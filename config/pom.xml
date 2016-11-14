@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>no.nav.fo</groupId>
-        <artifactId>mia-brukerflate</artifactId>
+        <artifactId>mia</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <packaging>jar</packaging>
 
-    <artifactId>mia-brukerflate-config</artifactId>
+    <artifactId>mia-config</artifactId>
     <build>
         <resources>
             <resource>

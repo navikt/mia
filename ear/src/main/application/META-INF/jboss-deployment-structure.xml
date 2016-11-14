@@ -9,7 +9,7 @@
             <module name="org.slf4j"/>
         </exclusions>
     </deployment>
-    <sub-deployment name="mia-brukerflate-web.war">
+    <sub-deployment name="mia-web.war">
         <exclusions>
             <module name="org.slf4j"/>
             <module name="javaee.api"/>

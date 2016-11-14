@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>brukerflate</display-name>
+    <display-name>mia</display-name>
 
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -28,7 +28,7 @@
 
     <servlet>
         <servlet-name>AppServlet</servlet-name>
-        <servlet-class>no.nav.fo.brukerflate.AppServlet</servlet-class>
+        <servlet-class>no.nav.fo.mia.AppServlet</servlet-class>
         <init-param>
             <param-name>applicationFile</param-name>
             <param-value>index.html</param-value>

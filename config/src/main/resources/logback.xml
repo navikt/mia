@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="MAIN_APPLICATION" value="mia-brukerflate"/>
+    <property name="MAIN_APPLICATION" value="mia"/>
 
     <property name="loggingPattern" value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}] ){'- \[, , \] ',''}- %m%n"/>
 

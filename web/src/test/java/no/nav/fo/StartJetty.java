@@ -10,7 +10,7 @@ public class StartJetty {
 
     public static void main(String[] args) throws Exception {
         Jetty jetty = usingWar()
-                .at("/brukerflate")
+                .at("/mia")
                 .loadProperties("/test.properties")
                 .port(PORT)
                 .buildJetty();

@@ -1,4 +1,4 @@
-package no.nav.fo.brukerflate;
+package no.nav.fo.mia;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
