@@ -4,6 +4,5 @@ target
 *.log
 web/src/frontend/node_modules
 
-web/src/main/webapp
-!web/src/main/webapp/WEB-INF/
-!web/src/main/webapp/index.html
+/web/src/main/webapp/js
+/web/src/main/webapp/css
