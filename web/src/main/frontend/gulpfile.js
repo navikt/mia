@@ -10,6 +10,7 @@ const isDevelopment = () => process.env.NODE_ENV !== 'production';
 gulp.task('build-js', require('./gulp/build-js').buildJs(gulp));
 gulp.task('build-js-watchify', require('./gulp/build-js').buildJsWatchify(gulp));
 gulp.task('build-vendors', require('./gulp/build-js').buildVendors(gulp));
+gulp.task('eslint', require('./gulp/eslint')(gulp));
 
 gulp.task('build', ['clean'], function () {
     gulp.start(['build-js', 'build-vendors']);
