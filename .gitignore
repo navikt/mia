@@ -2,7 +2,7 @@ target
 *.iml
 .idea
 *.log
-web/src/frontend/node_modules
+web/src/main/frontend/node_modules
 
 /web/src/main/webapp/js
 /web/src/main/webapp/css

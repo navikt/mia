@@ -8,7 +8,7 @@
 ## Ting vi trenger:
 
 - [x] Oppsett av servlet
-- [ ] Legge til frontend med bygging
+- [x] Legge til frontend med bygging
 - [ ] Oppsett for kjøring av unit-tester (js)
 - [ ] Intergrasjon/unit-tester
 - [ ] Rullerende versjonering
