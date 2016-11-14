@@ -7,10 +7,13 @@
 
 ## Ting vi trenger:
 
-[x] Oppsett av servlet
-[ ] Legge til frontend med bygging
-[ ] Oppsett for kjøring av unit-tester
-[ ] Intergrasjon/unit-tester
+- [x] Oppsett av servlet
+- [ ] Legge til frontend med bygging
+- [ ] Oppsett for kjøring av unit-tester
+- [ ] Intergrasjon/unit-tester
+- [ ] fullerende versjonering
+- [ ] Eget steg for javatester
+- [ ] Verifisere ingen snapshot dependencies
 
 Ønske:
 [ ] Automatisk deploy til T1
