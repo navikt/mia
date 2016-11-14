@@ -4,16 +4,23 @@
              xsi:schemaLocation="http://appconfig.aura.nav.no
              http://maven.adeo.no/xsd/appconfig.xsd ">
 
-<name>mia</name>
-<artifacts>
-    <ear groupId="no.nav.fo" artifactId="mia-ear"/>
-</artifacts>
+    <name>mia</name>
+    <artifacts>
+        <ear groupId="no.nav.fo" artifactId="mia-ear"/>
+    </artifacts>
 
-<resources>
+    <resources>
 
-</resources>
+    </resources>
 
-<loadBalancer />
+    <selftest>
+        <path>/mia/internal/selftest.json</path>
+        <humanReadablePath>/mia/internal/selftest</humanReadablePath>
+    </selftest>
 
+    <loadBalancer>
+        <contextRoot>mia</contextRoot>
+        <lbHealthMonitor type="HTTPS" isAliveUrl="internal/isAlive" interval="5" timeout="16"/>
+    </loadBalancer>
 
 </application>

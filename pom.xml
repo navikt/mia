@@ -76,7 +76,11 @@
                 <version>${slf4j.version}</version>
                 <scope>runtime</scope>
             </dependency>
-
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-web</artifactId>
+                <version>3.1.2</version>
+            </dependency>
             <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
                 <artifactId>common-jetty</artifactId>
