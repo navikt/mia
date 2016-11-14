@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>no.nav.fo</groupId>
+    <artifactId>mia-brukerflate</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>no.nav.sbl</groupId>
+        <artifactId>mor-pom</artifactId>
+        <version>3.2</version>
+    </parent>
+
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>web</module>
+        <module>config</module>
+        <module>ear</module>
+    </modules>
+
+
+    <properties>
+        <sonar.exclusions>
+            **/config/**,
+            **/mock/**,
+            **/selftest/**,
+            **/sikkerhet/**,
+            **/rest/providers/**
+        </sonar.exclusions>
+
+        <!-- Java  -->
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
+        <javax.inject.version>1</javax.inject.version>
+        <common-jetty.version>2.0.11</common-jetty.version>
+
+        <!-- Tredjeparts  -->
+        <jersey.version>2.22.2</jersey.version>
+        <jackson.version>2.7.2</jackson.version>
+        <spring.version>4.2.5.RELEASE</spring.version>
+        <slf4j.version>1.7.15</slf4j.version>
+        <logback.version>1.1.6</logback.version>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-jetty</artifactId>
+                <version>${common-jetty.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
