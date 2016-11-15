@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 import {routerMiddleware} from 'react-router-redux';
 import DevTools from './devtools.jsx';
 import Reducers from './reducers.js';
-import {erDev} from "./felles/utils/dev"
+import {erDev} from "./felles/utils/dev";
 
 function getDevStoreCompose(history) {
     return compose(

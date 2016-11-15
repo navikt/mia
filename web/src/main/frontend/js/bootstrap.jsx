@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createHistory} from 'history';
-import { Router, Route, IndexRoute, useRouterHistory } from "react-router";
+import { Router, Route, useRouterHistory } from "react-router";
 
 import Application from "./application";
 import Store from './store';
@@ -17,8 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     render((
         <Provider store={store}>
             <Router history={history}>
-                <Route path="/" component={Application}>
-                </Route>
+                <Route path="/" component={Application} />
             </Router>
         </Provider>
     ), document.getElementById('app'));

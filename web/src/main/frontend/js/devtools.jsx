@@ -14,7 +14,7 @@ if (erDev()) {
             fluid={false}
             defaultSize={300}
             defaultIsVisible={false}>
-            <LogMonitor theme="nicinabox"/>
+            <LogMonitor theme="nicinabox" />
         </DockMonitor>
     );
 
@@ -24,7 +24,7 @@ if (erDev()) {
 
 } else {
     DevTools = () => {
-        return <div style={{display: 'none'}}></div>;
+        return <div style={{display: 'none'}} />;
     };
 }
 
