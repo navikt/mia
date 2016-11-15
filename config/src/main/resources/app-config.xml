@@ -19,7 +19,7 @@
     </selftest>
 
     <loadBalancer>
-        <lbHealthMonitor type="HTTPS" isAliveUrl="internal/isAlive" interval="5" timeout="16"/>
+        <lbHealthMonitor type="HTTPS" isAliveUrl="mia/internal/isAlive" interval="5" timeout="16"/>
     </loadBalancer>
 
 </application>
