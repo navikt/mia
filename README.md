@@ -14,7 +14,7 @@
 - [ ] Rullerende versjonering
 - [x] Eget steg for javatester
 - [ ] Publisere coverage til sonar
-- [ ] Verifisere ingen snapshot dependencies
+- [x] Verifisere ingen snapshot dependencies
 
 Ønske:
 - [ ] Automatisk deploy til T1
