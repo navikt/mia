@@ -19,7 +19,6 @@
     </selftest>
 
     <loadBalancer>
-        <contextRoot>mia</contextRoot>
         <lbHealthMonitor type="HTTPS" isAliveUrl="internal/isAlive" interval="5" timeout="16"/>
     </loadBalancer>
 
