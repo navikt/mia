@@ -16,6 +16,10 @@ gulp.task('build', ['clean'], function () {
     gulp.start(['build-js', 'build-vendors']);
 });
 
+gulp.task('watch', ['clean'], function () {
+    gulp.start(['build-js-watchify', 'build-vendors']);
+});
+
 gulp.task('clean', function (callback) {
     const del = require('del');
     return del([
