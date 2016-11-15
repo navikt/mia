@@ -40,12 +40,11 @@
         <!-- Tredjeparts  -->
         <jersey.version>2.22.2</jersey.version>
         <jackson.version>2.7.2</jackson.version>
-        <spring.version>4.2.5.RELEASE</spring.version>
+        <spring.version>4.1.6.RELEASE</spring.version>
         <slf4j.version>1.7.15</slf4j.version>
-        <logback.version>1.1.6</logback.version>
+        <logback.version>1.0.13</logback.version>
 
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -117,4 +116,30 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-no-snapshots</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireReleaseDeps>
+                                    <onlyWhenRelease>true</onlyWhenRelease>
+                                    <message>No Snapshots Allowed!</message>
+                                </requireReleaseDeps>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
