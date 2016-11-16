@@ -41,7 +41,20 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-
+    <servlet>
+        <servlet-name>API</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>no.nav.fo.mia.rest.MuligheterIArbeidsmarkedetApplication</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>API</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>selftest</servlet-name>
         <servlet-class>no.nav.fo.mia.internal.SelftestServlet</servlet-class>
