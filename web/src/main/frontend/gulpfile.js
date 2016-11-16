@@ -12,13 +12,14 @@ gulp.task('build-js', require('./gulp/build-js').buildJs(gulp));
 gulp.task('build-js-watchify', require('./gulp/build-js').buildJsWatchify(gulp));
 gulp.task('build-vendors', require('./gulp/build-js').buildVendors(gulp));
 gulp.task('eslint', require('./gulp/eslint')(gulp));
+gulp.task('build-properties', ['build-js'], require('./gulp/build-properties').buildProperties());
 
 gulp.task('build', ['clean'], function () {
-    gulp.start(['build-js', 'build-vendors']);
+    gulp.start(['build-js', 'build-vendors', 'build-properties']);
 });
 
 gulp.task('watch', ['clean'], function () {
-    gulp.start(['build-js-watchify', 'build-vendors']);
+    gulp.start(['build-js-watchify', 'build-vendors', 'build-properties']);
 });
 
 gulp.task('clean', function (callback) {

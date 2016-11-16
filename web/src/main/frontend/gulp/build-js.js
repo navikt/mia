@@ -16,7 +16,13 @@ function getExternalVendors() {
 
 const babelifyReact = function (file) {
     const babelify = require('babelify');
-    return babelify(file);
+    return babelify(file,
+        {
+            "plugins": [
+                ["react-intl", { "messagesDir": "./messages/"}]
+            ]
+        }
+    );
 };
 
 function bundle(gulp, bundle, bundleFileName) {
