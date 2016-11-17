@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import bransjemock from '../../mock/mockdata';
 
@@ -20,7 +19,7 @@ export const meldinger = defineMessages({
 });
 
 function findTotaltAntallJobber(data) {
-    return data.reduce(function(a, b) {return a + b.antall}, 0);
+    return data.reduce(function(a, b) {return a + b.antall;}, 0);
 }
 
 const Bransjer = () => (
@@ -38,7 +37,7 @@ const Bransjer = () => (
             <select id="bransjeDropdown" className="bransjeDropdown">
                 <option value="all">Alle ({findTotaltAntallJobber(bransjer)})</option>
                 { bransjer.map( row => {
-                    return <option value={row.name}  key={row.name}>{row.name} ({row.antall})</option>
+                    return <option value={row.name}  key={row.name}>{row.name} ({row.antall})</option>;
                 })}
             </select>
         </div>
