@@ -1,0 +1,19 @@
+@import "@{modig-frontend-root-url}/less/includes/variables";
+
+.hovedmeny .liste-vannrett li:not(:last-child):after {
+    content: "";
+}
+
+.hovedmeny a {
+    color: @black;
+    padding-bottom: 2px;
+}
+
+.hovedmeny a:hover {
+    color: @blue-link;
+    border-bottom: 1px solid;
+}
+
+.hovedmeny a.active {
+    border-bottom: 1px solid;
+}

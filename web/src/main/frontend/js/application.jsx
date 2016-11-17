@@ -3,6 +3,8 @@ import Devtools from './devtools';
 import DocumentTitle from 'react-document-title';
 import {defineMessages, injectIntl} from 'react-intl';
 
+import Hovedmeny from "./felles/hovedmeny/hovedmeny";
+
 const meldinger = defineMessages({
     appTitle: {
         id: 'applikasjon.tittel',
@@ -15,7 +17,10 @@ class Application extends React.Component {
         return (
             <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
                 <div>
-                    <h1>Hei fra applikasjonswrapper</h1>
+                    <Hovedmeny />
+                    <div className="side-innhold">
+                        { this.props.children }
+                    </div>
                     <div aria-hidden="true">
                         <Devtools />
                     </div>
