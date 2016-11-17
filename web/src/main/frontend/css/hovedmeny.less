@@ -9,6 +9,11 @@
     padding-bottom: 2px;
 }
 
+.hovedmeny .liste-vannrett li {
+    display: block;
+    padding-bottom: 0.5rem;
+}
+
 .hovedmeny a:hover {
     color: @blue-link;
     border-bottom: 1px solid;
@@ -16,4 +21,10 @@
 
 .hovedmeny a.active {
     border-bottom: 1px solid;
+}
+
+@media (min-width: @screen-small) {
+    .hovedmeny .liste-vannrett li {
+        display: inline-block;
+    }
 }
