@@ -1,0 +1,29 @@
+@import "@{modig-frontend-root-url}/less/includes/variables";
+
+.stillinger-kart {
+    display: block;
+}
+
+.stillinger-bransjer {
+    display: block;
+}
+
+.stillinger-statistikk {
+    display: block;
+}
+
+@media (min-width: @screen-xl) {
+    .stillinger-kart {
+        display: inline-block;
+        width: 50%;
+        box-sizing: border-box;
+        padding-right: 0.5rem;
+    }
+
+    .stillinger-bransjer {
+        display: inline-block;
+        width: 50%;
+        box-sizing: border-box;
+        padding-left: 0.5rem;
+    }
+}
