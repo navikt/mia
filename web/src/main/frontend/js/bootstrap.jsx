@@ -10,6 +10,7 @@ import Arbeidsgivere from "./arbeidsgivere/arbeidsgivere";
 import LedigeStillinger from "./ledigestillinger/ledigestillinger";
 import Rapporter from "./rapporter/rapporter";
 import Yrker from "./yrker/yrker";
+import IkkeFunnet from "./felles/feilside/ikkefunnet";
 
 const history = useRouterHistory(createHistory)({
     basename: '/mia'
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <Route path="yrker" component={Yrker} />
                     <Route path="arbeidsgivere" component={Arbeidsgivere} />
                     <Route path="rapporter" component={Rapporter} />
+                    <Route path="*" component={IkkeFunnet}/>
                 </Route>
             </Router>
         </Provider>
