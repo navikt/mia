@@ -18,7 +18,6 @@ function copyImage() {
 }
 
 const isProduction = () => process.env.NODE_ENV === 'production';
-const isDevelopment = () => process.env.NODE_ENV !== 'production';
 process.env.NODE_ENV = gutil.env.prod != null ? 'production' : 'development'; //eslint-disable-line no-eq-null, eqeqeq
 
 gulp.task('build-js', require('./gulp/build-js').buildJs(gulp));

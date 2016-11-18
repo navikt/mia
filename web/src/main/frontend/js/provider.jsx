@@ -8,7 +8,7 @@ addLocaleData(nbLocale);
 const Provider = ({store, ...props}) => {
     return (
         <ReduxProvider store={store}>
-            <IntlProvider {...props} locale="no" />
+            <IntlProvider {...props} locale="nb" />
         </ReduxProvider>
     );
 };
