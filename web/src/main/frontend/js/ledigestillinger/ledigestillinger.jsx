@@ -3,7 +3,7 @@ import IkkeFerdigPanel from "../felles/ikkeferdig/ikke-ferdig-panel";
 import Oversikt from "./oversikt/ledigestillinger-oversikt";
 
 const LedigeStillinger = () => (
-    <div>
+    <div className="stillinger-container">
         <section className="stillinger-oversikt blokk-m">
             <Oversikt />
         </section>
