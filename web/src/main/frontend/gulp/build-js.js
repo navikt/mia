@@ -63,7 +63,7 @@ function buildVendors(gulp) {
         const browserify = require('browserify');
         const babelify = require('babelify');
 
-        var bundler = browserify({
+        var bundler = browserify('./js/vendors.js', {
             debug: isDevelopment(),
             fullPaths: isDevelopment()
         }).require(getExternalVendors()).transform(babelify);

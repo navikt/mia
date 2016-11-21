@@ -11,7 +11,7 @@ const Menylenke = ({tekst, path}) => (
 );
 
 const Hovedmeny = () => (
-    <nav className="hovedmeny blokk-m">
+    <nav className="hovedmeny blokk-s">
         <ul className="liste liste-ustilet liste-vannrett">
             <Menylenke tekst={meldinger.ledigestillinger} path="ledigestillinger" />
             <Menylenke tekst={meldinger.arbeidsgivere} path="arbeidsgivere" />

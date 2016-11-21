@@ -4,7 +4,7 @@ import Oversikt from "./oversikt/ledigestillinger-oversikt";
 import Bransjer from "./bransje/bransjer";
 
 const LedigeStillinger = () => (
-    <div>
+    <div className="stillinger-container">
         <section className="stillinger-oversikt blokk-m">
             <Oversikt />
         </section>
