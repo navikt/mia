@@ -20,7 +20,7 @@ const SelectElement = props => (
             <FormattedMessage {...props.label}/>
         </label>
         <div className="select-container input-fullbredde">
-            <select id={props.id} name={props.name} value={props.valgt} onChange={() => props.onChange(event.target.value)}>
+            <select id={props.id} name={props.name} value={props.valgt} onChange={event => props.onChange(event.target.value)}>
                 { props.alternativer.map(alternativ => (
                     <option key={alternativ} value={alternativ}>{alternativ}</option>
                 ))}
@@ -30,6 +30,7 @@ const SelectElement = props => (
 );
 
 const Oversiktstabell = props => {
+    console.log(props.valgtFylke, fylker.find(fylke => fylke.navn === props.valgtFylke));
     return (
         <div>
             <form noValidate>
@@ -38,7 +39,7 @@ const Oversiktstabell = props => {
                     className="blokk-s"
                     name="fylke"
                     value={props.valgtFylke}
-                    onChange={props.valgFylke}
+                    onChange={props.velgFylke}
                     label={meldinger.velgFylke}
                     alternativer={fylker.map(fylke => fylke.navn)}
                 />
@@ -47,7 +48,7 @@ const Oversiktstabell = props => {
                     id="select-kommune"
                     name="kommune"
                     value={props.valgtKommune}
-                    onChange={props.valgKommune}
+                    onChange={props.velgKommune}
                     label={meldinger.velgKommune}
                     alternativer={fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner}
                 />
