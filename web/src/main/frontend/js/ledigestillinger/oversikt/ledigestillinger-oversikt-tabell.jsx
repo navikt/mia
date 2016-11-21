@@ -30,7 +30,6 @@ const SelectElement = props => (
 );
 
 const Oversiktstabell = props => {
-    console.log(props.valgtFylke, fylker.find(fylke => fylke.navn === props.valgtFylke));
     return (
         <div>
             <form noValidate>
