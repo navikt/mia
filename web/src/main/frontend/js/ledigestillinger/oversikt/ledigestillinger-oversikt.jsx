@@ -18,16 +18,17 @@ const meldinger = defineMessages({
 });
 
 const Oversiktskart = (props) => {
-    const toggleKart = () => {
+    const toggleKart = (event) => {
+        event.preventDefault();
         props.dispatch({ type: props.visKart ? actions.vis_tabell : actions.vis_kart });
     };
 
     return (
         <div className="panel panel-fremhevet panel-oversikt">
             {props.visKart ? <OversiktKart/> : <OversiktTabell/>}
-            <button onClick={toggleKart}>
+            <a href="#" role="button" className="oversikt-toggle" onClick={toggleKart}>
                 <FormattedMessage {...(props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
-            </button>
+            </a>
         </div>
     );
 };
