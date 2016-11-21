@@ -21,7 +21,7 @@ const Oversiktstabell = props => {
                 <label htmlFor="select-fylke">
                     <FormattedMessage {...meldinger.velgFylke}/>
                 </label>
-                <div className="select-container blokk-s">
+                <div className="select-container input-fullbredde blokk-s">
                     <select id="select-fylke" name="fylke" value={props.valgtFylke} onChange={event => props.velgFylke(event.target.value)}>
                         {fylker.map(fylke => (
                             <option key={fylke.navn} value={fylke.navn}>
@@ -34,7 +34,7 @@ const Oversiktstabell = props => {
                 <label htmlFor="select-kommune">
                     <FormattedMessage {...meldinger.velgKommune}/>
                 </label>
-                <div className="select-container blokk-s">
+                <div className="select-container input-fullbredde blokk-s">
                     <select id="select-kommune" name="kommune" value={props.valgtKommune} onChange={event => props.velgKommune(event.target.value)}>
                         {fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner.map(kommune => (
                             <option key={kommune} value={kommune}>
