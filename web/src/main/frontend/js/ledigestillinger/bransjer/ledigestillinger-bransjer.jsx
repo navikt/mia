@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import bransjemock from '../../mock/mockdata';
 import BransjeBoks from './ledigestillinger-bransjer-boks';
@@ -64,9 +65,9 @@ const Bransjer = (props) => {
                         return <BransjeBoks {...row} onClick={velgBransje} bransjevalg={props.bransjevalg} key={row.id} />;
                     })}
             </div>
-            <a href="#">
+            <Link to="#">
                 <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
-            </a>
+            </Link>
         </div>
     );
 };
