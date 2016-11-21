@@ -14,35 +14,43 @@ const meldinger = defineMessages({
     }
 });
 
+const SelectElement = props => (
+    <div className={props.className}>
+        <label htmlFor={props.id}>
+            <FormattedMessage {...props.label}/>
+        </label>
+        <div className="select-container input-fullbredde">
+            <select id={props.id} name={props.name} value={props.valgt} onChange={() => props.onChange(event.target.value)}>
+                { props.alternativer.map(alternativ => (
+                    <option key={alternativ} value={alternativ}>{alternativ}</option>
+                ))}
+            </select>
+        </div>
+    </div>
+);
+
 const Oversiktstabell = props => {
     return (
         <div>
             <form noValidate>
-                <label htmlFor="select-fylke">
-                    <FormattedMessage {...meldinger.velgFylke}/>
-                </label>
-                <div className="select-container input-fullbredde blokk-s">
-                    <select id="select-fylke" name="fylke" value={props.valgtFylke} onChange={event => props.velgFylke(event.target.value)}>
-                        {fylker.map(fylke => (
-                            <option key={fylke.navn} value={fylke.navn}>
-                                {fylke.navn}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <SelectElement
+                    id="select-fylke"
+                    className="blokk-s"
+                    name="fylke"
+                    value={props.valgtFylke}
+                    onChange={props.valgFylke}
+                    label={meldinger.velgFylke}
+                    alternativer={fylker.map(fylke => fylke.navn)}
+                />
 
-                <label htmlFor="select-kommune">
-                    <FormattedMessage {...meldinger.velgKommune}/>
-                </label>
-                <div className="select-container input-fullbredde blokk-s">
-                    <select id="select-kommune" name="kommune" value={props.valgtKommune} onChange={event => props.velgKommune(event.target.value)}>
-                        {fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner.map(kommune => (
-                            <option key={kommune} value={kommune}>
-                                {kommune}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <SelectElement
+                    id="select-kommune"
+                    name="kommune"
+                    value={props.valgtKommune}
+                    onChange={props.valgKommune}
+                    label={meldinger.velgKommune}
+                    alternativer={fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner}
+                />
             </form>
         </div>
     );
