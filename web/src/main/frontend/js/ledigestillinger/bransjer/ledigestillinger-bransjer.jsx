@@ -56,10 +56,10 @@ const Bransjer = (props) => {
                     </select>
                 </div>
             </div>
-            <div className="boksOverskrift blokk-s">
+            <div className="blokk-s">
                 <FormattedMessage {...meldinger.boksoverskrift} values={{antall: findTotaltAntallJobber(bransjer)}}/>
             </div>
-            <div className="bokserContainer blokk-s">
+            <div className="bokser-container blokk-s">
                     { bransjer.map(row => {
                         return <BransjeBoks {...row} onClick={velgBransje} bransjevalg={props.bransjevalg} key={row.id} />;
                     })}
