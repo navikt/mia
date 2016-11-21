@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import oversiktReducer from "./oversikt/ledigestillinger-oversikt-reducer";
-import bransjeReducer from "./bransje/bransje-reducer";
+import bransjeReducer from "./bransjer/ledigestillinger-bransjer-reducer";
 
 const reducers = combineReducers({
     oversikt: oversiktReducer,

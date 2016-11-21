@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import bransjemock from '../../mock/mockdata';
-import BransjeBoks from './bransjeBoks';
-import {actions} from "./bransje-reducer";
+import BransjeBoks from './ledigestillinger-bransjer-boks';
+import {actions} from "./ledigestillinger-bransjer-reducer";
 
 const bransjer = bransjemock;
 export const meldinger = defineMessages({
@@ -35,7 +35,7 @@ const Bransjer = (props) => {
     };
 
     return (
-        <div className="panel panel-fremhevet">
+        <div className="panel">
             <div className="nav-input blokk-s">
                 <label htmlFor="input-sok">
                     <FormattedMessage {...meldinger.soketekst} />

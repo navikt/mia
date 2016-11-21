@@ -1,7 +1,7 @@
 import React from "react";
 import IkkeFerdigPanel from "../felles/ikkeferdig/ikke-ferdig-panel";
 import Oversikt from "./oversikt/ledigestillinger-oversikt";
-import Bransjer from "./bransje/bransjer";
+import Bransjer from "./bransjer/ledigestillinger-bransjer";
 
 const LedigeStillinger = () => (
     <div className="stillinger-container">
