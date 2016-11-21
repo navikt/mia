@@ -34,10 +34,51 @@
 
 // ----------------------- Bransjer -----------------------
 
-.bransjeDropdown {
-    width: 100%;
+.bransjeBoksContainer {
+  border: 0;
+  text-align: left;
+  height: 10rem;
+  width: 12rem;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  background-color: @gray-text;
+  color: @white;
+  margin: 5px;
+  position: relative;
+  float: left;
 }
 
-.bransjeSok {
-    width: 100%;
+.bransjeBoksContainer:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px @orange-focus;
+}
+
+.bransjeBoksContainer:hover {
+  background-color: @color-gray-additional;
+  color: @black;
+}
+
+.aktivBransjeBoks {
+  background-color: @blue-link-negative;
+  color: @black;
+  border: 1px solid @black;
+}
+
+.bokserContainer {
+  width: 100%;
+  display: inline-block;
+}
+
+.boksNavn {
+  position: absolute;
+  top: 1.25rem;
+  word-wrap: break-word;
+}
+
+.boksAntall {
+  font-size: @rem-as-38px;
+  position: absolute;
+  bottom: @rem-as-20px;
+  right: @rem-as-20px;
 }

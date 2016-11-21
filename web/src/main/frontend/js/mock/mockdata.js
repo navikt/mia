@@ -1,15 +1,48 @@
 export const bransjemock = [
     {
-    name: "Bygg og anlegg",
+        id: 0,
+        navn: "Bygg og anlegg",
         antall: 7
     },
     {
-    name: "Computer & Tech-wizardry",
+        id: 1,
+        navn: "Computer & Tech-wizardry",
         antall: 12
     },
     {
-    name: "Management Consulting",
+        id: 2,
+        navn: "Management Consulting",
         antall: 10
+    },
+    {
+        id: 3,
+        navn: "Kybernetikk",
+        antall: 4
+    },
+    {
+        id: 4,
+        navn: "Nanoteknologi",
+        antall: 9
+    },
+    {
+        id: 5,
+        navn: "Hotell og reiseliv",
+        antall: 14
+    },
+    {
+        id: 6,
+        navn: "Bartender",
+        antall: 2
+    },
+    {
+        id: 7,
+        navn: "Butikkmedarbeider",
+        antall: 1
+    },
+    {
+        id: 8,
+        navn: "PR-rådgivning",
+        antall: 13
     }
 ];
 
