@@ -14,7 +14,7 @@ const meldinger = defineMessages({
     }
 });
 
-const Oversiktstabell = () => {
+const Oversiktstabell = props => {
     return (
         <div>
             <form noValidate>
@@ -22,7 +22,7 @@ const Oversiktstabell = () => {
                     <FormattedMessage {...meldinger.velgFylke}/>
                 </label>
                 <div className="select-container blokk-s">
-                    <select id="select-fylke" name="fylke">
+                    <select id="select-fylke" name="fylke" value={props.valgtFylke} onChange={event => props.velgFylke(event.target.value)}>
                         {fylker.map(fylke => (
                             <option key={fylke.navn} value={fylke.navn}>
                                 {fylke.navn}
@@ -35,8 +35,8 @@ const Oversiktstabell = () => {
                     <FormattedMessage {...meldinger.velgKommune}/>
                 </label>
                 <div className="select-container blokk-s">
-                    <select id="select-kommune" name="kommune">
-                        {fylker.find(fylke => fylke.navn === 'Kristiansand').kommuner.map(kommune => (
+                    <select id="select-kommune" name="kommune" value={props.valgtKommune} onChange={event => props.velgKommune(event.target.value)}>
+                        {fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner.map(kommune => (
                             <option key={kommune} value={kommune}>
                                 {kommune}
                             </option>
