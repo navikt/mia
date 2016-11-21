@@ -51,9 +51,7 @@ const Bransjer = (props) => {
                     <select id="select-bransje" value={props.bransjevalg}
                             onChange={e => velgBransje(e.target.value)}>
                         <option value="alle">Alle ({findTotaltAntallJobber(bransjer)})</option>
-                        { bransjer.map(row => {
-                            return <option value={row.id} key={row.id}>{row.navn} ({row.antall})</option>;
-                        })}
+                        { bransjer.map(row => <option value={row.id} key={row.id}>{row.navn} ({row.antall})</option> )}
                     </select>
                 </div>
             </div>
@@ -61,9 +59,7 @@ const Bransjer = (props) => {
                 <FormattedMessage {...meldinger.boksoverskrift} values={{antall: findTotaltAntallJobber(bransjer)}}/>
             </div>
             <div className="bokser-container blokk-s">
-                    { bransjer.map(row => {
-                        return <BransjeBoks {...row} onClick={velgBransje} bransjevalg={props.bransjevalg} key={row.id} />;
-                    })}
+                    { bransjer.map(row => <BransjeBoks {...row} onClick={velgBransje} bransjevalg={props.bransjevalg} key={row.id} /> )}
             </div>
             <Link to="#">
                 <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
