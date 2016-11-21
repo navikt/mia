@@ -1,8 +1,8 @@
 import {combineReducers} from "redux";
-import {routerReducer} from "react-router-redux";
+import ledigeStillingerReducer from "./ledigestillinger/ledigestillinger-reducer";
 
 const reducers = combineReducers({
-    routing: routerReducer
+    ledigestillinger: ledigeStillingerReducer
 });
 
 export default reducers;

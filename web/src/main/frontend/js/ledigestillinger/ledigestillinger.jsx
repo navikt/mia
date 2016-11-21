@@ -1,10 +1,11 @@
 import React from "react";
 import IkkeFerdigPanel from "../felles/ikkeferdig/ikke-ferdig-panel";
+import Oversikt from "./oversikt/ledigestillinger-oversikt";
 
 const LedigeStillinger = () => (
     <div>
-        <section className="stillinger-kart blokk-m">
-            <IkkeFerdigPanel />
+        <section className="stillinger-oversikt blokk-m">
+            <Oversikt />
         </section>
         <section className="stillinger-bransjer blokk-m">
             <IkkeFerdigPanel />

@@ -1,7 +1,11 @@
 @import "@{modig-frontend-root-url}/less/includes/variables";
 
-.stillinger-kart {
+.stillinger-oversikt {
     display: block;
+}
+
+.panel-oversikt {
+    min-height: 600px;
 }
 
 .stillinger-bransjer {
@@ -12,10 +16,21 @@
     display: block;
 }
 
+.panel-oversikt {
+    position: relative;
+}
+
+.panel-oversikt .oversikt-toggle {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 2rem;
+}
+
 @media (min-width: @screen-xl) {
-    .stillinger-kart {
+    .stillinger-oversikt {
         display: inline-block;
         width: 50%;
+        float: left;
         box-sizing: border-box;
         padding-right: 0.5rem;
     }
@@ -23,7 +38,12 @@
     .stillinger-bransjer {
         display: inline-block;
         width: 50%;
+        float: left;
         box-sizing: border-box;
         padding-left: 0.5rem;
+    }
+
+    .stillinger-statistikk {
+        clear: both;
     }
 }
