@@ -5,6 +5,7 @@ import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import bransjemock from '../../mock/mockdata';
 import BransjeBoks from './ledigestillinger-bransjer-boks';
 import {actions} from "./ledigestillinger-bransjer-reducer";
+import Inputfelt from "../../felles/inputfelt";
 
 const bransjer = bransjemock;
 export const meldinger = defineMessages({
@@ -37,12 +38,7 @@ const Bransjer = (props) => {
 
     return (
         <div className="panel">
-            <div className="nav-input blokk-s">
-                <label htmlFor="input-sok">
-                    <FormattedMessage {...meldinger.soketekst} />
-                </label>
-                <input type="search" className="input-fullbredde" id="input-sok"/>
-            </div>
+            <Inputfelt labelFor="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
             <div className="bransjevalg blokk-s">
                 <label htmlFor="select-bransje">
                     <FormattedMessage {...meldinger.velgbransje} />
