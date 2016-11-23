@@ -9,9 +9,9 @@
 
 - [x] Oppsett av servlet
 - [x] Legge til frontend med bygging
-- [ ] Oppsett for kjøring av unit-tester (js)
+- [x] Oppsett for kjøring av unit-tester (js)
 - [ ] Intergrasjon/unit-tester
-- [ ] Rullerende versjonering
+- [x] Rullerende versjonering
 - [x] Eget steg for javatester
 - [ ] Publisere coverage til sonar
 - [x] Verifisere ingen snapshot dependencies

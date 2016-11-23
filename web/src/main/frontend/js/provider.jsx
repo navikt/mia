@@ -8,7 +8,7 @@ addLocaleData(nbLocale);
 const Provider = ({store, ...props}) => {
     return (
         <ReduxProvider store={store}>
-            <IntlProvider {...props} locale="nb" />
+            <IntlProvider {...props} />
         </ReduxProvider>
     );
 };
@@ -17,11 +17,6 @@ Provider.propTypes = {
     children: PropTypes.element.isRequired
 };
 
-const mapStateToProps = (state) => {
-    const {intl} = state;
-    return {
-        ...intl
-    };
-};
+const mapStateToProps = state => ({...(state.tekster)});
 
 export default connect(mapStateToProps)(Provider);
