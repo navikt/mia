@@ -2,12 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
-import bransjemock from '../../mock/mockdata';
-import BransjeBoks from './ledigestillinger-bransjer-boks';
 import {actions} from "./ledigestillinger-bransjer-reducer";
 import Inputfelt from "../../felles/inputfelt";
+import BransjeDropdown from '../../felles/bransje-dropdown';
+import Bokser from './ledige-stillinger-bransjer-bokser';
 
-const bransjer = bransjemock;
 export const meldinger = defineMessages({
     soketekst: {
         id: 'ledigestillinger.bransjer.soketekst',
@@ -31,32 +30,24 @@ function findTotaltAntallJobber(data) {
     return data.reduce(function(a, b) {return a + b.antall;}, 0);
 }
 
-const Bransjer = (props) => {
-    const velgBransje = (bransjeId) => {
-        props.dispatch({type: actions.bransjevalg, payload: bransjeId !== props.bransjevalg ? bransjeId : 'alle'});
+export const Bransjer = (props) => {
+    const toggleYrkesgruppe = (id) => {
+        if(props.valgteyrkesgrupper.includes(id)) {
+            props.dispatch({type: actions.yrkesgruppedeselect, payload: id});
+        } else {
+            props.dispatch({type: actions.yrkesgruppeselect, payload: id});
+        }
+    };
+
+    const velgYrkesomrade = (id) => {
+        props.dispatch({type: actions.yrkesomradeselect, payload: id});
     };
 
     return (
         <div className="panel">
-            <Inputfelt labelFor="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
-            <div className="bransjevalg blokk-s">
-                <label htmlFor="select-bransje">
-                    <FormattedMessage {...meldinger.velgbransje} />
-                </label>
-                <div className="select-container input-fullbredde">
-                    <select id="select-bransje" value={props.bransjevalg}
-                            onChange={e => velgBransje(e.target.value)}>
-                        <option value="alle">Alle ({findTotaltAntallJobber(bransjer)})</option>
-                        { bransjer.map(row => <option value={row.id} key={row.id}>{row.navn} ({row.antall})</option> )}
-                    </select>
-                </div>
-            </div>
-            <div className="blokk-s">
-                <FormattedMessage {...meldinger.boksoverskrift} values={{antall: findTotaltAntallJobber(bransjer)}}/>
-            </div>
-            <div className="bokser-container blokk-s">
-                    { bransjer.map(row => <BransjeBoks {...row} onClick={velgBransje} bransjevalg={props.bransjevalg} key={row.id} /> )}
-            </div>
+            <Inputfelt id="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
+            <BransjeDropdown meldinger={meldinger} yrkesomrade={props.yrkesomrade} onClick={velgYrkesomrade} findTotaltAntallJobber={findTotaltAntallJobber}/>
+            <Bokser meldinger={meldinger} findTotaltAntallJobber={findTotaltAntallJobber} onClick={toggleYrkesgruppe} valgteyrkesgrupper={props.valgteyrkesgrupper}/>
             <Link to="#">
                 <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
             </Link>
@@ -65,7 +56,8 @@ const Bransjer = (props) => {
 };
 
 const stateToProps = state => ({
-   bransjevalg: state.ledigestillinger.bransje.bransjevalg
+    valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
+    valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade
 });
 
 export default connect(stateToProps)(injectIntl(Bransjer));
