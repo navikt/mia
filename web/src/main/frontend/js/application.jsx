@@ -1,8 +1,10 @@
 import React from 'react';
 import Devtools from './devtools';
+import {connect} from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import {defineMessages, injectIntl} from 'react-intl';
 
+import {lastTekster} from './felles/tekster/tekster-reducer';
 import Hovedmeny from "./felles/hovedmeny/hovedmeny";
 
 const meldinger = defineMessages({
@@ -13,6 +15,10 @@ const meldinger = defineMessages({
 });
 
 class Application extends React.Component {
+    componentDidMount() {
+        const visCmsKeys = this.props.location.query.vistekster === 'true';
+        this.props.lastTekster(visCmsKeys);
+    }
     render() {
         return (
             <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
@@ -31,4 +37,12 @@ class Application extends React.Component {
     }
 }
 
-export default injectIntl(Application);
+const stateToProps = state => ({
+    lasterTekster: state.tekster.lastet
+});
+
+const actionsToProps = {
+    lastTekster
+};
+
+export default connect(stateToProps, actionsToProps)(injectIntl(Application));

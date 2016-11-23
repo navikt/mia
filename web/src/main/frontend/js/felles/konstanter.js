@@ -1,0 +1,1 @@
+export const RESTURL = "/mia/rest";
