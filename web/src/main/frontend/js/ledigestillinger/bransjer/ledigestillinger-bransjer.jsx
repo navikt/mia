@@ -46,7 +46,7 @@ export const Bransjer = (props) => {
     return (
         <div className="panel">
             <Inputfelt id="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
-            <BransjeDropdown meldinger={meldinger} yrkesomrade={props.yrkesomrade} onClick={velgYrkesomrade} findTotaltAntallJobber={findTotaltAntallJobber}/>
+            <BransjeDropdown meldinger={meldinger} yrkesomrade={props.valgtyrkesomrade} onClick={velgYrkesomrade} findTotaltAntallJobber={findTotaltAntallJobber}/>
             <Bokser meldinger={meldinger} findTotaltAntallJobber={findTotaltAntallJobber} onClick={toggleYrkesgruppe} valgteyrkesgrupper={props.valgteyrkesgrupper}/>
             <Link to="#">
                 <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
