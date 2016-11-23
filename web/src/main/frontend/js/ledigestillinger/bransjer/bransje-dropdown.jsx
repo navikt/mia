@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import bransjemock from '../mock/mockdata';
+import bransjemock from './ledige-stillinger-bransjer-mockdata';
 
 export const BransjeDropdown = (props) => {
     return(

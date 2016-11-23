@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {actions} from "./ledigestillinger-bransjer-reducer";
-import Inputfelt from "../../felles/inputfelt";
-import BransjeDropdown from '../../felles/bransje-dropdown';
+import Inputfelt from "../../felles/inputfelter/inputfelt";
+import BransjeDropdown from './bransje-dropdown';
 import Bokser from './ledige-stillinger-bransjer-bokser';
 
 export const meldinger = defineMessages({
