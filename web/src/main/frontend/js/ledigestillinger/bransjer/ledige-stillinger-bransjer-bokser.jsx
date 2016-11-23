@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import bransjemock from '../../mock/mockdata';
+import bransjemock from './ledige-stillinger-bransjer-mockdata';
 import BransjeBoks from './ledigestillinger-bransjer-boks';
 
 export const Bokser = (props) => {
