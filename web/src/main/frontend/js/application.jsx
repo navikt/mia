@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import {defineMessages, injectIntl} from 'react-intl';
 
+import Innholdslaster from "./felles/innholdslaster/innholdslaster";
 import {lastTekster} from './felles/tekster/tekster-reducer';
 import Hovedmeny from "./felles/hovedmeny/hovedmeny";
 
@@ -23,10 +24,12 @@ class Application extends React.Component {
         return (
             <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
                 <div>
-                    <Hovedmeny />
-                    <div className="side-innhold">
-                        { this.props.children }
-                    </div>
+                    <Innholdslaster avhengigheter={[this.props.tekster]}>
+                        <Hovedmeny />
+                        <div className="side-innhold">
+                            { this.props.children }
+                        </div>
+                    </Innholdslaster>
                     <div aria-hidden="true">
                         <Devtools />
                     </div>
@@ -38,7 +41,7 @@ class Application extends React.Component {
 }
 
 const stateToProps = state => ({
-    lasterTekster: state.tekster.lastet
+    tekster: state.tekster
 });
 
 const actionsToProps = {
