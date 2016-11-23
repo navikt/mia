@@ -85,6 +85,10 @@
             <artifactId>common-types</artifactId>
         </dependency>
         <dependency>
+            <groupId>no.nav.modig</groupId>
+            <artifactId>modig-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
@@ -108,7 +112,7 @@
     <build>
         <resources>
             <resource>
-                <directory>main/src/frontend/</directory>
+                <directory>src/main/frontend/</directory>
                 <excludes>
                     <exclude>**/node_modules/**</exclude>
                 </excludes>
