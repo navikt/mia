@@ -9,7 +9,7 @@ function cleanImg() {
 
 function copyImg(gulp) {
     return () => {
-        return gulp.src(['./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img/**/*', './img/*'])
+        return gulp.src(['./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img/**/*', './img/**/*'])
             .pipe(gulp.dest(OUTPUT_DIRECTORY + 'img/'));
     };
 }

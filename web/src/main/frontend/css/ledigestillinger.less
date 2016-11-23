@@ -1,27 +1,46 @@
 @import "@{modig-frontend-root-url}/less/includes/variables";
 
 .stillinger-container {
-    display: block;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .stillinger-oversikt {
-    display: block;
-}
-
-.panel-oversikt {
-    min-height: 600px;
+    flex-grow: 1;
+    display: inline-block;
+    width: 100%;
 }
 
 .stillinger-bransjer {
-    display: block;
+    flex-grow: 1;
+    display: inline-block;
+    width: 100%;
 }
 
 .stillinger-statistikk {
-    display: block;
+    flex-grow: 1;
+    display: inline-block;
+    width: 100%;
 }
 
 .panel-oversikt {
     position: relative;
+}
+
+.oversikt-kart {
+    svg {
+        max-width: 100%;
+        min-height: 30rem;
+        max-height: 40rem;
+
+        path {
+            pointer-events: all;
+        }
+
+        path:hover {
+            fill: #a0a0a0;
+        }
+    }
 }
 
 .panel-oversikt .oversikt-toggle {
@@ -32,23 +51,15 @@
 
 @media (min-width: @screen-xl) {
     .stillinger-oversikt {
-        display: inline-block;
         width: 50%;
-        float: left;
         box-sizing: border-box;
         padding-right: 0.5rem;
     }
 
     .stillinger-bransjer {
-        display: inline-block;
         width: 50%;
-        float: left;
         box-sizing: border-box;
         padding-left: 0.5rem;
-    }
-
-    .stillinger-statistikk {
-        clear: both;
     }
 }
 
