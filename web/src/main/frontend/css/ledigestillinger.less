@@ -24,6 +24,22 @@
     position: relative;
 }
 
+.oversikt-kart {
+    svg {
+        max-width: 100%;
+        min-height: 30rem;
+        max-height: 40rem;
+
+        path {
+            pointer-events: all;
+        }
+
+        path:hover {
+            fill: #a0a0a0;
+        }
+    }
+}
+
 .panel-oversikt .oversikt-toggle {
     position: absolute;
     bottom: 0.5rem;
