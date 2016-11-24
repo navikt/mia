@@ -46,14 +46,4 @@ export const bransjemock = [
     }
 ];
 
-bransjemock.sort(function(a, b) {
-    if(a.antall > b.antall) {
-        return -1;
-    }
-    if(a.antall < b.antall) {
-        return 1;
-    }
-    return 0;
-});
-
 export default bransjemock;
