@@ -1,7 +1,7 @@
 package no.nav.fo.mia.rest.ressurser;
 
-import no.nav.fo.mia.domain.Fylke;
-import no.nav.fo.mia.domain.Kommune;
+import no.nav.fo.mia.domain.kodeverk.FylkeKodeverk;
+import no.nav.fo.mia.domain.kodeverk.KommuneKodeverk;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.GET;
@@ -20,23 +20,23 @@ public class KodeverkRessurs {
 
     @GET
     @Path("/fylker")
-    public List<Fylke> hentFylkerOgKommuner() {
+    public List<FylkeKodeverk> hentFylkerOgKommuner() {
         return Arrays.asList(
-                new Fylke("Oslo")
-                    .withKommune(new Kommune("Oslo")),
-                new Fylke("Vest-agder")
-                    .withKommune(new Kommune("Kristiansand"))
-                    .withKommune(new Kommune("Mandal"))
-                    .withKommune(new Kommune("Farsun"))
-                    .withKommune(new Kommune("Søgne"))
-                    .withKommune(new Kommune("Åseral"))
-                    .withKommune(new Kommune("Lyngdal")),
-                new Fylke("Vestfold")
-                    .withKommune(new Kommune("Horten"))
-                    .withKommune(new Kommune("Tønsberg"))
-                    .withKommune(new Kommune("Larvik"))
-                    .withKommune(new Kommune("Stokke"))
-                    .withKommune(new Kommune("Andebu"))
+                new FylkeKodeverk("Oslo")
+                    .withKommune(new KommuneKodeverk("Oslo")),
+                new FylkeKodeverk("Vest-agder")
+                    .withKommune(new KommuneKodeverk("Kristiansand"))
+                    .withKommune(new KommuneKodeverk("Mandal"))
+                    .withKommune(new KommuneKodeverk("Farsun"))
+                    .withKommune(new KommuneKodeverk("Søgne"))
+                    .withKommune(new KommuneKodeverk("Åseral"))
+                    .withKommune(new KommuneKodeverk("Lyngdal")),
+                new FylkeKodeverk("Vestfold")
+                    .withKommune(new KommuneKodeverk("Horten"))
+                    .withKommune(new KommuneKodeverk("Tønsberg"))
+                    .withKommune(new KommuneKodeverk("Larvik"))
+                    .withKommune(new KommuneKodeverk("Stokke"))
+                    .withKommune(new KommuneKodeverk("Andebu"))
         );
     }
 }

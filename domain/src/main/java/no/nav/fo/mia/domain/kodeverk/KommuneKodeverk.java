@@ -1,13 +1,13 @@
-package no.nav.fo.mia.domain;
+package no.nav.fo.mia.domain.kodeverk;
 
-public class Kommune {
+public class KommuneKodeverk {
     private String navn;
 
-    public Kommune() {
+    public KommuneKodeverk() {
 
     }
 
-    public Kommune(String navn) {
+    public KommuneKodeverk(String navn) {
         this.navn = navn;
     }
 
@@ -19,7 +19,7 @@ public class Kommune {
         this.navn = navn;
     }
 
-    public Kommune withNavn(String navn) {
+    public KommuneKodeverk withNavn(String navn) {
         this.setNavn(navn);
         return this;
     }
