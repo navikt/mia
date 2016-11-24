@@ -1,5 +1,5 @@
 import {expect, sinon, React} from '../../../test/test-helper';
-import {shallow, mount} from "enzyme";
+import {shallow} from "enzyme";
 
 import OversiktReducer, {actions} from './ledigestillinger-oversikt-reducer';
 import {Oversikt} from "./ledigestillinger-oversikt";
