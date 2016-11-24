@@ -16,7 +16,7 @@ const reducer = (state=initialState, action) => {
         case actions.yrkesgruppedeselect:
             return { ...state, valgteyrkesgrupper: state.valgteyrkesgrupper.filter(yrkesgruppe => yrkesgruppe !== action.payload) };
         case actions.yrkesomradeselect:
-            return { ...state, valgtyrkesomrade: action.payload };
+            return { ...state, valgtyrkesomrade: action.payload, valgteyrkesgrupper: [] };
         default:
             return state;
     }

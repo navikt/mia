@@ -17,4 +17,9 @@ describe('bransje-reducer', () => {
         const newState = BransjeReducer({}, { type: actions.yrkesomradeselect, payload:  1});
         expect(newState.valgtyrkesomrade).to.equal(1);
     });
+
+    it("skal sette valgteyrkesgrupper til tom når vi kaller action YRKESOMRADE_SELECT", () => {
+        const newState = BransjeReducer({valgteyrkesgrupper: [2,3,4,5,6,7]}, { type: actions.yrkesomradeselect, payload:  1});
+        expect(newState.valgteyrkesgrupper).to.be.empty;
+    });
 });
