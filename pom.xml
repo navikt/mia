@@ -19,6 +19,7 @@
         <module>web</module>
         <module>config</module>
         <module>ear</module>
+        <module>domain</module>
     </modules>
 
 
@@ -47,6 +48,12 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>mia-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>

@@ -1,7 +1,7 @@
 const initialState = {
     visKart: true,
-    valgtFylke: "Oslo",
-    valgtKommune: "Oslo"
+    valgtFylke: null,
+    valgtKommune: null
 };
 
 export const actions = {
@@ -18,7 +18,7 @@ const reducer = (state=initialState, action) => {
         case actions.vis_tabell:
             return {...state, visKart: false};
         case actions.velg_fylke:
-            return {...state, valgtFylke: action.payload, valgtKommune: ''};
+            return {...state, valgtFylke: action.payload, valgtKommune: null};
         case actions.velg_kommune:
             return {...state, valgtKommune: action.payload};
         default:
