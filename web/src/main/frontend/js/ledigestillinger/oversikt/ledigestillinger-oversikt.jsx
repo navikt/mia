@@ -17,9 +17,11 @@ const meldinger = defineMessages({
     }
 });
 
-class Oversiktskart extends React.Component {
+export class Oversikt extends React.Component {
     componentDidMount() {
-        this.velgFylke(this.props.fylker[0].navn);
+        if(this.props.fylker.length > 0) {
+            this.velgFylke(this.props.fylker[0].navn);
+        }
     }
 
     togglekart() {
@@ -61,4 +63,4 @@ const stateToProps = state => ({
     fylker: state.kodeverk.fylker.fylker
 });
 
-export default connect(stateToProps)(injectIntl(Oversiktskart));
+export default connect(stateToProps)(injectIntl(Oversikt));
