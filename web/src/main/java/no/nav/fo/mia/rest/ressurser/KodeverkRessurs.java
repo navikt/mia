@@ -23,20 +23,20 @@ public class KodeverkRessurs {
     public List<FylkeKodeverk> hentFylkerOgKommuner() {
         return Arrays.asList(
                 new FylkeKodeverk("Oslo")
-                    .withKommune(new KommuneKodeverk("Oslo")),
+                    .withKommune(new KommuneKodeverk("Oslo", "0301")),
                 new FylkeKodeverk("Vest-agder")
-                    .withKommune(new KommuneKodeverk("Kristiansand"))
-                    .withKommune(new KommuneKodeverk("Mandal"))
-                    .withKommune(new KommuneKodeverk("Farsun"))
-                    .withKommune(new KommuneKodeverk("Søgne"))
-                    .withKommune(new KommuneKodeverk("Åseral"))
-                    .withKommune(new KommuneKodeverk("Lyngdal")),
+                    .withKommune(new KommuneKodeverk("Kristiansand", "1001"))
+                    .withKommune(new KommuneKodeverk("Mandal", "1002"))
+                    .withKommune(new KommuneKodeverk("Farsund", "1003"))
+                    .withKommune(new KommuneKodeverk("Flekkefjord", "1004"))
+                    .withKommune(new KommuneKodeverk("Åseral", "1026"))
+                    .withKommune(new KommuneKodeverk("Lyngdal", "1032")),
                 new FylkeKodeverk("Vestfold")
-                    .withKommune(new KommuneKodeverk("Horten"))
-                    .withKommune(new KommuneKodeverk("Tønsberg"))
-                    .withKommune(new KommuneKodeverk("Larvik"))
-                    .withKommune(new KommuneKodeverk("Stokke"))
-                    .withKommune(new KommuneKodeverk("Andebu"))
+                    .withKommune(new KommuneKodeverk("Horten", "0701"))
+                    .withKommune(new KommuneKodeverk("Tønsberg", "0704"))
+                    .withKommune(new KommuneKodeverk("Larvik", "0709"))
+                    .withKommune(new KommuneKodeverk("Stokke", "0720"))
+                    .withKommune(new KommuneKodeverk("Andebu", "0719"))
         );
     }
 }
