@@ -1,33 +1,33 @@
 package no.nav.fo.mia.domain.stillinger;
 
 public class KommuneStillinger {
-    private String kommunenr;
+    private String kommunenummer;
     private int antallLedige;
     private int antallStillinger;
 
     public KommuneStillinger() {
     }
 
-    public KommuneStillinger(String kommunenr) {
-        this.kommunenr = kommunenr;
+    public KommuneStillinger(String kommunenummer) {
+        this.kommunenummer = kommunenummer;
     }
 
-    public KommuneStillinger(String kommunenr, int antallLedige, int antallStillinger) {
-        this.kommunenr = kommunenr;
+    public KommuneStillinger(String kommunenummer, int antallLedige, int antallStillinger) {
+        this.kommunenummer = kommunenummer;
         this.antallLedige = antallLedige;
         this.antallStillinger = antallStillinger;
     }
 
-    public String getKommunenr() {
-        return kommunenr;
+    public String getKommunenummer() {
+        return kommunenummer;
     }
 
-    public void setKommunenr(String kommunenr) {
-        this.kommunenr = kommunenr;
+    public void setKommunenummer(String kommunenummer) {
+        this.kommunenummer = kommunenummer;
     }
 
     public KommuneStillinger withKommunenummer(String kommunenr){
-        setKommunenr(kommunenr);
+        setKommunenummer(kommunenr);
         return this;
     }
 

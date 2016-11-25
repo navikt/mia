@@ -1,18 +1,16 @@
 package no.nav.fo.mia.domain.kodeverk;
 
-import no.nav.fo.mia.domain.stillinger.KommuneStillinger;
-
 public class KommuneKodeverk {
     private String navn;
-    private String kommunenr;
+    private String kommunenummer;
 
     public KommuneKodeverk() {
 
     }
 
-    public KommuneKodeverk(String navn, String kommunenr) {
+    public KommuneKodeverk(String navn, String kommunenummer) {
         this.navn = navn;
-        this.kommunenr = kommunenr;
+        this.kommunenummer = kommunenummer;
     }
 
     public String getNavn() {
@@ -28,16 +26,16 @@ public class KommuneKodeverk {
         return this;
     }
 
-    public String getKommunenr() {
-        return kommunenr;
+    public String getKommunenummer() {
+        return kommunenummer;
     }
 
-    public void setKommunenr(String kommunenr) {
-        this.kommunenr = kommunenr;
+    public void setKommunenummer(String kommunenummer) {
+        this.kommunenummer = kommunenummer;
     }
 
     public KommuneKodeverk withKommunenr(String kommunenr) {
-        this.setKommunenr(kommunenr);
+        this.setKommunenummer(kommunenr);
         return this;
     }
 }
