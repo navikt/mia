@@ -26,7 +26,7 @@ describe('ledigestillinger', () => {
 
         it("skal blanke ut kommune når vi kaller VELG_FYLKE", () => {
             const newState = OversiktReducer({ valgtKommune: "gammel kommune" }, { type: actions.velg_fylke, payload: "et fylke" });
-            expect(newState.valgtKommune).to.be.null;
+            expect(newState.valgtKommune).to.equal("");
         });
 
         it("skal sette kommune til valgt kommune når vi kaller VELG_KOMMUNE", () => {
@@ -51,8 +51,8 @@ describe('ledigestillinger', () => {
             this.defaultProps = {
                 visKart: true,
                 dispatch: this.dispatch,
-                valgtFylke: null,
-                valgtKommune: null,
+                valgtFylke: "",
+                valgtKommune: "",
                 fylker: [this.fylke1, this.fylke2]
             };
         });

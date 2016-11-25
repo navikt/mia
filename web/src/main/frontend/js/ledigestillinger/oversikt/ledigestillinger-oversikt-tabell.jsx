@@ -30,9 +30,11 @@ const SelectElement = props => (
             <FormattedMessage {...props.label}/>
         </label>
         <div className="select-container input-fullbredde">
-            <select id={props.id} name={props.name} value={props.valgt} onChange={event => props.onChange(event.target.value)}>
+            <select id={props.id} name={props.name} defaultValue={props.valgt} value={props.value} onChange={event => props.onChange(event.target.value)}>
                 { props.alternativer.map(alternativ => (
-                    <option key={alternativ.value} value={alternativ.value}>{alternativ.navn}</option>
+                    <option key={alternativ.value} value={alternativ.value}>
+                        {alternativ.navn}
+                    </option>
                 ))}
             </select>
         </div>

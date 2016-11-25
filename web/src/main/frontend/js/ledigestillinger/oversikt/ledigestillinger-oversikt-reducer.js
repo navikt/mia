@@ -2,8 +2,8 @@ import {STATUS} from "../../felles/konstanter";
 
 const initialState = {
     visKart: true,
-    valgtFylke: null,
-    valgtKommune: null,
+    valgtFylke: "",
+    valgtKommune: "",
     kommunedata: {
         status: STATUS.initialisert,
         stillinger: []
@@ -27,7 +27,7 @@ const reducer = (state=initialState, action) => {
         case actions.vis_tabell:
             return {...state, visKart: false};
         case actions.velg_fylke:
-            return {...state, valgtFylke: action.payload, valgtKommune: null};
+            return {...state, valgtFylke: action.payload, valgtKommune: ""};
         case actions.velg_kommune:
             return {...state, valgtKommune: action.payload};
         case actions.laster_oversikt_stillinger:
