@@ -1,8 +1,6 @@
 import React from "react";
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 
-import { fylker } from "./ledigestillinger-overiskt-mockdata";
-
 const meldinger = defineMessages({
     velgFylke: {
         id: 'ledigestillinger.oversikt.tabell.velgfylke',
@@ -30,6 +28,8 @@ const SelectElement = props => (
 );
 
 const Oversiktstabell = props => {
+    const getKommunerForValgtFylke = () => props.valgtFylke === null ? [] : props.fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner;
+
     return (
         <div>
             <form noValidate>
@@ -40,7 +40,7 @@ const Oversiktstabell = props => {
                     value={props.valgtFylke}
                     onChange={props.velgFylke}
                     label={meldinger.velgFylke}
-                    alternativer={fylker.map(fylke => fylke.navn)}
+                    alternativer={props.fylker.map(fylke => fylke.navn)}
                 />
 
                 <SelectElement
@@ -49,7 +49,7 @@ const Oversiktstabell = props => {
                     value={props.valgtKommune}
                     onChange={props.velgKommune}
                     label={meldinger.velgKommune}
-                    alternativer={fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner}
+                    alternativer={getKommunerForValgtFylke().map(kommune => kommune.navn)}
                 />
             </form>
         </div>

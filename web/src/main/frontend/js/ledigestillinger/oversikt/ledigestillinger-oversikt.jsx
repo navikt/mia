@@ -17,33 +17,50 @@ const meldinger = defineMessages({
     }
 });
 
-const Oversiktskart = (props) => {
-    const toggleKart = event => {
-        event.preventDefault();
-        props.dispatch({ type: props.visKart ? actions.vis_tabell : actions.vis_kart });
-    };
+export class Oversikt extends React.Component {
+    componentDidMount() {
+        if(this.props.fylker.length > 0) {
+            this.velgFylke(this.props.fylker[0].navn);
+        }
+    }
 
-    const oversiktProps = {
-        velgFylke: fylke => props.dispatch({ type: actions.velg_fylke, payload: fylke }),
-        velgKommune: kommune => props.dispatch({ type: actions.velg_kommune, payload: kommune }),
-        valgtFylke: props.valgtFylke,
-        valgtKommune: props.valgtKommune
-    };
+    togglekart() {
+        this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
+    }
 
-    return (
-        <div className="panel panel-fremhevet panel-oversikt">
-            {props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
-            <a href="#" role="button" className="oversikt-toggle" onClick={toggleKart}>
-                <FormattedMessage {...(props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
-            </a>
-        </div>
-    );
-};
+    velgFylke(fylke) {
+        this.props.dispatch({ type: actions.velg_fylke, payload: fylke });
+    }
+
+    velgKommune(kommune) {
+        this.props.dispatch({ type: actions.velg_kommune, payload: kommune });
+    }
+
+    render() {
+        const oversiktProps = {
+            velgFylke: this.velgFylke.bind(this),
+            velgKommune: this.velgKommune.bind(this),
+            valgtFylke: this.props.valgtFylke,
+            valgtKommune: this.props.valgtKommune,
+            fylker: this.props.fylker
+        };
+
+        return (
+            <div className="panel panel-fremhevet panel-oversikt">
+                {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
+                <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
+                    <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
+                </a>
+            </div>
+        );
+    }
+}
 
 const stateToProps = state => ({
     visKart: state.ledigestillinger.oversikt.visKart,
     valgtFylke: state.ledigestillinger.oversikt.valgtFylke,
-    valgtKommune: state.ledigestillinger.oversikt.valgtKommune
+    valgtKommune: state.ledigestillinger.oversikt.valgtKommune,
+    fylker: state.kodeverk.fylker.fylker
 });
 
-export default connect(stateToProps)(injectIntl(Oversiktskart));
+export default connect(stateToProps)(injectIntl(Oversikt));

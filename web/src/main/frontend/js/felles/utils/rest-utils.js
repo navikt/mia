@@ -14,7 +14,7 @@ export function toJson(response) {
 }
 
 export function sendResultatTilDispatch(dispatch, action) {
-    return data => dispatch({type: action, data});
+    return data => dispatch({type: action, payload: data});
 }
 
 export function handterFeil(dispatch, action) {
@@ -22,11 +22,11 @@ export function handterFeil(dispatch, action) {
         if (error.response){
             error.response.json().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({type: action, data: {response: error.response, data: data}});
+                dispatch({type: action, data: {response: error.response, payload: data}});
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
-            dispatch({type: action, data: error.toString()});
+            dispatch({type: action, payload: error.toString()});
         }
     };
 }

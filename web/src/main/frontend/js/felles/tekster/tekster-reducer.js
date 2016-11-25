@@ -18,7 +18,7 @@ export default function teksterReducer(state = defaultstate, action) {
         case FEIL_TEKSTER:
             return {...state, status: STATUS.feilet};
         case LASTET_TEKSTER:
-            return {...state, status: STATUS.lastet, messages: action.data};
+            return {...state, status: STATUS.lastet, messages: action.payload};
         default:
             return state;
     }
@@ -31,7 +31,7 @@ function leggCmsKeyPaaTekster(dispatch, visCmsKeys) {
             Object.keys(data).forEach(key => {
                 meldinger[key] = `${data[key]} [${key}]`;
             });
-            return dispatch({type, data: meldinger});
+            return dispatch({type, payload: meldinger});
         }
         return data;
     };
@@ -39,7 +39,7 @@ function leggCmsKeyPaaTekster(dispatch, visCmsKeys) {
 
 export function lastTekster(visCmsKeys) {
     return function (dispatch) {
-        dispatch({ type: LASTER_TEKSTER});
+        dispatch({type: LASTER_TEKSTER});
 
         return fetchToJson('/tekster?lang=nb')
             .then(sendResultatTilDispatch(dispatch, LASTET_TEKSTER))

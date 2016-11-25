@@ -23,6 +23,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "chai": "^3.5.0",
+    "chai-enzyme": "^0.6.1",
     "core-js": "^2.4.1",
     "del": "^2.2.2",
     "enzyme": "^2.6.0",
