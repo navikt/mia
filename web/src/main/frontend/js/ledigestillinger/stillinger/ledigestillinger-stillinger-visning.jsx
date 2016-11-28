@@ -10,9 +10,9 @@ export const Stillingsvisning = (props) => {
             <h1>{props.valgteyrkesgrupper}</h1>
             <div className="panel panel-fremhevet">
                 <div className="row">
-                    <span className="col-lg-4 col-sm-4 typo-innholdstittel">Stilling</span>
-                    <span className="col-lg-4 col-sm-4 typo-innholdstittel">Arbeidsgiver</span>
-                    <span className="col-lg-4 col-sm-4 typo-innholdstittel">Søknadsfrist</span>
+                    <span className="col-lg-4 col-sm-4 typo-etikett-stor">Stilling</span>
+                    <span className="col-lg-4 col-sm-4 typo-etikett-stor">Arbeidsgiver</span>
+                    <span className="col-lg-4 col-sm-4 typo-etikett-stor">Søknadsfrist</span>
                 </div>
                 <ul className="ustilet">
                     {mockstillinger.length > 0 ? mockstillinger.map(stilling => {
