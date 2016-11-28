@@ -6,6 +6,7 @@ import {defineMessages, injectIntl} from 'react-intl';
 
 import Innholdslaster from "./felles/innholdslaster/innholdslaster";
 import {lastTekster} from './felles/tekster/tekster-reducer';
+import {lastFylker} from "./felles/kodeverk/kodeverk-fylker-reducer";
 import Hovedmeny from "./felles/hovedmeny/hovedmeny";
 
 const meldinger = defineMessages({
@@ -19,12 +20,13 @@ class Application extends React.Component {
     componentDidMount() {
         const visCmsKeys = this.props.location.query.vistekster === 'true';
         this.props.lastTekster(visCmsKeys);
+        this.props.lastFylker();
     }
     render() {
         return (
             <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
                 <div>
-                    <Innholdslaster avhengigheter={[this.props.tekster]}>
+                    <Innholdslaster avhengigheter={[this.props.tekster, this.props.fylker]}>
                         <Hovedmeny />
                         <div className="side-innhold">
                             { this.props.children }
@@ -41,11 +43,13 @@ class Application extends React.Component {
 }
 
 const stateToProps = state => ({
-    tekster: state.tekster
+    tekster: state.tekster,
+    fylker: state.kodeverk.fylker
 });
 
 const actionsToProps = {
-    lastTekster
+    lastTekster,
+    lastFylker
 };
 
 export default connect(stateToProps, actionsToProps)(injectIntl(Application));

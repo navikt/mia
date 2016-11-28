@@ -31,7 +31,7 @@ describe('rest_utils', () => {
 
             feilHandterer(error);
 
-            expect(dispatch).to.have.been.calledWith({type: 'ACTION_FEIL', data: 'Error: feilfeil'});
+            expect(dispatch).to.have.been.calledWith({type: 'ACTION_FEIL', payload: 'Error: feilfeil'});
         });
 
         it('skal resolve om feilen kom fra en response', (done) => {
@@ -48,7 +48,7 @@ describe('rest_utils', () => {
             setTimeout(() => {
                 expect(dispatch).to.have.been.calledWith({
                     type: 'ACTION_FEIL',
-                    data: {data: 'datadata', response: response}
+                    data: {payload: 'datadata', response: response}
                 });
                 done();
             });
