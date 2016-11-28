@@ -2,23 +2,11 @@ import React from 'react';
 
 export const Stilling = (props) => {
     return (
-        <tr className="stillingsrad" id={`stilling${props.stilling.id}`} >
-            <td className="stillingsrad-stilling">
+            <li className="row">
                 <a href={props.stilling.link}>
-                    {props.stilling.stilling}
+                <span className="col-lg-4 col-sm-4">{props.stilling.stilling}</span><span className="col-lg-4 col-sm-4">{props.stilling.arbeidsgiver}</span><span className="col-lg-4 col-sm-4">{props.stilling.soknadsfrist}</span>
                 </a>
-            </td>
-            <td className="stillingsrad-arbeidsgiver">
-                <a href={props.stilling.link}>
-                    {props.stilling.arbeidsgiver}
-                </a>
-            </td>
-            <td className="stillingsrad-soknadsfrist">
-                <a href={props.stilling.link}>
-                    {props.stilling.soknadsfrist}
-                </a>
-            </td>
-        </tr>
+            </li>
     );
 };
 

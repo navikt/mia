@@ -9,20 +9,16 @@ export const Stillingsvisning = (props) => {
         <div>
             <h1>{props.valgteyrkesgrupper}</h1>
             <div className="panel panel-fremhevet">
-                <table className="tabell tabell-hover">
-                    <thead>
-                        <tr>
-                            <th>Stilling</th>
-                            <th>Arbeidsgiver</th>
-                            <th>Søknadsfrist</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {mockstillinger.map(stilling => {
-                            return <Stilling stilling={stilling} key={stilling.id}/>;
-                        })}
-                    </tbody>
-                </table>
+                <div className="row">
+                    <span className="col-lg-4 col-sm-4 typo-innholdstittel">Stilling</span>
+                    <span className="col-lg-4 col-sm-4 typo-innholdstittel">Arbeidsgiver</span>
+                    <span className="col-lg-4 col-sm-4 typo-innholdstittel">Søknadsfrist</span>
+                </div>
+                <ul className="ustilet">
+                    {mockstillinger.length > 0 ? mockstillinger.map(stilling => {
+                        return <Stilling stilling={stilling} key={stilling.id}/>;
+                    }) : <li className="row">Ingen ledige stillinger</li>}
+                </ul>
             </div>
         </div>
     );

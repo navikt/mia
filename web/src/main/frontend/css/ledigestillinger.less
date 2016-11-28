@@ -59,13 +59,13 @@
     .stillinger-oversikt {
         width: 50%;
         box-sizing: border-box;
-        padding-right: 0.5rem;
+        padding-right: 1rem;
     }
 
     .stillinger-bransjer {
         width: 50%;
         box-sizing: border-box;
-        padding-left: 0.5rem;
+        padding-left: 1rem;
     }
 }
 
@@ -75,7 +75,7 @@
   border: 0;
   text-align: left;
   height: 10rem;
-  width: 12rem;
+  width: ~"calc(33.333% - 10px)";
   display: inline-block;
   box-sizing: border-box;
   padding: 0.5rem;
@@ -118,4 +118,15 @@
   position: absolute;
   bottom: @rem-as-20px;
   right: @rem-as-20px;
+}
+
+// ----------------------- Stillinger -----------------------
+
+.stillingsliste-header {
+  display: inline-block;
+}
+
+.ustilet .row:hover {
+  background-color: @white;
+  text-decoration: underline;
 }
