@@ -16,11 +16,11 @@ const meldinger = defineMessages({
     },
     tabellOverskriftLedige: {
         id: 'ledigestillinger.oversikt.tabell.overskriftledige',
-        defaultMessage: 'Ledige'
+        defaultMessage: 'Arbeidsledige ({antall})'
     },
     tabellOverskriftStillinger: {
         id: 'ledigestillinger.oversikt.tabell.overskriftstillinger',
-        defaultMessage: 'Stillinger'
+        defaultMessage: 'Ledige stillinger ({antall})'
     }
 });
 
@@ -61,6 +61,12 @@ const Oversiktstabell = props => {
         };
     };
 
+    const stillingerTotalt = getKommunerForValgtFylke().reduce((totalt, kommune) => {
+        totalt.antallLedige += getKommuneMedData(kommune).ledigeStillinger;
+        totalt.antallStillinger += getKommuneMedData(kommune).stillinger;
+        return totalt;
+    }, { antallLedige: 0, antallStillinger: 0 });
+
     return (
         <div>
             <form className="blokk-l" noValidate>
@@ -92,10 +98,10 @@ const Oversiktstabell = props => {
                             <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
                         </th>
                         <th scope="col" className="text-center">
-                            <FormattedMessage {...meldinger.tabellOverskriftLedige}/>
+                            <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
                         </th>
                         <th scope="col" className="text-center">
-                            <FormattedMessage {...meldinger.tabellOverskriftStillinger}/>
+                            <FormattedMessage {...meldinger.tabellOverskriftStillinger} values={{antall: stillingerTotalt.antallStillinger}}/>
                         </th>
                     </tr>
                 </thead>
