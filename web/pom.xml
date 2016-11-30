@@ -21,6 +21,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>mia-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mia-consumer</artifactId>
+        </dependency>
 
         <!-- JERSEY-->
         <dependency>
