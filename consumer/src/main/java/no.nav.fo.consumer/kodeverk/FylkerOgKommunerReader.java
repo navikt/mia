@@ -14,6 +14,7 @@ public class FylkerOgKommunerReader {
 
         List<KommuneCsvRecord> records = reader.lines()
                 .map(line -> line.split(","))
+                .filter(splittedLine -> splittedLine.length == 6)
                 .map(splittedLine -> new KommuneCsvRecord(splittedLine[1], splittedLine[2], splittedLine[4], splittedLine[5]))
                 .collect(Collectors.toList());
 
