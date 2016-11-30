@@ -1,5 +1,6 @@
 import React from "react";
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
+import {getStillingerTotalt, getKommuneMedData, getKommunerForValgtFylke} from './ledigestillinger-oversikt-utils';
 
 const meldinger = defineMessages({
     velgFylke: {
@@ -44,28 +45,14 @@ const SelectElement = props => (
 const KommuneTabellRad = props => (
     <tr key={props.kommune.kommunenummer}>
         <th scope="row">{props.kommune.navn}</th>
-        <td className="text-center">{props.kommune.ledigeStillinger}</td>
-        <td className="text-center">{props.kommune.stillinger}</td>
+        <td className="text-center">{props.kommune.antallLedige}</td>
+        <td className="text-center">{props.kommune.antallStillinger}</td>
     </tr>
 );
 
-const Oversiktstabell = props => {
-    const getKommunerForValgtFylke = () => props.valgtFylke === null ? [] : props.fylker.find(fylke => fylke.navn === props.valgtFylke).kommuner;
-    const getKommuneMedData = kommuneFraKodeverk => {
-        const kommunedata = props.kommunedata.stillinger.find(kommune => kommune.kommunenummer === kommuneFraKodeverk.kommunenummer) || {};
-        return {
-            navn: kommuneFraKodeverk.navn,
-            kommunenummer: kommuneFraKodeverk.kommunenummer,
-            ledigeStillinger: kommunedata.antallLedige,
-            stillinger: kommunedata.antallStillinger
-        };
-    };
-
-    const stillingerTotalt = getKommunerForValgtFylke().reduce((totalt, kommune) => {
-        totalt.antallLedige += getKommuneMedData(kommune).ledigeStillinger;
-        totalt.antallStillinger += getKommuneMedData(kommune).stillinger;
-        return totalt;
-    }, { antallLedige: 0, antallStillinger: 0 });
+export const Oversiktstabell = props => {
+    const kommunerForValgtFylke = getKommunerForValgtFylke(props.valgtFylke, props.fylker);
+    const stillingerTotalt = getStillingerTotalt(kommunerForValgtFylke, props.kommunedata);
 
     return (
         <div>
@@ -86,7 +73,7 @@ const Oversiktstabell = props => {
                     value={props.valgtKommune}
                     onChange={props.velgKommune}
                     label={meldinger.velgKommune}
-                    alternativer={getKommunerForValgtFylke().map(kommune => ({navn: kommune.navn, value: kommune.kommunenummer}))}
+                    alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.kommunenummer}))}
                 />
             </form>
 
@@ -106,7 +93,7 @@ const Oversiktstabell = props => {
                     </tr>
                 </thead>
                 <tbody>
-                    {getKommunerForValgtFylke().map(getKommuneMedData).map(kommune => <KommuneTabellRad key={kommune.kommunenummer} kommune={kommune}/>)}
+                    {kommunerForValgtFylke.map(kommune => getKommuneMedData(kommune, props.kommunedata)).map(kommune => <KommuneTabellRad key={kommune.kommunenummer} kommune={kommune}/>)}
                 </tbody>
             </table>
         </div>

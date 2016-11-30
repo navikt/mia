@@ -4,7 +4,8 @@ import {shallow} from "enzyme";
 import OversiktReducer, {actions} from './ledigestillinger-oversikt-reducer';
 import {Oversikt} from "./ledigestillinger-oversikt";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
-import OversiktTabell from "./ledigestillinger-oversikt-tabell";
+import {OversiktTabell} from "./ledigestillinger-oversikt-tabell";
+import {getStillingerTotalt, getKommuneMedData, getKommunerForValgtFylke} from './ledigestillinger-oversikt-utils';
 
 describe('ledigestillinger', () => {
     describe('oversikt-reducer', () => {
@@ -39,6 +40,7 @@ describe('ledigestillinger', () => {
     describe('oversikt-container', function() {
         beforeEach(() => {
             this.dispatch = sinon.spy();
+
             this.fylke1 = {
                 navn: "Oslo",
                 kommuner: []
@@ -86,6 +88,53 @@ describe('ledigestillinger', () => {
             const wrapper = shallow(<Oversikt {...props} />);
             wrapper.instance().togglekart();
             expect(this.dispatch).to.have.been.calledWith({type: actions.vis_tabell});
+        });
+
+        describe('oversikt-tabell', () => {
+            beforeEach(() => {
+                this.kommune1 = {
+                    navn: "kommune1",
+                    kommunenummer: "0101"
+                };
+                this.kommune2 = {
+                    navn: "kommune2",
+                    kommunenummer: "0202"
+                };
+
+                this.kommunedata = {
+                    status: "LASTET",
+                    stillinger: [
+                        { kommunenummer: "0101", antallLedige: 1, antallStillinger: 2 },
+                        { kommunenummer: "0202", antallLedige: 3, antallStillinger: 4 }
+                    ]
+                };
+            });
+
+            it('getKommunerForValgtFylke skal returnere [] hvis valgtFylke er tom string', () => {
+                const kommuner = getKommunerForValgtFylke("", this.defaultProps.fylker);
+                expect(kommuner).to.deep.equal([]);
+            });
+
+            it('getKommunerForValgtFylke skal returnere ["Oslo"] hvis valgtFylke er "Oslo"', () => {
+                const kommuner = getKommunerForValgtFylke("Oslo", this.defaultProps.fylker);
+                expect(kommuner).to.deep.equal(["Oslo"]);
+            });
+
+            it('getKommuneMedData skal populere kommunen med stillinger', () => {
+                const kommunedata = getKommuneMedData(this.kommune1, this.kommunedata);
+                const expected = {
+                    ...this.kommune1,
+                    ...this.kommunedata.stillinger[0]
+                };
+                expect(kommunedata).to.deep.equal(expected);
+            });
+
+            it("getStillingerTotalt skal returnerer summen av stillinger for alle kommuner i fylket", () => {
+                const kommuner = [this.kommune1, this.kommune2];
+                const antStillinger = getStillingerTotalt(kommuner, this.kommunedata);
+                expect(antStillinger.antallLedige).equal(4);
+                expect(antStillinger.antallStillinger).equal(6);
+            });
         });
     });
 });
