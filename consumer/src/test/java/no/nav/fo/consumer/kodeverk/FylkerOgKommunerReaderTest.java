@@ -26,4 +26,10 @@ public class FylkerOgKommunerReaderTest {
         FylkeKodeverk sorTrondelag = fylker.stream().filter(fylke -> fylke.getNavn().equalsIgnoreCase("Sør-Trøndelag")).findAny().get();
         assertThat(sorTrondelag.getKommuner().get(0).getKommunenummer()).isEqualTo("1640");
     }
+
+    @Test
+    public void kommuneSkalHaKommuneId() {
+        FylkeKodeverk sorTrondelag = fylker.stream().filter(fylke -> fylke.getNavn().equalsIgnoreCase("Sør-Trøndelag")).findAny().get();
+        assertThat(sorTrondelag.getKommuner().get(0).getStillingsSolrId()).isEqualTo("61354");
+    }
 }
