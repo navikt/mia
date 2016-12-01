@@ -6,13 +6,15 @@ import java.util.List;
 public class FylkeKodeverk {
     private List<KommuneKodeverk> kommuner = new ArrayList<>();
     private String navn;
+    private String fylkesnummer;
 
     public FylkeKodeverk() {
 
     }
 
-    public FylkeKodeverk(String navn) {
+    public FylkeKodeverk(String navn, String fylkesnummer) {
         this.navn = navn;
+        this.fylkesnummer = fylkesnummer;
     }
 
     public FylkeKodeverk withNavn(String navn) {
@@ -44,5 +46,30 @@ public class FylkeKodeverk {
 
     public void setNavn(String navn) {
         this.navn = navn;
+    }
+
+    public String getFylkesnummer() {
+        return fylkesnummer;
+    }
+
+    public void setFylkesnummer(String fylkesnummer) {
+        this.fylkesnummer = fylkesnummer;
+    }
+
+    public FylkeKodeverk withFylkesnummer(String fylkesnummer) {
+        setFylkesnummer(fylkesnummer);
+        return this;
+    }
+
+    public boolean equals(Object other) {
+        if(other instanceof FylkeKodeverk) {
+            return ((FylkeKodeverk)other).getFylkesnummer().equals(this.getFylkesnummer());
+        } else {
+            return false;
+        }
+    }
+
+    public int hashCode() {
+        return this.getFylkesnummer().hashCode();
     }
 }
