@@ -33,7 +33,7 @@ public class FylkerOgKommunerReader {
         Optional<KommuneMappingCsvRecord> kommunerecord = kommuneMappingCsvRecords.stream()
                 .filter(kommune -> kommune.getKommunenummer().equalsIgnoreCase(kommunenummer))
                 .findFirst();
-        return kommunerecord.isPresent() ? kommunerecord.get().getKommunenummer() : null;
+        return kommunerecord.isPresent() ? kommunerecord.get().getSolrid() : null;
     }
 
     private static List<KommuneCsvRecord> getKommuneCsvRecords() {

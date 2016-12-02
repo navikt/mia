@@ -4,7 +4,7 @@ class KommuneCsvRecord {
     private String fylkenavn;
     private String fylkeid;
     private String kommunenavn;
-    private String kommuneid;
+    private String kommunenummer;
 
     KommuneCsvRecord(String csvline) {
         String[] splittedLine = csvline.split(",");
@@ -12,7 +12,7 @@ class KommuneCsvRecord {
         this.fylkenavn = splittedLine[1];
         this.fylkeid = splittedLine[2];
         this.kommunenavn = splittedLine[4];
-        this.kommuneid = splittedLine[5];
+        this.kommunenummer = splittedLine[5];
     }
 
     public static boolean isValidCsvLine(String csvline) {
@@ -44,10 +44,10 @@ class KommuneCsvRecord {
     }
 
     String getKommunenummer() {
-        return kommuneid;
+        return kommunenummer;
     }
 
-    void setKommuneid(String kommuneid) {
-        this.kommuneid = kommuneid;
+    void setKommunenummer(String kommunenummer) {
+        this.kommunenummer = kommunenummer;
     }
 }
