@@ -3,14 +3,16 @@ package no.nav.fo.mia.domain.kodeverk;
 public class KommuneKodeverk {
     private String navn;
     private String kommunenummer;
+    private String stillingsSolrId;
 
     public KommuneKodeverk() {
 
     }
 
-    public KommuneKodeverk(String navn, String kommunenummer) {
+    public KommuneKodeverk(String navn, String kommunenummer, String stillingsSolrId) {
         this.navn = navn;
         this.kommunenummer = kommunenummer;
+        this.stillingsSolrId = stillingsSolrId;
     }
 
     public String getNavn() {
@@ -36,6 +38,19 @@ public class KommuneKodeverk {
 
     public KommuneKodeverk withKommunenr(String kommunenr) {
         this.setKommunenummer(kommunenr);
+        return this;
+    }
+
+    public String getStillingsSolrId() {
+        return stillingsSolrId;
+    }
+
+    public void setStillingsSolrId(String stillingsSolrId) {
+        this.stillingsSolrId = stillingsSolrId;
+    }
+
+    public KommuneKodeverk withStillingSolrId(String solrId) {
+        this.setStillingsSolrId(solrId);
         return this;
     }
 }

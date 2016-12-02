@@ -6,71 +6,49 @@ import no.nav.fo.mia.domain.kodeverk.KommuneKodeverk;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FylkerOgKommunerReader {
     public static List<FylkeKodeverk> getFylkerOgKommuner() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(FylkerOgKommunerReader.class.getResourceAsStream("/kommuner.csv")));
+        List<KommuneCsvRecord> kommuneCsvRecords = getKommuneCsvRecords();
+        List<KommuneMappingCsvRecord> kommuneMappingCsvRecords = getKommuneMappingCsvRecords();
 
-        List<KommuneCsvRecord> records = reader.lines()
-                .map(line -> line.split(","))
-                .filter(splittedLine -> splittedLine.length == 6)
-                .map(splittedLine -> new KommuneCsvRecord(splittedLine[1], splittedLine[2], splittedLine[4], splittedLine[5]))
-                .collect(Collectors.toList());
-
-        return records.stream()
+        return kommuneCsvRecords.stream()
                 .map(record -> new FylkeKodeverk(record.getFylkenavn(), record.getFylkesnummer()))
                 .distinct()
-                .map(fylke -> fylke.withKommuner(records.stream()
-                        .filter(record -> record.getFylkesnummer().equals(fylke.getFylkesnummer()))
-                        .map(record -> new KommuneKodeverk(record.getKommunenavn(), record.getKommunenummer()))
-                        .collect(Collectors.toList()))
-                ).collect(Collectors.toList());
+                .map(fylke -> fylke.withKommuner(getKommunerForFylke(fylke, kommuneCsvRecords, kommuneMappingCsvRecords)))
+                .collect(Collectors.toList());
     }
 
-    private static class KommuneCsvRecord {
-        private String fylkenavn;
-        private String fylkeid;
-        private String kommunenavn;
-        private String kommuneid;
+    private static List<KommuneKodeverk> getKommunerForFylke(FylkeKodeverk fylke, List<KommuneCsvRecord> kommuneCsvRecords, List<KommuneMappingCsvRecord> kommuneMappingCsvRecords) {
+        return kommuneCsvRecords.stream()
+                .filter(record -> record.getFylkesnummer().equals(fylke.getFylkesnummer()))
+                .map(record -> new KommuneKodeverk(record.getKommunenavn(), record.getKommunenummer(), getKommuneSolrId(record.getKommunenummer(), kommuneMappingCsvRecords)))
+                .filter(kommune -> kommune.getStillingsSolrId() != null)
+                .collect(Collectors.toList());
+    }
 
-        KommuneCsvRecord(String fylkenavn, String fylkeid, String kommunenavn, String kommuneid) {
-            this.fylkenavn = fylkenavn;
-            this.fylkeid = fylkeid;
-            this.kommunenavn = kommunenavn;
-            this.kommuneid = kommuneid;
-        }
+    private static String getKommuneSolrId(String kommunenummer, List<KommuneMappingCsvRecord> kommuneMappingCsvRecords) {
+        Optional<KommuneMappingCsvRecord> kommunerecord = kommuneMappingCsvRecords.stream()
+                .filter(kommune -> kommune.getKommunenummer().equalsIgnoreCase(kommunenummer))
+                .findFirst();
+        return kommunerecord.isPresent() ? kommunerecord.get().getSolrid() : null;
+    }
 
-        String getFylkenavn() {
-            return fylkenavn;
-        }
+    private static List<KommuneCsvRecord> getKommuneCsvRecords() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(FylkerOgKommunerReader.class.getResourceAsStream("/kommuner.csv")));
+        return reader.lines()
+                .filter(KommuneCsvRecord::isValidCsvLine)
+                .map(KommuneCsvRecord::new)
+                .collect(Collectors.toList());
+    }
 
-        void setFylkenavn(String fylkenavn) {
-            this.fylkenavn = fylkenavn;
-        }
-
-        String getFylkesnummer() {
-            return fylkeid;
-        }
-
-        void setFylkeid(String fylkeid) {
-            this.fylkeid = fylkeid;
-        }
-
-        String getKommunenavn() {
-            return kommunenavn;
-        }
-
-        void setKommunenavn(String kommunenavn) {
-            this.kommunenavn = kommunenavn;
-        }
-
-        String getKommunenummer() {
-            return kommuneid;
-        }
-
-        void setKommuneid(String kommuneid) {
-            this.kommuneid = kommuneid;
-        }
+    private static List<KommuneMappingCsvRecord> getKommuneMappingCsvRecords() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(FylkerOgKommunerReader.class.getResourceAsStream("/geografi_land_datadump.csv")));
+        return reader.lines()
+                .filter(KommuneMappingCsvRecord::isValidCsvLine)
+                .map(KommuneMappingCsvRecord::new)
+                .collect(Collectors.toList());
     }
 }
