@@ -7,8 +7,8 @@ export function getKommuneMedData(kommuneFraKodeverk, kommuneData) {
     return {
         navn: kommuneFraKodeverk.navn,
         kommunenummer: kommuneFraKodeverk.kommunenummer,
-        antallLedige: kommunedata.antallLedige,
-        antallStillinger: kommunedata.antallStillinger
+        antallLedige: kommunedata.antallLedige || 0,
+        antallStillinger: kommunedata.antallStillinger || 0
     };
 }
 

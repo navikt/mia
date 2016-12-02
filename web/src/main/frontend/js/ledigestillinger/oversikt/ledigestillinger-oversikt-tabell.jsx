@@ -17,11 +17,11 @@ const meldinger = defineMessages({
     },
     tabellOverskriftLedige: {
         id: 'ledigestillinger.oversikt.tabell.overskriftledige',
-        defaultMessage: 'Arbeidsledige ({antall})'
+        defaultMessage: 'Arbeidsledige ({antall, number})'
     },
     tabellOverskriftStillinger: {
         id: 'ledigestillinger.oversikt.tabell.overskriftstillinger',
-        defaultMessage: 'Ledige stillinger ({antall})'
+        defaultMessage: 'Ledige stillinger ({antall, number})'
     }
 });
 
