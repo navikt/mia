@@ -10,7 +10,7 @@
     </artifacts>
 
     <resources>
-
+        <baseUrl mapToProperty="stilling.solr" alias="stilling.solr"/>
     </resources>
 
     <selftest>
