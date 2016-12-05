@@ -37,6 +37,7 @@
     "gulp-eslint": "^3.0.1",
     "gulp-if": "^2.0.2",
     "gulp-less": "^3.3.0",
+    "gulp-replace": "^0.5.4",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "intl": "^1.2.5",
