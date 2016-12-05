@@ -25,6 +25,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>mia-consumer</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav</groupId>
+            <artifactId>metrics</artifactId>
+        </dependency>
 
         <!-- JERSEY-->
         <dependency>

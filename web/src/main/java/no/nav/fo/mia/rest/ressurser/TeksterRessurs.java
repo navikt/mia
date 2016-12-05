@@ -1,5 +1,6 @@
 package no.nav.fo.mia.rest.ressurser;
 
+import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +17,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Controller
 @Path("/tekster")
 @Produces(APPLICATION_JSON)
+@Timed
 public class TeksterRessurs {
     private static Properties innebygdeLedetekster = new Properties();
 
