@@ -6,6 +6,7 @@ import org.springframework.context.annotation.*;
 @Configuration
 @Import({
         EnvironmentPropertiesConfig.class,
+        EndpointsConfig.class,
         MetricsConfig.class
 })
 @ComponentScan(basePackages = "no.nav.fo.mia.rest")

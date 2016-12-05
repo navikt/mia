@@ -18,15 +18,10 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 @Timed
 public class KodeverkRessurs {
-    private static List<FylkeKodeverk> fylker;
-
-    static {
-        fylker = FylkerOgKommunerReader.getFylkerOgKommuner();
-    }
 
     @GET
     @Path("/fylker")
     public List<FylkeKodeverk> hentFylkerOgKommuner() {
-        return fylker;
+        return FylkerOgKommunerReader.getFylkerOgKommuner();
     }
 }

@@ -16,6 +16,19 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>mia-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.modig</groupId>
+            <artifactId>modig-core</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav</groupId>
+            <artifactId>metrics</artifactId>
+        </dependency>
 
         <!-- test dependencies -->
         <dependency>

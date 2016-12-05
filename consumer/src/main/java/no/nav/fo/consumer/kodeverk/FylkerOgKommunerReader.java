@@ -10,7 +10,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FylkerOgKommunerReader {
+    private static final List<FylkeKodeverk> fylkerOgKommuner = hentFylkerOgKommunerFraCsvFil();
+
     public static List<FylkeKodeverk> getFylkerOgKommuner() {
+        return fylkerOgKommuner;
+    }
+
+    private static List<FylkeKodeverk> hentFylkerOgKommunerFraCsvFil() {
         List<KommuneCsvRecord> kommuneCsvRecords = getKommuneCsvRecords();
         List<KommuneMappingCsvRecord> kommuneMappingCsvRecords = getKommuneMappingCsvRecords();
 
