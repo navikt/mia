@@ -22,9 +22,6 @@ const meldinger = defineMessages({
 export class Oversikt extends React.Component {
     componentDidMount() {
         this.props.dispatch(lastOversiktAlleKommuner());
-        if(this.props.fylker.length > 0) {
-            this.velgFylke(this.props.fylker[0].navn);
-        }
     }
 
     togglekart() {

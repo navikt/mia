@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import bransjemock from './ledige-stillinger-bransjer-mockdata';
+import {findTotaltAntallJobber} from './ledigestillinger-bransjer-util';
 
 export const BransjeDropdown = (props) => {
     return(
@@ -11,8 +11,8 @@ export const BransjeDropdown = (props) => {
             <div className="select-container input-fullbredde">
                 <select id="select-bransje" value={props.yrkesomrade}
                         onChange={e => props.onClick(e.target.value)}>
-                    <option value="alle">Alle ({props.findTotaltAntallJobber(bransjemock)})</option>
-                    { bransjemock.map(row => <option value={row.id} key={row.id}>{row.navn} ({row.antall})</option> )}
+                    <option value="alle">Alle ({findTotaltAntallJobber(props.yrkesomrader)})</option>
+                    { props.yrkesomrader.map(row => <option value={row.bransjeid} key={row.bransjeid}>{row.bransjenavn} ({row.antallStillinger})</option> )}
                 </select>
             </div>
         </div>

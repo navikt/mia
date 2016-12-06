@@ -5,7 +5,9 @@ import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {actions} from "./ledigestillinger-bransjer-reducer";
 import Inputfelt from "../../felles/inputfelter/inputfelt";
 import BransjeDropdown from './bransje-dropdown';
-import Bokser from './ledige-stillinger-bransjer-bokser';
+import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
+import { hentYrkesomraderForAlleFylker } from './ledigestillinger-bransjer-actions';
+import IkkeFerdigPanel from '../../felles/ikkeferdig/ikke-ferdig-panel';
 
 export const meldinger = defineMessages({
     soketekst: {
@@ -26,38 +28,44 @@ export const meldinger = defineMessages({
     }
 });
 
-function findTotaltAntallJobber(data) {
-    return data.reduce(function(a, b) {return a + b.antall;}, 0);
-}
+export class Bransjer extends React.Component {
+    componentDidMount() {
+        this.props.dispatch(hentYrkesomraderForAlleFylker());
+    }
 
-export const Bransjer = (props) => {
-    const toggleYrkesgruppe = (id) => {
-        if(props.valgteyrkesgrupper.includes(id)) {
-            props.dispatch({type: actions.yrkesgruppedeselect, payload: id});
+    toggleYrkesgruppe(id) {
+        if(this.props.valgteyrkesgrupper.includes(id)) {
+            this.props.dispatch({type: actions.yrkesgruppedeselect, payload: id});
         } else {
-            props.dispatch({type: actions.yrkesgruppeselect, payload: id});
+            this.props.dispatch({type: actions.yrkesgruppeselect, payload: id});
         }
-    };
+    }
 
-    const velgYrkesomrade = (id) => {
-        props.dispatch({type: actions.yrkesomradeselect, payload: id});
-    };
+    velgYrkesomrade(id) {
+        this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
+    }
 
-    return (
-        <div>
-            <Inputfelt id="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
-            <BransjeDropdown meldinger={meldinger} yrkesomrade={props.valgtyrkesomrade} onClick={velgYrkesomrade} findTotaltAntallJobber={findTotaltAntallJobber}/>
-            <Bokser meldinger={meldinger} findTotaltAntallJobber={findTotaltAntallJobber} onClick={toggleYrkesgruppe} valgteyrkesgrupper={props.valgteyrkesgrupper}/>
-            <Link to="#">
-                <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
-            </Link>
-        </div>
-    );
-};
+    render() {
+        return (
+            <div>
+                <Inputfelt id="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
+                <Innholdslaster avhengigheter={[this.props.yrkesomrader]}>
+                    <BransjeDropdown meldinger={meldinger} yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} />
+                        <IkkeFerdigPanel />
+                    <Link to="#">
+                        <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
+                    </Link>
+                </Innholdslaster>
+            </div>
+        );
+    }
+}
 
 const stateToProps = state => ({
     valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
-    valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade
+    valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade,
+    yrkesgrupper: state.ledigestillinger.bransje.yrkesgrupper,
+    yrkesomrader: state.ledigestillinger.bransje.yrkesomrader
 });
 
 export default connect(stateToProps)(injectIntl(Bransjer));
