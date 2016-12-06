@@ -59,11 +59,6 @@ describe('ledigestillinger', () => {
             };
         });
 
-        it("skal velge første fylke ved mount", () => {
-            shallow(<Oversikt {...this.defaultProps} />, {lifecycleExperimental: true});
-            expect(this.dispatch).to.have.been.calledWith({type: actions.velg_fylke, payload: this.fylke1.navn});
-        });
-
         it("skal vise kart om prop visKart er true", () => {
             const props = {...this.defaultProps, visKart: true};
             const wrapper = shallow(<Oversikt {...props} />);
