@@ -7,7 +7,7 @@ import Inputfelt from "../../felles/inputfelter/inputfelt";
 import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
 import { hentYrkesomraderForAlleFylker } from './ledigestillinger-bransjer-actions';
-import IkkeFerdigPanel from '../../felles/ikkeferdig/ikke-ferdig-panel';
+import Bokser from './ledigestillinger-bransjer-bokser';
 
 export const meldinger = defineMessages({
     soketekst: {
@@ -51,7 +51,9 @@ export class Bransjer extends React.Component {
                 <Inputfelt id="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
                 <Innholdslaster avhengigheter={[this.props.yrkesomrader]}>
                     <BransjeDropdown meldinger={meldinger} yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} />
-                        <IkkeFerdigPanel />
+                    <Innholdslaster avhengigheter={[this.props.yrkesgrupper]}>
+                        <Bokser meldinger={meldinger} onClick={id => this.toggleYrkesgruppe(id)} yrkesgrupper={this.props.yrkesgrupper.data} valgteyrkesgrupper={this.props.valgteyrkesgrupper}/>
+                    </Innholdslaster>
                     <Link to="#">
                         <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
                     </Link>

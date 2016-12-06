@@ -1,9 +1,9 @@
 package no.nav.fo.consumer.endpoints;
 
 import no.nav.fo.consumer.kodeverk.FylkerOgKommunerReader;
-import no.nav.fo.consumer.transformers.BransjeLvl1ForFylkeTransformer;
+import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.consumer.transformers.StillingerForKommuneTransformer;
-import no.nav.fo.mia.domain.stillinger.BransjeLvl1;
+import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.fo.mia.domain.stillinger.KommuneStilling;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
@@ -45,7 +45,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    public List<BransjeLvl1> getBransjerLvl1ForFylke(String fylkesnummer) {
+    public List<Bransje> getYrkesomraderForFylke(String fylkesnummer) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("YRKGR_LVL_1");
@@ -54,7 +54,7 @@ public class StillingerEndpoint {
 
         try {
             QueryResponse resp = solrClient.query(solrQuery);
-            return BransjeLvl1ForFylkeTransformer.getBransjeLvlForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID"));
+            return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID"));
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());

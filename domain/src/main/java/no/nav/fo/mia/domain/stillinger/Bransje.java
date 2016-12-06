@@ -1,14 +1,14 @@
 package no.nav.fo.mia.domain.stillinger;
 
-public class BransjeLvl1 {
+public class Bransje {
     private String bransjenavn;
     private String bransjeid;
     private int antallStillinger;
 
-    public BransjeLvl1() {
+    public Bransje() {
     }
 
-    public BransjeLvl1(String bransjenavn, String bransjeid, int antallStillinger) {
+    public Bransje(String bransjenavn, String bransjeid, int antallStillinger) {
         this.bransjenavn = bransjenavn;
         this.bransjeid = bransjeid;
         this.antallStillinger = antallStillinger;
