@@ -1,18 +1,18 @@
 package no.nav.fo.mia.domain.stillinger;
 
-public class KommuneStillinger {
+public class KommuneStilling {
     private String kommunenummer;
     private int antallLedige;
     private int antallStillinger;
 
-    public KommuneStillinger() {
+    public KommuneStilling() {
     }
 
-    public KommuneStillinger(String kommunenummer) {
+    public KommuneStilling(String kommunenummer) {
         this.kommunenummer = kommunenummer;
     }
 
-    public KommuneStillinger(String kommunenummer, int antallLedige, int antallStillinger) {
+    public KommuneStilling(String kommunenummer, int antallLedige, int antallStillinger) {
         this.kommunenummer = kommunenummer;
         this.antallLedige = antallLedige;
         this.antallStillinger = antallStillinger;
@@ -26,7 +26,7 @@ public class KommuneStillinger {
         this.kommunenummer = kommunenummer;
     }
 
-    public KommuneStillinger withKommunenummer(String kommunenr){
+    public KommuneStilling withKommunenummer(String kommunenr){
         setKommunenummer(kommunenr);
         return this;
     }
@@ -39,7 +39,7 @@ public class KommuneStillinger {
         this.antallLedige = antallLedige;
     }
 
-    public KommuneStillinger withAntallLedige(int antallLedige) {
+    public KommuneStilling withAntallLedige(int antallLedige) {
         setAntallLedige(antallLedige);
         return this;
     }
@@ -52,7 +52,7 @@ public class KommuneStillinger {
         this.antallStillinger = antallStillinger;
     }
 
-    public KommuneStillinger withAntallStillinger(int antallStillinger) {
+    public KommuneStilling withAntallStillinger(int antallStillinger) {
         setAntallStillinger(antallStillinger);
         return this;
     }

@@ -1,8 +1,8 @@
-package no.nav.fo.mia.transformers;
+package no.nav.fo.consumer.transformers;
 
 import no.nav.fo.mia.domain.kodeverk.FylkeKodeverk;
 import no.nav.fo.mia.domain.kodeverk.KommuneKodeverk;
-import no.nav.fo.mia.domain.stillinger.KommuneStillinger;
+import no.nav.fo.mia.domain.stillinger.KommuneStilling;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StillingerTransformerTest {
+public class StillingerForKommuneTransformerTest {
 
     @Test
     public void skalLeggePaaAntallLedigeStillingerForKommuner() throws Exception {
@@ -25,7 +25,7 @@ public class StillingerTransformerTest {
                     .withKommune(new KommuneKodeverk("KOMMUNE1", "0101", "KOMMUNE_ID_1"))
         );
 
-        assertThat(StillingerTransformer.getStillingerForKommuner(ledigeStillinger, null, fylkerFraKodeverk).get(0).getAntallStillinger()).isEqualTo(10);
+        assertThat(StillingerForKommuneTransformer.getStillingerForKommuner(ledigeStillinger, null, fylkerFraKodeverk).get(0).getAntallStillinger()).isEqualTo(10);
     }
 
     @Test
@@ -42,12 +42,12 @@ public class StillingerTransformerTest {
                         .withKommune(new KommuneKodeverk("KOMMUNE5", "5", "KOMMUNE_ID_5"))
         );
 
-        KommuneStillinger kommuneStillinger = getStillingerForKommunenummer("5", StillingerTransformer.getStillingerForKommuner(ledigeStillinger, null, fylkerFraKodeverk));
-        assertThat(kommuneStillinger.getAntallStillinger()).isEqualTo(0);
+        KommuneStilling kommuneStilling = getStillingerForKommunenummer("5", StillingerForKommuneTransformer.getStillingerForKommuner(ledigeStillinger, null, fylkerFraKodeverk));
+        assertThat(kommuneStilling.getAntallStillinger()).isEqualTo(0);
     }
 
-    private KommuneStillinger getStillingerForKommunenummer(String kommunenummer, List<KommuneStillinger> stillinger) {
-        Optional<KommuneStillinger> kommuneStillinger = stillinger.stream()
+    private KommuneStilling getStillingerForKommunenummer(String kommunenummer, List<KommuneStilling> stillinger) {
+        Optional<KommuneStilling> kommuneStillinger = stillinger.stream()
                 .filter(stilling -> stilling.getKommunenummer().equalsIgnoreCase(kommunenummer))
                 .findFirst();
 

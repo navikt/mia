@@ -1,12 +1,16 @@
 package no.nav.fo.consumer.endpoints;
 
+import no.nav.fo.consumer.kodeverk.FylkerOgKommunerReader;
+import no.nav.fo.consumer.transformers.BransjeLvl1ForFylkeTransformer;
+import no.nav.fo.consumer.transformers.StillingerForKommuneTransformer;
+import no.nav.fo.mia.domain.stillinger.BransjeLvl1;
+import no.nav.fo.mia.domain.stillinger.KommuneStilling;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +29,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    public List<FacetField.Count> getAntallStillingerForAlleKommuner() {
+    public List<KommuneStilling> getAntallStillingerForAlleKommuner() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("KOMMUNE_ID");
@@ -33,10 +37,27 @@ public class StillingerEndpoint {
 
         try {
             QueryResponse resp = solrClient.query(solrQuery);
-            return resp.getFacetField("KOMMUNE_ID").getValues();
+            return StillingerForKommuneTransformer.getStillingerForKommuner(resp.getFacetField("KOMMUNE_ID").getValues(), null, FylkerOgKommunerReader.getFylkerOgKommuner());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av stillinger fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
+        }
+    }
+
+    @Timed
+    public List<BransjeLvl1> getBransjerLvl1ForFylke(String fylkesnummer) {
+        String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
+        SolrQuery solrQuery = new SolrQuery(query);
+        solrQuery.addFacetField("YRKGR_LVL_1");
+        solrQuery.addFacetField("YRKGR_LVL_1_ID");
+        solrQuery.setRows(0);
+
+        try {
+            QueryResponse resp = solrClient.query(solrQuery);
+            return BransjeLvl1ForFylkeTransformer.getBransjeLvlForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID"));
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
         }
     }
 }
