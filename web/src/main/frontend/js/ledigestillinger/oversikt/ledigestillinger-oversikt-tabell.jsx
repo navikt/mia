@@ -50,8 +50,10 @@ const KommuneTabellRad = props => (
     </tr>
 );
 
-const KommuneTabell = ({fylkenavn, kommuner, stillinger}) => {
+const KommuneTabell = ({valgtFylke, kommuner, stillinger}) => {
     const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
+    const fylkenavn = valgtFylke != null ? valgtFylke.navn : "";
+
     return (
         <div>
             <h3 className="typo-etikett">{fylkenavn}</h3>
@@ -103,7 +105,7 @@ export const Oversiktstabell = props => {
                     alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.id}))}
                 />
             </form>
-            { valgtFylke !== null ? <KommuneTabell fylkenavn={valgtFylke.navn} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
+            { valgtFylke != null ? <KommuneTabell valgFylke={valgtFylke} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
         </div>
     );
 };

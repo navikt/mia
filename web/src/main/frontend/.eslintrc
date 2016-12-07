@@ -7,9 +7,9 @@
     "no-eval": 2, //- disallow use of eval()
     "no-with":2, //disallow use of the with statement
     "curly":2, //specify curly brace conventions for all control statements
-    "eqeqeq":2, // equire the use of === and !==
+    "eqeqeq": [2, "smart"], // equire the use of === and !==
     "semi": [2, "always"], //require use of semicolons instead of ASI
-    "no-eq-null": 2, //- disallow comparisons to null without a type-checking operator
+    "no-eq-null": 0, //- allow comparisons to null without a type-checking operator
     "react/jsx-no-undef": 1, // Disallow unused variables in JSX
     "react/jsx-curly-spacing": 1, // disable spaces inside curly-bracket in JSX
     "react/no-danger": 1, // Prevent usage of dangerous JSX features
