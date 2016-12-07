@@ -36,5 +36,7 @@ export function createRestReducer(navn) {
 
 export default combineReducers({
     omrader: createRestReducer('omrader'),
-    oversiktStillinger: createRestReducer('oversikt_stillinger')
+    oversiktStillinger: createRestReducer('oversikt_stillinger'),
+    yrkesomrader: createRestReducer('yrkesomrader'),
+    yrkesgrupper: createRestReducer('yrkesgrupper')
 });
