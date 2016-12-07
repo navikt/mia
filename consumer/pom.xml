@@ -43,6 +43,10 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
 
         <!-- test dependencies -->
         <dependency>

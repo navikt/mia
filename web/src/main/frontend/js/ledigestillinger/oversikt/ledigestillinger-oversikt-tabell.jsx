@@ -103,7 +103,7 @@ export const Oversiktstabell = props => {
                     alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.id}))}
                 />
             </form>
-            { valgtFylke != null ? <KommuneTabell fylkenavn={valgtFylke.navn} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
+            { valgtFylke !== null ? <KommuneTabell fylkenavn={valgtFylke.navn} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
         </div>
     );
 };

@@ -31,7 +31,7 @@ export function createRestReducer(navn) {
             default:
                 return state;
         }
-    }
+    };
 }
 
 export default combineReducers({
