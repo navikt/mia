@@ -3,9 +3,14 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>no.nav.fo.config.ApplicationTestConfig</param-value>
+    </context-param>
+
     <filter>
         <filter-name>CORSFilter</filter-name>
-        <filter-class>test.no.nav.fo.CORSFilter</filter-class>
+        <filter-class>no.nav.fo.CORSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CORSFilter</filter-name>
@@ -15,7 +20,7 @@
 
     <filter>
         <filter-name>Headerfilter</filter-name>
-        <filter-class>test.no.nav.fo.HeaderFilter</filter-class>
+        <filter-class>no.nav.fo.HeaderFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Headerfilter</filter-name>

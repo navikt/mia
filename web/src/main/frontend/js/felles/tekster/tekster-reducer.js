@@ -1,4 +1,4 @@
-import {fetchToJson, sendResultatTilDispatch, handterFeil} from "../utils/rest-utils";
+import {fetchToJson, sendResultatTilDispatch, handterFeil} from "../rest/rest-utils";
 import { STATUS } from "../konstanter";
 
 export const LASTER_TEKSTER = 'LASTER_TEKSTER';
