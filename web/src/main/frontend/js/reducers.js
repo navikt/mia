@@ -1,12 +1,12 @@
 import {combineReducers} from "redux";
 import ledigeStillingerReducer from "./ledigestillinger/ledigestillinger-reducer";
 import teksterReducer from "./felles/tekster/tekster-reducer";
-import kodeverkReducer from "./felles/kodeverk/kodeverk-reducer";
+import restReducer from "./felles/rest/rest-reducer";
 
 const reducers = combineReducers({
     ledigestillinger: ledigeStillingerReducer,
-    kodeverk: kodeverkReducer,
-    tekster: teksterReducer
+    tekster: teksterReducer,
+    rest: restReducer
 });
 
 export default reducers;

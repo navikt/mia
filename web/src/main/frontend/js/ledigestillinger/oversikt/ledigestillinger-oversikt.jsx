@@ -6,7 +6,7 @@ import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import OversiktTabell from "./ledigestillinger-oversikt-tabell";
-import {lastOversiktAlleKommuner} from "./ledigestillinger-oversikt-actions";
+import restActionCreator from "../../felles/rest/rest-action";
 
 const meldinger = defineMessages({
     lenkeVisKart: {
@@ -21,7 +21,7 @@ const meldinger = defineMessages({
 
 export class Oversikt extends React.Component {
     componentDidMount() {
-        this.props.dispatch(lastOversiktAlleKommuner());
+        this.props.dispatch(restActionCreator('oversikt_stillinger', '/stillinger/oversiktAlleKommuner'));
     }
 
     togglekart() {
@@ -42,13 +42,13 @@ export class Oversikt extends React.Component {
             velgKommune: this.velgKommune.bind(this),
             valgtFylke: this.props.valgtFylke,
             valgtKommune: this.props.valgtKommune,
-            kommunedata: this.props.kommunedata,
-            fylker: this.props.fylker
+            oversiktStillinger: this.props.oversiktStillinger.data,
+            omrader: this.props.omrader.data
         };
 
         return (
             <div className="panel panel-fremhevet panel-oversikt">
-                <Innholdslaster avhengigheter={[this.props.kommunedata]}>
+                <Innholdslaster avhengigheter={[this.props.oversiktStillinger]}>
                     {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
                     <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
                         <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
@@ -63,8 +63,8 @@ const stateToProps = state => ({
     visKart: state.ledigestillinger.oversikt.visKart,
     valgtFylke: state.ledigestillinger.oversikt.valgtFylke,
     valgtKommune: state.ledigestillinger.oversikt.valgtKommune,
-    fylker: state.kodeverk.fylker.fylker,
-    kommunedata: state.ledigestillinger.oversikt.kommunedata
+    omrader: state.rest.omrader,
+    oversiktStillinger: state.rest.oversiktStillinger
 });
 
 export default connect(stateToProps)(injectIntl(Oversikt));
