@@ -12,10 +12,9 @@ public class Bransje {
     public Bransje() {
     }
 
-    public Bransje(String bransjenavn, String bransjeid, int antallStillinger) {
+    public Bransje(String bransjenavn, String bransjeid) {
         this.navn = bransjenavn;
         this.id = bransjeid;
-        this.antallStillinger = antallStillinger;
     }
 
 

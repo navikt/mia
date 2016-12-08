@@ -59,16 +59,28 @@ public class StillingerEndpoint {
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("YRKGR_LVL_1");
         solrQuery.addFacetField("YRKGR_LVL_1_ID");
-        solrQuery.addFacetField("ANTALLSTILLINGER");
         solrQuery.setRows(0);
 
         try {
             QueryResponse resp = mainSolrClient.query(solrQuery);
-            return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID"));
+            return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID")).stream()
+                    .map(yrkesomrade -> yrkesomrade.withAntallStillinger(getAntallStillingerForYrkesomrade(yrkesomrade.getId())))
+                    .collect(Collectors.toList());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
         }
+    }
+
+    @Timed
+    @Cacheable("antallStillingerYrkesomrade")
+    private int getAntallStillingerForYrkesomrade(String yrkesomradeid) {
+        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
+        henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_1_ID:"+yrkesomradeid);
+        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
+        henteAntallStillingerQuery.setRows(0);
+
+        return getAntallStillinger(henteAntallStillingerQuery);
     }
 
     @Timed
@@ -113,12 +125,16 @@ public class StillingerEndpoint {
         henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
         henteAntallStillingerQuery.setRows(0);
 
+        return getAntallStillinger(henteAntallStillingerQuery);
+    }
+
+    private int getAntallStillinger(SolrQuery henteAntallStillingerQuery) {
         try {
             QueryResponse antallStillingerResponse = mainSolrClient.query(henteAntallStillingerQuery);
             return AntallStillingerExtractor.getAntallStillinger(antallStillingerResponse);
         } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av antall stillinger fra solr supportcore", e.getCause());
-            throw new ApplicationException("Feil ved henting av antall stillinger fra solr supportcore", e.getCause());
+            logger.error("Feil ved henting av antall stillinger fra solr maincore", e.getCause());
+            throw new ApplicationException("Feil ved henting av antall stillinger fra solr maincore", e.getCause());
         }
     }
 }
