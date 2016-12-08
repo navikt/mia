@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 
 import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";

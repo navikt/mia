@@ -38,8 +38,18 @@ export function fetchToJson(url, config = {}) {
         .then(toJson);
 }
 
+function reduceParamList(paramlist) {
+    return paramlist.join("&");
+}
+
+function getUriParam(key, param) {
+    if(Array.isArray(param)) {
+        return reduceParamList(param.map(p => `${key}[]=${p}`));
+    }
+    return `${key}=${param}`;
+}
+
 export function buildUriParams(params) {
-    return Object.keys(params)
-        .map(key => `${key}=${params[key]}`)
-        .reduce((paramstring, current) => `${paramstring}&${current}`, "");
+    return reduceParamList(Object.keys(params)
+        .map(key => getUriParam(key, params[key])));
 }

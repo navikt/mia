@@ -1,5 +1,5 @@
 import React from "react";
-import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 import {getStillingerTotalt, getKommuneMedData, getKommunerForValgtFylke} from './ledigestillinger-oversikt-utils';
 
 const meldinger = defineMessages({

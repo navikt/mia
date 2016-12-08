@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 import {actions} from "./ledigestillinger-bransjer-reducer";
 import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
@@ -9,6 +9,7 @@ import Bokser from './ledigestillinger-bransjer-bokser';
 import {findTotaltAntallJobber} from './ledigestillinger-bransjer-util';
 import restActionCreator from "../../felles/rest/rest-action";
 import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
+import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {STATUS, ALTERNATIV_ALLE} from "../../felles/konstanter";
 
 const meldinger = defineMessages({
@@ -51,6 +52,7 @@ export class Bransjer extends React.Component {
         } else {
             this.props.dispatch({type: actions.yrkesgruppeselect, payload: id});
         }
+        this.props.dispatch(hentStillinger());
     }
 
     velgYrkesomrade(id) {

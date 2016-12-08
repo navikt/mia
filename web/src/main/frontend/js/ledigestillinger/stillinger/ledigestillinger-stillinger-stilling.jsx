@@ -1,11 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router';
+import {FormattedDate} from "react-intl";
 
 export const Stilling = (props) => {
+    const getSoknadsfrist = datestring => {
+        if(datestring == null) {
+            return "-";
+        }
+        return <FormattedDate value={new Date(datestring)}/>;
+    };
+
     return (
         <li className="row">
-            <Link to={props.stilling.link}>
-                <span className="col-sm-4">{props.stilling.stilling}</span><span className="col-sm-4">{props.stilling.arbeidsgiver}</span><span className="col-sm-4">{props.stilling.soknadsfrist}</span>
+            <Link to="#">
+                <span className="col-sm-4">{props.stilling.tittel}</span>
+                <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
+                <span className="col-sm-4">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
             </Link>
         </li>
     );

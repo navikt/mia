@@ -22,13 +22,12 @@ export const meldinger = defineMessages({
 });
 
 
-export const Stillingsvisning = (props) => {
-    const mockstillinger = [{id: 13, stilling: "Mekaniker", arbeidsgiver: "Rett Bemanning", soknadsfrist: "29.10.2016", link: "www.finn.no/jobb/14"},
-        {id: 14, stilling: "Mekaniker2", arbeidsgiver: "Rett Bemanning2", soknadsfrist: "30.10.2016", link: "www.finn.no/jobb/14"}];
+export const Stillingsvisning = props => {
+    const stillinger = props.yrkesgruppe.stillinger.sort((a, b) => new Date(a.soknadfrist) < new Date(b.soknadfrist));
 
     return  (
-        <div>
-            <h1>{props.valgteyrkesgrupper}</h1>
+        <div className="blokk-m">
+            <h2 className="typo-element blokk-xxs">{props.yrkesgruppe.navn} ({props.yrkesgruppe.stillinger.length})</h2>
             <div className="panel panel-fremhevet">
                 <div className="row">
                     <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></span>
@@ -36,7 +35,7 @@ export const Stillingsvisning = (props) => {
                     <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></span>
                 </div>
                 <ul className="ustilet list-with-hover">
-                    {mockstillinger.length > 0 ? mockstillinger.map(stilling => {
+                    {stillinger.length > 0 ? stillinger.map(stilling => {
                         return <Stilling stilling={stilling} key={stilling.id}/>;
                     }) : <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>}
                 </ul>

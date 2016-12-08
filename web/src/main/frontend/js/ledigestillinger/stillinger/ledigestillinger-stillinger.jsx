@@ -1,20 +1,32 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {injectIntl} from 'react-intl';
-import Stillingsvisning from './ledigestillinger-stillinger-visning';
+import Stillingstabell from './ledigestillinger-stillinger-tabell';
+import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 
-export const Stillinger = (props) => {
+import {
+    getHarValgtYrkesgrupper,
+    getValgteYrkesgrupperMedStillinger
+} from "./ledigestillinger-stillinger-selectors";
 
-    function skalVises() {
-        return props.valgteyrkesgrupper.length > 0;
+export class Stillinger extends React.Component {
+    render() {
+        if(!this.props.skalVises) {
+            return null;
+        }
+
+        return (
+            <Innholdslaster avhengigheter={[this.props.stillingerRest]}>
+                {this.props.yrkesgrupper.map(yrkesgruppe => <Stillingstabell key={yrkesgruppe.id} yrkesgruppe={yrkesgruppe} />)}
+            </Innholdslaster>
+        );
     }
-
-    return skalVises() ? <Stillingsvisning /> : null;
-};
+}
 
 
 const stateToProps = state => ({
-    valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper
+    skalVises: getHarValgtYrkesgrupper(state),
+    yrkesgrupper: getValgteYrkesgrupperMedStillinger(state),
+    stillingerRest: state.rest.stillinger
 });
 
 export default connect(stateToProps)(Stillinger);

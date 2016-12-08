@@ -38,5 +38,6 @@ export default combineReducers({
     omrader: createRestReducer('omrader'),
     oversiktStillinger: createRestReducer('oversikt_stillinger'),
     yrkesomrader: createRestReducer('yrkesomrader'),
-    yrkesgrupper: createRestReducer('yrkesgrupper')
+    yrkesgrupper: createRestReducer('yrkesgrupper'),
+    stillinger: createRestReducer('stillinger')
 });

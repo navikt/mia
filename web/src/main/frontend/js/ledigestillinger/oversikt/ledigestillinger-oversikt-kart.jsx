@@ -1,6 +1,6 @@
 import React from "react";
 import ISvg from "react-inlinesvg";
-import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 
 const meldinger = defineMessages({
     kartplaceholder: {

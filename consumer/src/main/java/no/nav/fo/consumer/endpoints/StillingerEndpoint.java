@@ -1,15 +1,14 @@
 package no.nav.fo.consumer.endpoints;
 
-import no.nav.fo.consumer.transformers.StillingerForKommuneTransformer;
-import no.nav.fo.consumer.transformers.GeografiTransformer;
+import no.nav.fo.consumer.transformers.*;
 import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
-import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.mia.domain.stillinger.KommuneStilling;
 import no.nav.fo.mia.domain.geografi.Omrade;
-import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
 import no.nav.fo.mia.domain.stillinger.Bransje;
+import no.nav.fo.mia.domain.stillinger.Stilling;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -137,5 +136,22 @@ public class StillingerEndpoint {
             logger.error("Feil ved henting av antall stillinger fra solr maincore", e.getCause());
             throw new ApplicationException("Feil ved henting av antall stillinger fra solr maincore", e.getCause());
         }
+    }
+
+    @Timed
+    @Cacheable("stillinger")
+    public List<Stilling> getStillinger(List<String> yrkesgrupper) {
+        SolrQuery stillingerQuery = new SolrQuery("*:*");
+        stillingerQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
+        stillingerQuery.setRows(Integer.MAX_VALUE);
+
+        try {
+            return StillingTransformer.getStillinger(mainSolrClient.query(stillingerQuery).getResults());
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av stillinger", e.getCause());
+            throw new ApplicationException("Feil ved henting av stillinger", e.getCause());
+        }
+
+
     }
 }

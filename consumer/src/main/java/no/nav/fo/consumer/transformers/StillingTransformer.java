@@ -1,0 +1,52 @@
+package no.nav.fo.consumer.transformers;
+
+import no.nav.fo.mia.domain.stillinger.Stilling;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class StillingTransformer {
+    public static List<Stilling> getStillinger(SolrDocumentList stillinger) {
+        return stillinger.stream()
+                .map(StillingTransformer::getStilling)
+                .collect(Collectors.toList());
+    }
+
+    private static Stilling getStilling(SolrDocument stilling) {
+        List<String> yrkesomrader = stilling.getFieldValues("YRKGR_LVL_1_ID").stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+        List<String> yrkesgrupper = stilling.getFieldValues("YRKGR_LVL_2_ID").stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+        return new Stilling(getValue(stilling, "ARBEIDSGIVERNAVN"), getValue(stilling, "ID"))
+                .withTittel(getValue(stilling, "TITTEL"))
+                .withSoknadfrist(getDateString((Date)stilling.getFieldValue("SOKNADSFRIST")))
+                .withYrkesgrupper(yrkesgrupper)
+                .withYrkesomrader(yrkesomrader);
+    }
+
+    private static String getValue(SolrDocument document, String fieldname) {
+        Object fieldvalue = document.getFieldValue(fieldname);
+        return fieldvalue != null ? fieldvalue.toString() : null;
+    }
+
+    private static String getDateString(Date date) {
+        if(date == null) {
+            return null;
+        }
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    }
+}

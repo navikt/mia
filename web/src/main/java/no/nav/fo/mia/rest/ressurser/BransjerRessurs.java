@@ -2,6 +2,7 @@ package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.mia.domain.stillinger.Bransje;
+import no.nav.fo.mia.domain.stillinger.Stilling;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
@@ -33,5 +34,11 @@ public class BransjerRessurs {
     @Path("/yrkesgruppe")
     public List<Bransje> hentYrkesgrupper(@QueryParam("yrkesomrade") String yrkesomrade) {
         return stillingerEndpoint.getYrkesgrupperForYrkesomrade(yrkesomrade);
+    }
+
+    @GET
+    @Path("/stillinger")
+    public List<Stilling> hentYrkesgrupper(@QueryParam("yrkesgrupper[]") List<String> yrkesgrupper) {
+        return stillingerEndpoint.getStillinger(yrkesgrupper);
     }
 }
