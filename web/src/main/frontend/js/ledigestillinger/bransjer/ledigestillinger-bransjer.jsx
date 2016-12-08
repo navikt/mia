@@ -94,4 +94,4 @@ const stateToProps = state => ({
     yrkesomrader: state.rest.yrkesomrader
 });
 
-export default connect(stateToProps)(injectIntl(Bransjer));
+export default connect(stateToProps)(Bransjer);

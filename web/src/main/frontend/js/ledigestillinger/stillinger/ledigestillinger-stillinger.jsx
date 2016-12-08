@@ -17,4 +17,4 @@ const stateToProps = state => ({
     valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper
 });
 
-export default connect(stateToProps)(injectIntl(Stillinger));
+export default connect(stateToProps)(Stillinger);

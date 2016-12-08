@@ -110,4 +110,4 @@ export const Oversiktstabell = props => {
     );
 };
 
-export default injectIntl(Oversiktstabell);
+export default Oversiktstabell;

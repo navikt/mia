@@ -22,4 +22,4 @@ const Oversiktskart = () => {
     );
 };
 
-export default injectIntl(Oversiktskart);
+export default Oversiktskart;

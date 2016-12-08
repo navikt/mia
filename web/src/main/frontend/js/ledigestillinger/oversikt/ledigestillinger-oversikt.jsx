@@ -67,4 +67,4 @@ const stateToProps = state => ({
     oversiktStillinger: state.rest.oversiktStillinger
 });
 
-export default connect(stateToProps)(injectIntl(Oversikt));
+export default connect(stateToProps)(Oversikt);
