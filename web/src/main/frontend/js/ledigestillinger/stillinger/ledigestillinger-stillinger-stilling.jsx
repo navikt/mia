@@ -13,7 +13,7 @@ export const Stilling = (props) => {
     return (
         <li className="row">
             <Link to="#">
-                <span className="col-sm-4">{props.stilling.tittel}</span>
+                <span className="col-sm-4">{props.stilling.stillingstype}</span>
                 <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
                 <span className="col-sm-4">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
             </Link>

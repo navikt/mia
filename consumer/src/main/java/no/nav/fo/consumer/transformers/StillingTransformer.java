@@ -4,12 +4,7 @@ import no.nav.fo.mia.domain.stillinger.Stilling;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +28,7 @@ public class StillingTransformer {
 
         return new Stilling(getValue(stilling, "ARBEIDSGIVERNAVN"), getValue(stilling, "ID"))
                 .withTittel(getValue(stilling, "TITTEL"))
+                .withStillingstype(getValue(stilling, "STILLINGSTYPE_5"))
                 .withSoknadfrist(getDateString((Date)stilling.getFieldValue("SOKNADSFRIST")))
                 .withYrkesgrupper(yrkesgrupper)
                 .withYrkesomrader(yrkesomrader);

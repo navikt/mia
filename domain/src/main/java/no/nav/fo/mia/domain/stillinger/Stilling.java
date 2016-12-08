@@ -10,6 +10,7 @@ public class Stilling {
     private List<String> yrkesgrupper = new ArrayList<>();
     private List<String> yrkesomrader = new ArrayList<>();
     private String soknadfrist;
+    private String stillingstype;
 
     public Stilling() {
     }
@@ -94,6 +95,19 @@ public class Stilling {
 
     public Stilling withYrkesomrade(String yrkesomrade) {
         this.yrkesomrader.add(yrkesomrade);
+        return this;
+    }
+
+    public String getStillingstype() {
+        return stillingstype;
+    }
+
+    public void setStillingstype(String stillingstype) {
+        this.stillingstype = stillingstype;
+    }
+
+    public Stilling withStillingstype(String stillingstype) {
+        this.setStillingstype(stillingstype);
         return this;
     }
 }
