@@ -3,34 +3,30 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {actions} from "./ledigestillinger-bransjer-reducer";
-import Inputfelt from "../../felles/inputfelter/inputfelt";
 import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
 import Bokser from './ledigestillinger-bransjer-bokser';
 import restActionCreator from "../../felles/rest/rest-action";
+import IkkeFerdigPanel from "../../felles/ikkeferdig/ikke-ferdig-panel";
 
-export const meldinger = defineMessages({
-    soketekst: {
-        id: 'ledigestillinger.bransjer.soketekst',
-        defaultMessage: 'Søk direkte eller klikk videre i kategoriene'
-    },
-    velgbransje: {
-        id: 'ledigestillinger.bransjer.velgbransje',
-        defaultMessage: 'Velg bransje'
-    },
-    boksoverskrift: {
-        id: 'ledigestillinger.bransjer.boksoverskrift',
-        defaultMessage: 'Ledige jobber totalt ({antall}) fordelt på bransjer'
-    },
+const meldinger = defineMessages({
     lenkeallebransjer: {
         id: 'ledigestillinger.bransjer.lenkeallebransjer',
-        defaultMessage: 'Vis alle bransjer med ledige stillinger'
+        defaultMessage: 'Vis alle bransjer med ledige stillinger >>'
     }
 });
 
+const BokserForYrkesomrader = props => (
+    <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader.data}/>
+);
+
+const BokserForYrkesgrupper = () => (
+    <IkkeFerdigPanel />
+);
+
 export class Bransjer extends React.Component {
     componentDidMount() {
-        this.props.dispatch(restActionCreator("yrkesomrader", "/bransjer/yrkesomrade/hentForFylke"));
+        this.props.dispatch(restActionCreator("yrkesomrader", "/bransjer/yrkesomrade"));
     }
 
     toggleYrkesgruppe(id) {
@@ -48,14 +44,14 @@ export class Bransjer extends React.Component {
     render() {
         return (
             <div>
-                <Inputfelt id="input-sok" label={meldinger.soketekst} type="search" className="input-fullbredde" />
                 <Innholdslaster avhengigheter={[this.props.yrkesomrader]}>
-                    <BransjeDropdown meldinger={meldinger} yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} />
-                    <Innholdslaster avhengigheter={[this.props.yrkesgrupper]}>
-                        <Bokser meldinger={meldinger} onClick={id => this.toggleYrkesgruppe(id)} yrkesgrupper={this.props.yrkesgrupper.data} valgteyrkesgrupper={this.props.valgteyrkesgrupper}/>
-                    </Innholdslaster>
+                    <BransjeDropdown yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} />
+                    { this.props.valgtyrkesomrade === "alle"
+                        ? <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)} yrkesomrader={this.props.yrkesomrader}/>
+                        : <BokserForYrkesgrupper onClick={id => this.toggleYrkesgruppe(id)} yrkesgrupper={this.props.yrkesgrupper} valgteyrkesgrupper={this.props.valgteyrkesgrupper} />
+                    }
                     <Link to="#">
-                        <FormattedMessage {...meldinger.lenkeallebransjer} /> >>
+                        <FormattedMessage {...meldinger.lenkeallebransjer} />
                     </Link>
                 </Innholdslaster>
             </div>

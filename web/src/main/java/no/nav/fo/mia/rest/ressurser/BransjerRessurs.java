@@ -2,7 +2,6 @@ package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.mia.domain.stillinger.Bransje;
-import no.nav.fo.mia.domain.stillinger.Stillingstype;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
@@ -25,26 +24,14 @@ public class BransjerRessurs {
     StillingerEndpoint stillingerEndpoint;
 
     @GET
-    @Path("/yrkesomrade/hentForFylke")
+    @Path("/yrkesomrade")
     public List<Bransje> hentBransjerForFylke(@QueryParam("fylkesnummer") String fylkesnummer) {
         return stillingerEndpoint.getYrkesomraderForFylke(fylkesnummer);
     }
 
     @GET
-    @Path("/yrkesomrade/hentForKommuner")
-    public String hentBransjerForKommuner() {
-        return "";
-    }
-
-    @GET
-    @Path("/yrkesgruppe/hentForYrkesomrade")
-    public List<Stillingstype> hentForYrkesomrade(@QueryParam("yrkesomrade") String yrkesomrade) {
+    @Path("/yrkesgruppe")
+    public List<Bransje> hentForYrkesomrade(@QueryParam("yrkesomrade") String yrkesomrade) {
         return stillingerEndpoint.getYrkesgrupperForYrkesomrade(yrkesomrade);
-    }
-
-    @GET
-    @Path("/yrkesgruppe/hentForAlle")
-    public List<Stillingstype> hentForYrkesomrade() {
-        return stillingerEndpoint.getYrkesgrupperForYrkesomrade("*");
     }
 }

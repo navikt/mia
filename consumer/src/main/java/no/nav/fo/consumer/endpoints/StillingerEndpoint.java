@@ -8,7 +8,6 @@ import no.nav.fo.mia.domain.stillinger.KommuneStilling;
 import no.nav.fo.mia.domain.geografi.Omrade;
 import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
 import no.nav.fo.mia.domain.stillinger.Bransje;
-import no.nav.fo.mia.domain.stillinger.Stillingstype;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.solr.client.solrj.SolrClient;
@@ -89,7 +88,7 @@ public class StillingerEndpoint {
 
     @Timed
     @Cacheable
-    public List<Stillingstype> getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
+    public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
         SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
         henteYrkesgrupperQuery.addFilterQuery("PARENT:"+yrkesomradeid);
         henteYrkesgrupperQuery.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
