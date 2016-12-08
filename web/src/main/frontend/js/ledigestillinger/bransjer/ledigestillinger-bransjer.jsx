@@ -6,8 +6,8 @@ import {actions} from "./ledigestillinger-bransjer-reducer";
 import Inputfelt from "../../felles/inputfelter/inputfelt";
 import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
-import { hentYrkesomraderForAlleFylker, hentYrkesgrupperForOmrade } from './ledigestillinger-bransjer-actions';
 import Bokser from './ledigestillinger-bransjer-bokser';
+import restActionCreator from "../../felles/rest/rest-action";
 
 export const meldinger = defineMessages({
     soketekst: {
@@ -30,7 +30,7 @@ export const meldinger = defineMessages({
 
 export class Bransjer extends React.Component {
     componentDidMount() {
-        this.props.dispatch(hentYrkesomraderForAlleFylker());
+        this.props.dispatch(restActionCreator("yrkesomrader", "/bransjer/yrkesomrade/hentForFylke"));
     }
 
     toggleYrkesgruppe(id) {
@@ -43,7 +43,6 @@ export class Bransjer extends React.Component {
 
     velgYrkesomrade(id) {
         this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
-        this.props.dispatch(hentYrkesgrupperForOmrade(id));
     }
 
     render() {
@@ -67,8 +66,8 @@ export class Bransjer extends React.Component {
 const stateToProps = state => ({
     valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
     valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade,
-    yrkesgrupper: state.ledigestillinger.bransje.yrkesgrupper,
-    yrkesomrader: state.ledigestillinger.bransje.yrkesomrader
+    yrkesgrupper: state.rest.yrkesgrupper,
+    yrkesomrader: state.rest.yrkesomrader
 });
 
 export default connect(stateToProps)(injectIntl(Bransjer));

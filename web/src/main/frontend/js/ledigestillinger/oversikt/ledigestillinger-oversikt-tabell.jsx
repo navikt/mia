@@ -50,9 +50,38 @@ const KommuneTabellRad = props => (
     </tr>
 );
 
+const KommuneTabell = ({valgtFylke, kommuner, stillinger}) => {
+    const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
+    const fylkenavn = valgtFylke != null ? valgtFylke.navn : "";
+
+    return (
+        <div>
+            <h3 className="typo-etikett">{fylkenavn}</h3>
+            <table className="tabell blokk-s">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
+                    </th>
+                    <th scope="col" className="text-center">
+                        <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
+                    </th>
+                    <th scope="col" className="text-center">
+                        <FormattedMessage {...meldinger.tabellOverskriftStillinger} values={{antall: stillingerTotalt.antallStillinger}}/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    {kommuner.map(kommune => getKommuneMedData(kommune, stillinger)).map(kommune => <KommuneTabellRad key={kommune.id} kommune={kommune}/>)}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
 export const Oversiktstabell = props => {
-    const kommunerForValgtFylke = getKommunerForValgtFylke(props.valgtFylke, props.fylker);
-    const stillingerTotalt = getStillingerTotalt(kommunerForValgtFylke, props.kommunedata);
+    const kommunerForValgtFylke = getKommunerForValgtFylke(props.valgtFylke, props.omrader);
+    const valgtFylke = props.omrader.find(omrade => omrade.id === props.valgtFylke);
 
     return (
         <div>
@@ -64,7 +93,7 @@ export const Oversiktstabell = props => {
                     value={props.valgtFylke}
                     onChange={props.velgFylke}
                     label={meldinger.velgFylke}
-                    alternativer={props.fylker.map(fylke => ({navn: fylke.navn, value: fylke.navn}))}
+                    alternativer={props.omrader.map(fylke => ({navn: fylke.navn, value: fylke.id}))}
                 />
 
                 <SelectElement
@@ -73,29 +102,10 @@ export const Oversiktstabell = props => {
                     value={props.valgtKommune}
                     onChange={props.velgKommune}
                     label={meldinger.velgKommune}
-                    alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.kommunenummer}))}
+                    alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.id}))}
                 />
             </form>
-
-            <h3 className="typo-etikett">{props.valgtFylke}</h3>
-            <table className="tabell blokk-s">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
-                        </th>
-                        <th scope="col" className="text-center">
-                            <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
-                        </th>
-                        <th scope="col" className="text-center">
-                            <FormattedMessage {...meldinger.tabellOverskriftStillinger} values={{antall: stillingerTotalt.antallStillinger}}/>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {kommunerForValgtFylke.map(kommune => getKommuneMedData(kommune, props.kommunedata)).map(kommune => <KommuneTabellRad key={kommune.kommunenummer} kommune={kommune}/>)}
-                </tbody>
-            </table>
+            { valgtFylke != null ? <KommuneTabell valgFylke={valgtFylke} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
         </div>
     );
 };

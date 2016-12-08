@@ -55,7 +55,8 @@ describe('ledigestillinger', () => {
                 dispatch: this.dispatch,
                 valgtFylke: "",
                 valgtKommune: "",
-                fylker: [this.fylke1, this.fylke2]
+                omrader: {data: [this.fylke1, this.fylke2] },
+                oversiktStillinger: { data: {} }
             };
         });
 
@@ -90,66 +91,70 @@ describe('ledigestillinger', () => {
         beforeEach(() => {
             this.kommune1 = {
                 navn: "kommune1",
-                kommunenummer: "0101"
+                id: "0101"
             };
             this.kommune2 = {
                 navn: "kommune2",
-                kommunenummer: "0202"
+                id: "0202"
             };
 
             this.fylke1 = {
-                kommuner: [this.kommune1],
+                underomrader: [this.kommune1],
                 navn: "fylke1",
+                id: "f1"
             };
 
             this.fylke2 = {
-                kommuner: [this.kommune2],
-                navn: "fylke2"
+                underomrader: [this.kommune2],
+                navn: "fylke2",
+                id: "f2"
             };
 
-            this.fylker = {
+            this.omrader = {
                 status: "LASTET",
-                fylker: [this.fylke1, this.fylke2]
+                data: [this.fylke1, this.fylke2]
             };
 
             this.defaultProps = {
                 visKart: true,
                 valgtFylke: "",
                 valgtKommune: "",
-                fylker: [this.fylke1, this.fylke2]
+                omrader: [this.fylke1, this.fylke2]
             };
 
-            this.kommunedata = {
+            this.oversiktStillinger = {
                 status: "LASTET",
-                stillinger: [
-                    { kommunenummer: "0101", antallLedige: 1, antallStillinger: 2 },
-                    { kommunenummer: "0202", antallLedige: 3, antallStillinger: 4 }
+                data: [
+                    { kommuneid: "0101", antallLedige: 1, antallStillinger: 2 },
+                    { kommuneid: "0202", antallLedige: 3, antallStillinger: 4 }
                 ]
             };
         });
 
         it('getKommunerForValgtFylke skal returnere [] hvis valgtFylke er tom string', () => {
-            const kommuner = getKommunerForValgtFylke("", this.defaultProps.fylker);
+            const kommuner = getKommunerForValgtFylke("", this.omrader.data);
             expect(kommuner).to.deep.equal([]);
         });
 
         it('getKommunerForValgtFylke skal returnere hvis valgtFylke er "fylke1"', () => {
-            const kommuner = getKommunerForValgtFylke("fylke1", this.fylker.fylker);
+            const kommuner = getKommunerForValgtFylke("f1", this.omrader.data);
             expect(kommuner).to.deep.equal([this.kommune1]);
         });
 
         it('getKommuneMedData skal populere kommunen med stillinger', () => {
-            const kommunedata = getKommuneMedData(this.kommune1, this.kommunedata);
+            const oversiktStillinger = getKommuneMedData(this.kommune1, this.oversiktStillinger.data);
             const expected = {
-                ...this.kommune1,
-                ...this.kommunedata.stillinger[0]
+                antallLedige: 1,
+                antallStillinger: 2,
+                id: "0101",
+                navn: "kommune1"
             };
-            expect(kommunedata).to.deep.equal(expected);
+            expect(oversiktStillinger).to.deep.equal(expected);
         });
 
         it("getStillingerTotalt skal returnerer summen av stillinger for alle kommuner i fylket", () => {
             const kommuner = [this.kommune1, this.kommune2];
-            const antStillinger = getStillingerTotalt(kommuner, this.kommunedata);
+            const antStillinger = getStillingerTotalt(kommuner, this.oversiktStillinger.data);
             expect(antStillinger.antallLedige).equal(4);
             expect(antStillinger.antallStillinger).equal(6);
         });
