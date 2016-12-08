@@ -6,22 +6,36 @@ import {actions} from "./ledigestillinger-bransjer-reducer";
 import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
 import Bokser from './ledigestillinger-bransjer-bokser';
+import {findTotaltAntallJobber} from './ledigestillinger-bransjer-util';
 import restActionCreator from "../../felles/rest/rest-action";
 import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
+import {STATUS, ALTERNATIV_ALLE} from "../../felles/konstanter";
 
 const meldinger = defineMessages({
     lenkeallebransjer: {
         id: 'ledigestillinger.bransjer.lenkeallebransjer',
         defaultMessage: 'Vis alle bransjer med ledige stillinger >>'
+    },
+    boksoverskrift: {
+        id: 'ledigestillinger.bransjer.boksoverskrift',
+        defaultMessage: 'Ledige jobber totalt ({antall}) fordelt på bransjer'
     }
 });
 
 const BokserForYrkesomrader = props => (
-    <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader.data}/>
+    <div>
+        <div className="blokk-xxs">
+            <FormattedMessage {...meldinger.boksoverskrift} values={{antall: props.totaltAntall}}/>
+        </div>
+        <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader.data}/>
+    </div>
 );
 
 const BokserForYrkesgrupper = props => (
     <Innholdslaster avhengigheter={[props.yrkesgrupper]}>
+        <div className="blokk-xxs">
+            <FormattedMessage {...meldinger.boksoverskrift} values={{antall: props.totaltAntall}}/>
+        </div>
         <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesgrupper.data} valgteyrkesgrupper={props.valgteyrkesgrupper}/>
     </Innholdslaster>
 );
@@ -44,14 +58,25 @@ export class Bransjer extends React.Component {
         this.props.dispatch(hentYrkesgrupper());
     }
 
+    getTotaltAntallJobber() {
+        if(this.props.yrkesomrader.status !== STATUS.lastet) {
+            return 0;
+        } else if(this.props.valgtyrkesomrade === ALTERNATIV_ALLE) {
+            return findTotaltAntallJobber(this.props.yrkesomrader.data);
+        }
+
+        const valgtOmrade =  this.props.yrkesomrader.data.find(yrkesomrade => yrkesomrade.id === this.props.valgtyrkesomrade);
+        return valgtOmrade != null ? valgtOmrade.antallStillinger : 0;
+    }
+
     render() {
         return (
             <div>
                 <Innholdslaster avhengigheter={[this.props.yrkesomrader]}>
                     <BransjeDropdown yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} />
-                    { this.props.valgtyrkesomrade === "alle"
-                        ? <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)} yrkesomrader={this.props.yrkesomrader}/>
-                        : <BokserForYrkesgrupper onClick={id => this.toggleYrkesgruppe(id)} yrkesgrupper={this.props.yrkesgrupper} valgteyrkesgrupper={this.props.valgteyrkesgrupper} />
+                    { this.props.valgtyrkesomrade === ALTERNATIV_ALLE
+                        ? <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)} yrkesomrader={this.props.yrkesomrader} totaltAntall={this.getTotaltAntallJobber()}/>
+                        : <BokserForYrkesgrupper onClick={id => this.toggleYrkesgruppe(id)} yrkesgrupper={this.props.yrkesgrupper} valgteyrkesgrupper={this.props.valgteyrkesgrupper} totaltAntall={this.getTotaltAntallJobber()}/>
                     }
                     <Link to="#">
                         <FormattedMessage {...meldinger.lenkeallebransjer} />
