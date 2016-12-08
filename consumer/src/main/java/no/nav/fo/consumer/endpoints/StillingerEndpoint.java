@@ -36,7 +36,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable
+    @Cacheable("antallStillingerForAlleKommuner")
     public List<KommuneStilling> getAntallStillingerForAlleKommuner() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
@@ -53,7 +53,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable
+    @Cacheable("yrkesomraderForFylke")
     public List<Bransje> getYrkesomraderForFylke(String fylkesnummer) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
@@ -72,7 +72,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable
+    @Cacheable("fylkerOgKommuner")
     public List<Omrade> getFylkerOgKommuner() {
         SolrQuery query = new SolrQuery("NIVAA:[2 TO 3] AND DOKUMENTTYPE:GEOGRAFI");
         query.setRows(500);
@@ -87,7 +87,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable
+    @Cacheable("yrkesgrupperForYrkesomrade")
     public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
         SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
         henteYrkesgrupperQuery.addFilterQuery("PARENT:"+yrkesomradeid);
@@ -106,7 +106,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable
+    @Cacheable("antallStillingerYrkesgruppe")
     private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
         henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
