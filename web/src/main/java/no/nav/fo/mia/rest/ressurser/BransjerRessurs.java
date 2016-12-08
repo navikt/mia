@@ -25,13 +25,13 @@ public class BransjerRessurs {
 
     @GET
     @Path("/yrkesomrade")
-    public List<Bransje> hentBransjerForFylke(@QueryParam("fylkesnummer") String fylkesnummer) {
+    public List<Bransje> hentYrkesomrader(@QueryParam("fylkesnummer") String fylkesnummer) {
         return stillingerEndpoint.getYrkesomraderForFylke(fylkesnummer);
     }
 
     @GET
     @Path("/yrkesgruppe")
-    public List<Bransje> hentForYrkesomrade(@QueryParam("yrkesomrade") String yrkesomrade) {
+    public List<Bransje> hentYrkesgrupper(@QueryParam("yrkesomrade") String yrkesomrade) {
         return stillingerEndpoint.getYrkesgrupperForYrkesomrade(yrkesomrade);
     }
 }

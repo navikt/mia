@@ -7,7 +7,7 @@ import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
 import Bokser from './ledigestillinger-bransjer-bokser';
 import restActionCreator from "../../felles/rest/rest-action";
-import IkkeFerdigPanel from "../../felles/ikkeferdig/ikke-ferdig-panel";
+import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
 
 const meldinger = defineMessages({
     lenkeallebransjer: {
@@ -20,8 +20,10 @@ const BokserForYrkesomrader = props => (
     <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader.data}/>
 );
 
-const BokserForYrkesgrupper = () => (
-    <IkkeFerdigPanel />
+const BokserForYrkesgrupper = props => (
+    <Innholdslaster avhengigheter={[props.yrkesgrupper]}>
+        <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesgrupper.data} valgteyrkesgrupper={props.valgteyrkesgrupper}/>
+    </Innholdslaster>
 );
 
 export class Bransjer extends React.Component {
@@ -39,6 +41,7 @@ export class Bransjer extends React.Component {
 
     velgYrkesomrade(id) {
         this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
+        this.props.dispatch(hentYrkesgrupper());
     }
 
     render() {

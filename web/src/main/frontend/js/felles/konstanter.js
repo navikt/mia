@@ -5,3 +5,4 @@ export const STATUS = {
     laster: 'LASTER',
     initialisert: 'INITIALISERT'
 };
+export const ALTERNATIV_ALLE = "alle";
