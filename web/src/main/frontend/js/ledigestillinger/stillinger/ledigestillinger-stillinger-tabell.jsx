@@ -28,7 +28,7 @@ export const Stillingsvisning = props => {
             return 1;
         }
         if(b.soknadfrist == null) {
-            return -1
+            return -1;
         }
         return new Date(a.soknadfrist) < new Date(b.soknadfrist);
     };
