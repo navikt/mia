@@ -23,7 +23,17 @@ export const meldinger = defineMessages({
 
 
 export const Stillingsvisning = props => {
-    const stillinger = props.yrkesgruppe.stillinger.sort((a, b) => new Date(a.soknadfrist) < new Date(b.soknadfrist));
+    const compareSoknadsfrister = (a, b) => {
+        if(a.soknadfrist == null) {
+            return 1;
+        }
+        if(b.soknadfrist == null) {
+            return -1
+        }
+        return new Date(a.soknadfrist) < new Date(b.soknadfrist);
+    };
+
+    const stillinger = props.yrkesgruppe.stillinger.sort(compareSoknadsfrister);
 
     return  (
         <div className="blokk-m">
