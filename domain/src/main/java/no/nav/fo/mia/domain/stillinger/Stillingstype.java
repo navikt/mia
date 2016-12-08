@@ -7,6 +7,7 @@ public class Stillingstype {
     private String id;
     private String strukturkode;
     private List<String> parent;
+    private int antallStillinger;
 
     public Stillingstype() {
     }
@@ -16,6 +17,14 @@ public class Stillingstype {
         this.id = id;
         this.strukturkode = strukturkode;
         this.parent = parent;
+    }
+
+    public int getAntallStillinger() {
+        return antallStillinger;
+    }
+
+    public void setAntallStillinger(int antallStillinger) {
+        this.antallStillinger = antallStillinger;
     }
 
     public List<String> getParent() {
@@ -48,5 +57,10 @@ public class Stillingstype {
 
     public void setStrukturkode(String strukturkode) {
         this.strukturkode = strukturkode;
+    }
+
+    public Stillingstype withAntallStillinger(int antall) {
+        this.setAntallStillinger(antall);
+        return this;
     }
 }

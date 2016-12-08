@@ -6,7 +6,7 @@ import {actions} from "./ledigestillinger-bransjer-reducer";
 import Inputfelt from "../../felles/inputfelter/inputfelt";
 import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
-import { hentYrkesomraderForAlleFylker } from './ledigestillinger-bransjer-actions';
+import { hentYrkesomraderForAlleFylker, hentYrkesgrupperForOmrade } from './ledigestillinger-bransjer-actions';
 import Bokser from './ledigestillinger-bransjer-bokser';
 
 export const meldinger = defineMessages({
@@ -43,6 +43,7 @@ export class Bransjer extends React.Component {
 
     velgYrkesomrade(id) {
         this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
+        this.props.dispatch(hentYrkesgrupperForOmrade(id));
     }
 
     render() {

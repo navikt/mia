@@ -1,5 +1,6 @@
 package no.nav.fo.consumer.endpoints;
 
+import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
 import no.nav.fo.consumer.kodeverk.FylkerOgKommunerReader;
 import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.consumer.transformers.StillingerForKommuneTransformer;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StillingerEndpoint {
 
@@ -54,6 +56,7 @@ public class StillingerEndpoint {
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("YRKGR_LVL_1");
         solrQuery.addFacetField("YRKGR_LVL_1_ID");
+        solrQuery.addFacetField("ANTALLSTILLINGER");
         solrQuery.setRows(0);
 
         try {
@@ -67,18 +70,34 @@ public class StillingerEndpoint {
 
     @Timed
     public List<Stillingstype> getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
-        String query = String.format("DOKUMENTTYPE:STILLINGSTYPE AND PARENT:%s", yrkesomradeid);
-        SolrQuery solrQuery = new SolrQuery(query);
-        if(yrkesomradeid.equals("*")) {
-            solrQuery.setRows(10000);
-        }
+        SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
+        henteYrkesgrupperQuery.addFilterQuery("PARENT:"+yrkesomradeid);
+        henteYrkesgrupperQuery.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
 
         try {
-            QueryResponse resp = supportSolrClient.query(solrQuery);
-            return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesomrade(resp.getResults());
+            QueryResponse yrkesgruppeResponse = supportSolrClient.query(henteYrkesgrupperQuery);
+            return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
+                    .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId())))
+                    .collect(Collectors.toList());
+
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
             throw new ApplicationException("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
+        }
+    }
+
+    private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid) {
+        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
+        henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
+        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
+        henteAntallStillingerQuery.setRows(0);
+
+        try {
+            QueryResponse antallStillingerResponse = mainSolrClient.query(henteAntallStillingerQuery);
+            return AntallStillingerExtractor.getAntallStillinger(antallStillingerResponse);
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av antall stillinger fra solr supportcore", e.getCause());
+            throw new ApplicationException("Feil ved henting av antall stillinger fra solr supportcore", e.getCause());
         }
     }
 }
