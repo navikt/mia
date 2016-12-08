@@ -1,11 +1,13 @@
 package no.nav.fo.consumer.endpoints;
 
-import no.nav.fo.consumer.transformers.BransjeLvl1ForFylkeTransformer;
-import no.nav.fo.consumer.transformers.GeografiTransformer;
 import no.nav.fo.consumer.transformers.StillingerForKommuneTransformer;
-import no.nav.fo.mia.domain.geografi.Omrade;
-import no.nav.fo.mia.domain.stillinger.BransjeLvl1;
+import no.nav.fo.consumer.transformers.GeografiTransformer;
+import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
+import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.mia.domain.stillinger.KommuneStilling;
+import no.nav.fo.mia.domain.geografi.Omrade;
+import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
+import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.solr.client.solrj.SolrClient;
@@ -19,21 +21,22 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StillingerEndpoint {
 
-    private SolrClient solrClientMain;
-    private SolrClient solrClientSupport;
+    private SolrClient mainSolrClient, supportSolrClient;
     private Logger logger = LoggerFactory.getLogger(StillingerEndpoint.class);
 
     public StillingerEndpoint() {
-        String mainCoreUri = String.format("%s/maincore", System.getProperty("stilling.solr.url"));
+        String maincoreUri = String.format("%s/maincore", System.getProperty("stilling.solr.url"));
         String supportCoreUri = String.format("%s/supportcore", System.getProperty("stilling.solr.url"));
-        solrClientMain = new HttpSolrClient.Builder().withBaseSolrUrl(mainCoreUri).build();
-        solrClientSupport = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
+        mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
+        supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
     }
 
     @Timed
+    @Cacheable
     public List<KommuneStilling> getAntallStillingerForAlleKommuner() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
@@ -41,7 +44,7 @@ public class StillingerEndpoint {
         solrQuery.setRows(0);
 
         try {
-            QueryResponse resp = solrClientMain.query(solrQuery);
+            QueryResponse resp = mainSolrClient.query(solrQuery);
             return StillingerForKommuneTransformer.getStillingerForKommuner(resp.getFacetField("KOMMUNE_ID").getValues(), null, getFylkerOgKommuner());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av stillinger fra solr", e.getCause());
@@ -50,16 +53,18 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    public List<BransjeLvl1> getBransjerLvl1ForFylke(String fylkesnummer) {
+    @Cacheable
+    public List<Bransje> getYrkesomraderForFylke(String fylkesnummer) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("YRKGR_LVL_1");
         solrQuery.addFacetField("YRKGR_LVL_1_ID");
+        solrQuery.addFacetField("ANTALLSTILLINGER");
         solrQuery.setRows(0);
 
         try {
-            QueryResponse resp = solrClientMain.query(solrQuery);
-            return BransjeLvl1ForFylkeTransformer.getBransjeLvlForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID"));
+            QueryResponse resp = mainSolrClient.query(solrQuery);
+            return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID"));
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
@@ -67,17 +72,53 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("fylkerogkommuner")
+    @Cacheable
     public List<Omrade> getFylkerOgKommuner() {
         SolrQuery query = new SolrQuery("NIVAA:[2 TO 3] AND DOKUMENTTYPE:GEOGRAFI");
         query.setRows(500);
 
         try {
-            QueryResponse resp = solrClientSupport.query(query);
+            QueryResponse resp = supportSolrClient.query(query);
             return GeografiTransformer.transformResponseToFylkerOgKommuner(resp.getResults());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av geografi fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av geografi fra solr", e.getCause());
+        }
+    }
+
+    @Timed
+    @Cacheable
+    public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
+        SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
+        henteYrkesgrupperQuery.addFilterQuery("PARENT:"+yrkesomradeid);
+        henteYrkesgrupperQuery.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
+
+        try {
+            QueryResponse yrkesgruppeResponse = supportSolrClient.query(henteYrkesgrupperQuery);
+            return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
+                    .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId())))
+                    .collect(Collectors.toList());
+
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
+            throw new ApplicationException("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
+        }
+    }
+
+    @Timed
+    @Cacheable
+    private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid) {
+        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
+        henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
+        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
+        henteAntallStillingerQuery.setRows(0);
+
+        try {
+            QueryResponse antallStillingerResponse = mainSolrClient.query(henteAntallStillingerQuery);
+            return AntallStillingerExtractor.getAntallStillinger(antallStillingerResponse);
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av antall stillinger fra solr supportcore", e.getCause());
+            throw new ApplicationException("Feil ved henting av antall stillinger fra solr supportcore", e.getCause());
         }
     }
 }
