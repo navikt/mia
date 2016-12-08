@@ -37,3 +37,9 @@ export function fetchToJson(url, config = {}) {
         .then(sjekkStatuskode)
         .then(toJson);
 }
+
+export function buildUriParams(params) {
+    return Object.keys(params)
+        .map(key => `${key}=${params[key]}`)
+        .reduce((paramstring, current) => `${paramstring}&${current}`, "");
+}
