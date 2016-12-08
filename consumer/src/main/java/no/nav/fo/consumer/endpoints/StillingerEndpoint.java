@@ -86,8 +86,9 @@ public class StillingerEndpoint {
     @Timed
     @Cacheable("fylkerOgKommuner")
     public List<Omrade> getFylkerOgKommuner() {
-        SolrQuery query = new SolrQuery("NIVAA:[2 TO 3] AND DOKUMENTTYPE:GEOGRAFI");
-        query.setRows(500);
+        SolrQuery query = new SolrQuery("NIVAA:[2 TO 3]");
+        query.addFilterQuery("DOKUMENTTYPE:GEOGRAFI");
+        query.setRows(1000);
 
         try {
             QueryResponse resp = supportSolrClient.query(query);
