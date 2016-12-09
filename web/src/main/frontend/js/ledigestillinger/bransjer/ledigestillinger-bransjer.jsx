@@ -7,8 +7,7 @@ import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
 import Bokser from './ledigestillinger-bransjer-bokser';
 import {findTotaltAntallJobber} from './ledigestillinger-bransjer-util';
-import restActionCreator from "../../felles/rest/rest-action";
-import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
+import {hentYrkesgrupper, hentYrkesomrader} from "./ledigestillinger-bransjer-actions";
 import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {STATUS, ALTERNATIV_ALLE} from "../../felles/konstanter";
 
@@ -43,7 +42,7 @@ const BokserForYrkesgrupper = props => (
 
 export class Bransjer extends React.Component {
     componentDidMount() {
-        this.props.dispatch(restActionCreator("yrkesomrader", "/bransjer/yrkesomrade"));
+        this.props.dispatch(hentYrkesomrader());
     }
 
     toggleYrkesgruppe(id) {

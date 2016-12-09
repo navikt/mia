@@ -53,3 +53,18 @@ export function buildUriParams(params) {
     return reduceParamList(Object.keys(params)
         .map(key => getUriParam(key, params[key])));
 }
+
+export function getParamsForValgteFylkerOgKommuner(state) {
+    const params = {};
+    const valgtFylke = state.ledigestillinger.oversikt.valgtFylke;
+    if(valgtFylke !== "") {
+        params['fylker'] = [valgtFylke];
+    }
+
+    const valgtKommune = state.ledigestillinger.oversikt.valgtKommune;
+    if(valgtKommune !== "") {
+        params['kommuner'] = [valgtKommune];
+    }
+
+    return params;
+}

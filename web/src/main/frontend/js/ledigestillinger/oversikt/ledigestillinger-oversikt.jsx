@@ -7,6 +7,8 @@ import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import OversiktTabell from "./ledigestillinger-oversikt-tabell";
 import restActionCreator from "../../felles/rest/rest-action";
+import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
+import {hentYrkesgrupper, hentYrkesomrader} from "../bransjer/ledigestillinger-bransjer-actions";
 
 const meldinger = defineMessages({
     lenkeVisKart: {
@@ -30,10 +32,18 @@ export class Oversikt extends React.Component {
 
     velgFylke(fylke) {
         this.props.dispatch({ type: actions.velg_fylke, payload: fylke });
+        this.oppdaterAlleDatagrunnlag();
     }
 
     velgKommune(kommune) {
         this.props.dispatch({ type: actions.velg_kommune, payload: kommune });
+        this.oppdaterAlleDatagrunnlag();
+    }
+
+    oppdaterAlleDatagrunnlag() {
+        this.props.dispatch(hentYrkesomrader());
+        this.props.dispatch(hentYrkesgrupper());
+        this.props.dispatch(hentStillinger());
     }
 
     render() {
