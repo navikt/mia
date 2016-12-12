@@ -51,7 +51,7 @@ const KommuneTabellRad = props => (
 );
 
 const KommuneTabell = ({valgtFylke, kommuner, stillinger}) => {
-    const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
+    const stillingerTotalt = stillinger.find(stilling => stilling.id === valgtFylke.id);
     const fylkenavn = valgtFylke != null ? valgtFylke.navn : "";
 
     return (
@@ -105,7 +105,7 @@ export const Oversiktstabell = props => {
                     alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.id}))}
                 />
             </form>
-            { valgtFylke != null ? <KommuneTabell valgFylke={valgtFylke} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
+            { valgtFylke != null ? <KommuneTabell valgtFylke={valgtFylke} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
         </div>
     );
 };

@@ -1,7 +1,7 @@
 package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
-import no.nav.fo.mia.domain.stillinger.KommuneStilling;
+import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
@@ -25,7 +25,7 @@ public class StillingerRessurs {
 
     @GET
     @Path("/oversiktAlleKommuner")
-    public List<KommuneStilling> hentOversiktForAlleKommuner() {
-        return stillingerEndpoint.getAntallStillingerForAlleKommuner();
+    public List<OmradeStilling> hentOversiktForFylkerOgKommuner() {
+        return stillingerEndpoint.getAntallStillingerForFylkerOgKommuner();
     }
 }

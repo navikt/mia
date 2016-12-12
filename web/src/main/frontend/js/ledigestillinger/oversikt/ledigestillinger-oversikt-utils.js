@@ -3,7 +3,7 @@ export function getKommunerForValgtFylke(valgtFylke, fylker){
 }
 
 export function getKommuneMedData(kommune, stillinger) {
-    const stillingdata = stillinger.find(stilling => stilling.kommuneid === kommune.id) || {};
+    const stillingdata = stillinger.find(stilling => stilling.id === kommune.id) || {};
     return {
         navn: kommune.navn,
         id: kommune.id,

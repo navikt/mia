@@ -2,7 +2,7 @@ package no.nav.fo.consumer.endpoints;
 
 import no.nav.fo.consumer.transformers.*;
 import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
-import no.nav.fo.mia.domain.stillinger.KommuneStilling;
+import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.fo.mia.domain.geografi.Omrade;
 import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.fo.mia.domain.stillinger.Stilling;
@@ -35,16 +35,17 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerForAlleKommuner")
-    public List<KommuneStilling> getAntallStillingerForAlleKommuner() {
+    @Cacheable("antallStillingerForFylkerOgKommuner")
+    public List<OmradeStilling> getAntallStillingerForFylkerOgKommuner() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("KOMMUNE_ID");
+        solrQuery.addFacetField("FYLKE_ID");
         solrQuery.setRows(0);
 
         try {
             QueryResponse resp = mainSolrClient.query(solrQuery);
-            return StillingerForKommuneTransformer.getStillingerForKommuner(resp.getFacetField("KOMMUNE_ID").getValues(), null, getFylkerOgKommuner());
+            return StillingerForOmradeTransformer.getStillingerForKommuner(resp.getFacetField("KOMMUNE_ID").getValues(), resp.getFacetField("FYLKE_ID").getValues());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av stillinger fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());

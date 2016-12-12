@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class GeografiTransformer {
     public static List<Omrade> transformResponseToFylkerOgKommuner(SolrDocumentList solrDocuments) {
         List<Omrade> alleOmrader = solrDocuments.stream()
-                .map(GeografiTransformer::createOmradeFromDocuement)
+                .map(GeografiTransformer::createOmradeFromDocument)
                 .filter(omrade -> omrade.getStrukturkode() != null)
                 .filter(omrade -> !omrade.getNavn().contains("Ikke i bruk"))
                 .collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class GeografiTransformer {
         return omrade.getNivaa().equals("2");
     }
 
-    private static Omrade createOmradeFromDocuement(SolrDocument document) {
+    private static Omrade createOmradeFromDocument(SolrDocument document) {
         Omrade omrade = new Omrade(
                 getFieldValue("NIVAA", document),
                 getFieldValue("ID", document),

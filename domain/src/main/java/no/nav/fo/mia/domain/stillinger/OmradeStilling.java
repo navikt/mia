@@ -1,33 +1,33 @@
 package no.nav.fo.mia.domain.stillinger;
 
-public class KommuneStilling {
-    private String kommuneid;
+public class OmradeStilling {
+    private String id;
     private int antallLedige;
     private int antallStillinger;
 
-    public KommuneStilling() {
+    public OmradeStilling() {
     }
 
-    public KommuneStilling(String kommuneid) {
-        this.kommuneid = kommuneid;
+    public OmradeStilling(String id) {
+        this.id = id;
     }
 
-    public KommuneStilling(String kommuneid, int antallLedige, int antallStillinger) {
-        this.kommuneid = kommuneid;
+    public OmradeStilling(String id, int antallLedige, int antallStillinger) {
+        this.id = id;
         this.antallLedige = antallLedige;
         this.antallStillinger = antallStillinger;
     }
 
-    public String getKommuneid() {
-        return kommuneid;
+    public String getId() {
+        return id;
     }
 
-    public void setKommuneid(String kommuneid) {
-        this.kommuneid = kommuneid;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public KommuneStilling withKommuneid(String kommuneid){
-        setKommuneid(kommuneid);
+    public OmradeStilling withId(String id){
+        setId(id);
         return this;
     }
 
@@ -39,7 +39,7 @@ public class KommuneStilling {
         this.antallLedige = antallLedige;
     }
 
-    public KommuneStilling withAntallLedige(int antallLedige) {
+    public OmradeStilling withAntallLedige(int antallLedige) {
         setAntallLedige(antallLedige);
         return this;
     }
@@ -52,7 +52,7 @@ public class KommuneStilling {
         this.antallStillinger = antallStillinger;
     }
 
-    public KommuneStilling withAntallStillinger(int antallStillinger) {
+    public OmradeStilling withAntallStillinger(int antallStillinger) {
         setAntallStillinger(antallStillinger);
         return this;
     }
