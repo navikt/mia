@@ -55,16 +55,13 @@ export function buildUriParams(params) {
 }
 
 export function getParamsForValgteFylkerOgKommuner(state) {
+    const valgteKommuner = state.ledigestillinger.oversikt.valgteKommuner;
+    const valgteFylker = state.ledigestillinger.oversikt.valgteFylker;
+
+    const harIkkeValgtKommuneIFylke = valgtFylke => state.rest.omrader.data.find(fylke => fylke.id === valgtFylke).underomrader.some(kommune => !valgteKommuner.includes(kommune.id));
+
     const params = {};
-    const valgtFylke = state.ledigestillinger.oversikt.valgtFylke;
-    if(valgtFylke !== "") {
-        params['fylker'] = [valgtFylke];
-    }
-
-    const valgtKommune = state.ledigestillinger.oversikt.valgtKommune;
-    if(valgtKommune !== "") {
-        params['kommuner'] = [valgtKommune];
-    }
-
+    params['fylker'] = valgteFylker.filter(harIkkeValgtKommuneIFylke);
+    params['kommuner'] = valgteKommuner;
     return params;
 }

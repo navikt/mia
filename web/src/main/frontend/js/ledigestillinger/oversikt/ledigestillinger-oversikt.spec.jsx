@@ -1,39 +1,48 @@
 import {expect, sinon, React} from '../../../test/test-helper';
 import {shallow} from "enzyme";
 
-import OversiktReducer, {actions} from './ledigestillinger-oversikt-reducer';
+import OversiktReducer, {actions, initialState} from './ledigestillinger-oversikt-reducer';
 import {Oversikt} from "./ledigestillinger-oversikt";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import Oversiktstabell from "./ledigestillinger-oversikt-tabell";
-import {getStillingerTotalt, getKommuneMedData, getKommunerForValgtFylke} from './ledigestillinger-oversikt-utils';
+import {getStillingerTotalt, getKommuneMedData} from './ledigestillinger-oversikt-utils';
 
 describe('ledigestillinger', () => {
     describe('oversikt-reducer', () => {
         it("skal sette visKart til true når vi kaller action VIS_KART", () => {
-            const newState = OversiktReducer({}, { type: actions.vis_kart });
+            const newState = OversiktReducer(initialState, { type: actions.vis_kart });
             expect(newState.visKart).to.be.true;
         });
 
         it("skal sette visKart til false når vi kaller action VIS_TABELL", () => {
-            const newState = OversiktReducer({}, { type: actions.vis_tabell });
+            const newState = OversiktReducer(initialState, { type: actions.vis_tabell });
             expect(newState.visKart).to.be.false;
         });
 
-        it("skal sette fylke til valgt fylke når vi kaller VELG_FYLKE", () => {
-            const fylkeSomVelges = "ET FYLKE";
-            const newState = OversiktReducer({}, { type: actions.velg_fylke, payload: fylkeSomVelges });
-            expect(newState.valgtFylke).to.equal(fylkeSomVelges);
-        });
+        describe('modal', () => {
+            it("skal sette fylke til valgt fylke når vi kaller MODAL_VELG_FYLKE", () => {
+                const fylkeSomVelges = "ET FYLKE";
+                const newState = OversiktReducer(initialState, { type: actions.modal_velg_fylke, payload: fylkeSomVelges });
+                expect(newState.valgteFylkerModal[0]).to.equal(fylkeSomVelges);
+            });
 
-        it("skal blanke ut kommune når vi kaller VELG_FYLKE", () => {
-            const newState = OversiktReducer({ valgtKommune: "gammel kommune" }, { type: actions.velg_fylke, payload: "et fylke" });
-            expect(newState.valgtKommune).to.equal("");
-        });
+            it("skal sette kommune til valgt kommune når vi kaller MODALVELG_KOMMUNE", () => {
+                const kommuneSomVelges = "ET FYLKE";
+                const newState = OversiktReducer(initialState, { type: actions.modal_velg_kommune, payload: kommuneSomVelges });
+                expect(newState.valgteKommunerModal[0]).to.equal(kommuneSomVelges);
+            });
 
-        it("skal sette kommune til valgt kommune når vi kaller VELG_KOMMUNE", () => {
-            const kommuneSomVelges = "ET FYLKE";
-            const newState = OversiktReducer({}, { type: actions.velg_kommune, payload: kommuneSomVelges });
-            expect(newState.valgtKommune).to.equal(kommuneSomVelges);
+            it("skal kopiere verdier til valgte_fylker og velgte_kommunr når vi kaller MODAL_LAGRE", () => {
+                const state = {
+                    ...initialState,
+                    valgteFylkerModal: ["FYLKE"],
+                    valgteKommunerModal: ["KOMMUNE"]
+                };
+
+                const newState = OversiktReducer(state, { type: actions.modal_lagre });
+                expect(newState.valgteKommuner.length).to.equal(1);
+                expect(newState.valgteFylker[0]).to.equal("FYLKE");
+            });
         });
     });
 
@@ -129,16 +138,6 @@ describe('ledigestillinger', () => {
                     { kommuneid: "0202", antallLedige: 3, antallStillinger: 4 }
                 ]
             };
-        });
-
-        it('getKommunerForValgtFylke skal returnere [] hvis valgtFylke er tom string', () => {
-            const kommuner = getKommunerForValgtFylke("", this.omrader.data);
-            expect(kommuner).to.deep.equal([]);
-        });
-
-        it('getKommunerForValgtFylke skal returnere hvis valgtFylke er "fylke1"', () => {
-            const kommuner = getKommunerForValgtFylke("f1", this.omrader.data);
-            expect(kommuner).to.deep.equal([this.kommune1]);
         });
 
         it('getKommuneMedData skal populere kommunen med stillinger', () => {

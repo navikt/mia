@@ -1,11 +1,17 @@
 import React from "react";
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {getStillingerTotalt, getKommuneMedData, getKommunerForValgtFylke} from './ledigestillinger-oversikt-utils';
+import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke} from './ledigestillinger-oversikt-utils';
+import Modal from "../../felles/modal/modal";
+import Modalinnhold from "./ledigestillinger-oversikt-modalinnhold";
 
 const meldinger = defineMessages({
-    velgFylke: {
-        id: 'ledigestillinger.oversikt.tabell.velgfylke',
-        defaultMessage: 'Velg fylke/fylker'
+    velgKommuneOgFylkeLabel: {
+        id: 'ledigestillinger.oversikt.tabell.velgfylkerogkommuner',
+        defaultMessage: 'Velg fylker og kommuner'
+    },
+    modalTittel: {
+        id: 'ledigestillinger.oversikt.tabell.modal.tittel',
+        defaultMessage: 'Velg fylker og kommuner'
     },
     velgKommune: {
         id: 'ledigestillinger.oversikt.tabell.velgkommune',
@@ -22,25 +28,12 @@ const meldinger = defineMessages({
     tabellOverskriftStillinger: {
         id: 'ledigestillinger.oversikt.tabell.overskriftstillinger',
         defaultMessage: 'Ledige stillinger ({antall, number})'
-    }
+    },
+    tabellIngenValgt: {
+    id: 'ledigestillinger.oversikt.tabell.ingenvalgt',
+        defaultMessage: 'Ingen fylker eller kommuner er valgt'
+}
 });
-
-const SelectElement = props => (
-    <div className={props.className}>
-        <label htmlFor={props.id}>
-            <FormattedMessage {...props.label}/>
-        </label>
-        <div className="select-container input-fullbredde">
-            <select id={props.id} name={props.name} defaultValue={props.valgt} value={props.value} onChange={event => props.onChange(event.target.value)}>
-                { props.alternativer.map(alternativ => (
-                    <option key={alternativ.value} value={alternativ.value}>
-                        {alternativ.navn}
-                    </option>
-                ))}
-            </select>
-        </div>
-    </div>
-);
 
 const KommuneTabellRad = props => (
     <tr key={props.kommune.kommunenummer}>
@@ -50,12 +43,12 @@ const KommuneTabellRad = props => (
     </tr>
 );
 
-const KommuneTabell = ({valgtFylke, kommuner, stillinger}) => {
+const KommuneTabell = ({fylke, kommuner, stillinger}) => {
     const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
-    const fylkenavn = valgtFylke != null ? valgtFylke.navn : "";
+    const fylkenavn = fylke != null ? fylke.navn : "";
 
     return (
-        <div>
+        <div className="blokk">
             <h3 className="typo-etikett">{fylkenavn}</h3>
             <table className="tabell blokk-s">
                 <thead>
@@ -80,32 +73,22 @@ const KommuneTabell = ({valgtFylke, kommuner, stillinger}) => {
 };
 
 export const Oversiktstabell = props => {
-    const kommunerForValgtFylke = getKommunerForValgtFylke(props.valgtFylke, props.omrader);
-    const valgtFylke = props.omrader.find(omrade => omrade.id === props.valgtFylke);
+    const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
+    const modalId = "velgKommunerOgFylker";
 
     return (
         <div>
-            <form className="blokk-l" noValidate>
-                <SelectElement
-                    id="select-fylke"
-                    className="blokk-s"
-                    name="fylke"
-                    value={props.valgtFylke}
-                    onChange={props.velgFylke}
-                    label={meldinger.velgFylke}
-                    alternativer={props.omrader.map(fylke => ({navn: fylke.navn, value: fylke.id}))}
-                />
-
-                <SelectElement
-                    id="select-kommune"
-                    name="kommune"
-                    value={props.valgtKommune}
-                    onChange={props.velgKommune}
-                    label={meldinger.velgKommune}
-                    alternativer={kommunerForValgtFylke.map(kommune => ({navn: kommune.navn, value: kommune.id}))}
-                />
-            </form>
-            { valgtFylke != null ? <KommuneTabell valgFylke={valgtFylke} kommuner={kommunerForValgtFylke} stillinger={props.oversiktStillinger} /> : null }
+            <div className="text-center blokk">
+                <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)}>
+                    <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
+                </button>
+            </div>
+            <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}>
+                <Modalinnhold />
+            </Modal>
+            { valgteFylker.length !== 0
+                ? valgteFylker.map(fylke => <KommuneTabell key={fylke.id} fylke={fylke} kommuner={getValgteKommunerForFylke(fylke.id, props.omrader, props.valgteKommuner)} stillinger={props.oversiktStillinger} />)
+                : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em> }
         </div>
     );
 };

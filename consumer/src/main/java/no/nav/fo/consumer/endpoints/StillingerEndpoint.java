@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -157,11 +158,17 @@ public class StillingerEndpoint {
     }
 
     private void addFylkerOgKommunerFilter(SolrQuery query, List<String> fylker, List<String> kommuner) {
+        List<String> statements = new ArrayList<>();
+
         if(fylker != null && !fylker.isEmpty()) {
-            query.addFilterQuery(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
+            statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
         }
         if(kommuner != null && !kommuner.isEmpty()) {
-            query.addFilterQuery(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
+            statements.add(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
+        }
+
+        if(!statements.isEmpty()) {
+            query.addFilterQuery(StringUtils.join(statements, " OR "));
         }
     }
 }

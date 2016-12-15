@@ -9,6 +9,7 @@ import OversiktTabell from "./ledigestillinger-oversikt-tabell";
 import restActionCreator from "../../felles/rest/rest-action";
 import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader} from "../bransjer/ledigestillinger-bransjer-actions";
+import {apneModal} from "../../felles/modal/modal-reducer";
 
 const meldinger = defineMessages({
     lenkeVisKart: {
@@ -30,13 +31,12 @@ export class Oversikt extends React.Component {
         this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
     }
 
-    velgFylke(fylke) {
-        this.props.dispatch({ type: actions.velg_fylke, payload: fylke });
-        this.oppdaterAlleDatagrunnlag();
+    apneModal(modalid) {
+        this.props.dispatch(apneModal(modalid));
     }
 
-    velgKommune(kommune) {
-        this.props.dispatch({ type: actions.velg_kommune, payload: kommune });
+    lagreModal() {
+        this.props.dispatch({ type: actions.modal_lagre });
         this.oppdaterAlleDatagrunnlag();
     }
 
@@ -48,12 +48,12 @@ export class Oversikt extends React.Component {
 
     render() {
         const oversiktProps = {
-            velgFylke: this.velgFylke.bind(this),
-            velgKommune: this.velgKommune.bind(this),
-            valgtFylke: this.props.valgtFylke,
-            valgtKommune: this.props.valgtKommune,
+            valgteFylker: this.props.valgteFylker,
+            valgteKommuner: this.props.valgteKommuner,
             oversiktStillinger: this.props.oversiktStillinger.data,
-            omrader: this.props.omrader.data
+            omrader: this.props.omrader.data,
+            apneModal: this.apneModal.bind(this),
+            lagreModal: this.lagreModal.bind(this)
         };
 
         return (
@@ -71,8 +71,8 @@ export class Oversikt extends React.Component {
 
 const stateToProps = state => ({
     visKart: state.ledigestillinger.oversikt.visKart,
-    valgtFylke: state.ledigestillinger.oversikt.valgtFylke,
-    valgtKommune: state.ledigestillinger.oversikt.valgtKommune,
+    valgteFylker: state.ledigestillinger.oversikt.valgteFylker,
+    valgteKommuner: state.ledigestillinger.oversikt.valgteKommuner,
     omrader: state.rest.omrader,
     oversiktStillinger: state.rest.oversiktStillinger
 });
