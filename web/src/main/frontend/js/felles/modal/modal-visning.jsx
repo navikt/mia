@@ -122,7 +122,8 @@ export class ModalVisning extends Component {
                                 <ul className="ustilet liste-ustilet">
                                     <li className="blokk-xs">
                                         <button type="button" onClick={this.lagreOgLukk} className="knapp knapp-hoved js-test-lagre">
-                                            <FormattedMessage {...messages.lagre}/></button>
+                                            <FormattedMessage {...messages.lagre} />
+                                        </button>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0)" role="button" className="lenke js-test-avbryt" onClick={this.onLukk} ref="avbryt">

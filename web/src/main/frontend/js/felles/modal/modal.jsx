@@ -8,7 +8,7 @@ class Modal extends Component {
         if(this.props.apenmodal === this.props.id) {
             return <ModalVisning {...this.props}/>;
         } else {
-            return null
+            return null;
         }
     }
 }

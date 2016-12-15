@@ -11,7 +11,7 @@ describe('ModalVisning - ', () => {
             tekster: {
                 tittel: {}
             },
-            children: <div id="mittIndreBarn"> </div>,
+            children: <div id="mittIndreBarn" />,
             apenmodal: true,
             onLukk: "onLukkCallback",
             feilmelding: "Du gjorde feil!"
