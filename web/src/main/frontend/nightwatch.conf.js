@@ -1,4 +1,4 @@
-const argv = require('yargs')
+var argv = require('yargs')
     .option('url',  {
         type: 'string'
     })
@@ -8,13 +8,13 @@ const argv = require('yargs')
     })
     .argv;
 
-const chromedrivers = {
+var chromedrivers = {
     'linux': './selenium/chromedriver',
     'win32': './selenium/chromedriver.exe',
     'win64': './selenium/chromedriver.exe'
 };
 
-const phantomjsdrivers = {
+var phantomjsdrivers = {
     'linux': './selenium/phantomjs',
     'win32': './selenium/phantomjs.exe',
     'win64': './selenium/phantomjs.exe'
