@@ -76,14 +76,14 @@ stage("Deploy app") {
     callback = "${env.BUILD_URL}input/Deploy/"
     node {
         def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
-        deploy = common.deployApp('mia', version, "${miljo}", callback, author)
+        def deploy = common.deployApp('mia', version, "${miljo}", callback, author).key
 
         try {
             timeout(time: 15, unit: 'MINUTES') {
-                input id: 'deploy', message: "deployer ${deploy.key}, deploy OK?"
+                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
             }
         } catch(Exception e) {
-            msg = "Deploy feilet (" + deploy.key + ")[https://jira.adeo.no/browse/" + deploy.key + "]"
+            msg = "Deploy feilet (" + deploy + ")[https://jira.adeo.no/browse/" + deploy + "]"
             notifyFailed(msg, e)
         }
     }
