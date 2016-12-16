@@ -1,6 +1,5 @@
-"use strict";
-let WAIT_TIME;
-let ledigestillinger;
+var WAIT_TIME;
+var ledigestillinger;
 
 module.exports = {
     before: (client) => {
@@ -12,7 +11,6 @@ module.exports = {
         client.end();
     },
     "oversikt, bransjer og graf skal være synlig": function () {
-        console.log();
         ledigestillinger.expect.section('@oversikt').to.be.present.after(WAIT_TIME);
         ledigestillinger.expect.section('@bransjer').to.be.present.after(WAIT_TIME);
         ledigestillinger.expect.section('@statistikk').to.be.present.after(WAIT_TIME);

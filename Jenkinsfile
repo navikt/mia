@@ -73,31 +73,32 @@ node {
 }
 
 stage("Deploy app") {
-    try {
-        callback = "${env.BUILD_URL}input/Deploy/"
-        node {
-            def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
-            common.deployApp('mia', version, "${miljo}", callback, author)
-        }
+    callback = "${env.BUILD_URL}input/Deploy/"
+    node {
+        def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
+        deploy = common.deployApp('mia', version, "${miljo}", callback, author)
 
-        timeout(time: 15, unit: 'MINUTES') {
-            input id: 'deploy', message: 'deploy OK?'
+        try {
+            timeout(time: 15, unit: 'MINUTES') {
+                input id: 'deploy', message: "deployer ${deploy.key}, deploy OK?"
+            }
+        } catch(Exception e) {
+            msg = "Deploy feilet (" + deploy.key + ")[https://jira.adeo.no/browse/" + deploy.key + "]"
+            notifyFailed(msg, e)
         }
-    } catch(Exception e) {
-        notifyFailed("Deploy feilet", e)
     }
 }
 
 stage("Int. tester") {
-    try {
-        node {
+    node {
+        try {
             dir("web/src/main/frontend") {
                 sh("node nightwatch.js --env phantomjs --url ${testurl}")
             }
+        } catch (Exception e) {
+            step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+            notifyFailed("Integrasjonstester feilet", e)
         }
-    } catch(Exception e) {
-        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-        notifyFailed("Integrasjonstester feilet", e)
     }
 }
 
