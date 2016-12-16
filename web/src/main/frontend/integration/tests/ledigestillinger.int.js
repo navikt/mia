@@ -1,9 +1,10 @@
+"use strict";
 let WAIT_TIME;
 let ledigestillinger;
 
 module.exports = {
     before: (client) => {
-        WAIT_TIME = client.globals.test_settings.timeout;;
+        WAIT_TIME = client.globals.test_settings.timeout;
         ledigestillinger = client.init().page.ledigestillinger();
         ledigestillinger.navigate();
     },

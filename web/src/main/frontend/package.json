@@ -11,7 +11,7 @@
     "test": "mocha",
     "tdd": "mocha -w",
     "eslint": "gulp eslint",
-    "integration": "gulp e2e --phantomjs"
+    "integration": "node nightwatch.js"
   },
   "author": "",
   "license": "ISC",

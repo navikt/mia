@@ -24,7 +24,7 @@ node {
     stage('Build (java)') {
         try {
             sh "mvn clean install -DskipTests -P pipeline"
-        } catch(e) {
+        } catch(Exception e) {
             notifyFailed("Bygg feilet", e)
         }
     }
@@ -32,7 +32,7 @@ node {
     stage('Run tests (java)') {
         try {
             sh "mvn test -P pipeline"
-        } catch(e) {
+        } catch(Exception e) {
             step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
             notifyFailed("Java-tester feilet", e)
         }
@@ -43,7 +43,7 @@ node {
             try {
                 sh "npm install"
                 sh "npm run buildProd"
-            } catch(e) {
+            } catch(Exception e) {
                 notifyFailed("Javascript-bygging feilet", e)
             }
         }
@@ -52,7 +52,7 @@ node {
             try {
                 sh "npm test"
                 sh "npm run eslint"
-            } catch(e) {
+            } catch(Exception e) {
                 notifyFailed("Javascript tester/linter feilet", e)
             }
         }
@@ -66,7 +66,7 @@ node {
             if (useSnapshot != 'true') {
                 sh "git tag -a ${version} -m ${version} HEAD && git push --tags"
             }
-        } catch(e) {
+        } catch(Exception e) {
             notifyFailed("Deploy av artifakt til nexus feilet", e)
         }
     }
@@ -83,7 +83,7 @@ stage("Deploy app") {
         timeout(time: 15, unit: 'MINUTES') {
             input id: 'deploy', message: 'deploy OK?'
         }
-    } catch(e) {
+    } catch(Exception e) {
         notifyFailed("Deploy feilet", e)
     }
 }
@@ -95,7 +95,7 @@ stage("Int. tester") {
                 sh("node nightwatch.js --env phantomjs --url ${testurl}")
             }
         }
-    } catch(e) {
+    } catch(Exception e) {
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
         notifyFailed("Integrasjonstester feilet", e)
     }
