@@ -36,7 +36,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerForAlleKommuner")
     public List<KommuneStilling> getAntallStillingerForAlleKommuner() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
@@ -53,7 +52,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("yrkesomrader")
     public List<Bransje> getYrkesomrader(String fylkesnummer, List<String> fylker, List<String> kommuner) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
@@ -73,7 +71,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerYrkesomrade")
     private int getAntallStillingerForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
         henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_1_ID:"+yrkesomradeid);
@@ -120,7 +117,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerYrkesgruppe")
     private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, List<String> fylker, List<String> kommuner) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
         henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
@@ -142,7 +138,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("stillinger")
     public List<Stilling> getStillinger(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         SolrQuery stillingerQuery = new SolrQuery("*:*");
         stillingerQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
