@@ -32,7 +32,7 @@ module.exports = ((settings) => {
         settings['test_settings'].default.timeout = argv.timeout;
     }
 
-    let seleniumPort = process.env['seleniumport'];
+    var seleniumPort = process.env['seleniumport'];
     settings.selenium.port = seleniumPort;
     settings['test_settings'].default['selenium_port'] = seleniumPort;
     
