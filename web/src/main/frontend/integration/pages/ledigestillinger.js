@@ -14,7 +14,7 @@ module.exports = {
             selector: '.stillinger-bransjer'
         },
         statistikk: {
-            selector: '.stillinger-statistikk#123'
+            selector: '.stillinger-statistikk'
         }
     }
 };
