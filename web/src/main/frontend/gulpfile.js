@@ -28,7 +28,7 @@ gulp.task('build-vendors', require('./gulp/build-js').buildVendors(gulp));
 gulp.task('eslint', require('./gulp/eslint')(gulp));
 gulp.task('copy-img', require('./gulp/copy-img').copyImg(gulp));
 gulp.task('clean-img', require('./gulp/copy-img').cleanImg());
-gulp.task('build-properties', ['build-js'], require('./gulp/build-properties').buildProperties());
+gulp.task('build-properties', ['build-js'], require('./gulp/build-properties').buildProperties())
 
 gulp.task('build', ['clean'], function () {
     gulp.start(['build-js', 'build-vendors', 'build-less', 'build-properties', 'build-html']);

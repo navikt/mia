@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "git submodule init && git submodule update --remote",
     "build": "gulp",
     "buildProd": "gulp --prod",
     "dev": "gulp watch",
     "test": "mocha",
     "tdd": "mocha -w",
-    "eslint": "gulp eslint"
+    "eslint": "gulp eslint",
+    "integration": "node nightwatch.js"
   },
   "author": "",
   "license": "ISC",
@@ -44,6 +46,7 @@
     "jsdom": "^9.8.3",
     "mocha": "^3.1.2",
     "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-4.0.11",
+    "nightwatch": "^0.9.11",
     "path-exists": "^3.0.0",
     "react-addons-test-utils": "^15.4.0",
     "redux-devtools": "^3.3.1",
@@ -54,7 +57,8 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "whatwg-fetch": "^1.0.0"
+    "whatwg-fetch": "^1.0.0",
+    "yargs": "^6.5.0"
   },
   "dependencies": {
     "history": "^3.2.1",

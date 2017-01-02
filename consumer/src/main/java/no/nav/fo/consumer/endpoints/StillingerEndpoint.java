@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +36,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerForFylkerOgKommuner")
-    public List<OmradeStilling> getAntallStillingerForFylkerOgKommuner() {
+    public List<OmradeStilling> getAntallStillingerForAlleKommuner() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("KOMMUNE_ID");
@@ -53,7 +53,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("yrkesomrader")
     public List<Bransje> getYrkesomrader(String fylkesnummer, List<String> fylker, List<String> kommuner) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
@@ -73,7 +72,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerYrkesomrade")
     private int getAntallStillingerForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
         henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_1_ID:"+yrkesomradeid);
@@ -120,7 +118,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("antallStillingerYrkesgruppe")
     private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, List<String> fylker, List<String> kommuner) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
         henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
@@ -142,7 +139,6 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("stillinger")
     public List<Stilling> getStillinger(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         SolrQuery stillingerQuery = new SolrQuery("*:*");
         stillingerQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
@@ -158,11 +154,17 @@ public class StillingerEndpoint {
     }
 
     private void addFylkerOgKommunerFilter(SolrQuery query, List<String> fylker, List<String> kommuner) {
+        List<String> statements = new ArrayList<>();
+
         if(fylker != null && !fylker.isEmpty()) {
-            query.addFilterQuery(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
+            statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
         }
         if(kommuner != null && !kommuner.isEmpty()) {
-            query.addFilterQuery(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
+            statements.add(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
+        }
+
+        if(!statements.isEmpty()) {
+            query.addFilterQuery(StringUtils.join(statements, " OR "));
         }
     }
 }

@@ -5,3 +5,17 @@
 .text-center {
     text-align: center;
 }
+
+.liste-omrade {
+    list-style: none;
+    padding-left: 2rem;
+
+    li:first-child {
+        margin-top: 0.5rem;
+    }
+
+    .nav-checkbox:checked.expanded + label:before {
+        background-image: url('/mia/img/input_checkbox_cheked_expanded.svg');
+        background-size: initial;
+    }
+}

@@ -1,5 +1,6 @@
-export function getKommunerForValgtFylke(valgtFylke, fylker){
-    return valgtFylke === "" ? [] : fylker.find(fylke => fylke.id === valgtFylke).underomrader;
+export function getValgteKommunerForFylke(fylke, fylker, valgteKommuner){
+    const valgteKommunderForFylke = fylker.find(f => f.id === fylke).underomrader.filter(omrade => valgteKommuner.includes(omrade.id));
+    return valgteKommunderForFylke.length === 0 ? fylker.find(f => f.id === fylke).underomrader : valgteKommunderForFylke;
 }
 
 export function getKommuneMedData(kommune, stillinger) {

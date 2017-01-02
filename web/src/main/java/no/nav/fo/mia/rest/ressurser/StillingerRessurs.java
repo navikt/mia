@@ -26,6 +26,6 @@ public class StillingerRessurs {
     @GET
     @Path("/oversiktAlleKommuner")
     public List<OmradeStilling> hentOversiktForFylkerOgKommuner() {
-        return stillingerEndpoint.getAntallStillingerForFylkerOgKommuner();
+        return stillingerEndpoint.getAntallStillingerForAlleKommuner();
     }
 }
