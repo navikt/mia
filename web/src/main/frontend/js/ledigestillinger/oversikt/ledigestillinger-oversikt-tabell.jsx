@@ -1,6 +1,6 @@
 import React from "react";
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke} from './ledigestillinger-oversikt-utils';
+import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke, getStillingerTotaltForKommuneIFylke} from './ledigestillinger-oversikt-utils';
 import Modal from "../../felles/modal/modal";
 import Modalinnhold from "./ledigestillinger-oversikt-modalinnhold";
 
@@ -43,7 +43,7 @@ const KommuneTabellRad = props => (
     </tr>
 );
 
-const KommuneTabell = ({fylke, kommuner, stillinger}) => {
+const KommuneTabell = ({fylke, kommuner, stillinger, totaltAntall}) => {
     const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
     const fylkenavn = fylke != null ? fylke.navn : "";
 
@@ -60,7 +60,7 @@ const KommuneTabell = ({fylke, kommuner, stillinger}) => {
                         <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
                     </th>
                     <th scope="col" className="text-center">
-                        <FormattedMessage {...meldinger.tabellOverskriftStillinger} values={{antall: stillingerTotalt.antallStillinger}}/>
+                        <FormattedMessage {...meldinger.tabellOverskriftStillinger} values={{antall: totaltAntall.antallStillinger}}/>
                     </th>
                 </tr>
                 </thead>
@@ -87,7 +87,7 @@ export const Oversiktstabell = props => {
                 <Modalinnhold />
             </Modal>
             { valgteFylker.length !== 0
-                ? valgteFylker.map(fylke => <KommuneTabell key={fylke.id} fylke={fylke} kommuner={getValgteKommunerForFylke(fylke.id, props.omrader, props.valgteKommuner)} stillinger={props.oversiktStillinger} />)
+                ? valgteFylker.map(fylke => <KommuneTabell key={fylke.id} fylke={fylke} kommuner={getValgteKommunerForFylke(fylke.id, props.omrader, props.valgteKommuner)} stillinger={props.oversiktStillinger} totaltAntall={getStillingerTotaltForKommuneIFylke(fylke.id, props.omrader, props.valgteKommuner, props.oversiktStillinger)}/>)
                 : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em> }
         </div>
     );

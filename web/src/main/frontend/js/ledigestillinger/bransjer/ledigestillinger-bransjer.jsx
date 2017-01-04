@@ -7,7 +7,7 @@ import BransjeDropdown from './bransje-dropdown';
 import Innholdslaster from '../../felles/innholdslaster/innholdslaster';
 import Bokser from './ledigestillinger-bransjer-bokser';
 import {findTotaltAntallJobber} from './ledigestillinger-bransjer-util';
-import {hentYrkesgrupper, hentYrkesomrader} from "./ledigestillinger-bransjer-actions";
+import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "./ledigestillinger-bransjer-actions";
 import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {STATUS, ALTERNATIV_ALLE} from "../../felles/konstanter";
 
@@ -43,6 +43,7 @@ const BokserForYrkesgrupper = props => (
 export class Bransjer extends React.Component {
     componentDidMount() {
         this.props.dispatch(hentYrkesomrader());
+        this.props.dispatch(hentAntallStillingerForOmrade());
     }
 
     toggleYrkesgruppe(id) {
@@ -74,9 +75,9 @@ export class Bransjer extends React.Component {
         return (
             <div>
                 <Innholdslaster avhengigheter={[this.props.yrkesomrader]}>
-                    <BransjeDropdown yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} />
+                    <BransjeDropdown yrkesomrader={this.props.yrkesomrader.data} yrkesomrade={this.props.valgtyrkesomrade} onClick={id => this.velgYrkesomrade(id)} totaltAntall={this.props.totantallstillinger.data}/>
                     { this.props.valgtyrkesomrade === ALTERNATIV_ALLE
-                        ? <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)} yrkesomrader={this.props.yrkesomrader} totaltAntall={this.getTotaltAntallJobber()}/>
+                        ? <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)} yrkesomrader={this.props.yrkesomrader} totaltAntall={this.props.totantallstillinger.data}/>
                         : <BokserForYrkesgrupper onClick={id => this.toggleYrkesgruppe(id)} yrkesgrupper={this.props.yrkesgrupper} valgteyrkesgrupper={this.props.valgteyrkesgrupper} totaltAntall={this.getTotaltAntallJobber()}/>
                     }
                     <Link to="#">
@@ -92,7 +93,8 @@ const stateToProps = state => ({
     valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
     valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade,
     yrkesgrupper: state.rest.yrkesgrupper,
-    yrkesomrader: state.rest.yrkesomrader
+    yrkesomrader: state.rest.yrkesomrader,
+    totantallstillinger: state.rest.totantallstillinger
 });
 
 export default connect(stateToProps)(Bransjer);

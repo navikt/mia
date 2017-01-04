@@ -22,6 +22,20 @@ export const hentYrkesomrader = () => (dispatch, getState) => {
         );
 };
 
+export const hentAntallStillingerForOmrade = () => (dispatch, getState) => {
+    const state = getState();
+    const actions = getActions('totantallstillinger');
+
+    dispatch({type: actions[STATUS.laster]});
+
+    const uri = "/stillinger/antallstillinger?" + buildUriParams(getParamsForValgteFylkerOgKommuner(state));
+    fetchToJson(uri)
+        .then(
+            sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
+            handterFeil(dispatch, actions[STATUS.feilet])
+        );
+};
+
 export const hentYrkesgrupper = () => (dispatch, getState) => {
     const state = getState();
     const actions = getActions('yrkesgrupper');

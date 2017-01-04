@@ -20,3 +20,7 @@ export function getStillingerTotalt(kommuner, stillinger) {
         return totalt;
     }, { antallLedige: 0, antallStillinger: 0 });
 }
+
+export function getStillingerTotaltForKommuneIFylke(fylke, fylker, valgteKommuner, stillinger) {
+    return getStillingerTotalt(getValgteKommunerForFylke(fylke, fylker, valgteKommuner), stillinger);
+}

@@ -39,5 +39,6 @@ export default combineReducers({
     oversiktStillinger: createRestReducer('oversikt_stillinger'),
     yrkesomrader: createRestReducer('yrkesomrader'),
     yrkesgrupper: createRestReducer('yrkesgrupper'),
-    stillinger: createRestReducer('stillinger')
+    stillinger: createRestReducer('stillinger'),
+    totantallstillinger: createRestReducer('totantallstillinger')
 });

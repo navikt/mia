@@ -156,7 +156,7 @@ public class StillingerEndpoint {
     private void addFylkerOgKommunerFilter(SolrQuery query, List<String> fylker, List<String> kommuner) {
         List<String> statements = new ArrayList<>();
 
-        if(fylker != null && !fylker.isEmpty()) {
+        if(fylker != null && !fylker.isEmpty() && kommuner.size() < 1) {
             statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
         }
         if(kommuner != null && !kommuner.isEmpty()) {
