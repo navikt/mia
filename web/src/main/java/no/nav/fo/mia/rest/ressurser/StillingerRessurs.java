@@ -1,14 +1,12 @@
 package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
-import no.nav.fo.mia.domain.stillinger.KommuneStilling;
+import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import java.util.List;
 
@@ -25,7 +23,21 @@ public class StillingerRessurs {
 
     @GET
     @Path("/oversiktAlleKommuner")
-    public List<KommuneStilling> hentOversiktForAlleKommuner() {
+    public List<OmradeStilling> hentOversiktForFylkerOgKommuner() {
         return stillingerEndpoint.getAntallStillingerForAlleKommuner();
+    }
+
+    @GET
+    @Path("/antallstillinger")
+    public int antallstillinger(@BeanParam StillingerRessurs.FylkerOgKommunerParams fylkerOgKommuner) {
+        return stillingerEndpoint.getAntallStillingerForValgtOmrade(fylkerOgKommuner.fylker, fylkerOgKommuner.kommuner);
+    }
+
+    private static class FylkerOgKommunerParams {
+        @QueryParam("fylker[]")
+        public List<String> fylker;
+
+        @QueryParam("kommuner[]")
+        public List<String> kommuner;
     }
 }

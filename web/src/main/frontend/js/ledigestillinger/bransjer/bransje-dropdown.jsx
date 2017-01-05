@@ -1,6 +1,5 @@
 import React from 'react';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
-import {findTotaltAntallJobber} from './ledigestillinger-bransjer-util';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
 
 const meldinger = defineMessages({
@@ -26,7 +25,7 @@ export const BransjeDropdown = (props) => {
                 <select id="select-bransje" value={props.yrkesomrade}
                         onChange={e => props.onClick(e.target.value)}>
                     <option value={ALTERNATIV_ALLE}>
-                        {formatMessage(meldinger.alternativAlle, {antall: findTotaltAntallJobber(props.yrkesomrader)})}
+                        {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall})}
                     </option>
                     { props.yrkesomrader.map(row => <option value={row.id} key={row.id}>{row.navn} ({row.antallStillinger})</option> )}
                 </select>

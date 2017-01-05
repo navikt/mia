@@ -2,7 +2,7 @@ package no.nav.fo.consumer.endpoints;
 
 import no.nav.fo.consumer.transformers.*;
 import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
-import no.nav.fo.mia.domain.stillinger.KommuneStilling;
+import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.fo.mia.domain.geografi.Omrade;
 import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.fo.mia.domain.stillinger.Stilling;
@@ -20,8 +20,12 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static no.nav.fo.consumer.transformers.StillingerForOmradeTransformer.getOmradeStillingForKommuner;
 
 public class StillingerEndpoint {
 
@@ -35,20 +39,44 @@ public class StillingerEndpoint {
         supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
     }
 
-    @Timed
-    public List<KommuneStilling> getAntallStillingerForAlleKommuner() {
+    private Map<String, QueryResponse> queryForKommuner(List<String> kommuner) {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
-        solrQuery.addFacetField("KOMMUNE_ID");
+        solrQuery.addFacetField("ANTALLSTILLINGER");
         solrQuery.setRows(0);
 
-        try {
-            QueryResponse resp = mainSolrClient.query(solrQuery);
-            return StillingerForKommuneTransformer.getStillingerForKommuner(resp.getFacetField("KOMMUNE_ID").getValues(), null, getFylkerOgKommuner());
-        } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av stillinger fra solr", e.getCause());
-            throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
+        Map<String, QueryResponse> responses = new HashMap<>();
+
+        for (String kommuneid : kommuner) {
+            String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
+            solrQuery.addFilterQuery(filterquery);
+            try {
+                responses.put(kommuneid, mainSolrClient.query(solrQuery));
+            } catch (SolrServerException | IOException e) {
+                logger.error("Feil ved henting av stillinger fra solr", e.getCause());
+                throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
+            }
+            solrQuery.removeFilterQuery(filterquery);
         }
+        return responses;
+    }
+
+    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste) {
+        return liste.keySet().stream()
+                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues()))
+                .collect(Collectors.toList());
+    }
+
+    @Timed
+    public List<OmradeStilling> getAntallStillingerForAlleKommuner() {
+        List<String> alleKommuner = new ArrayList<>();
+
+        getFylkerOgKommuner()
+                .forEach(omrade -> alleKommuner.addAll(omrade.getUnderomrader().stream().map(Omrade::getId).collect(Collectors.toList())));
+
+        Map<String, QueryResponse> responser = queryForKommuner(alleKommuner);
+
+        return getAntallStillingerForKommuner(responser);
     }
 
     @Timed
@@ -120,6 +148,17 @@ public class StillingerEndpoint {
     private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, List<String> fylker, List<String> kommuner) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
         henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
+        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
+        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
+        henteAntallStillingerQuery.setRows(0);
+
+        return getAntallStillinger(henteAntallStillingerQuery);
+    }
+
+    @Timed
+    public int getAntallStillingerForValgtOmrade(List<String> fylker, List<String> kommuner) {
+        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
+
         addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
         henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
         henteAntallStillingerQuery.setRows(0);

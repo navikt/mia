@@ -36,7 +36,7 @@ gulp.task('build', ['clean'], function () {
 });
 
 gulp.task('watch', ['clean'], function () {
-    gulp.start(['build-js-watchify', 'build-vendors', 'build-less', 'build-properties', 'build-html']);
+    gulp.start(['build-js-watchify', 'build-vendors', 'build-less', 'build-properties', 'build-html', 'copy-img']);
     gulp.watch('./css/*.less', ['build-less']);
     copyImage();
 });

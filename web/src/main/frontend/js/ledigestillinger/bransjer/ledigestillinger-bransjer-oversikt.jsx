@@ -1,0 +1,71 @@
+import React from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
+import {defineMessages, FormattedMessage} from 'react-intl';
+import {actions} from "./ledigestillinger-bransjer-reducer";
+import BransjeDropdown from './bransje-dropdown';
+import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
+import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
+import {ALTERNATIV_ALLE} from "../../felles/konstanter";
+import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
+
+const meldinger = defineMessages({
+    lenkeallebransjer: {
+        id: 'ledigestillinger.bransjer.lenkeallebransjer',
+        defaultMessage: 'Vis alle bransjer med ledige stillinger >>'
+    }
+});
+
+class BransjerOversikt extends React.Component {
+    toggleYrkesgruppe(id) {
+        if (this.props.valgteyrkesgrupper.includes(id)) {
+            this.props.dispatch({type: actions.yrkesgruppedeselect, payload: id});
+        } else {
+            this.props.dispatch({type: actions.yrkesgruppeselect, payload: id});
+        }
+        this.props.dispatch(hentStillinger());
+    }
+
+    velgYrkesomrade(id) {
+        this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
+        this.props.dispatch(hentYrkesgrupper());
+    }
+
+    render() {
+        const { yrkesomrader, yrkesgrupper, totantallstillinger, valgtyrkesomrade, valgteyrkesgrupper } = this.props;
+
+        const boksForYrkesomrader = <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)}
+                                                           yrkesomrader={yrkesomrader}
+                                                           totaltAntall={totantallstillinger}/>;
+
+        const boksForYrkesgrupper = <BokserForYrkesgrupper onClick={id => this.toggleYrkesgruppe(id)}
+                                                           yrkesgrupper={yrkesgrupper}
+                                                           valgteyrkesgrupper={valgteyrkesgrupper}
+                                                           totaltAntall={totantallstillinger}/>;
+
+        const bransjeBokser = valgtyrkesomrade === ALTERNATIV_ALLE ? boksForYrkesomrader : boksForYrkesgrupper;
+
+        return (
+            <div>
+                <BransjeDropdown yrkesomrader={yrkesomrader}
+                                 yrkesomrade={valgtyrkesomrade}
+                                 onClick={id => this.velgYrkesomrade(id)}
+                                 totaltAntall={totantallstillinger}
+                />
+                {bransjeBokser}
+                <Link to="#">
+                    <FormattedMessage {...meldinger.lenkeallebransjer} />
+                </Link>
+            </div>
+
+        );
+    }
+}
+
+const stateToProps = state => ({
+    yrkesgrupper: state.rest.yrkesgrupper,
+    valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
+    valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade,
+});
+
+export default connect(stateToProps)(BransjerOversikt);
