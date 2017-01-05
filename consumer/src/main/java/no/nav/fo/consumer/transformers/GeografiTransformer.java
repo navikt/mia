@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GeografiTransformer {
+    private static final String GENERELT_FOR_FYLKE_PREFIX = "110011";
     public static List<Omrade> transformResponseToFylkerOgKommuner(SolrDocumentList solrDocuments) {
         List<Omrade> alleOmrader = solrDocuments.stream()
                 .map(GeografiTransformer::createOmradeFromDocument)
-                .filter(omrade -> omrade.getStrukturkode() != null)
+                .filter(omrade -> omrade.getStrukturkode() != null || omrade.getId().startsWith(GENERELT_FOR_FYLKE_PREFIX))
                 .filter(omrade -> !omrade.getNavn().contains("Ikke i bruk"))
                 .collect(Collectors.toList());
 

@@ -20,8 +20,12 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static no.nav.fo.consumer.transformers.StillingerForOmradeTransformer.getOmradeStillingForKommuner;
 
 public class StillingerEndpoint {
 
@@ -35,21 +39,44 @@ public class StillingerEndpoint {
         supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
     }
 
-    @Timed
-    public List<OmradeStilling> getAntallStillingerForAlleKommuner() {
+    private Map<String, QueryResponse> queryForKommuner(List<String> kommuner) {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
-        solrQuery.addFacetField("KOMMUNE_ID");
-        solrQuery.addFacetField("FYLKE_ID");
+        solrQuery.addFacetField("ANTALLSTILLINGER");
         solrQuery.setRows(0);
 
-        try {
-            QueryResponse resp = mainSolrClient.query(solrQuery);
-            return StillingerForOmradeTransformer.getStillingerForKommuner(resp.getFacetField("KOMMUNE_ID").getValues(), resp.getFacetField("FYLKE_ID").getValues());
-        } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av stillinger fra solr", e.getCause());
-            throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
+        Map<String, QueryResponse> responses = new HashMap<>();
+
+        for (String kommuneid : kommuner) {
+            String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
+            solrQuery.addFilterQuery(filterquery);
+            try {
+                responses.put(kommuneid, mainSolrClient.query(solrQuery));
+            } catch (SolrServerException | IOException e) {
+                logger.error("Feil ved henting av stillinger fra solr", e.getCause());
+                throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
+            }
+            solrQuery.removeFilterQuery(filterquery);
         }
+        return responses;
+    }
+
+    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste) {
+        return liste.keySet().stream()
+                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues()))
+                .collect(Collectors.toList());
+    }
+
+    @Timed
+    public List<OmradeStilling> getAntallStillingerForAlleKommuner() {
+        List<String> alleKommuner = new ArrayList<>();
+
+        getFylkerOgKommuner()
+                .forEach(omrade -> alleKommuner.addAll(omrade.getUnderomrader().stream().map(Omrade::getId).collect(Collectors.toList())));
+
+        Map<String, QueryResponse> responser = queryForKommuner(alleKommuner);
+
+        return getAntallStillingerForKommuner(responser);
     }
 
     @Timed
@@ -128,6 +155,17 @@ public class StillingerEndpoint {
         return getAntallStillinger(henteAntallStillingerQuery);
     }
 
+    @Timed
+    public int getAntallStillingerForValgtOmrade(List<String> fylker, List<String> kommuner) {
+        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
+
+        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
+        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
+        henteAntallStillingerQuery.setRows(0);
+
+        return getAntallStillinger(henteAntallStillingerQuery);
+    }
+
     private int getAntallStillinger(SolrQuery henteAntallStillingerQuery) {
         try {
             QueryResponse antallStillingerResponse = mainSolrClient.query(henteAntallStillingerQuery);
@@ -156,7 +194,7 @@ public class StillingerEndpoint {
     private void addFylkerOgKommunerFilter(SolrQuery query, List<String> fylker, List<String> kommuner) {
         List<String> statements = new ArrayList<>();
 
-        if(fylker != null && !fylker.isEmpty() && kommuner.size() < 1) {
+        if(fylker != null && !fylker.isEmpty()) {
             statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
         }
         if(kommuner != null && !kommuner.isEmpty()) {
