@@ -65,7 +65,8 @@ describe('ledigestillinger', () => {
                 valgtFylke: "",
                 valgtKommune: "",
                 omrader: {data: [this.fylke1, this.fylke2] },
-                oversiktStillinger: { data: {} }
+                oversiktStillinger: { data: {} },
+                totantallstillinger: {data: {}}
             };
         });
 
@@ -134,8 +135,8 @@ describe('ledigestillinger', () => {
             this.oversiktStillinger = {
                 status: "LASTET",
                 data: [
-                    { kommuneid: "0101", antallLedige: 1, antallStillinger: 2 },
-                    { kommuneid: "0202", antallLedige: 3, antallStillinger: 4 }
+                    { id: "0101", antallLedige: 1, antallStillinger: 2 },
+                    { id: "0202", antallLedige: 3, antallStillinger: 4 }
                 ]
             };
         });
