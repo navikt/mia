@@ -9,14 +9,15 @@ export const Stilling = (props) => {
         }
         return <FormattedDate value={new Date(datestring)}/>;
     };
+    const stillingUrl = "https://tjenester-q1.nav.no/stillinger/stilling?ID="+props.stilling.id;
 
     return (
         <li className="row">
-            <Link to="#">
+            <a href={stillingUrl} target="_blank">
                 <span className="col-sm-4">{props.stilling.tittel}</span>
                 <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
                 <span className="col-sm-4">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
-            </Link>
+            </a>
         </li>
     );
 };
