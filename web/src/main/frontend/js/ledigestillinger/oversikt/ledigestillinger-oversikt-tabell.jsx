@@ -27,7 +27,7 @@ const meldinger = defineMessages({
     },
     tabellOverskriftStillinger: {
         id: 'ledigestillinger.oversikt.tabell.overskriftstillinger',
-        defaultMessage: 'Ledige stillinger ({antall, number})'
+        defaultMessage: 'Ledige stillinger'
     },
     tabellIngenValgt: {
     id: 'ledigestillinger.oversikt.tabell.ingenvalgt',
@@ -43,7 +43,7 @@ const KommuneTabellRad = props => (
     </tr>
 );
 
-const KommuneTabell = ({fylke, kommuner, stillinger, totaltAntall}) => {
+const KommuneTabell = ({fylke, kommuner, stillinger}) => {
     const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
     const fylkenavn = fylke != null ? fylke.navn : "";
 
@@ -60,7 +60,7 @@ const KommuneTabell = ({fylke, kommuner, stillinger, totaltAntall}) => {
                         <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
                     </th>
                     <th scope="col" className="text-center">
-                        <FormattedMessage {...meldinger.tabellOverskriftStillinger} values={{antall: totaltAntall.antallStillinger}}/>
+                        <FormattedMessage {...meldinger.tabellOverskriftStillinger} />
                     </th>
                 </tr>
                 </thead>
@@ -76,6 +76,10 @@ export const Oversiktstabell = props => {
     const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
     const modalId = "velgKommunerOgFylker";
 
+    const komuneTabell = valgteFylker.length !== 0
+        ? valgteFylker.map(fylke => <KommuneTabell key={fylke.id} fylke={fylke} kommuner={getValgteKommunerForFylke(fylke.id, props.omrader, props.valgteKommuner)} stillinger={props.oversiktStillinger} />)
+        : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>;
+
     return (
         <div>
             <div className="text-center blokk">
@@ -86,9 +90,7 @@ export const Oversiktstabell = props => {
             <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}>
                 <Modalinnhold />
             </Modal>
-            { valgteFylker.length !== 0
-                ? valgteFylker.map(fylke => <KommuneTabell key={fylke.id} fylke={fylke} kommuner={getValgteKommunerForFylke(fylke.id, props.omrader, props.valgteKommuner)} stillinger={props.oversiktStillinger} totaltAntall={getStillingerTotaltForKommuneIFylke(fylke.id, props.omrader, props.valgteKommuner, props.oversiktStillinger)}/>)
-                : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em> }
+            {komuneTabell}
         </div>
     );
 };
