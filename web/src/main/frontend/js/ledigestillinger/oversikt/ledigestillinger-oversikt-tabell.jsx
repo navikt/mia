@@ -1,6 +1,6 @@
 import React from "react";
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke, getStillingerTotaltForKommuneIFylke} from './ledigestillinger-oversikt-utils';
+import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke} from './ledigestillinger-oversikt-utils';
 import Modal from "../../felles/modal/modal";
 import Modalinnhold from "./ledigestillinger-oversikt-modalinnhold";
 

@@ -58,7 +58,9 @@ export function getParamsForValgteFylkerOgKommuner(state) {
     const valgteKommuner = state.ledigestillinger.oversikt.valgteKommuner;
     const valgteFylker = state.ledigestillinger.oversikt.valgteFylker;
 
-    const harIkkeValgtKommuneIFylke = valgtFylke => state.rest.omrader.data.find(fylke => fylke.id === valgtFylke).underomrader.some(kommune => !valgteKommuner.includes(kommune.id));
+    const harIkkeValgtKommuneIFylke = valgtFylke => {
+        return !state.rest.omrader.data.find(fylke => fylke.id === valgtFylke).underomrader.find(kommune => valgteKommuner.includes(kommune.id));
+    };
 
     const params = {};
     params['fylker'] = valgteFylker.filter(harIkkeValgtKommuneIFylke);
