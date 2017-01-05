@@ -31,7 +31,24 @@ export class Modalinnhold extends React.Component {
         ));
     }
 
+    hentKommunerForFylke(fylkeid) {
+        const fylkeObjekt = this.props.omrader.filter(fylke => fylke.id === fylkeid);
+        return fylkeObjekt[0].underomrader;
+    }
+
+    avvelgAlleKommunerForFylke(fylkeid) {
+        const kommuner = this.hentKommunerForFylke(fylkeid);
+        kommuner.forEach(kommune => this.props.dispatch({
+                type: actions.modal_avvelg_kommune,
+                payload: kommune.id
+            }));
+    }
+
     toggleFylke(fylke) {
+        if (this.props.valgteFylker.includes(fylke)) {
+            this.avvelgAlleKommunerForFylke(fylke);
+        }
+
         const actionType = this.props.valgteFylker.includes(fylke) ? actions.modal_avvelg_fylke : actions.modal_velg_fylke;
         this.props.dispatch({ type: actionType, payload: fylke });
     }
