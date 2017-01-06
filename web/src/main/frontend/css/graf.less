@@ -1,0 +1,60 @@
+.highcharts-axis-labels .aar {
+    display: none;
+}
+
+.highcharts-axis-labels .yEnhet {
+    display: none;
+}
+
+.highcharts-axis-labels .aar.vises {
+    display: block;
+    font-weight: bold;
+    margin-top: 0.3rem;
+}
+
+.highcharts-tooltip > span > span:first-child {
+    display: block;
+    text-align: center;
+}
+
+.highcharts-tooltip > span {
+    text-align: center;
+}
+
+.sykmelding-spredning-tabell-brukers {
+    background-color: @tooltip-background-color;
+    color: @color-background;
+}
+
+.sykmelding-spredning-tabell-header {
+    max-width: 170px;
+}
+
+.spredning-yakse-hack {
+    width: 0px;
+    overflow: visible;
+    display: block;
+
+    > span {
+        display: block;
+        width: 350px;
+    }
+}
+
+.spredning-beskrivelse {
+    background: @tooltip-background-color;
+    color: white;
+    padding: .5rem;
+    position: relative;
+}
+
+.spredning-brukers-point-pil {
+    content: "";
+    position: absolute;
+    border: 15px solid transparent;
+    height: 0;
+    width: 0;
+    top: -25px;
+    left: 0px;
+    border-bottom-color: @tooltip-background-color;
+}

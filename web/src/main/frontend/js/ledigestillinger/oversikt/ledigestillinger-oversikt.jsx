@@ -9,6 +9,7 @@ import OversiktTabell from "./ledigestillinger-oversikt-tabell";
 import restActionCreator from "../../felles/rest/rest-action";
 import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
+import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
 import {apneModal} from "../../felles/modal/modal-reducer";
 
 const meldinger = defineMessages({
@@ -45,6 +46,7 @@ export class Oversikt extends React.Component {
         this.props.dispatch(hentYrkesgrupper());
         this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForOmrade());
+        this.props.dispatch(hentStatistikk());
     }
 
     render() {

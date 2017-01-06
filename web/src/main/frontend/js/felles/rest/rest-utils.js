@@ -67,3 +67,11 @@ export function getParamsForValgteFylkerOgKommuner(state) {
     params['kommuner'] = valgteKommuner;
     return params;
 }
+
+export function getParamsForValgteFylker(state) {
+    const valgteFylker = state.ledigestillinger.oversikt.valgteFylker;
+
+    return {
+        fylker: valgteFylker
+    };
+}

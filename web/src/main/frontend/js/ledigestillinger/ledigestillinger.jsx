@@ -1,8 +1,8 @@
 import React from "react";
-import IkkeFerdigPanel from "../felles/ikkeferdig/ikke-ferdig-panel";
 import Oversikt from "./oversikt/ledigestillinger-oversikt";
 import Bransjer from "./bransjer/ledigestillinger-bransjer";
 import Stillinger from "./stillinger/ledigestillinger-stillinger";
+import Statistikk from "./statistikk/ledigestillinger-statistikk";
 
 const LedigeStillinger = () => (
     <div className="stillinger-container">
@@ -16,7 +16,7 @@ const LedigeStillinger = () => (
             <Stillinger />
         </section>
         <section className="stillinger-statistikk blokk-m">
-            <IkkeFerdigPanel />
+            <Statistikk />
         </section>
     </div>
 );
