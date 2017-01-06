@@ -37,7 +37,7 @@ export const Stillingsvisning = props => {
 
     return  (
         <div className="blokk-m">
-            <h2 className="typo-element blokk-xxs">{props.yrkesgruppe.navn} ({props.yrkesgruppe.stillinger.length})</h2>
+            <h2 className="typo-element blokk-xxs">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
             <div className="panel panel-fremhevet">
                 <div className="row blokk-xs">
                     <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></span>
