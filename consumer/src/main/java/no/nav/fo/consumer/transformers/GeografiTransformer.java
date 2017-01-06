@@ -15,6 +15,10 @@ public class GeografiTransformer {
                 .map(GeografiTransformer::createOmradeFromDocument)
                 .filter(omrade -> omrade.getStrukturkode() != null || omrade.getId().startsWith(GENERELT_FOR_FYLKE_PREFIX))
                 .filter(omrade -> !omrade.getNavn().contains("Ikke i bruk"))
+                .filter(omrade -> !omrade.getNavn().contains("UTGÅTT"))
+                .filter(omrade -> !omrade.getNavn().contains("gml"))
+                .filter(omrade -> !omrade.getNavn().contains("Gml"))
+                .filter(omrade -> !omrade.getNavn().contains("gammel"))
                 .collect(Collectors.toList());
 
         return alleOmrader.stream()
