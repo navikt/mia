@@ -72,7 +72,7 @@
 // ----------------------- Bransjer -----------------------
 
 .bransje-boks-container {
-  border: 0;
+  border: solid 1px @color-border;
   text-align: left;
   height: 10rem;
   width: ~"calc(33.333% - 10px)";
@@ -88,7 +88,7 @@
 
 .bransje-boks-container:focus {
   outline: 0;
-  box-shadow: 0 0 0 3px @orange-focus;
+  box-shadow: 0 0 0 3px @color-focus;
 }
 
 .bransje-boks-container:hover {
@@ -97,7 +97,7 @@
 }
 
 .aktiv-bransjeboks {
-  background-color: @blue-link-negative;
+  background-color: @color-link-active;
   color: @black;
   border: 1px solid @black;
 }

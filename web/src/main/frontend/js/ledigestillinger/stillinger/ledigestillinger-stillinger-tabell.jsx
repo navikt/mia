@@ -37,12 +37,12 @@ export const Stillingsvisning = props => {
 
     return  (
         <div className="blokk-m">
-            <h2 className="typo-element blokk-xxs">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
             <div className="panel panel-fremhevet">
+                <h2 className="blokk-m">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
                 <div className="row blokk-xs">
-                    <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></span>
-                    <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></span>
-                    <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></span>
+                    <h3 className="col-sm-4"><FormattedMessage {...meldinger.stilling} /></h3>
+                    <h3 className="col-sm-4"><FormattedMessage {...meldinger.arbeidsgiver} /></h3>
+                    <h3 className="col-sm-4"><FormattedMessage {...meldinger.soknadsfrist} /></h3>
                 </div>
                 <ul className="ustilet list-with-hover">
                     {stillinger.length > 0 ? stillinger.map(stilling => {
