@@ -53,9 +53,6 @@ class BransjerOversikt extends React.Component {
                                  totaltAntall={totantallstillinger}
                 />
                 {bransjeBokser}
-                <Link to="#">
-                    <FormattedMessage {...meldinger.lenkeallebransjer} />
-                </Link>
             </div>
 
         );
