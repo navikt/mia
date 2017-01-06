@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {FormattedDate} from "react-intl";
 
 export const Stilling = (props) => {
@@ -9,14 +8,15 @@ export const Stilling = (props) => {
         }
         return <FormattedDate value={new Date(datestring)}/>;
     };
+    const stillingUrl = "https://tjenester-q1.nav.no/stillinger/stilling?ID="+props.stilling.id;
 
     return (
         <li className="row">
-            <Link to="#">
-                <span className="col-sm-4">{props.stilling.stillingstype}</span>
+            <a href={stillingUrl} target="_blank">
+                <span className="col-sm-4">{props.stilling.tittel}</span>
                 <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
                 <span className="col-sm-4">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
-            </Link>
+            </a>
         </li>
     );
 };
