@@ -72,34 +72,34 @@
 // ----------------------- Bransjer -----------------------
 
 .bransje-boks-container {
-  border: 0;
+  border: solid 1px @gray-icon;
   text-align: left;
-  height: 10rem;
-  width: ~"calc(33.333% - 10px)";
+  color: @gray-text;
+  width: 143px;
+  height: 131px;
+  border-radius: 4px;
   display: inline-block;
   box-sizing: border-box;
-  padding: 0.5rem;
-  background-color: @gray-text;
-  color: @white;
+  padding: 5px 5px 12px 5px;
   margin: 5px;
   position: relative;
   float: left;
 }
 
-.bransje-boks-container:focus {
-  outline: 0;
-  box-shadow: 0 0 0 3px @orange-focus;
-}
-
 .bransje-boks-container:hover {
-  background-color: @color-gray-additional;
+  background-color: @white;
   color: @black;
+  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
 }
 
 .aktiv-bransjeboks {
-  background-color: @blue-link-negative;
-  color: @black;
-  border: 1px solid @black;
+  background-color: @blue-active;
+  color: @white;
+}
+
+.bransje-boks-container:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px @orange-focus;
 }
 
 .bokser-container {
@@ -108,16 +108,25 @@
 }
 
 .boks-navn {
+  width: 128px;
+  font-size: @rem-as-16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.38;
   position: absolute;
-  top: 1.25rem;
+  top: 0;
   word-wrap: break-word;
 }
 
 .boks-antall {
-  font-size: @rem-as-38px;
+  width: 122px;
+  font-weight: bold;
+  font-size: 30px;
   position: absolute;
-  bottom: @rem-as-20px;
-  right: @rem-as-20px;
+  text-align: right;
+  bottom: 0;
+  right: @rem-as-16px;
 }
 
 // ----------------------- Stillinger -----------------------
