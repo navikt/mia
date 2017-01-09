@@ -37,7 +37,7 @@ const meldinger = defineMessages({
 
 const KommuneTabellRad = props => (
     <tr key={props.kommune.kommunenummer}>
-        <th scope="row">{props.kommune.navn}</th>
+        <th scope="row" className="kommune-navn">{props.kommune.navn}</th>
         <td className="text-center">{props.kommune.antallLedige}</td>
         <td className="text-center">{props.kommune.antallStillinger}</td>
     </tr>
