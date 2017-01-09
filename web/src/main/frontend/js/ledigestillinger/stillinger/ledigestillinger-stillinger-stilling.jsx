@@ -6,16 +6,17 @@ export const Stilling = (props) => {
         if(datestring == null) {
             return "-";
         }
-        return <FormattedDate value={new Date(datestring)}/>;
+        return <FormattedDate
+            value={new Date(datestring)} format="short"/>;
     };
     const stillingUrl = "https://tjenester-q1.nav.no/stillinger/stilling?ID="+props.stilling.id;
 
     return (
         <li className="row">
             <a href={stillingUrl} target="_blank">
-                <span className="col-sm-4">{props.stilling.tittel}</span>
+                <span className="col-sm-6">{props.stilling.tittel}</span>
                 <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
-                <span className="col-sm-4">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
+                <span className="col-sm-2">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
             </a>
         </li>
     );

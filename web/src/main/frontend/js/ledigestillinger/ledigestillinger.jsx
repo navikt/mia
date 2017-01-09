@@ -16,7 +16,6 @@ const LedigeStillinger = () => (
             <Stillinger />
         </section>
         <section className="stillinger-statistikk blokk-m">
-            <IkkeFerdigPanel />
         </section>
     </div>
 );

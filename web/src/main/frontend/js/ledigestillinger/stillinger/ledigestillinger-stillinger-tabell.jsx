@@ -38,17 +38,19 @@ export const Stillingsvisning = props => {
     return  (
         <div className="blokk-m">
             <div className="panel panel-fremhevet">
-                <h2 className="blokk-m">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
-                <div className="row blokk-xs">
-                    <h3 className="col-sm-4"><FormattedMessage {...meldinger.stilling} /></h3>
-                    <h3 className="col-sm-4"><FormattedMessage {...meldinger.arbeidsgiver} /></h3>
-                    <h3 className="col-sm-4"><FormattedMessage {...meldinger.soknadsfrist} /></h3>
+                <h2 className="blokk-m typo-undertittel">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
+                <div className="tabell-container">
+                    <div className="row blokk-xs">
+                        <h3 className="col-sm-6 typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></h3>
+                        <h3 className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></h3>
+                        <h3 className="col-sm-2 typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></h3>
+                    </div>
+                    <ul className="ustilet list-with-hover">
+                        {stillinger.length > 0 ? stillinger.map(stilling => {
+                            return <Stilling stilling={stilling} key={stilling.id}/>;
+                        }) : <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>}
+                    </ul>
                 </div>
-                <ul className="ustilet list-with-hover">
-                    {stillinger.length > 0 ? stillinger.map(stilling => {
-                        return <Stilling stilling={stilling} key={stilling.id}/>;
-                    }) : <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>}
-                </ul>
             </div>
         </div>
     );
