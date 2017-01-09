@@ -1,5 +1,5 @@
 export const initialState = {
-    visKart: true,
+    visKart: false,
     valgteFylker: [],
     valgteKommuner: [],
     valgteFylkerModal: [],
@@ -20,9 +20,9 @@ export const actions = {
 const reducer = (state=initialState, action) => {
     switch(action.type) {
         case actions.vis_kart:
-            return {...state, visKart: true};
-        case actions.vis_tabell:
             return {...state, visKart: false};
+        case actions.vis_tabell:
+            return {...state, visKart: true};
         case actions.modal_reset:
             return {...state, valgteFylkerModal: state.valgteFylker, valgteKommunerModal: state.valgteKommuner};
         case actions.modal_lagre:

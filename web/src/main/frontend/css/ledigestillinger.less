@@ -53,17 +53,18 @@
     position: absolute;
     bottom: 0.5rem;
     right: 2rem;
+  display: none;
 }
 
-@media (min-width: @screen-xl) {
+@media (min-width: @screen-medium-plus-rem-as-one-px) {
     .stillinger-oversikt {
-        width: 50%;
+        width: 70%;
         box-sizing: border-box;
         padding-right: 1rem;
     }
 
     .stillinger-bransjer {
-        width: 50%;
+        width: 30%;
         box-sizing: border-box;
         padding-left: 1rem;
     }
@@ -82,7 +83,7 @@
   display: inline-block;
   box-sizing: border-box;
   padding: 5px 5px 12px 5px;
-  margin: 5px;
+  margin: 0px 16px 16px 0;
   position: relative;
   float: left;
 }
@@ -109,7 +110,7 @@
 }
 
 .boks-navn {
-  width: 7rem;
+  width: 8rem;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.38;
