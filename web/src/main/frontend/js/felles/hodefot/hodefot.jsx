@@ -17,3 +17,5 @@ export const Hodefot = () => {
         </div>
     );
 };
+
+export default Hodefot;

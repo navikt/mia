@@ -6,8 +6,8 @@ export const Stilling = (props) => {
         if(datestring == null) {
             return "-";
         }
-        return <FormattedDate
-            value={new Date(datestring)} format="short"/>;
+
+        return <FormattedDate value={new Date(datestring)} format="numeric" />;
     };
     const stillingUrl = "https://tjenester-q1.nav.no/stillinger/stilling?ID="+props.stilling.id;
 

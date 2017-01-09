@@ -33,7 +33,10 @@ export const Stillingsvisning = props => {
         return new Date(a.soknadfrist) < new Date(b.soknadfrist);
     };
 
-    const stillinger = props.yrkesgruppe.stillinger.sort(compareSoknadsfrister);
+    const stillingerFraProps = props.yrkesgruppe.stillinger.sort(compareSoknadsfrister);
+    const stillinger = stillingerFraProps.length > 0 ?
+        stillingerFraProps.map(stilling => { return <Stilling stilling={stilling} key={stilling.id}/>; }) :
+        <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>;
 
     return  (
         <div className="blokk-m">
@@ -46,9 +49,7 @@ export const Stillingsvisning = props => {
                         <h3 className="col-sm-2 typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></h3>
                     </div>
                     <ul className="ustilet list-with-hover">
-                        {stillinger.length > 0 ? stillinger.map(stilling => {
-                            return <Stilling stilling={stilling} key={stilling.id}/>;
-                        }) : <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>}
+                        {stillinger}
                     </ul>
                 </div>
             </div>
