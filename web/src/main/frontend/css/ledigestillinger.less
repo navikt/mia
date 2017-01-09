@@ -76,8 +76,8 @@
   border: solid 1px @gray-icon;
   text-align: left;
   color: @gray-text;
-  width: 143px;
-  height: 131px;
+  width: @bransje-boks-width;
+  height: @bransje-boks-height;
   border-radius: 4px;
   display: inline-block;
   box-sizing: border-box;
@@ -109,9 +109,7 @@
 }
 
 .boks-navn {
-  width: 128px;
-  font-size: @rem-as-16px;
-  font-weight: bold;
+  width: 7rem;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.38;
@@ -122,8 +120,9 @@
 
 .boks-antall {
   width: 122px;
+  font-size: @rem-as-38px;
   font-weight: bold;
-  font-size: 30px;
+  font-style: normal;
   position: absolute;
   text-align: right;
   bottom: 0;
