@@ -9,15 +9,15 @@ import {getStillingerTotalt, getKommuneMedData} from './ledigestillinger-oversik
 
 describe('ledigestillinger', () => {
     describe('oversikt-reducer', () => {
-        // it("skal sette visKart til true når vi kaller action VIS_KART", () => {
-        //     const newState = OversiktReducer(initialState, { type: actions.vis_kart });
-        //     expect(newState.visKart).to.be.true;
-        // });
-        //
-        // it("skal sette visKart til false når vi kaller action VIS_TABELL", () => {
-        //     const newState = OversiktReducer(initialState, { type: actions.vis_tabell });
-        //     expect(newState.visKart).to.be.false;
-        // });
+        it("skal sette visKart til true når vi kaller action VIS_KART", () => {
+            const newState = OversiktReducer(initialState, { type: actions.vis_kart });
+            expect(newState.visKart).to.be.true;
+        });
+
+        it("skal sette visKart til false når vi kaller action VIS_TABELL", () => {
+            const newState = OversiktReducer(initialState, { type: actions.vis_tabell });
+            expect(newState.visKart).to.be.false;
+        });
 
         describe('modal', () => {
             it("skal sette fylke til valgt fylke når vi kaller MODAL_VELG_FYLKE", () => {

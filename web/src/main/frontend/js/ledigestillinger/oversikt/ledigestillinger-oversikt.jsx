@@ -62,9 +62,9 @@ export class Oversikt extends React.Component {
             <div className="panel panel-fremhevet panel-oversikt">
                 <Innholdslaster avhengigheter={[this.props.oversiktStillinger]}>
                     {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
-                    <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
-                        <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
-                    </a>
+                    {/*<a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>*/}
+                        {/*<FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>*/}
+                    {/*</a>*/}
                 </Innholdslaster>
             </div>
         );
