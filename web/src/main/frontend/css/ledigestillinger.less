@@ -58,13 +58,13 @@
 
 @media (min-width: @screen-medium-plus-rem-as-one-px) {
     .stillinger-oversikt {
-        width: 70%;
+        width: 60%;
         box-sizing: border-box;
         padding-right: 1rem;
     }
 
     .stillinger-bransjer {
-        width: 30%;
+        width: 40%;
         box-sizing: border-box;
         padding-left: 1rem;
     }
@@ -72,6 +72,11 @@
 
 .kommune-navn {
     width: 400px;
+}
+
+//skjuler lenken for å toggle kart
+.oversikt-toggle {
+  display: none;
 }
 
 // ----------------------- Bransjer -----------------------
@@ -84,12 +89,11 @@
   width: @bransje-boks-width;
   height: @bransje-boks-height;
   border-radius: 4px;
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 5px 5px 12px 5px;
+  padding: 10px 14px 5px 13px;
   margin: 0px 16px 16px 0;
-  position: relative;
-  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .bransje-boks-container:hover {
@@ -110,28 +114,23 @@
 
 .bokser-container {
   width: 100%;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .boks-navn {
-  width: 8rem;
+  width: 9rem;
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.38;
-  position: absolute;
-  top: 0;
   word-wrap: break-word;
 }
 
 .boks-antall {
-  width: 122px;
-  font-size: @rem-as-38px;
+  font-size: @rem-as-30px;
   font-weight: bold;
   font-style: normal;
-  position: absolute;
-  text-align: right;
-  bottom: 0;
-  right: @rem-as-16px;
+  align-self: flex-end;
+  justify-content: flex-end;
 }
 
 // ----------------------- Stillinger -----------------------
@@ -147,4 +146,12 @@
 
 .tabell-container {
   padding-left: 8px;
+}
+
+.stillinger-arbeidsgiver {
+  width: 300px;
+}
+
+.stillinger-soknadsfrist {
+  width: 120px;
 }

@@ -12,13 +12,17 @@ export const Stilling = (props) => {
     const stillingUrl = "https://tjenester-q1.nav.no/stillinger/stilling?ID="+props.stilling.id;
 
     return (
-        <li className="row">
-            <a href={stillingUrl} target="_blank">
-                <span className="col-sm-6">{props.stilling.tittel}</span>
-                <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
-                <span className="col-sm-2">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
-            </a>
-        </li>
+        <tr>
+            <td>
+                <a href={stillingUrl} target="_blank">{props.stilling.tittel}</a>
+            </td>
+            <td>
+                <span>{props.stilling.arbeidsgivernavn}</span>
+            </td>
+            <td>
+                <span>{getSoknadsfrist(props.stilling.soknadfrist)}</span>
+            </td>
+        </tr>
     );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import Stilling from './ledigestillinger-stillinger-stilling';
 import {defineMessages, FormattedMessage} from 'react-intl';
+import Stilling from './ledigestillinger-stillinger-stilling';
 
 export const meldinger = defineMessages({
     stilling: {
@@ -15,46 +15,30 @@ export const meldinger = defineMessages({
         id: 'ledigestillinger.stillinger.soknadsfrist',
         defaultMessage: 'Søknadsfrist'
     },
-    ingenstillinger: {
-        id: 'ledigestillinger.stillinger.ingenstillinger',
-        defaultMessage: 'Ingen ledige stillinger'
+    tabellcaption: {
+        id: 'ledigestillinger.stillinger.tabell.caption',
+        defaultMessage: 'Tabell'
     }
 });
 
+export const StillingsTabell = ({ stillinger }) => {
+    const rader = stillinger.map(stilling => <Stilling stilling={stilling} key={stilling.id}/>);
 
-export const Stillingsvisning = props => {
-    const compareSoknadsfrister = (a, b) => {
-        if(a.soknadfrist == null) {
-            return 1;
-        }
-        if(b.soknadfrist == null) {
-            return -1;
-        }
-        return new Date(a.soknadfrist) < new Date(b.soknadfrist);
-    };
-
-    const stillingerFraProps = props.yrkesgruppe.stillinger.sort(compareSoknadsfrister);
-    const stillinger = stillingerFraProps.length > 0 ?
-        stillingerFraProps.map(stilling => { return <Stilling stilling={stilling} key={stilling.id}/>; }) :
-        <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>;
-
-    return  (
-        <div className="blokk-m">
-            <div className="panel panel-fremhevet">
-                <h2 className="blokk-m typo-undertittel">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
-                <div className="tabell-container">
-                    <div className="row blokk-xs">
-                        <h3 className="col-sm-6 typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></h3>
-                        <h3 className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></h3>
-                        <h3 className="col-sm-2 typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></h3>
-                    </div>
-                    <ul className="ustilet list-with-hover">
-                        {stillinger}
-                    </ul>
-                </div>
-            </div>
-        </div>
+    return (
+        <table className="tabell tabell-container">
+            <caption><FormattedMessage {...meldinger.tabellcaption} /></caption>
+            <thead>
+                <tr>
+                    <th scope="col" className="typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></th>
+                    <th scope="col" className="stillinger-arbeidsgiver typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></th>
+                    <th scope="col" className="stillinger-soknadsfrist typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></th>
+                </tr>
+            </thead>
+            <tbody>
+                {rader}
+            </tbody>
+        </table>
     );
 };
 
-export default Stillingsvisning;
+export default StillingsTabell;

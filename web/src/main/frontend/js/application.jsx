@@ -29,9 +29,9 @@ class Application extends React.Component {
                 <div>
                     <Innholdslaster avhengigheter={[this.props.tekster, this.props.omrader]}>
                         <Hodefot />
-                        <div className="hovedinnhold">
+                        <div className="hovedinnhold side-midtstilt">
                             <Hovedmeny />
-                            <div className="side-innhold">
+                            <div>
                                 { this.props.children }
                             </div>
                         </div>

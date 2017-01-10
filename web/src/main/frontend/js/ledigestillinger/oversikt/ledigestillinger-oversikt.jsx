@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {defineMessages, FormattedMessage} from 'react-intl';
-
 import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
@@ -62,9 +61,9 @@ export class Oversikt extends React.Component {
             <div className="panel panel-fremhevet panel-oversikt">
                 <Innholdslaster avhengigheter={[this.props.oversiktStillinger]}>
                     {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
-                    {/*<a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>*/}
-                        {/*<FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>*/}
-                    {/*</a>*/}
+                    <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
+                        <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
+                    </a>
                 </Innholdslaster>
             </div>
         );
