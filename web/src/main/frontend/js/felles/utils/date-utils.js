@@ -1,4 +1,4 @@
-export const sorterForsteDatoForst = (a, b) => {
+export const datoStigende = (a, b) => {
     if(a == null) {
         return 1;
     }

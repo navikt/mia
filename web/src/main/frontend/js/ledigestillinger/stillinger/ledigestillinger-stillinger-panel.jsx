@@ -1,7 +1,7 @@
 import React from 'react';
 import StillingTabell from './ledigestillinger-stillinger-tabell';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {sorterForsteDatoForst} from '../../felles/utils/date-utils';
+import {datoStigende} from '../../felles/utils/date-utils';
 
 export const meldinger = defineMessages({
     ingenstillinger: {
@@ -11,7 +11,7 @@ export const meldinger = defineMessages({
 });
 
 const StillingerPanel = (props) => {
-    const stillingerFraProps = props.yrkesgruppe.stillinger.sort((a, b) => sorterForsteDatoForst(a.soknadfrist, b.soknadfrist));
+    const stillingerFraProps = props.yrkesgruppe.stillinger.sort((a, b) => datoStigende(a.soknadfrist, b.soknadfrist));
     const stillinger = stillingerFraProps.length > 0 ?
         <StillingTabell stillinger={stillingerFraProps} /> :
         <FormattedMessage {...meldinger.ingenstillinger} />;

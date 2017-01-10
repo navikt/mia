@@ -12,8 +12,10 @@ const meldinger = defineMessages({
 export const Hodefot = () => {
     return (
         <div className="header">
-            <img src="/mia/img/nav_logo.svg" alt="nav logo" className="header-logo"/>
-            <span className="typo-normal header-appnavn"><FormattedMessage {...meldinger.hodefotTittel}/></span>
+            <div className="header-container">
+                <img src="/mia/img/nav_logo.svg" alt="nav logo" className="header-logo"/>
+                <span className="typo-normal header-appnavn"><FormattedMessage {...meldinger.hodefotTittel}/></span>
+            </div>
         </div>
     );
 };
