@@ -9,7 +9,7 @@ const meldinger = defineMessages({
     },
     alternativAlle: {
         id: 'ledigestillinger.bransjer.alle',
-        defaultMessage: 'Alle ({antall})'
+        defaultMessage: 'Alle ({antall, number})'
     }
 });
 
@@ -27,7 +27,11 @@ export const BransjeDropdown = (props) => {
                     <option value={ALTERNATIV_ALLE}>
                         {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall})}
                     </option>
-                    { props.yrkesomrader.map(row => <option value={row.id} key={row.id}>{row.navn} ({row.antallStillinger})</option> )}
+                    { props.yrkesomrader.map(row => (
+                        <option value={row.id} key={row.id}>
+                            {row.navn} ({row.antallStillinger})
+                        </option>
+                    ))}
                 </select>
             </div>
         </div>
