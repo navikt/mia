@@ -27,7 +27,7 @@ export const compareOmrader = (k1, k2) => {
     if(erGenereltOmrade(k1) && !erGenereltOmrade(k2)) {
         return 1;
     } else if(!erGenereltOmrade(k1) && erGenereltOmrade(k2)) {
-        return -1
+        return -1;
     }
     return k1.navn.localeCompare(k2.navn);
 };

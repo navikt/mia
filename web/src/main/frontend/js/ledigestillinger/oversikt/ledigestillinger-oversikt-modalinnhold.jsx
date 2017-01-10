@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {actions} from './ledigestillinger-oversikt-reducer'
+import {actions} from './ledigestillinger-oversikt-reducer';
 import {compareOmrader} from './ledigestillinger-oversikt-utils';
 
 const Omrade = props => {
