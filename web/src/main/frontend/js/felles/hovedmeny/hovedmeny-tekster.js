@@ -3,7 +3,7 @@ import {defineMessages} from 'react-intl';
 const meldinger = defineMessages({
     ledigestillinger: {
         id: 'hovedmeny.ledigestilliger',
-        defaultMessage: 'Ledige stillinger'
+        defaultMessage: 'Dagens arbeidsmarked'
     },
     arbeidsgivere: {
         id: 'hovedmeny.arbeidsgivere',
