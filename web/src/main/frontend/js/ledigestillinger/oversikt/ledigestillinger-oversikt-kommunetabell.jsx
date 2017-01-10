@@ -19,7 +19,7 @@ const meldinger = defineMessages({
 
 export const KommuneTabellRad = props => (
     <tr key={props.kommune.kommunenummer}>
-        <th scope="row">{props.kommune.navn}</th>
+        <td scope="row">{props.kommune.navn}</td>
         <td className="text-center">{props.kommune.antallLedige}</td>
         <td className="text-center">{props.kommune.antallStillinger}</td>
     </tr>
@@ -38,13 +38,13 @@ export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
             <table className="tabell blokk-s">
                 <thead>
                     <tr>
-                        <th scope="col">
+                        <th scope="col" className="typo-etikett-stor kommune-navn">
                             <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
                         </th>
-                        <th scope="col" className="text-center">
+                        <th scope="col" className="text-center typo-etikett-stor">
                             <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
                         </th>
-                        <th scope="col" className="text-center">
+                        <th scope="col" className="text-center typo-etikett-stor">
                             <FormattedMessage {...meldinger.tabellOverskriftStillinger} />
                         </th>
                     </tr>

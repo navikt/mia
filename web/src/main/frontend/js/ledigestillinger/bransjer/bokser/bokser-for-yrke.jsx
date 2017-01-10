@@ -16,7 +16,7 @@ const meldinger = defineMessages({
 
 export const BokserForYrkesomrader = props => (
     <div>
-        <div className="blokk-xxs">
+        <div className="blokk-s">
             <FormattedMessage {...meldinger.boksoverskrift_stillingskategori} />
         </div>
         <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader}/>
@@ -25,7 +25,7 @@ export const BokserForYrkesomrader = props => (
 
 export const BokserForYrkesgrupper = ({ yrkesgrupper, onClick, valgteyrkesgrupper}) => (
     <Innholdslaster avhengigheter={[yrkesgrupper]}>
-        <div className="blokk-xxs">
+        <div className="blokk-s">
             <FormattedMessage {...meldinger.boksoverskrift_arbeidsomrader} />
         </div>
         <Bokser onClick={id => onClick(id)} yrkesgrupper={yrkesgrupper.data}

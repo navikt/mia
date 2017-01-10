@@ -3,11 +3,11 @@ import Devtools from './devtools';
 import {connect} from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import {defineMessages, injectIntl} from 'react-intl';
-
-import Innholdslaster from "./felles/innholdslaster/innholdslaster";
+import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import {lastTekster} from './felles/tekster/tekster-reducer';
-import restActionCreator from "./felles/rest/rest-action";
-import Hovedmeny from "./felles/hovedmeny/hovedmeny";
+import restActionCreator from './felles/rest/rest-action';
+import Hovedmeny from './felles/hovedmeny/hovedmeny';
+import Hodefot from './felles/hodefot/hodefot';
 
 const meldinger = defineMessages({
     appTitle: {
@@ -27,8 +27,9 @@ class Application extends React.Component {
             <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
                 <div>
                     <Innholdslaster avhengigheter={[this.props.tekster, this.props.omrader]}>
-                        <Hovedmeny />
-                        <div className="side-innhold">
+                        <Hodefot />
+                        <div className="hovedinnhold side-midtstilt">
+                            <Hovedmeny />
                             { this.props.children }
                         </div>
                     </Innholdslaster>
@@ -38,7 +39,6 @@ class Application extends React.Component {
                 </div>
             </DocumentTitle>
         );
-
     }
 }
 

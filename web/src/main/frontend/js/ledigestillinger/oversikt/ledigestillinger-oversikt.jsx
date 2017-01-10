@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {defineMessages, FormattedMessage} from 'react-intl';
-
 import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";

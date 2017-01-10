@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Stillingstabell from './ledigestillinger-stillinger-tabell';
+import Stillingspanel from './ledigestillinger-stillinger-panel';
 import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 
 import {
@@ -16,7 +16,7 @@ export class Stillinger extends React.Component {
 
         return (
             <Innholdslaster avhengigheter={[this.props.stillingerRest]}>
-                {this.props.yrkesgrupper.map(yrkesgruppe => <Stillingstabell key={yrkesgruppe.id} yrkesgruppe={yrkesgruppe} />)}
+                {this.props.yrkesgrupper.map(yrkesgruppe => <Stillingspanel key={yrkesgruppe.id} yrkesgruppe={yrkesgruppe} />)}
             </Innholdslaster>
         );
     }

@@ -1,5 +1,5 @@
 export const initialState = {
-    visKart: true,
+    visKart: false,
     valgteFylker: [],
     valgteKommuner: [],
     valgteFylkerModal: [],

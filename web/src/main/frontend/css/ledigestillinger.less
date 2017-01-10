@@ -53,37 +53,64 @@
     position: absolute;
     bottom: 0.5rem;
     right: 2rem;
+  display: none;
 }
 
-@media (min-width: @screen-xl) {
+@media (min-width: @screen-medium-plus-rem-as-one-px) {
     .stillinger-oversikt {
-        width: 50%;
+        width: 60%;
         box-sizing: border-box;
         padding-right: 1rem;
     }
 
     .stillinger-bransjer {
-        width: 50%;
+        width: 40%;
         box-sizing: border-box;
         padding-left: 1rem;
     }
 }
 
+.kommune-navn {
+    width: 50%;
+}
+
+//skjuler lenken for å toggle kart
+.oversikt-toggle {
+  display: none;
+}
+
 // ----------------------- Bransjer -----------------------
 
 .bransje-boks-container {
-  border: 0;
+  background-color: @gray-background;
+  border: solid 1px @gray-icon;
   text-align: left;
-  height: 10rem;
-  width: ~"calc(33.333% - 10px)";
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 0.5rem;
-  background-color: @gray-text;
+  color: @gray-text;
+  width: @bransje-boks-width;
+  height: @bransje-boks-height;
+  border-radius: 4px;
+  padding: 10px 14px 5px 13px;
+  margin: 0px 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bransje-boks-container:hover {
+  background-color: @white;
+  color: @black;
+  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
+}
+
+.bransje-boks-container:active {
+  background-color: @blue-active;
   color: @white;
-  margin: 5px;
-  position: relative;
-  float: left;
+  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
+}
+
+.aktiv-bransjeboks {
+  background-color: @blue-active;
+  color: @white;
 }
 
 .bransje-boks-container:focus {
@@ -91,33 +118,25 @@
   box-shadow: 0 0 0 3px @orange-focus;
 }
 
-.bransje-boks-container:hover {
-  background-color: @color-gray-additional;
-  color: @black;
-}
-
-.aktiv-bransjeboks {
-  background-color: @blue-link-negative;
-  color: @black;
-  border: 1px solid @black;
-}
-
 .bokser-container {
   width: 100%;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .boks-navn {
-  position: absolute;
-  top: 1.25rem;
+  width: 9rem;
+  font-style: normal;
+  font-stretch: normal;
   word-wrap: break-word;
 }
 
 .boks-antall {
-  font-size: @rem-as-38px;
-  position: absolute;
-  bottom: @rem-as-20px;
-  right: @rem-as-20px;
+  font-size: @rem-as-30px;
+  font-weight: bold;
+  font-style: normal;
+  align-self: flex-end;
+  justify-content: flex-end;
 }
 
 // ----------------------- Stillinger -----------------------
@@ -127,6 +146,18 @@
 }
 
 .list-with-hover .row:hover {
-  background-color: @white;
+  background-color: @gray-background;
   text-decoration: underline;
+}
+
+.tabell-container {
+  padding-left: 8px;
+}
+
+.stillinger-arbeidsgiver {
+  width: 300px;
+}
+
+.stillinger-soknadsfrist {
+  width: 120px;
 }

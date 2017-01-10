@@ -1,20 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
-import {defineMessages, FormattedMessage} from 'react-intl';
 import {actions} from "./ledigestillinger-bransjer-reducer";
 import BransjeDropdown from './bransje-dropdown';
 import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
 import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
-
-const meldinger = defineMessages({
-    lenkeallebransjer: {
-        id: 'ledigestillinger.bransjer.lenkeallebransjer',
-        defaultMessage: 'Vis alle bransjer med ledige stillinger >>'
-    }
-});
 
 class BransjerOversikt extends React.Component {
     toggleYrkesgruppe(id) {
@@ -53,11 +44,7 @@ class BransjerOversikt extends React.Component {
                                  totaltAntall={totantallstillinger}
                 />
                 {bransjeBokser}
-                <Link to="#">
-                    <FormattedMessage {...meldinger.lenkeallebransjer} />
-                </Link>
             </div>
-
         );
     }
 }
