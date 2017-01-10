@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux';
 import {actions} from './ledigestillinger-oversikt-reducer';
+import {compareOmrader} from './ledigestillinger-oversikt-utils';
 
 const Omrade = props => {
     const name = `checkbox_${props.omrade.id}`;
@@ -26,7 +27,7 @@ export class Modalinnhold extends React.Component {
     }
 
     getKommunerForFylke(fylke) {
-        return fylke.underomrader.map(kommune => (
+        return fylke.underomrader.sort(compareOmrader).map(kommune => (
             <Omrade key={kommune.id} omrade={kommune} onChange={this.toggleKommune.bind(this, kommune.id)} />
         ));
     }
@@ -68,7 +69,7 @@ export class Modalinnhold extends React.Component {
             }))
         }));
 
-        const omrader = omraderMedData.map(fylke => (
+        const omrader = omraderMedData.sort(compareOmrader).map(fylke => (
             <Omrade key={fylke.id} omrade={fylke} onChange={this.toggleFylke.bind(this, fylke.id)}>
                 <ul className="liste liste-omrade blokk-xs">
                     {this.getKommunerForFylke(fylke)}

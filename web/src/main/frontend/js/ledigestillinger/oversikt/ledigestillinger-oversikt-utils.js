@@ -20,3 +20,14 @@ export function getStillingerTotalt(kommuner, stillinger) {
         return totalt;
     }, { antallLedige: 0, antallStillinger: 0 });
 }
+
+export const compareOmrader = (k1, k2) => {
+    const erGenereltOmrade = omrade => omrade.id.startsWith('110011');
+
+    if(erGenereltOmrade(k1) && !erGenereltOmrade(k2)) {
+        return 1;
+    } else if(!erGenereltOmrade(k1) && erGenereltOmrade(k2)) {
+        return -1;
+    }
+    return k1.navn.localeCompare(k2.navn);
+};
