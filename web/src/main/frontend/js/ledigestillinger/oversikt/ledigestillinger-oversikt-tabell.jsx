@@ -1,6 +1,6 @@
 import React from "react";
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke} from './ledigestillinger-oversikt-utils';
+import {getStillingerTotalt, getKommuneMedData, getValgteKommunerForFylke, compareOmrader} from './ledigestillinger-oversikt-utils';
 import Modal from "../../felles/modal/modal";
 import Modalinnhold from "./ledigestillinger-oversikt-modalinnhold";
 
@@ -65,7 +65,7 @@ const KommuneTabell = ({fylke, kommuner, stillinger}) => {
                 </tr>
                 </thead>
                 <tbody>
-                    {kommuner.map(kommune => getKommuneMedData(kommune, stillinger)).map(kommune => <KommuneTabellRad key={kommune.id} kommune={kommune}/>)}
+                    {kommuner.sort(compareOmrader).map(kommune => getKommuneMedData(kommune, stillinger)).map(kommune => <KommuneTabellRad key={kommune.id} kommune={kommune}/>)}
                 </tbody>
             </table>
         </div>
