@@ -3,7 +3,6 @@ import Devtools from './devtools';
 import {connect} from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import {defineMessages, injectIntl} from 'react-intl';
-
 import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import {lastTekster} from './felles/tekster/tekster-reducer';
 import restActionCreator from './felles/rest/rest-action';
@@ -31,9 +30,7 @@ class Application extends React.Component {
                         <Hodefot />
                         <div className="hovedinnhold side-midtstilt">
                             <Hovedmeny />
-                            <div>
-                                { this.props.children }
-                            </div>
+                            { this.props.children }
                         </div>
                     </Innholdslaster>
                     <div aria-hidden="true">
@@ -42,7 +39,6 @@ class Application extends React.Component {
                 </div>
             </DocumentTitle>
         );
-
     }
 }
 
