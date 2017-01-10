@@ -21,7 +21,7 @@ export const meldinger = defineMessages({
     }
 });
 
-export const StillingsTabell = ({ stillinger }) => {
+export const StillingTabell = ({ stillinger }) => {
     const rader = stillinger.map(stilling => <Stilling stilling={stilling} key={stilling.id}/>);
 
     return (
@@ -41,4 +41,4 @@ export const StillingsTabell = ({ stillinger }) => {
     );
 };
 
-export default StillingsTabell;
+export default StillingTabell;
