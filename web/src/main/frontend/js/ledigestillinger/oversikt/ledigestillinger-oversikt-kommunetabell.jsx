@@ -33,8 +33,8 @@ export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
         .map(kommune => <KommuneTabellRad key={kommune.id} kommune={kommune}/>);
 
     return (
-        <div className="blokk">
-            <h3 className="typo-etikett">{fylkenavn}</h3>
+        <section className="blokk">
+            <h2 className="typo-etikett">{fylkenavn}</h2>
             <table className="tabell blokk-s">
                 <thead>
                     <tr>
@@ -53,7 +53,7 @@ export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
                     {tabellrad}
                 </tbody>
             </table>
-        </div>
+        </section>
     );
 };
 

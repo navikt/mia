@@ -12,11 +12,11 @@ export class Bransjer extends React.Component {
 
     render() {
         return (
-            <div>
+            <section>
                 <Innholdslaster avhengigheter={[this.props.yrkesomrader]}>
                     <BransjerOversikt yrkesomrader={this.props.yrkesomrader.data} totantallstillinger={this.props.totantallstillinger.data} />
                 </Innholdslaster>
-            </div>
+            </section>
         );
     }
 }
