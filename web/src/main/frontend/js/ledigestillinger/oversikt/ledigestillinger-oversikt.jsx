@@ -4,7 +4,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
-import OversiktTabell from "./ledigestillinger-oversikt-tabell";
+import Oversiktspanel from "./ledigestillinger-oversikt-panel";
 import restActionCreator from "../../felles/rest/rest-action";
 import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
@@ -60,7 +60,7 @@ export class Oversikt extends React.Component {
         return (
             <div className="panel panel-fremhevet panel-oversikt">
                 <Innholdslaster avhengigheter={[this.props.oversiktStillinger]}>
-                    {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
+                    {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <Oversiktspanel {...oversiktProps}/>}
                     <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
                         <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
                     </a>

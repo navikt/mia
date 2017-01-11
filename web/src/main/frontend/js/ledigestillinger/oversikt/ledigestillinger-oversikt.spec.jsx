@@ -4,7 +4,7 @@ import {shallow} from "enzyme";
 import OversiktReducer, {actions, initialState} from './ledigestillinger-oversikt-reducer';
 import {Oversikt} from "./ledigestillinger-oversikt";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
-import Oversiktstabell from "./ledigestillinger-oversikt-tabell";
+import Oversiktspanel from "./ledigestillinger-oversikt-panel";
 import {getStillingerTotalt, getKommuneMedData} from './ledigestillinger-oversikt-utils';
 
 describe('ledigestillinger', () => {
@@ -79,7 +79,7 @@ describe('ledigestillinger', () => {
         it("skal vise tabell om prop visKart er false", () => {
             const props = {...this.defaultProps, visKart: false};
             const wrapper = shallow(<Oversikt {...props} />);
-            expect(wrapper).to.have.descendants(Oversiktstabell);
+            expect(wrapper).to.have.descendants(Oversiktspanel);
         });
 
         it("toggleKart skal kalle action VIS_KART om visKart er false", () => {
