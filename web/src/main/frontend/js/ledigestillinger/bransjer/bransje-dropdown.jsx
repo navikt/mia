@@ -9,7 +9,7 @@ const meldinger = defineMessages({
     },
     alternativAlle: {
         id: 'ledigestillinger.bransjer.alle',
-        defaultMessage: 'Alle ({antall, number})'
+        defaultMessage: 'Alle ({antall})'
     }
 });
 
@@ -30,7 +30,7 @@ export const BransjeDropdown = (props) => {
                 <select id="select-bransje" value={props.yrkesomrade}
                         onChange={e => props.onClick(e.target.value)}>
                     <option value={ALTERNATIV_ALLE}>
-                        {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall})}
+                        {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall + ''})}
                     </option>
                     {yrkesomrader}
                 </select>
