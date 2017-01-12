@@ -40,6 +40,7 @@ export class ModalVisning extends Component {
         this.body.classList.add('modalside');
         this.html.classList.add('modalside');
         this.refs.modal.focus();
+        this.pagewrapper.setAttribute('aria-hidden', true);
         this.preventFocusLost();
         this.addEventListeners();
     }
@@ -47,6 +48,7 @@ export class ModalVisning extends Component {
     componentWillUnmount() {
         this.body.classList.remove('modalside');
         this.html.classList.remove('modalside');
+        this.pagewrapper.setAttribute('aria-hidden', false);
     }
 
     addEventListeners() {
