@@ -48,7 +48,7 @@ export class Oversiktspanel extends React.Component {
                         : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>)}
             </div>
         );
-    };
+    }
 }
 
 export default Oversiktspanel;
