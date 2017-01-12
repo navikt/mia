@@ -19,27 +19,30 @@ const meldinger = defineMessages({
     }
 });
 
-export const Oversiktspanel = props => {
-    const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
-    const modalId = "velgKommunerOgFylker";
+export class Oversiktspanel extends React.Component {
+    render() {
+        const props = this.props;
+        const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
+        const modalId = "velgKommunerOgFylker";
 
-    const panelInnhold = valgteFylker.length !== 0
-        ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger} />
-        : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>;
+        const panelInnhold = valgteFylker.length !== 0
+            ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger} />
+            : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>;
 
-    return (
-        <div>
-            <div className="text-center blokk">
-                <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)}>
-                    <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
-                </button>
+        return (
+            <div>
+                <div className="text-center blokk">
+                    <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)} ref="modalknapp">
+                        <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
+                    </button>
+                </div>
+                <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()} onLukk={() => this.refs.modalknapp.focus()}>
+                    <Modalinnhold />
+                </Modal>
+                {panelInnhold}
             </div>
-            <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}>
-                <Modalinnhold />
-            </Modal>
-            {panelInnhold}
-        </div>
-    );
-};
+        );
+    }
+}
 
 export default Oversiktspanel;
