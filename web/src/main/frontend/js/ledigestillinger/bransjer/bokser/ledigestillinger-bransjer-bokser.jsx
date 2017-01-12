@@ -7,7 +7,7 @@ export const Bokser = (props) => {
 
     return (
         <div className="bokser-container blokk-s">
-            { yrkesgrupper.map(row => <BransjeBoks {...row} onClick={props.onClick} erValgt={erValgt(row)} key={row.id} /> )}
+            { yrkesgrupper.map(row => <BransjeBoks {...row} onClick={props.onClick} erValgt={erValgt(row)} key={row.id} checkbox={row.parent != null}/> )}
         </div>
     );
 };

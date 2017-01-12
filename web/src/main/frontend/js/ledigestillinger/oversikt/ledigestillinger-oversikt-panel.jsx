@@ -21,30 +21,34 @@ const meldinger = defineMessages({
     }
 });
 
-export const Oversiktspanel = props => {
-    if (props.oversiktStillinger.status === STATUS.laster) {
-        return <Spinner />;
-    }
+export class Oversiktspanel extends React.Component {
+    render() {
+        const props = this.props;
+        if (props.oversiktStillinger.status === STATUS.laster) {
+            return <Spinner />;
+        }
 
-    const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
-    const modalId = "velgKommunerOgFylker";
+        const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
+        const modalId = "velgKommunerOgFylker";
 
-    return (
-        <div>
-            <div className="text-center blokk">
-                <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)}>
-                    <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
-                </button>
-            </div>
-            <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}>
-                <Modalinnhold />
-            </Modal>
+        return (
+            <div>
+                <div className="text-center blokk">
+                    <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)} ref="modalknapp">
+                        <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
+                    </button>
+                </div>
+                <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}
+                       onLukk={() => this.refs.modalknapp.focus()}>
+                    <Modalinnhold />
+                </Modal>
                 {props.oversiktStillinger.status === STATUS.laster ? <noscript/> :
                     (valgteFylker.length !== 0
-                    ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger.data} />
-                    : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>)}
-        </div>
-    );
-};
+                        ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger.data} />
+                        : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>)}
+            </div>
+        );
+    };
+}
 
 export default Oversiktspanel;
