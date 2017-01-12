@@ -17,10 +17,10 @@ const StillingerPanel = (props) => {
         <FormattedMessage {...meldinger.ingenstillinger} />;
 
     return (
-        <div className="blokk-m panel panel-fremhevet">
+        <section className="blokk-m panel panel-fremhevet">
             <h2 className="blokk-m typo-undertittel">{props.yrkesgruppe.navn} ({props.yrkesgruppe.antallStillinger})</h2>
             {stillinger}
-        </div>
+        </section>
     );
 };
 
