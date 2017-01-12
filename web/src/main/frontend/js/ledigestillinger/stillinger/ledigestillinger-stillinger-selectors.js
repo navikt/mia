@@ -2,6 +2,8 @@ import {STATUS} from "../../felles/konstanter";
 
 export const getValgteYrkesgrupperId = state => state.ledigestillinger.bransje.valgteyrkesgrupper;
 
+export const getValgtYrkesomradeId = state => state.ledigestillinger.bransje.valgtyrkesomrade;
+
 export const getHarValgtYrkesgrupper = state => getValgteYrkesgrupperId(state).length > 0;
 
 export const getYrkesgruppeById = (id, state) => {

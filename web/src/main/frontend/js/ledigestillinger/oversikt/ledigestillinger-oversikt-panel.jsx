@@ -3,6 +3,8 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import Modal from '../../felles/modal/modal';
 import Modalinnhold from './ledigestillinger-oversikt-modalinnhold';
 import OmradeTabell from './ledigestillinger-oversikt-omradetabell';
+import Spinner from './../../felles/innholdslaster/innholdslaster-spinner';
+import {STATUS} from './../../felles/konstanter';
 
 const meldinger = defineMessages({
     velgKommuneOgFylkeLabel: {
@@ -20,12 +22,12 @@ const meldinger = defineMessages({
 });
 
 export const Oversiktspanel = props => {
+    if (props.oversiktStillinger.status === STATUS.laster) {
+        return <Spinner />;
+    }
+
     const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
     const modalId = "velgKommunerOgFylker";
-
-    const panelInnhold = valgteFylker.length !== 0
-        ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger} />
-        : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>;
 
     return (
         <div>
@@ -37,7 +39,10 @@ export const Oversiktspanel = props => {
             <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}>
                 <Modalinnhold />
             </Modal>
-            {panelInnhold}
+                {props.oversiktStillinger.status === STATUS.laster ? <noscript/> :
+                    (valgteFylker.length !== 0
+                    ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger.data} />
+                    : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>)}
         </div>
     );
 };

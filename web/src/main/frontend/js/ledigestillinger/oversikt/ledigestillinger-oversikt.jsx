@@ -5,8 +5,7 @@ import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import Oversiktspanel from "./ledigestillinger-oversikt-panel";
-import restActionCreator from "../../felles/rest/rest-action";
-import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
+import {hentStillinger, hentAntallStillingerForYrkesgruppe} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
 import {apneModal} from "../../felles/modal/modal-reducer";
 
@@ -22,10 +21,6 @@ const meldinger = defineMessages({
 });
 
 export class Oversikt extends React.Component {
-    componentDidMount() {
-        this.props.dispatch(restActionCreator('oversikt_stillinger', '/stillinger/oversiktAlleKommuner'));
-    }
-
     togglekart() {
         this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
     }
@@ -44,27 +39,28 @@ export class Oversikt extends React.Component {
         this.props.dispatch(hentYrkesgrupper());
         this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForOmrade());
+        this.props.dispatch(hentAntallStillingerForYrkesgruppe());
     }
 
     render() {
         const oversiktProps = {
             valgteFylker: this.props.valgteFylker,
             valgteKommuner: this.props.valgteKommuner,
-            oversiktStillinger: this.props.oversiktStillinger.data,
+            oversiktStillinger: this.props.oversiktStillinger,
             totantallstillinger: this.props.totantallstillinger.data,
             omrader: this.props.omrader.data,
             apneModal: this.apneModal.bind(this),
             lagreModal: this.lagreModal.bind(this)
         };
 
+        const innhold = this.props.visKart ? <OversiktKart {...oversiktProps}/> : <Oversiktspanel {...oversiktProps}/>;
+
         return (
             <div className="panel panel-fremhevet panel-oversikt">
-                <Innholdslaster avhengigheter={[this.props.oversiktStillinger]}>
-                    {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <Oversiktspanel {...oversiktProps}/>}
-                    <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
-                        <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
-                    </a>
-                </Innholdslaster>
+                {innhold}
+                <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
+                    <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
+                </a>
             </div>
         );
     }

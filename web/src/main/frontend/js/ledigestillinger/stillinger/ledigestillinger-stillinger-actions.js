@@ -1,4 +1,4 @@
-import {STATUS} from "../../felles/konstanter";
+import {STATUS, ALTERNATIV_ALLE} from "../../felles/konstanter";
 import {getActions} from "../../felles/rest/rest-reducer";
 import {
     buildUriParams,
@@ -10,7 +10,8 @@ import {
 
 import {
     getHarValgtYrkesgrupper,
-    getValgteYrkesgrupperId
+    getValgteYrkesgrupperId,
+    getValgtYrkesomradeId
 } from "./ledigestillinger-stillinger-selectors";
 
 export const hentStillinger = () => (dispatch, getState) => {
@@ -30,8 +31,33 @@ export const hentStillinger = () => (dispatch, getState) => {
         );
 };
 
+export const hentAntallStillingerForYrkesgruppe = () => (dispatch, getState) => {
+    const state = getState();
+    const actions = getActions('oversikt_stillinger');
+
+    dispatch({type: actions[STATUS.laster]});
+
+    const uri = "/omrader/kommunedata?" + buildUriParams(getUriParamsForKommunerYrkesgrupperYrkesomrader(state));
+    fetchToJson(uri)
+        .then(
+            sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
+            handterFeil(dispatch, actions[STATUS.feilet])
+        );
+};
+
 const getUriParams = state => {
     const params = getParamsForValgteFylkerOgKommuner(state);
     params.yrkesgrupper = getValgteYrkesgrupperId(state);
     return params;
 };
+
+const getUriParamsForKommunerYrkesgrupperYrkesomrader = state => {
+    const params = getParamsForValgteFylkerOgKommuner(state);
+    params.yrkesgrupper = getValgteYrkesgrupperId(state);
+    const valgtYrkesomradeId = getValgtYrkesomradeId(state);
+    if (valgtYrkesomradeId !== ALTERNATIV_ALLE) {
+        params.yrkesomrade = valgtYrkesomradeId;
+    }
+    return params;
+};
+
