@@ -41,7 +41,7 @@ export const hentAntallStillingerForYrkesgruppe = () => (dispatch, getState) => 
     }
     dispatch({type: actions[STATUS.laster]});
 
-    const uri = "/omrader/kommunedata?" + buildUriParams(getUriParamsForKommunerYrkesgrupperYrkesomrader(state));
+    const uri = "/omrader/kommunedata?" + buildUriParams(getUriParamsForFiltrering(state));
     fetchToJson(uri)
         .then(
             sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
@@ -55,7 +55,7 @@ const getUriParams = state => {
     return params;
 };
 
-const getUriParamsForKommunerYrkesgrupperYrkesomrader = state => {
+const getUriParamsForFiltrering = state => {
     const params = getParamsForValgteFylkerOgKommuner(state);
     params.yrkesgrupper = getValgteYrkesgrupperId(state);
     const valgtYrkesomradeId = getValgtYrkesomradeId(state);
