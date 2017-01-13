@@ -1,5 +1,6 @@
 import React from 'react';
-import {FormattedDate} from "react-intl";
+import {FormattedDate} from 'react-intl';
+import {connect} from 'react-redux';
 
 export const Stilling = (props) => {
     const getSoknadsfrist = datestring => {
@@ -9,7 +10,8 @@ export const Stilling = (props) => {
 
         return <FormattedDate value={new Date(datestring)} format="numeric" />;
     };
-    const stillingUrl = "https://tjenester-q1.nav.no/stillinger/stilling?ID="+props.stilling.id;
+    const baseUrl = props.miljovariabler["stillingsok.link.url"];
+    const stillingUrl = `${baseUrl}stilling?ID=${props.stilling.id}`;
 
     return (
         <tr>
@@ -26,4 +28,8 @@ export const Stilling = (props) => {
     );
 };
 
-export default Stilling;
+const stateToProps = state => ({
+    miljovariabler: state.rest.miljovariabler.data
+});
+
+export default connect(stateToProps)(Stilling);
