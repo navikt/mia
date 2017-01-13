@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {actions} from "./ledigestillinger-bransjer-reducer";
+import {actions} from './ledigestillinger-bransjer-reducer';
 import BransjeDropdown from './bransje-dropdown';
-import {hentYrkesgrupper} from "./ledigestillinger-bransjer-actions";
-import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
-import {ALTERNATIV_ALLE} from "../../felles/konstanter";
+import {hentYrkesgrupper} from './ledigestillinger-bransjer-actions';
+import {hentStillinger, hentAntallStillingerForYrkesgruppe} from '../stillinger/ledigestillinger-stillinger-actions';
+import {ALTERNATIV_ALLE} from '../../felles/konstanter';
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
 
 class BransjerOversikt extends React.Component {
@@ -15,11 +15,13 @@ class BransjerOversikt extends React.Component {
             this.props.dispatch({type: actions.yrkesgruppeselect, payload: id});
         }
         this.props.dispatch(hentStillinger());
+        this.props.dispatch(hentAntallStillingerForYrkesgruppe());
     }
 
     velgYrkesomrade(id) {
         this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
         this.props.dispatch(hentYrkesgrupper());
+        this.props.dispatch(hentAntallStillingerForYrkesgruppe());
     }
 
     render() {

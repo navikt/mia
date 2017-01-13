@@ -2,13 +2,12 @@ package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.mia.domain.geografi.Omrade;
+import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import java.util.List;
 
@@ -26,5 +25,25 @@ public class OmradeRessurs {
     @GET
     public List<Omrade> hentFylkerOgKommuner() {
         return stillingerEndpoint.getFylkerOgKommuner();
+    }
+
+    @GET
+    @Path("/kommunedata")
+    public List<OmradeStilling> hentKommunedata(@BeanParam FiltreringParams filtrering) {
+        return stillingerEndpoint.getAntallStillingerForFiltrering(filtrering.yrkesomradeid, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
+    }
+
+    private static class FiltreringParams {
+        @QueryParam("yrkesomrade")
+        public String yrkesomradeid;
+
+        @QueryParam("yrkesgrupper[]")
+        public List<String> yrkesgrupper;
+
+        @QueryParam("fylker[]")
+        public List<String> fylker;
+
+        @QueryParam("kommuner[]")
+        public List<String> kommuner;
     }
 }
