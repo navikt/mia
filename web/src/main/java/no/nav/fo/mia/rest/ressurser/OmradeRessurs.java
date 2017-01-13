@@ -29,10 +29,21 @@ public class OmradeRessurs {
 
     @GET
     @Path("/kommunedata")
-    public List<OmradeStilling> hentKommunedata(@QueryParam("yrkesomrade") String yrkesomradeid,
-                                                @QueryParam("yrkesgrupper[]") List<String> yrkesgrupper,
-                                                @QueryParam("fylker[]") List<String> fylker,
-                                                @QueryParam("kommuner[]") List<String> kommuner) {
-        return stillingerEndpoint.getAntallStillingerForFiltrering(yrkesomradeid, yrkesgrupper, fylker, kommuner);
+    public List<OmradeStilling> hentKommunedata(@BeanParam FiltreringParams filtrering) {
+        return stillingerEndpoint.getAntallStillingerForFiltrering(filtrering.yrkesomradeid, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
+    }
+
+    private static class FiltreringParams {
+        @QueryParam("yrkesomrade")
+        public String yrkesomradeid;
+
+        @QueryParam("yrkesgrupper[]")
+        public List<String> yrkesgrupper;
+
+        @QueryParam("fylker[]")
+        public List<String> fylker;
+
+        @QueryParam("kommuner[]")
+        public List<String> kommuner;
     }
 }
