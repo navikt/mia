@@ -26,22 +26,23 @@ module.exports = {
     },
     "skal vise stillingsannonser for valgte arbeidsomrader": function() {
         const bransjebokser = ledigestillinger.section.bransjer.elements.bransjebokser;
+        const selectboks = ledigestillinger.section.bransjer.elements.bransjeselect;
         const arbeidsomrade1 = bransjebokser.selector + ':nth-of-type(1)';
         const arbeidsomrade2 = bransjebokser.selector + ':nth-of-type(2)';
         const arbeidsomrade3 = bransjebokser.selector + ':nth-of-type(3)';
         const tabeller = ledigestillinger.section.stillingliste.elements.tabeller;
 
-        ledigestillinger.api.pause(300);
         ledigestillinger.section.bransjer.expect.element(arbeidsomrade1).to.be.present.after(WAIT_TIME);
         ledigestillinger.section.bransjer.expect.element(arbeidsomrade2).to.be.present.after(WAIT_TIME);
         ledigestillinger.section.bransjer.expect.element(arbeidsomrade3).to.be.present.after(WAIT_TIME);
-        ledigestillinger.api.click(arbeidsomrade1).pause(100);
-        ledigestillinger.api.click(arbeidsomrade2).pause(100);
-        ledigestillinger.api.click(arbeidsomrade3).pause(100);
+        ledigestillinger.api.click(arbeidsomrade1).pause(1000);
+        ledigestillinger.api.click(arbeidsomrade1).pause(400);
+        ledigestillinger.api.click(arbeidsomrade2).pause(400);
+        ledigestillinger.api.click(arbeidsomrade3).pause(400);
         ledigestillinger.section.stillingliste.expect.element('@tabell1').to.be.present.after(WAIT_TIME);
 
         ledigestillinger.api.elements(tabeller.locateStrategy, tabeller.selector, (result)=> {
-            ledigestillinger.api.assert.equal(result.value.length, 2, "viser tabell for alle valgte yrkesomrader");
+            ledigestillinger.api.assert.equal(result.value.length, 3, "viser tabell for alle valgte yrkesomrader");
         });
     },
     "skal vise oversikt over stillinger og arbeidsledige for kommuner valgt i modal": function() {

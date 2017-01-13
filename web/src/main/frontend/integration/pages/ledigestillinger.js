@@ -8,7 +8,7 @@ module.exports = {
             selector: '.stillinger-oversikt',
             elements: {
                 kart: '.oversikt-kart',
-                knapp: 'button',
+                knapp: 'button span',
                 fylkeheader: 'h2'
             }
         },
