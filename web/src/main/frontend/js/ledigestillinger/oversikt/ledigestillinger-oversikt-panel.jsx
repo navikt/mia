@@ -1,8 +1,9 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import Modal from '../../felles/modal/modal';
+import Modal from './../../felles/modal/modal';
 import Modalinnhold from './ledigestillinger-oversikt-modalinnhold';
 import OmradeTabell from './ledigestillinger-oversikt-omradetabell';
+import Innholdslaster from './../../felles/innholdslaster/innholdslaster';
 
 const meldinger = defineMessages({
     velgKommuneOgFylkeLabel: {
@@ -14,7 +15,7 @@ const meldinger = defineMessages({
         defaultMessage: 'Velg fylker og kommuner'
     },
     tabellIngenValgt: {
-    id: 'ledigestillinger.oversikt.tabell.ingenvalgt',
+        id: 'ledigestillinger.oversikt.tabell.ingenvalgt',
         defaultMessage: 'Ingen fylker eller kommuner er valgt'
     }
 });
@@ -25,10 +26,6 @@ export class Oversiktspanel extends React.Component {
         const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
         const modalId = "velgKommunerOgFylker";
 
-        const panelInnhold = valgteFylker.length !== 0
-            ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader} valgteKommuner={props.valgteKommuner} stillinger={props.oversiktStillinger} />
-            : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>;
-
         return (
             <div>
                 <div className="text-center blokk">
@@ -36,10 +33,17 @@ export class Oversiktspanel extends React.Component {
                         <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
                     </button>
                 </div>
-                <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()} onLukk={() => this.refs.modalknapp.focus()}>
+                <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}
+                       onLukk={() => this.refs.modalknapp.focus()}>
                     <Modalinnhold />
                 </Modal>
-                {panelInnhold}
+                <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger]}>
+                    {valgteFylker.length !== 0
+                        ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader}
+                                        valgteKommuner={props.valgteKommuner}
+                                        stillinger={props.oversiktStillinger.data}/>
+                        : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>}
+                </Innholdslaster>
             </div>
         );
     }
