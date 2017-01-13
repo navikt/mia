@@ -9,6 +9,7 @@ import {
 } from "../../felles/rest/rest-utils";
 
 import {
+    getHarValgtOmrade,
     getHarValgtYrkesgrupper,
     getValgteYrkesgrupperId,
     getValgtYrkesomradeId
@@ -35,6 +36,9 @@ export const hentAntallStillingerForYrkesgruppe = () => (dispatch, getState) => 
     const state = getState();
     const actions = getActions('oversikt_stillinger');
 
+    if(!getHarValgtOmrade(state)){
+        return;
+    }
     dispatch({type: actions[STATUS.laster]});
 
     const uri = "/omrader/kommunedata?" + buildUriParams(getUriParamsForKommunerYrkesgrupperYrkesomrader(state));

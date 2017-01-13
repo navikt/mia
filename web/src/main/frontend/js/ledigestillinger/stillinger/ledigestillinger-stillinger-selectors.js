@@ -6,6 +6,8 @@ export const getValgtYrkesomradeId = state => state.ledigestillinger.bransje.val
 
 export const getHarValgtYrkesgrupper = state => getValgteYrkesgrupperId(state).length > 0;
 
+export const getHarValgtOmrade = state => state.ledigestillinger.oversikt.valgteFylker.length > 0 || state.ledigestillinger.oversikt.valgteKommuner.length > 0;
+
 export const getYrkesgruppeById = (id, state) => {
     if(state.rest.yrkesgrupper.status === STATUS.lastet) {
         return state.rest.yrkesgrupper.data.find(gruppe => gruppe.id === id);
