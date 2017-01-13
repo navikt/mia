@@ -17,5 +17,5 @@
 - [x] Verifisere ingen snapshot dependencies
 
 Ønske:
-- [ ] Automatisk deploy til T1
+- [x] Automatisk deploy til T1
 - [ ] Automatisk deploy til Q1
