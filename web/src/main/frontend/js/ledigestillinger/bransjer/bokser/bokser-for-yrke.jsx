@@ -6,11 +6,11 @@ import Bokser from './ledigestillinger-bransjer-bokser';
 const meldinger = defineMessages({
     boksoverskrift_stillingskategori: {
         id: 'ledigestillinger.bransjer.boksoverskrift.stillingskategori',
-        defaultMessage: 'Ledige jobber fordelt på stillingskategorier'
+        defaultMessage: 'Ledige stillinger fordelt på stillingskategorier'
     },
     boksoverskrift_arbeidsomrader: {
         id: 'ledigestillinger.bransjer.boksoverskrift.arbeidsomrade',
-        defaultMessage: 'Ledige jobber fordelt på arbeidsområder'
+        defaultMessage: 'Ledige stillinger fordelt på arbeidsområder'
     }
 });
 

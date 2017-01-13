@@ -3,9 +3,9 @@ import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
 
 const meldinger = defineMessages({
-    velgbransje: {
-        id: 'ledigestillinger.bransjer.velgbransje',
-        defaultMessage: 'Velg bransje'
+    velgstillingskategori: {
+        id: 'ledigestillinger.bransjer.velgstillingskategori',
+        defaultMessage: 'Velg stillingskategori'
     },
     alternativAlle: {
         id: 'ledigestillinger.bransjer.alle',
@@ -24,7 +24,7 @@ export const BransjeDropdown = (props) => {
     return(
         <div className="bransjevalg blokk-s">
             <label htmlFor="select-bransje">
-                <FormattedMessage {...meldinger.velgbransje} />
+                <FormattedMessage {...meldinger.velgstillingskategori} />
             </label>
             <div className="select-container input-fullbredde">
                 <select id="select-bransje" value={props.yrkesomrade}

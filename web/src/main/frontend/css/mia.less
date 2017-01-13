@@ -2,9 +2,11 @@
     padding: 2rem 0;
 }
 
-.side-midtstilt {
-    width: 1200px;
-    margin: 0 auto;
+@media (min-width: @screen-xl) {
+    .side-midtstilt {
+        width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 .text-center {
@@ -22,6 +24,5 @@
     .nav-checkbox:checked.expanded + label:before {
         background-image: url('/mia/img/input_checkbox_checked_expanded.svg');
         background-size: auto;
-        background-size: initial;
     }
 }

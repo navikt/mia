@@ -13,10 +13,6 @@ const meldinger = defineMessages({
     modalTittel: {
         id: 'ledigestillinger.oversikt.tabell.modal.tittel',
         defaultMessage: 'Velg fylker og kommuner'
-    },
-    tabellIngenValgt: {
-        id: 'ledigestillinger.oversikt.tabell.ingenvalgt',
-        defaultMessage: 'Ingen fylker eller kommuner er valgt'
     }
 });
 
@@ -42,7 +38,7 @@ export class Oversiktspanel extends React.Component {
                         ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader}
                                         valgteKommuner={props.valgteKommuner}
                                         stillinger={props.oversiktStillinger.data}/>
-                        : <em><FormattedMessage {...meldinger.tabellIngenValgt} /></em>}
+                        : <noscript/>}
                 </Innholdslaster>
             </div>
         );
