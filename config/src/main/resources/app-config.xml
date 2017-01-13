@@ -11,6 +11,7 @@
 
     <resources>
         <baseUrl mapToProperty="stilling.solr" alias="stilling.solr"/>
+        <baseUrl mapToProperty="stillingsok.link" alias="stillingsok.link"/>
     </resources>
 
     <selftest>
