@@ -73,7 +73,7 @@ public class StillingerEndpoint {
             spesifikkTimer.stop();
             generellTimer.stop();
             spesifikkTimer.report();
-            generellTimer.stop();
+            spesifikkTimer.report();
 
             solrQuery.removeFilterQuery(filterquery);
         }
