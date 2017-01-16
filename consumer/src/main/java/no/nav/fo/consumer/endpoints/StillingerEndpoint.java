@@ -69,11 +69,14 @@ public class StillingerEndpoint {
 
             spesifikkTimer.start();
             generellTimer.start();
+
             responses.put(kommuneid, doQuery(solrQuery));
+
             spesifikkTimer.stop();
             generellTimer.stop();
+
             spesifikkTimer.report();
-            spesifikkTimer.report();
+            generellTimer.report();
 
             solrQuery.removeFilterQuery(filterquery);
         }
