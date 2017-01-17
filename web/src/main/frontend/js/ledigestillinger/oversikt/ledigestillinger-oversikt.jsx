@@ -52,7 +52,7 @@ export class Oversikt extends React.Component {
             lagreModal: this.lagreModal.bind(this)
         };
 
-        const innhold = this.props.visKart ? <OversiktKart {...oversiktProps}/> : <Oversiktspanel {...oversiktProps}/>;
+        const innhold = this.props.visKart ? <OversiktKart {...oversiktProps} geojson={this.props.geojson.data}/> : <Oversiktspanel {...oversiktProps}/>;
 
         return (
             <div className="panel panel-fremhevet panel-oversikt">
@@ -71,7 +71,8 @@ const stateToProps = state => ({
     valgteKommuner: state.ledigestillinger.oversikt.valgteKommuner,
     omrader: state.rest.omrader,
     oversiktStillinger: state.rest.oversiktStillinger,
-    totantallstillinger: state.rest.totantallstillinger
+    totantallstillinger: state.rest.totantallstillinger,
+    geojson: state.rest.geojson
 });
 
 export default connect(stateToProps)(Oversikt);
