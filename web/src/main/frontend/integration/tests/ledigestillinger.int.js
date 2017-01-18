@@ -45,6 +45,17 @@ module.exports = {
             ledigestillinger.api.assert.equal(result.value.length, 3, "viser tabell for alle valgte yrkesomrader");
         });
     },
+    "Skal kunne bytte fra kartvisning til tabellvisning": function() {
+        const toggle = ledigestillinger.section.oversikt.elements.toggle;
+        const kart = ledigestillinger.section.oversikt.elements.kart;
+
+        ledigestillinger.section.oversikt.expect.element('@kart').to.be.present.after(WAIT_TIME);
+        ledigestillinger.section.oversikt.expect.element('@toggle').to.be.present.after(WAIT_TIME);
+
+        ledigestillinger.api.click(toggle.selector).pause(100);
+
+        ledigestillinger.section.oversikt.expect.element('@knapp').to.be.present.after(WAIT_TIME);
+    },
     "skal vise oversikt over stillinger og arbeidsledige for kommuner valgt i modal": function() {
         const lagreknapp = ledigestillinger.section.modal.elements.lagre;
         const modalknapp = ledigestillinger.section.oversikt.elements.knapp;

@@ -9,6 +9,7 @@ module.exports = {
             elements: {
                 kart: '.oversikt-kart',
                 knapp: 'button span',
+                toggle: '.oversikt-toggle',
                 fylkeheader: 'h2'
             }
         },
