@@ -1,11 +1,11 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
-import {defineMessages} from 'react-intl';
+import {defineMessages, injectIntl} from 'react-intl';
 
 const meldinger = defineMessages({
     kartplaceholder: {
         id: 'ledigestillinger.oversikt.kartplaceholder',
-        defaultMessage: 'Kart over {fylke}-fylke. Det er {stillinger} ledige stillinger.'
+        defaultMessage: 'Kart for å velge fylker og kommuner.'
     }
 });
 
@@ -70,13 +70,13 @@ class Oversiktskart extends React.Component {
             maxBounds: maxBounds,
             minZoom: initialZoom,
             maxZoom: 8,
-            zoomControl: false
+            zoomControl: false,
         };
 
         return (
             <div>
-                <div className="oversikt-kart">
-                    <Map ref="map" {...mapProps} >
+                <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
+                    <Map ref="map" {...mapProps}>
                         <TileLayer
                             url="/mia/map/{z}_{x}_{y}.png"
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
@@ -89,4 +89,4 @@ class Oversiktskart extends React.Component {
     }
 }
 
-export default Oversiktskart;
+export default injectIntl(Oversiktskart);
