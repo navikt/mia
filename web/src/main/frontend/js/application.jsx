@@ -21,14 +21,23 @@ class Application extends React.Component {
         const visCmsKeys = this.props.location.query.vistekster === 'true';
         this.props.lastTekster(visCmsKeys);
         this.props.lastOmrader();
-        this.props.lastGeojson();
+        this.props.lastFylkerGeojson();
+        this.props.lastKommunerGeojson();
         this.props.lastMiljovariabler();
     }
     render() {
+        const avhengigheter = [
+            this.props.tekster,
+            this.props.omrader,
+            this.props.miljovariabler,
+            this.props.fylkergeojson,
+            this.props.kommunergeojson
+        ];
+
         return (
             <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
                 <div>
-                    <Innholdslaster avhengigheter={[this.props.tekster, this.props.omrader, this.props.miljovariabler, this.props.geojson]}>
+                    <Innholdslaster avhengigheter={avhengigheter}>
                         <Hodefot />
                         <div className="hovedinnhold side-midtstilt">
                             <Hovedmeny />
@@ -48,14 +57,16 @@ const stateToProps = state => ({
     tekster: state.tekster,
     omrader: state.rest.omrader,
     miljovariabler: state.rest.miljovariabler,
-    geojson: state.rest.geojson
+    fylkergeojson: state.rest.fylkergeojson,
+    kommunergeojson: state.rest.kommunergeojson
 });
 
 const actionsToProps = {
     lastTekster,
     lastOmrader: () => restActionCreator('omrader', '/omrader'),
     lastMiljovariabler: () => restActionCreator('miljovariabler', '/miljovariabler'),
-    lastGeojson: () => restActionCreator('geojson', '/../geojson/fylker.json')
+    lastFylkerGeojson: () => restActionCreator('fylkergeojson', '/../geojson/fylker.json'),
+    lastKommunerGeojson: () => restActionCreator('kommunergeojson', '/../geojson/kommuner.json')
 };
 
 export default connect(stateToProps, actionsToProps)(injectIntl(Application));

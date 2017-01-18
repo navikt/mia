@@ -19,13 +19,10 @@ class Oversiktskart extends React.Component {
         const map = this.refs.map.leafletElement;
         map.touchZoom.disable();
         map.doubleClickZoom.disable();
-        //map.scrollWheelZoom.disable();
+        map.scrollWheelZoom.disable();
         map.keyboard.disable();
         map.boxZoom.disable();
-    }
-
-    zoomToWorldView() {
-        this.refs.map.leafletElement.fitBounds(this.worldBounds);
+        map.dragging.disable();
     }
 
     render() {
@@ -43,7 +40,7 @@ class Oversiktskart extends React.Component {
         const hilightFeature = e => {
             const layer = e.target;
             layer.setStyle({
-                fillOpacity: 0.4
+                fillOpacity: 0.2
             });
         };
 
@@ -51,15 +48,22 @@ class Oversiktskart extends React.Component {
             e.target.setStyle(geojsonStyling);
         };
 
-        const zoomToFeature = e => {
+        const zoomTilFylke = e => {
             this.refs.map.leafletElement.fitBounds(e.target.getBounds());
+            this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
+
         };
 
-        const onEachFeature = (feature, layer) => {
+        const zoomTilLandvisning = () => {
+            this.refs.map.leafletElement.fitBounds(this.worldBounds);
+            this.refs.kommuner.leafletElement.setStyle({ opacity: 0 });
+        };
+
+        const onEachFylke = (feature, layer) => {
             layer.on({
                 mouseover: hilightFeature,
                 mouseout: resetHilight,
-                click: zoomToFeature
+                click: zoomTilFylke
             });
         };
 
@@ -81,9 +85,13 @@ class Oversiktskart extends React.Component {
                             url="/mia/map/{z}_{x}_{y}.png"
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
                         />
-                        <GeoJSON data={this.props.geojson} style={geojsonStyling} onEachFeature={onEachFeature}/>
+                        <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} />
+                        <GeoJSON ref="fylker" data={this.props.fylkergeojson} style={geojsonStyling} onEachFeature={onEachFylke}/>
                     </Map>
                 </div>
+                <button className="knapp knapp-hoved knapp-liten" onClick={() => {zoomTilLandvisning();}}>
+                    Reset kart
+                </button>
             </div>
         );
     }
