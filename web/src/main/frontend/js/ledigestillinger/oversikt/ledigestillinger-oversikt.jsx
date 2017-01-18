@@ -55,7 +55,7 @@ export class Oversikt extends React.Component {
         const innhold = this.props.visKart ? <OversiktKart {...oversiktProps} geojson={this.props.geojson.data}/> : <Oversiktspanel {...oversiktProps}/>;
 
         return (
-            <div className="panel panel-fremhevet panel-oversikt">
+            <div className="panel-oversikt">
                 {innhold}
                 <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
                     <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
