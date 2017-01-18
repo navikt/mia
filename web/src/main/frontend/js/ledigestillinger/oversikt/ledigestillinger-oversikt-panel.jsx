@@ -23,7 +23,7 @@ export class Oversiktspanel extends React.Component {
         const modalId = "velgKommunerOgFylker";
 
         return (
-            <div>
+            <div className="panel panel-fremhevet">
                 <div className="text-center blokk">
                     <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)} ref="modalknapp">
                         <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>

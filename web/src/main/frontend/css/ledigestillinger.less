@@ -31,29 +31,112 @@
 
 .panel-oversikt {
     position: relative;
-}
-
-.oversikt-kart {
-    svg {
-        max-width: 100%;
-        min-height: 30rem;
-        max-height: 40rem;
-
-        path {
-            pointer-events: all;
-        }
-
-        path:hover {
-            fill: #a0a0a0;
-        }
-    }
+    background-color: @gray-background;
 }
 
 .panel-oversikt .oversikt-toggle {
     position: absolute;
     bottom: 0.5rem;
     right: 2rem;
-  display: none;
+}
+
+.kommune-navn {
+    width: 50%;
+}
+
+.oversikt-kart {
+    display: inline-block;
+    width: 100%;
+    height: 800px;
+    margin-bottom: 3rem;
+
+    .leaflet-container {
+        height: 800px;
+        background-color: @gray-background;
+    }
+}
+
+// ----------------------- Bransjer -----------------------
+
+.bransje-boks-container {
+    background-color: @gray-background;
+    border: solid 1px @gray-icon;
+    text-align: left;
+    color: @gray-text;
+    width: @bransje-boks-width;
+    height: @bransje-boks-height;
+    border-radius: 4px;
+    padding: 10px 14px 5px 13px;
+    margin: 0px 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bransje-boks-container:hover {
+    background-color: @white;
+    color: @black;
+    box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
+}
+
+.bransje-boks-container:active {
+    background-color: @blue-active;
+    color: @white;
+    box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
+}
+
+.aktiv-bransjeboks {
+    background-color: @blue-active;
+    color: @white;
+}
+
+.bransje-boks-container:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px @orange-focus;
+}
+
+.bokser-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.boks-navn {
+    width: 9rem;
+    font-style: normal;
+    font-stretch: normal;
+    word-wrap: break-word;
+}
+
+.boks-antall {
+    font-size: @rem-as-30px;
+    font-weight: bold;
+    font-style: normal;
+    align-self: flex-end;
+    justify-content: flex-end;
+}
+
+// ----------------------- Stillinger -----------------------
+
+.stillingsliste-header {
+    display: inline-block;
+}
+
+.list-with-hover .row:hover {
+    background-color: @gray-background;
+    text-decoration: underline;
+}
+
+.tabell-container {
+    padding-left: 8px;
+}
+
+.stillinger-arbeidsgiver {
+    width: 300px;
+}
+
+.stillinger-soknadsfrist {
+    width: 120px;
 }
 
 @media (min-width: @screen-medium-plus-rem-as-one-px) {
@@ -68,96 +151,4 @@
         box-sizing: border-box;
         padding-left: 1rem;
     }
-}
-
-.kommune-navn {
-    width: 50%;
-}
-
-//skjuler lenken for å toggle kart
-.oversikt-toggle {
-  display: none;
-}
-
-// ----------------------- Bransjer -----------------------
-
-.bransje-boks-container {
-  background-color: @gray-background;
-  border: solid 1px @gray-icon;
-  text-align: left;
-  color: @gray-text;
-  width: @bransje-boks-width;
-  height: @bransje-boks-height;
-  border-radius: 4px;
-  padding: 10px 14px 5px 13px;
-  margin: 0px 16px 16px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.bransje-boks-container:hover {
-  background-color: @white;
-  color: @black;
-  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
-}
-
-.bransje-boks-container:active {
-  background-color: @blue-active;
-  color: @white;
-  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
-}
-
-.aktiv-bransjeboks {
-  background-color: @blue-active;
-  color: @white;
-}
-
-.bransje-boks-container:focus {
-  outline: 0;
-  box-shadow: 0 0 0 3px @orange-focus;
-}
-
-.bokser-container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.boks-navn {
-  width: 9rem;
-  font-style: normal;
-  font-stretch: normal;
-  word-wrap: break-word;
-}
-
-.boks-antall {
-  font-size: @rem-as-30px;
-  font-weight: bold;
-  font-style: normal;
-  align-self: flex-end;
-  justify-content: flex-end;
-}
-
-// ----------------------- Stillinger -----------------------
-
-.stillingsliste-header {
-  display: inline-block;
-}
-
-.list-with-hover .row:hover {
-  background-color: @gray-background;
-  text-decoration: underline;
-}
-
-.tabell-container {
-  padding-left: 8px;
-}
-
-.stillinger-arbeidsgiver {
-  width: 300px;
-}
-
-.stillinger-soknadsfrist {
-  width: 120px;
 }
