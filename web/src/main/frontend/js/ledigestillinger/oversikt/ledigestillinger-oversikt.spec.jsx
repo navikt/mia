@@ -67,7 +67,8 @@ describe('ledigestillinger', () => {
                 omrader: {data: [this.fylke1, this.fylke2] },
                 oversiktStillinger: { data: {} },
                 totantallstillinger: {data: {}},
-                geojson: {data: {}}
+                fylkergeojson: {data: {}},
+                kommunergeojson: {data: {}}
             };
         });
 
