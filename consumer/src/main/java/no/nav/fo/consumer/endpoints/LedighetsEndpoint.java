@@ -8,13 +8,16 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
@@ -80,8 +83,8 @@ public class LedighetsEndpoint {
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(0);
 
-        DateTime d = DateTime.now().minusMonths(1);
-        String sistePeriodeFilter = d.getYear() + "" + d.getMonthOfYear() + "";
+        LocalDateTime d = LocalDateTime.now().minusMonths(1);
+        String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
 
         solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
         solrQuery.addFacetField("FYLKE_ID");
@@ -110,8 +113,8 @@ public class LedighetsEndpoint {
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(0);
 
-        DateTime d = DateTime.now().minusMonths(1);
-        String sistePeriodeFilter = d.getYear() + "" + d.getMonthOfYear() + "";
+        LocalDateTime d = LocalDateTime.now().minusMonths(1);
+        String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
 
         String filter = createFylkeFilter(fylkesnr, kommunenr);
 
