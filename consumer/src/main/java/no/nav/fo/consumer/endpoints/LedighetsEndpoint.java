@@ -31,7 +31,7 @@ public class LedighetsEndpoint {
 
 
     public LedighetsEndpoint() {
-        String ledigehetsCoreUri = String.format("%s/arbeidsledigecore", System.getProperty("ledighet.solr.url"));
+        String ledigehetsCoreUri = System.getProperty("miasolr.solr.ledigestillingercore.url");
         ledighetsSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(ledigehetsCoreUri).build();
     }
 
