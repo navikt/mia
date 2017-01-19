@@ -33,11 +33,13 @@ export class Oversiktspanel extends React.Component {
                        onLukk={() => this.refs.modalknapp.focus()}>
                     <Modalinnhold />
                 </Modal>
-                <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger]}>
+                <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger, props.oversiktArbeidsledighet]}>
                     {valgteFylker.length !== 0
                         ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader}
                                         valgteKommuner={props.valgteKommuner}
-                                        stillinger={props.oversiktStillinger.data}/>
+                                        stillinger={props.oversiktStillinger.data}
+                                        ledighet={props.oversiktArbeidsledighet.data}
+                    />
                         : <noscript/>}
                 </Innholdslaster>
             </div>
