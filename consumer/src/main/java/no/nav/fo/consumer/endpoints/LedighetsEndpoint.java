@@ -53,11 +53,11 @@ public class LedighetsEndpoint {
 //        }
 
         if (fylkesnr != null && fylkesnr.size() > 0) {
-            filter.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylkesnr, " OR ")));
+            filter.add(String.format("FYLKESNR:(%s)", StringUtils.join(fylkesnr, " OR ")));
         }
 
         if (kommuner != null && kommuner.size() > 0) {
-            filter.add(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
+            filter.add(String.format("KOMMUNENR:(%s)", StringUtils.join(kommuner, " OR ")));
         }
 
         filter.forEach(solrQuery::addFilterQuery);
@@ -87,12 +87,12 @@ public class LedighetsEndpoint {
         String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
 
         solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
-        solrQuery.addFacetField("FYLKE_ID");
+        solrQuery.addFacetField("FYLKESNR");
 
         try {
             QueryResponse resp = ledighetsSolrClient.query(solrQuery);
             Map<String, Integer> ledighetPerFylke = new HashMap<>();
-            resp.getFacetField("FYLKE_ID").getValues()
+            resp.getFacetField("FYLKESNR").getValues()
                     .forEach(fylke -> ledighetPerFylke.put(fylke.getName(), (int)fylke.getCount()));
 
             return ledighetPerFylke;
@@ -121,12 +121,12 @@ public class LedighetsEndpoint {
         solrQuery.addFilterQuery(filter);
         solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
 
-        solrQuery.addFacetField("KOMMUNE_ID");
+        solrQuery.addFacetField("KOMMUNENR");
 
         try {
             QueryResponse resp = ledighetsSolrClient.query(solrQuery);
             Map<String, Integer> ledighetPerFylke = new HashMap<>();
-            resp.getFacetField("KOMMUNE_ID").getValues()
+            resp.getFacetField("KOMMUNENR").getValues()
                     .forEach(kommune -> {
                         if ((int) kommune.getCount() > 0) {
                             String kommuneid = strukturkodeTilIdMapping.get(kommune.getName());
@@ -145,7 +145,7 @@ public class LedighetsEndpoint {
         String filter = "";
 
         if (fylker != null && fylker.size() > 0) {
-            filter += String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR "));
+            filter += String.format("FYLKESNR:(%s)", StringUtils.join(fylker, " OR "));
         }
 
         if (fylker != null && fylker.size() > 0 && kommuner != null && kommuner.size() > 0) {
@@ -153,7 +153,7 @@ public class LedighetsEndpoint {
         }
 
         if (kommuner != null && kommuner.size() > 0) {
-            filter += String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR "));
+            filter += String.format("KOMMUNENR:(%s)", StringUtils.join(kommuner, " OR "));
         }
         return filter;
     }
