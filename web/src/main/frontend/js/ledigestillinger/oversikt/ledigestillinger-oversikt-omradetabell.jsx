@@ -3,13 +3,14 @@ import {getValgteKommunerForFylke, compareOmrader} from './ledigestillinger-over
 import KommuneTabell from './ledigestillinger-oversikt-kommunetabell';
 
 
-export const OmradeTabell = ({ valgteFylker, valgteKommuner, omrader, stillinger }) => {
+export const OmradeTabell = ({ valgteFylker, valgteKommuner, omrader, stillinger, ledighet }) => {
     const tabell = valgteFylker
         .sort(compareOmrader)
         .map(fylke => <KommuneTabell
             key={fylke.id}
             fylke={fylke}
             kommuner={getValgteKommunerForFylke(fylke.id, omrader, valgteKommuner)}
+            ledighet={ledighet}
             stillinger={stillinger}
         />);
 
