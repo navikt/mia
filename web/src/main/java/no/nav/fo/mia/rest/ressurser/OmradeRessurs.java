@@ -1,5 +1,6 @@
 package no.nav.fo.mia.rest.ressurser;
 
+import no.nav.fo.consumer.endpoints.SupportEndpoint;
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.mia.domain.geografi.Omrade;
 import no.nav.fo.mia.domain.stillinger.OmradeStilling;
@@ -22,9 +23,12 @@ public class OmradeRessurs {
     @Inject
     StillingerEndpoint stillingerEndpoint;
 
+    @Inject
+    SupportEndpoint supportEndpoint;
+
     @GET
     public List<Omrade> hentFylkerOgKommuner() {
-        return stillingerEndpoint.getFylkerOgKommuner();
+        return supportEndpoint.getFylkerOgKommuner();
     }
 
     @GET

@@ -25,11 +25,11 @@ export const KommuneTabellRad = props => (
     </tr>
 );
 
-export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
-    const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
+export const KommuneTabell = ({fylke, kommuner, stillinger, ledighet}) => {
+    const stillingerTotalt = getStillingerTotalt(kommuner, stillinger, ledighet);
     const fylkenavn = fylke != null ? fylke.navn : "";
     const tabellrad = kommuner.sort(compareOmrader)
-        .map(kommune => getKommuneMedData(kommune, stillinger))
+        .map(kommune => getKommuneMedData(kommune, stillinger, ledighet))
         .map(kommune => <KommuneTabellRad key={kommune.id} kommune={kommune}/>);
 
     return (
