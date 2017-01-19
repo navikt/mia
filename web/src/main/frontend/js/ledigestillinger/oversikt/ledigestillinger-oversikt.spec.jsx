@@ -66,7 +66,9 @@ describe('ledigestillinger', () => {
                 valgtKommune: "",
                 omrader: {data: [this.fylke1, this.fylke2] },
                 oversiktStillinger: { data: {} },
-                totantallstillinger: {data: {}}
+                totantallstillinger: {data: {}},
+                fylkergeojson: {data: {}},
+                kommunergeojson: {data: {}}
             };
         });
 

@@ -19,3 +19,8 @@
 Ønske:
 - [x] Automatisk deploy til T1
 - [ ] Automatisk deploy til Q1
+
+## Lage nye geojson-filer for ønsket nøyaktighet:
+```
+cat ../webapp/geojson/fylker-original.json | ./node_modules/.bin/simplify-geojson -t 0.003 > ../webapp/geojson/fylker.json
+```
