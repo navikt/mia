@@ -41,5 +41,6 @@ export default combineReducers({
     yrkesgrupper: createRestReducer('yrkesgrupper'),
     stillinger: createRestReducer('stillinger'),
     totantallstillinger: createRestReducer('totantallstillinger'),
-    miljovariabler: createRestReducer('miljovariabler')
+    miljovariabler: createRestReducer('miljovariabler'),
+    oversiktArbeidsledighet: createRestReducer('oversikt_arbeidsledighet')
 });
