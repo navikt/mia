@@ -6,6 +6,10 @@ const meldinger = defineMessages({
     kartplaceholder: {
         id: 'ledigestillinger.oversikt.kartplaceholder',
         defaultMessage: 'Kart for å velge fylker og kommuner.'
+    },
+    kommunePopup: {
+        id: 'ledigestillinger.oversikt.kommunepopup',
+        defaultMessage: '<h3>{kommune}</h3><p>Ledige stillinger: {stillinger}<br />Arbeidsledige: {arbeidsledige}</p>'
     }
 });
 
@@ -22,7 +26,6 @@ class Oversiktskart extends React.Component {
         map.scrollWheelZoom.disable();
         map.keyboard.disable();
         map.boxZoom.disable();
-        map.dragging.disable();
     }
 
     render() {
@@ -71,7 +74,6 @@ class Oversiktskart extends React.Component {
         };
 
         const clickKommune = e => {
-
             const properties = e.target.feature.properties;
             const kommuneErValgt = properties.valgt === true;
             if(kommuneErValgt) {
@@ -104,8 +106,24 @@ class Oversiktskart extends React.Component {
 
         const onEachKommune = (feature, layer) => {
             layer.on({
-                mouseover: highlightFeature,
-                mouseout: resetHighlight,
+                mouseover: e => {
+                    feature.properties.hasFocus = true;
+                    highlightFeature(e);
+                    const tekstAttrs = {
+                        kommune: e.target.feature.properties.navn,
+                        arbeidsledige: 0 + '',
+                        stillinger: 22 + ''
+                    };
+                    setTimeout(() => {
+                        if(feature.properties.hasFocus) {
+                            layer.bindPopup(this.props.intl.formatMessage(meldinger.kommunePopup, tekstAttrs)).openPopup();
+                        }
+                    }, 700);
+                },
+                mouseout: e => {
+                    feature.properties.hasFocus = false;
+                    resetHighlight(e);
+                },
                 click: clickKommune
             });
         };
