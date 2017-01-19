@@ -37,26 +37,61 @@ class Oversiktskart extends React.Component {
             fillOpacity: 0
         };
 
+        const highlightStyling = {
+            fillOpacity: 0.2,
+            weight: 3
+        };
+
+        const selectedStyling = {
+            fillOpacity: 0.4
+        };
+
         const highlightFeature = e => {
             const layer = e.target;
-            layer.setStyle({
-                fillOpacity: 0.2
-            });
+            let styling = highlightStyling;
+
+            if(layer.feature.properties.valgt === true) {
+                styling = {...styling, ...selectedStyling};
+            }
+            layer.setStyle(styling);
         };
 
         const resetHighlight = e =>  {
             e.target.setStyle(geojsonStyling);
+            if(e.target.feature.properties.valgt === true) {
+                e.target.setStyle(selectedStyling);
+            }
         };
 
         const zoomTilFylke = e => {
             this.refs.map.leafletElement.fitBounds(e.target.getBounds());
             this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
+            this.refs.kommuner.leafletElement.bringToFront();
 
+        };
+
+        const clickKommune = e => {
+
+            const properties = e.target.feature.properties;
+            const kommuneErValgt = properties.valgt === true;
+            if(kommuneErValgt) {
+                e.target.setStyle(highlightStyling);
+            } else {
+                e.target.setStyle(selectedStyling);
+            }
+
+            properties.valgt = !kommuneErValgt;
         };
 
         const zoomTilLandvisning = () => {
             this.refs.map.leafletElement.fitBounds(this.worldBounds);
             this.refs.kommuner.leafletElement.setStyle({ opacity: 0 });
+            this.refs.fylker.leafletElement.bringToFront();
+
+            this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
+                layer.feature.properties.valgt = false;
+                layer.setStyle(geojsonStyling);
+            });
         };
 
         const onEachFylke = (feature, layer) => {
@@ -64,6 +99,14 @@ class Oversiktskart extends React.Component {
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
                 click: zoomTilFylke
+            });
+        };
+
+        const onEachKommune = (feature, layer) => {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: clickKommune
             });
         };
 
@@ -85,7 +128,7 @@ class Oversiktskart extends React.Component {
                             url="/mia/map/{z}_{x}_{y}.png"
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
                         />
-                        <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} />
+                        <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} style={geojsonStyling} onEachFeature={onEachFylke}/>
                     </Map>
                 </div>
