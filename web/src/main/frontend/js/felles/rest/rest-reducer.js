@@ -43,6 +43,5 @@ export default combineReducers({
     fylkergeojson: createRestReducer('fylkergeojson'),
     kommunergeojson: createRestReducer('kommunergeojson'),
     totantallstillinger: createRestReducer('totantallstillinger'),
-    miljovariabler: createRestReducer('miljovariabler'),
-    oversiktArbeidsledighet: createRestReducer('oversikt_arbeidsledighet')
+    miljovariabler: createRestReducer('miljovariabler')
 });

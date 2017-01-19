@@ -141,17 +141,10 @@ describe('ledigestillinger', () => {
                     { id: "0202", antallLedige: 3, antallStillinger: 4 }
                 ]
             };
-            this.oversiktArbeidsledighet = {
-                status: "LASTET",
-                data: {
-                    "0101": 1,
-                    "0202": 3
-                }
-            };
         });
 
         it('getKommuneMedData skal populere kommunen med stillinger', () => {
-            const oversiktStillinger = getKommuneMedData(this.kommune1, this.oversiktStillinger.data, this.oversiktArbeidsledighet.data);
+            const oversiktStillinger = getKommuneMedData(this.kommune1, this.oversiktStillinger.data);
             const expected = {
                 antallLedige: 1,
                 antallStillinger: 2,
@@ -163,7 +156,7 @@ describe('ledigestillinger', () => {
 
         it("getStillingerTotalt skal returnerer summen av stillinger for alle kommuner i fylket", () => {
             const kommuner = [this.kommune1, this.kommune2];
-            const antStillinger = getStillingerTotalt(kommuner, this.oversiktStillinger.data, this.oversiktArbeidsledighet.data);
+            const antStillinger = getStillingerTotalt(kommuner, this.oversiktStillinger.data);
             expect(antStillinger.antallLedige).equal(4);
             expect(antStillinger.antallStillinger).equal(6);
         });

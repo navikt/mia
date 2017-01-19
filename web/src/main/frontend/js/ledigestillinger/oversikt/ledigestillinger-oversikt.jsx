@@ -6,7 +6,6 @@ import OversiktKart from "./ledigestillinger-oversikt-kart";
 import Oversiktspanel from "./ledigestillinger-oversikt-panel";
 import {hentStillinger, hentAntallStillingerForYrkesgruppe} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
-import {hentArbeidsledighetForOmrade} from '../oversikt/ledigestillinger-arbeidsledighet-actions';
 import {apneModal} from "../../felles/modal/modal-reducer";
 
 const meldinger = defineMessages({
@@ -40,7 +39,6 @@ export class Oversikt extends React.Component {
         this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForOmrade());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
-        this.props.dispatch(hentArbeidsledighetForOmrade());
     }
 
     render() {
@@ -48,7 +46,6 @@ export class Oversikt extends React.Component {
             valgteFylker: this.props.valgteFylker,
             valgteKommuner: this.props.valgteKommuner,
             oversiktStillinger: this.props.oversiktStillinger,
-            oversiktArbeidsledighet: this.props.oversiktArbeidsledighet,
             totantallstillinger: this.props.totantallstillinger.data,
             omrader: this.props.omrader.data,
             apneModal: this.apneModal.bind(this),
@@ -79,7 +76,6 @@ const stateToProps = state => ({
     valgteKommuner: state.ledigestillinger.oversikt.valgteKommuner,
     omrader: state.rest.omrader,
     oversiktStillinger: state.rest.oversiktStillinger,
-    oversiktArbeidsledighet: state.rest.oversiktArbeidsledighet,
     totantallstillinger: state.rest.totantallstillinger,
     fylkergeojson: state.rest.fylkergeojson,
     kommunergeojson: state.rest.kommunergeojson
