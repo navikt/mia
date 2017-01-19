@@ -37,14 +37,14 @@ class Oversiktskart extends React.Component {
             fillOpacity: 0
         };
 
-        const hilightFeature = e => {
+        const highlightFeature = e => {
             const layer = e.target;
             layer.setStyle({
                 fillOpacity: 0.2
             });
         };
 
-        const resetHilight = e =>  {
+        const resetHighlight = e =>  {
             e.target.setStyle(geojsonStyling);
         };
 
@@ -61,8 +61,8 @@ class Oversiktskart extends React.Component {
 
         const onEachFylke = (feature, layer) => {
             layer.on({
-                mouseover: hilightFeature,
-                mouseout: resetHilight,
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
                 click: zoomTilFylke
             });
         };
