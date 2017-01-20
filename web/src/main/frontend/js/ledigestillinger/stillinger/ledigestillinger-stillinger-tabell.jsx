@@ -1,6 +1,6 @@
 import React from 'react';
-import Stilling from './ledigestillinger-stillinger-stilling';
 import {defineMessages, FormattedMessage} from 'react-intl';
+import Stilling from './ledigestillinger-stillinger-stilling';
 
 export const meldinger = defineMessages({
     stilling: {
@@ -15,43 +15,30 @@ export const meldinger = defineMessages({
         id: 'ledigestillinger.stillinger.soknadsfrist',
         defaultMessage: 'Søknadsfrist'
     },
-    ingenstillinger: {
-        id: 'ledigestillinger.stillinger.ingenstillinger',
-        defaultMessage: 'Ingen ledige stillinger'
+    tabellcaption: {
+        id: 'ledigestillinger.stillinger.tabell.caption',
+        defaultMessage: 'Tabell'
     }
 });
 
+export const StillingTabell = ({ stillinger }) => {
+    const rader = stillinger.map(stilling => <Stilling stilling={stilling} key={stilling.id}/>);
 
-export const Stillingsvisning = props => {
-    const compareSoknadsfrister = (a, b) => {
-        if(a.soknadfrist == null) {
-            return 1;
-        }
-        if(b.soknadfrist == null) {
-            return -1;
-        }
-        return new Date(a.soknadfrist) < new Date(b.soknadfrist);
-    };
-
-    const stillinger = props.yrkesgruppe.stillinger.sort(compareSoknadsfrister);
-
-    return  (
-        <div className="blokk-m">
-            <h2 className="typo-element blokk-xxs">{props.yrkesgruppe.navn} ({props.yrkesgruppe.stillinger.length})</h2>
-            <div className="panel panel-fremhevet">
-                <div className="row blokk-xs">
-                    <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></span>
-                    <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></span>
-                    <span className="col-sm-4 typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></span>
-                </div>
-                <ul className="ustilet list-with-hover">
-                    {stillinger.length > 0 ? stillinger.map(stilling => {
-                        return <Stilling stilling={stilling} key={stilling.id}/>;
-                    }) : <li className="row"><FormattedMessage {...meldinger.ingenstillinger} /></li>}
-                </ul>
-            </div>
-        </div>
+    return (
+        <table className="tabell tabell-container">
+            <caption><FormattedMessage {...meldinger.tabellcaption} /></caption>
+            <thead>
+                <tr>
+                    <th scope="col" className="typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></th>
+                    <th scope="col" className="stillinger-arbeidsgiver typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></th>
+                    <th scope="col" className="stillinger-soknadsfrist typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></th>
+                </tr>
+            </thead>
+            <tbody>
+                {rader}
+            </tbody>
+        </table>
     );
 };
 
-export default Stillingsvisning;
+export default StillingTabell;

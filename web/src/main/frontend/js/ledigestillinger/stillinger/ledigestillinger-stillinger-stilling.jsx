@@ -1,24 +1,35 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {FormattedDate} from "react-intl";
+import {FormattedDate} from 'react-intl';
+import {connect} from 'react-redux';
 
 export const Stilling = (props) => {
     const getSoknadsfrist = datestring => {
         if(datestring == null) {
             return "-";
         }
-        return <FormattedDate value={new Date(datestring)}/>;
+
+        return <FormattedDate value={new Date(datestring)} format="numeric" />;
     };
+    const baseUrl = props.miljovariabler["stillingsok.link.url"];
+    const stillingUrl = `${baseUrl}stilling?ID=${props.stilling.id}`;
 
     return (
-        <li className="row">
-            <Link to="#">
-                <span className="col-sm-4">{props.stilling.stillingstype}</span>
-                <span className="col-sm-4">{props.stilling.arbeidsgivernavn}</span>
-                <span className="col-sm-4">{getSoknadsfrist(props.stilling.soknadfrist)}</span>
-            </Link>
-        </li>
+        <tr>
+            <td>
+                <a href={stillingUrl} target="_blank">{props.stilling.tittel}</a>
+            </td>
+            <td>
+                <span>{props.stilling.arbeidsgivernavn}</span>
+            </td>
+            <td>
+                <span>{getSoknadsfrist(props.stilling.soknadfrist)}</span>
+            </td>
+        </tr>
     );
 };
 
-export default Stilling;
+const stateToProps = state => ({
+    miljovariabler: state.rest.miljovariabler.data
+});
+
+export default connect(stateToProps)(Stilling);

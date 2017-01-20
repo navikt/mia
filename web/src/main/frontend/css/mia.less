@@ -1,5 +1,12 @@
 .hovedinnhold {
-    padding: 1rem 2rem;
+    padding: 2rem 0;
+}
+
+@media (min-width: @screen-xl) {
+    .side-midtstilt {
+        width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 .text-center {
@@ -16,6 +23,6 @@
 
     .nav-checkbox:checked.expanded + label:before {
         background-image: url('/mia/img/input_checkbox_checked_expanded.svg');
-        background-size: initial;
+        background-size: auto;
     }
 }

@@ -14,7 +14,7 @@ public class GeografiTransformer {
         List<Omrade> alleOmrader = solrDocuments.stream()
                 .map(GeografiTransformer::createOmradeFromDocument)
                 .filter(omrade -> omrade.getStrukturkode() != null || omrade.getId().startsWith(GENERELT_FOR_FYLKE_PREFIX))
-                .filter(omrade -> !omrade.getNavn().contains("Ikke i bruk"))
+                .filter(omrade -> !fjernUtgaatteKommuner(omrade))
                 .collect(Collectors.toList());
 
         return alleOmrader.stream()
@@ -28,6 +28,14 @@ public class GeografiTransformer {
 
     private static boolean erFylke(Omrade omrade) {
         return omrade.getNivaa().equals("2");
+    }
+
+    private static boolean fjernUtgaatteKommuner(Omrade omrade) {
+        return omrade.getNavn().contains("Ikke i bruk") ||
+                omrade.getNavn().contains("UTGÅTT") ||
+                omrade.getNavn().contains("gml") ||
+                omrade.getNavn().contains("Gml") ||
+                omrade.getNavn().contains("gammel");
     }
 
     private static Omrade createOmradeFromDocument(SolrDocument document) {

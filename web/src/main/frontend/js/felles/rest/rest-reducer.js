@@ -40,6 +40,10 @@ export default combineReducers({
     yrkesomrader: createRestReducer('yrkesomrader'),
     yrkesgrupper: createRestReducer('yrkesgrupper'),
     stillinger: createRestReducer('stillinger'),
+    fylkergeojson: createRestReducer('fylkergeojson'),
+    kommunergeojson: createRestReducer('kommunergeojson'),
     totantallstillinger: createRestReducer('totantallstillinger'),
+    miljovariabler: createRestReducer('miljovariabler'),
+    oversiktArbeidsledighet: createRestReducer('oversikt_arbeidsledighet'),
     statistikk: createRestReducer('statistikk')
 });

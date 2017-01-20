@@ -1,16 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
 import {defineMessages, FormattedMessage} from 'react-intl';
-
-import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
-import OversiktTabell from "./ledigestillinger-oversikt-tabell";
-import restActionCreator from "../../felles/rest/rest-action";
-import {hentStillinger} from "../stillinger/ledigestillinger-stillinger-actions";
+import Oversiktspanel from "./ledigestillinger-oversikt-panel";
+import {hentStillinger, hentAntallStillingerForYrkesgruppe} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
-import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
+import {hentArbeidsledighetForOmrade} from '../oversikt/ledigestillinger-arbeidsledighet-actions';
 import {apneModal} from "../../felles/modal/modal-reducer";
+import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
 
 const meldinger = defineMessages({
     lenkeVisKart: {
@@ -24,10 +22,6 @@ const meldinger = defineMessages({
 });
 
 export class Oversikt extends React.Component {
-    componentDidMount() {
-        this.props.dispatch(restActionCreator('oversikt_stillinger', '/stillinger/oversiktAlleKommuner'));
-    }
-
     togglekart() {
         this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
     }
@@ -46,6 +40,8 @@ export class Oversikt extends React.Component {
         this.props.dispatch(hentYrkesgrupper());
         this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForOmrade());
+        this.props.dispatch(hentAntallStillingerForYrkesgruppe());
+        this.props.dispatch(hentArbeidsledighetForOmrade());
         this.props.dispatch(hentStatistikk());
     }
 
@@ -53,21 +49,27 @@ export class Oversikt extends React.Component {
         const oversiktProps = {
             valgteFylker: this.props.valgteFylker,
             valgteKommuner: this.props.valgteKommuner,
-            oversiktStillinger: this.props.oversiktStillinger.data,
+            oversiktStillinger: this.props.oversiktStillinger,
+            oversiktArbeidsledighet: this.props.oversiktArbeidsledighet,
             totantallstillinger: this.props.totantallstillinger.data,
             omrader: this.props.omrader.data,
             apneModal: this.apneModal.bind(this),
             lagreModal: this.lagreModal.bind(this)
         };
 
+        const kartProps = {
+            fylkergeojson: this.props.fylkergeojson.data,
+            kommunergeojson: this.props.kommunergeojson.data
+        };
+
+        const innhold = this.props.visKart ? <OversiktKart {...oversiktProps} {...kartProps} /> : <Oversiktspanel {...oversiktProps}/>;
+
         return (
-            <div className="panel panel-fremhevet panel-oversikt">
-                <Innholdslaster avhengigheter={[this.props.oversiktStillinger]}>
-                    {this.props.visKart ? <OversiktKart {...oversiktProps}/> : <OversiktTabell {...oversiktProps}/>}
-                    <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
-                        <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
-                    </a>
-                </Innholdslaster>
+            <div className="panel-oversikt">
+                {innhold}
+                <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
+                    <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
+                </a>
             </div>
         );
     }
@@ -79,7 +81,10 @@ const stateToProps = state => ({
     valgteKommuner: state.ledigestillinger.oversikt.valgteKommuner,
     omrader: state.rest.omrader,
     oversiktStillinger: state.rest.oversiktStillinger,
-    totantallstillinger: state.rest.totantallstillinger
+    oversiktArbeidsledighet: state.rest.oversiktArbeidsledighet,
+    totantallstillinger: state.rest.totantallstillinger,
+    fylkergeojson: state.rest.fylkergeojson,
+    kommunergeojson: state.rest.kommunergeojson
 });
 
 export default connect(stateToProps)(Oversikt);

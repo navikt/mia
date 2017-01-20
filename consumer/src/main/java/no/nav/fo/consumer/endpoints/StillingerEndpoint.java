@@ -1,11 +1,15 @@
 package no.nav.fo.consumer.endpoints;
 
-import no.nav.fo.consumer.transformers.*;
 import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
-import no.nav.fo.mia.domain.stillinger.OmradeStilling;
-import no.nav.fo.mia.domain.geografi.Omrade;
+import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
+import no.nav.fo.consumer.transformers.StillingTransformer;
+import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
 import no.nav.fo.mia.domain.stillinger.Bransje;
+import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.fo.mia.domain.stillinger.Stilling;
+import no.nav.metrics.Event;
+import no.nav.metrics.MetricsFactory;
+import no.nav.metrics.Timer;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,54 +34,67 @@ import static no.nav.fo.consumer.transformers.StillingerForOmradeTransformer.get
 
 public class StillingerEndpoint {
 
-    private SolrClient mainSolrClient, supportSolrClient;
+    private SolrClient mainSolrClient;
     private Logger logger = LoggerFactory.getLogger(StillingerEndpoint.class);
+
+    @Inject
+    SupportEndpoint supportEndpointUtils;
 
     public StillingerEndpoint() {
         String maincoreUri = String.format("%s/maincore", System.getProperty("stilling.solr.url"));
-        String supportCoreUri = String.format("%s/supportcore", System.getProperty("stilling.solr.url"));
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
-        supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
     }
 
-    private Map<String, QueryResponse> queryForKommuner(List<String> kommuner) {
+    private Map<String, QueryResponse> queryForKommuner(List<String> kommuner, List<String> filter) {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("ANTALLSTILLINGER");
         solrQuery.setRows(0);
+
+        if (filter != null) {
+            filter.forEach(solrQuery::addFilterQuery);
+        }
 
         Map<String, QueryResponse> responses = new HashMap<>();
 
         for (String kommuneid : kommuner) {
             String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
             solrQuery.addFilterQuery(filterquery);
-            try {
-                responses.put(kommuneid, mainSolrClient.query(solrQuery));
-            } catch (SolrServerException | IOException e) {
-                logger.error("Feil ved henting av stillinger fra solr", e.getCause());
-                throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
-            }
+
+            Event event = MetricsFactory.createEvent("StillingerEndpoint.hentLedigeStillingerForKommune." + kommuneid);
+            event.report();
+            Timer spesifikkTimer = MetricsFactory.createTimer("StillingerEndpoint.hentLedigeStillingerForKommune." + kommuneid);
+            Timer generellTimer = MetricsFactory.createTimer("StillingerEndpoint.hentLedigeStillingerForKommune");
+
+            spesifikkTimer.start();
+            generellTimer.start();
+
+            responses.put(kommuneid, doQuery(solrQuery));
+
+            spesifikkTimer.stop();
+            generellTimer.stop();
+
+            spesifikkTimer.report();
+            generellTimer.report();
+
             solrQuery.removeFilterQuery(filterquery);
         }
         return responses;
+    }
+
+    private QueryResponse doQuery(SolrQuery query) {
+        try {
+            return mainSolrClient.query(query);
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av stillinger fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
+        }
     }
 
     private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste) {
         return liste.keySet().stream()
                 .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues()))
                 .collect(Collectors.toList());
-    }
-
-    @Timed
-    public List<OmradeStilling> getAntallStillingerForAlleKommuner() {
-        List<String> alleKommuner = new ArrayList<>();
-
-        getFylkerOgKommuner()
-                .forEach(omrade -> alleKommuner.addAll(omrade.getUnderomrader().stream().map(Omrade::getId).collect(Collectors.toList())));
-
-        Map<String, QueryResponse> responser = queryForKommuner(alleKommuner);
-
-        return getAntallStillingerForKommuner(responser);
     }
 
     @Timed
@@ -88,7 +106,11 @@ public class StillingerEndpoint {
         solrQuery.setRows(0);
 
         try {
+            Timer timer = MetricsFactory.createTimer("StillingerEndpoint.getYrkesomrader");
+            timer.start();
             QueryResponse resp = mainSolrClient.query(solrQuery);
+            timer.stop();
+            timer.report();
             return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID")).stream()
                     .map(yrkesomrade -> yrkesomrade.withAntallStillinger(getAntallStillingerForYrkesomrade(yrkesomrade.getId(), fylker, kommuner)))
                     .collect(Collectors.toList());
@@ -98,61 +120,57 @@ public class StillingerEndpoint {
         }
     }
 
-    @Timed
     private int getAntallStillingerForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
-        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
-        henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_1_ID:"+yrkesomradeid);
-        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
-        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
-        henteAntallStillingerQuery.setRows(0);
-
-        return getAntallStillinger(henteAntallStillingerQuery);
+        String filter = "YRKGR_LVL_1_ID:" + yrkesomradeid;
+        return getAntallStillingerForFiltrering(fylker, kommuner, filter, "StillingerEndpoint.getAntallStillingerForYrkesomrade");
     }
 
-    @Timed
-    @Cacheable("fylkerOgKommuner")
-    public List<Omrade> getFylkerOgKommuner() {
-        SolrQuery query = new SolrQuery("NIVAA:[2 TO 3]");
-        query.addFilterQuery("DOKUMENTTYPE:GEOGRAFI");
-        query.setRows(1000);
+    private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, List<String> fylker, List<String> kommuner) {
+        String filter = "YRKGR_LVL_2_ID:" + yrkesgruppeid;
+        return getAntallStillingerForFiltrering(fylker, kommuner, filter, "StillingerEndpoint.getAntallStillingerForYrkesgruppe");
+    }
 
-        try {
-            QueryResponse resp = supportSolrClient.query(query);
-            return GeografiTransformer.transformResponseToFylkerOgKommuner(resp.getResults());
-        } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av geografi fra solr", e.getCause());
-            throw new ApplicationException("Feil ved henting av geografi fra solr", e.getCause());
-        }
+    private int getAntallStillingerForFiltrering(List<String> fylker, List<String> kommuner, String filter, String timernavn) {
+        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
+        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
+        henteAntallStillingerQuery.addFilterQuery(filter);
+        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
+        henteAntallStillingerQuery.setRows(0);
+
+        Timer timer = MetricsFactory.createTimer(timernavn);
+        timer.start();
+        int antallStillinger = getAntallStillinger(henteAntallStillingerQuery);
+        timer.stop();
+        timer.report();
+        return antallStillinger;
     }
 
     @Timed
     @Cacheable("yrkesgrupperForYrkesomrade")
     public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
-        SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
-        henteYrkesgrupperQuery.addFilterQuery("PARENT:"+yrkesomradeid);
-        henteYrkesgrupperQuery.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
-
-        try {
-            QueryResponse yrkesgruppeResponse = supportSolrClient.query(henteYrkesgrupperQuery);
-            return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
-                    .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), fylker, kommuner)))
-                    .collect(Collectors.toList());
-
-        } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
-            throw new ApplicationException("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
-        }
+        QueryResponse yrkesgruppeResponse = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid, fylker, kommuner);
+        return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
+                .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), fylker, kommuner)))
+                .collect(Collectors.toList());
     }
 
     @Timed
-    private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, List<String> fylker, List<String> kommuner) {
-        SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
-        henteAntallStillingerQuery.addFilterQuery("YRKGR_LVL_2_ID:"+yrkesgruppeid);
-        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
-        henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
-        henteAntallStillingerQuery.setRows(0);
+    public List<OmradeStilling> getAntallStillingerForFiltrering(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+        if (fylker.size() > 0) {
+            kommuner.addAll(supportEndpointUtils.finnKommunerTilFylke(fylker));
+        }
 
-        return getAntallStillinger(henteAntallStillingerQuery);
+        List<String> filter = new ArrayList<>();
+        if (yrkesomradeid != null) {
+            filter.add(String.format("YRKGR_LVL_1_ID:(%s)", yrkesomradeid));
+        }
+        if (yrkesgrupper.size() > 0) {
+            filter.add(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
+        }
+
+        Map<String, QueryResponse> responser = queryForKommuner(kommuner, filter);
+
+        return getAntallStillingerForKommuner(responser);
     }
 
     @Timed
@@ -194,14 +212,14 @@ public class StillingerEndpoint {
     private void addFylkerOgKommunerFilter(SolrQuery query, List<String> fylker, List<String> kommuner) {
         List<String> statements = new ArrayList<>();
 
-        if(fylker != null && !fylker.isEmpty()) {
+        if (fylker != null && !fylker.isEmpty()) {
             statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
         }
-        if(kommuner != null && !kommuner.isEmpty()) {
+        if (kommuner != null && !kommuner.isEmpty()) {
             statements.add(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
         }
 
-        if(!statements.isEmpty()) {
+        if (!statements.isEmpty()) {
             query.addFilterQuery(StringUtils.join(statements, " OR "));
         }
     }

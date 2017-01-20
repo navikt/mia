@@ -33,7 +33,11 @@ export function handterFeil(dispatch, action) {
 
 const secConfig = {credentials: 'same-origin', redirect: 'manual'};
 export function fetchToJson(url, config = {}) {
-    return fetch(RESTURL + url, {...secConfig, ...config})
+    const headers = new Headers();
+    headers.append('pragma', 'no-cache');
+    headers.append('cache-control', 'no-cache');
+
+    return fetch(RESTURL + url, {...secConfig, ...config, headers})
         .then(sjekkStatuskode)
         .then(toJson);
 }

@@ -4,7 +4,7 @@ import {shallow} from "enzyme";
 import OversiktReducer, {actions, initialState} from './ledigestillinger-oversikt-reducer';
 import {Oversikt} from "./ledigestillinger-oversikt";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
-import Oversiktstabell from "./ledigestillinger-oversikt-tabell";
+import Oversiktspanel from "./ledigestillinger-oversikt-panel";
 import {getStillingerTotalt, getKommuneMedData} from './ledigestillinger-oversikt-utils';
 
 describe('ledigestillinger', () => {
@@ -66,7 +66,9 @@ describe('ledigestillinger', () => {
                 valgtKommune: "",
                 omrader: {data: [this.fylke1, this.fylke2] },
                 oversiktStillinger: { data: {} },
-                totantallstillinger: {data: {}}
+                totantallstillinger: {data: {}},
+                fylkergeojson: {data: {}},
+                kommunergeojson: {data: {}}
             };
         });
 
@@ -79,7 +81,7 @@ describe('ledigestillinger', () => {
         it("skal vise tabell om prop visKart er false", () => {
             const props = {...this.defaultProps, visKart: false};
             const wrapper = shallow(<Oversikt {...props} />);
-            expect(wrapper).to.have.descendants(Oversiktstabell);
+            expect(wrapper).to.have.descendants(Oversiktspanel);
         });
 
         it("toggleKart skal kalle action VIS_KART om visKart er false", () => {
@@ -139,10 +141,17 @@ describe('ledigestillinger', () => {
                     { id: "0202", antallLedige: 3, antallStillinger: 4 }
                 ]
             };
+            this.oversiktArbeidsledighet = {
+                status: "LASTET",
+                data: {
+                    "0101": 1,
+                    "0202": 3
+                }
+            };
         });
 
         it('getKommuneMedData skal populere kommunen med stillinger', () => {
-            const oversiktStillinger = getKommuneMedData(this.kommune1, this.oversiktStillinger.data);
+            const oversiktStillinger = getKommuneMedData(this.kommune1, this.oversiktStillinger.data, this.oversiktArbeidsledighet.data);
             const expected = {
                 antallLedige: 1,
                 antallStillinger: 2,
@@ -154,7 +163,7 @@ describe('ledigestillinger', () => {
 
         it("getStillingerTotalt skal returnerer summen av stillinger for alle kommuner i fylket", () => {
             const kommuner = [this.kommune1, this.kommune2];
-            const antStillinger = getStillingerTotalt(kommuner, this.oversiktStillinger.data);
+            const antStillinger = getStillingerTotalt(kommuner, this.oversiktStillinger.data, this.oversiktArbeidsledighet.data);
             expect(antStillinger.antallLedige).equal(4);
             expect(antStillinger.antallStillinger).equal(6);
         });

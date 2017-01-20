@@ -6,18 +6,18 @@ import Statistikk from "./statistikk/ledigestillinger-statistikk";
 
 const LedigeStillinger = () => (
     <div className="stillinger-container">
-        <section className="stillinger-oversikt blokk-m">
+        <div className="stillinger-oversikt blokk-m">
             <Oversikt />
-        </section>
-        <section className="stillinger-bransjer blokk-m">
+        </div>
+        <div className="stillinger-bransjer blokk-m">
             <Bransjer />
-        </section>
-        <section className="stillinger-stillingsliste blokk-m">
+        </div>
+        <div className="stillinger-stillingsliste blokk-m">
             <Stillinger />
-        </section>
-        <section className="stillinger-statistikk blokk-m">
+        </div>
+        <div className="stillinger-statistikk blokk-m">
             <Statistikk />
-        </section>
+        </div>
     </div>
 );
 
