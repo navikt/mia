@@ -82,6 +82,7 @@ public class SupportEndpoint {
         kommunerTilFylkeQuery.addFilterQuery("NIVAA:3");
         kommunerTilFylkeQuery.addFilterQuery(String.format("PARENT:(%s)", StringUtils.join(fylker, " OR ")));
         kommunerTilFylkeQuery.setRows(0);
+        kommunerTilFylkeQuery.setFacetLimit(-1);
         kommunerTilFylkeQuery.addFacetField("ID");
 
         try {
