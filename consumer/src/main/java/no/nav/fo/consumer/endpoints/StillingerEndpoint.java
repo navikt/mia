@@ -45,6 +45,7 @@ public class StillingerEndpoint {
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
     }
 
+    @Timed
     private Map<String, QueryResponse> queryForKommuner(List<String> kommuner, List<String> filter) {
         String query = "*:*";
         String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
