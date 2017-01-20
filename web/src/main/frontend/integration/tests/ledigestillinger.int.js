@@ -64,12 +64,13 @@ module.exports = {
         const oversikt = ledigestillinger.section.oversikt.selector;
 
 
-        ledigestillinger.api.click(modalknapp.selector).pause(100);
+        ledigestillinger.api.click(modalknapp.selector).pause(300);
         ledigestillinger.expect.section('@modal').to.be.present.after(WAIT_TIME);
 
         ledigestillinger.api.getText("#modal " + andreFylke.selector, result => {
-            ledigestillinger.api.click(andreFylke.selector).pause(100);
-            ledigestillinger.api.click(lagreknapp.selector).pause(200);
+            ledigestillinger.api.click(andreFylke.selector).pause(300);
+            ledigestillinger.api.click(lagreknapp.selector).pause(300);
+            ledigestillinger.section.oversikt.expect.element('@fylkeheader').to.be.present.after(WAIT_TIME);
             ledigestillinger.assert.containsText(`${oversikt} ${fylkesHeader}`, result.value);
         });
     },
