@@ -2,6 +2,7 @@ import React from "react";
 import Oversikt from "./oversikt/ledigestillinger-oversikt";
 import Bransjer from "./bransjer/ledigestillinger-bransjer";
 import Stillinger from "./stillinger/ledigestillinger-stillinger";
+import Statistikk from "./statistikk/ledigestillinger-statistikk";
 
 const LedigeStillinger = () => (
     <div className="stillinger-container">
@@ -14,7 +15,9 @@ const LedigeStillinger = () => (
         <div className="stillinger-stillingsliste blokk-m">
             <Stillinger />
         </div>
-        <div className="stillinger-statistikk blokk-m" />
+        <div className="stillinger-statistikk blokk-m">
+            <Statistikk />
+        </div>
     </div>
 );
 

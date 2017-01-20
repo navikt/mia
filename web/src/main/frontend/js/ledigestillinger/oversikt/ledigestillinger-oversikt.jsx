@@ -8,6 +8,7 @@ import {hentStillinger, hentAntallStillingerForYrkesgruppe} from "../stillinger/
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
 import {hentArbeidsledighetForOmrade} from '../oversikt/ledigestillinger-arbeidsledighet-actions';
 import {apneModal} from "../../felles/modal/modal-reducer";
+import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
 
 const meldinger = defineMessages({
     lenkeVisKart: {
@@ -41,6 +42,7 @@ export class Oversikt extends React.Component {
         this.props.dispatch(hentAntallStillingerForOmrade());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
         this.props.dispatch(hentArbeidsledighetForOmrade());
+        this.props.dispatch(hentStatistikk());
     }
 
     render() {

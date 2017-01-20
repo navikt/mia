@@ -1,0 +1,52 @@
+@switcher-blafarge: #1976CB;
+
+.knapp-switcher {
+  background: transparent;
+  position: relative;
+  border: 1px solid @gray-icon;
+  padding: 6px 16px;
+  margin-left: -1px;
+
+  &.er-aktiv {
+    background: @switcher-blafarge;
+    color: @white;
+    border-color: @switcher-blafarge;
+
+    &:hover {
+      color: @white;
+    }
+  }
+
+  &:hover {
+    border-color: @switcher-blafarge;
+    color: @switcher-blafarge;
+    z-index: 5;
+  }
+
+  &:focus {
+    outline: none;
+    .mixin-focus-outline(2px);
+    z-index: 10;
+  }
+
+  &:first-child {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+}
+
+.contrast .knapp-switcher {
+  border-color: @yellow;
+  &.er-aktiv {
+    text-decoration: underline;
+  }
+}
+
+.switcher-graf {
+  min-height: 400px;
+}
