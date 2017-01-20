@@ -47,11 +47,12 @@ public class StillingerEndpoint {
         mainSolrClientAsync = JavaAsyncSolrClient.create(maincoreUri);
     }
 
-    @Timed
     private Map<String, QueryResponse> queryForKommuner(List<String> kommuner, List<String> filter) {
         String query = "*:*";
         Map<String, QueryResponse> responses = new HashMap<>();
         List<AsyncSolrQuery> asyncQueries = new ArrayList<>();
+        Timer metricsTimer = MetricsFactory.createTimer(this.getClass().toString() + ".hentLedigeStillingerForKommuner");
+        metricsTimer.start();
 
         for (String kommuneid : kommuner) {
             SolrQuery solrQuery = new SolrQuery(query);
@@ -66,6 +67,8 @@ public class StillingerEndpoint {
         }
 
         asyncQueries.forEach(asyncQuery -> responses.put(asyncQuery.getKommuneid(), asyncQuery.getResponse()));
+        metricsTimer.stop();
+        metricsTimer.report();
         return responses;
     }
 
