@@ -71,7 +71,6 @@
     "react-document-title": "^2.0.2",
     "react-dom": "^15.4.0",
     "react-highcharts": "^11.5.0",
-    "react-inlinesvg": "^0.5.4",
     "react-intl": "^2.1.5",
     "react-leaflet": "^1.1.0",
     "react-redux": "^4.4.6",

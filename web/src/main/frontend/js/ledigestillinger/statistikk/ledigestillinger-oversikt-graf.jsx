@@ -16,7 +16,7 @@ const LedigestillingerOversiktGraf = ({ tabell }) => {
         tabell,
         periodetype: "Måned",
         yEnhet: '',
-        yTittel: ''
+        yTittel: 'Antall'
     };
 
     return (
