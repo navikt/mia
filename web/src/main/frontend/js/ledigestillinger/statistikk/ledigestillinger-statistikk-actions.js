@@ -5,8 +5,10 @@ import {
     fetchToJson,
     sendResultatTilDispatch,
     handterFeil,
-    getParamsForValgteFylker
-} from './../../felles/rest/rest-utils';
+    getParamsForValgteFylkerOgKommuner
+} from '../../felles/rest/rest-utils';
+
+import {getValgteYrkesgrupperId} from './../stillinger/ledigestillinger-stillinger-selectors';
 
 export const hentStatistikk = () => (dispatch, getState) => {
     const state = getState();
@@ -14,10 +16,16 @@ export const hentStatistikk = () => (dispatch, getState) => {
 
     dispatch({ type: actions[STATUS.laster] });
 
-    const uri = "/statistikk/ledighet?" + buildUriParams(getParamsForValgteFylker(state));
+    const uri = "/ledighet/statistikk?" + buildUriParams(getUriParams(state));
     fetchToJson(uri)
         .then(
             sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
             handterFeil(dispatch, actions[STATUS.feilet])
         );
+};
+
+const getUriParams = state => {
+    const params = getParamsForValgteFylkerOgKommuner(state);
+    params.yrkesgrupper = getValgteYrkesgrupperId(state);
+    return params;
 };

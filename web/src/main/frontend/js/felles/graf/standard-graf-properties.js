@@ -202,9 +202,9 @@ const lagTidsserier = (tidsserier) => {
         })));
     }
 };
-const transformerKolonnedataTilAarOgMaaned = (header) => header.kolonner.map((kolonne) => ({
-    aar: kolonne.data.substring(0, 4),
-    maaned: kolonne.data.substring(4)
+const transformerKolonnedataTilAarOgMaaned = (header) => header.map((kolonne) => ({
+    aar: kolonne.substring(0, 4),
+    maaned: kolonne.substring(4)
 }));
 
 const lagManeder = (headerRad) => {
@@ -218,29 +218,12 @@ const lagManeder = (headerRad) => {
 
 const leggTilMaaned = (mndOjekt, maanedListe = []) => maanedListe.concat(maanederTekst[mndOjekt.maaned - 1]);
 
-const transformerKolonnedataTilAarOgKvartal = (header) => header.kolonner.map((kolonne) => ({
-    aar: kolonne.data.substring(0, 4),
-    kvartal: kolonne.data.substring(4)
-}));
-
-const lagKvartal = (headerRad) => {
-    const kvartalsObjekter = transformerKolonnedataTilAarOgKvartal(headerRad);
-    const result = {};
-    kvartalsObjekter.forEach((kvartalObjekt) => {
-        result[kvartalObjekt.aar] = leggTilKvartal(kvartalObjekt, result[kvartalObjekt.aar]);
-    });
-    return result;
-};
-
-const leggTilKvartal = (kvartalObjekt, kvartalListe = []) => kvartalListe.concat(kvartalTekst[kvartalObjekt.kvartal]);
-
 export {
     standardGrafConfig,
     serieFarger,
     konfigurerSerie,
     lagTidsserier,
     lagManeder,
-    lagKvartal,
     maanederTekst,
     kvartalTekst
 };

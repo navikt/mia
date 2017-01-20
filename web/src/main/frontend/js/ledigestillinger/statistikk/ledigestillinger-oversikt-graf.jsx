@@ -1,23 +1,19 @@
 import React from 'react';
-import {defineMessages} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 import LinjeGraf from '../../felles/graf/linje-graf';
-import {lagManeder} from '../../felles/graf/standard-graf-properties';
 
 const grafTekster = defineMessages({
     tabellOverskrift: {
         id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
         defaultMessage: 'Ledighet siste 12 måneder'
     }
-
 });
-
 
 const LedigestillingerOversiktGraf = ({ tabell }) => {
     const grafData = {
         id: 'arbeidsledighet-graf',
-        serieData: tabell,
         tabellOverskrift: grafTekster.tabellOverskrift,
-        serie: lagManeder,
+        tabell,
         periodetype: "Måned",
         yEnhet: '',
         yTittel: ''
@@ -25,6 +21,7 @@ const LedigestillingerOversiktGraf = ({ tabell }) => {
 
     return (
         <div className="ledigestillinger-oversikt-graf">
+            <h2><FormattedMessage {...grafTekster.tabellOverskrift} /></h2>
             <LinjeGraf {...grafData} />
         </div>
     );
