@@ -1,5 +1,6 @@
 package no.nav.fo.consumer.endpoints;
 
+import io.ino.solrs.JavaAsyncSolrClient;
 import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
 import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.consumer.transformers.StillingTransformer;
@@ -7,7 +8,6 @@ import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
 import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.fo.mia.domain.stillinger.Stilling;
-import no.nav.metrics.Event;
 import no.nav.metrics.MetricsFactory;
 import no.nav.metrics.Timer;
 import no.nav.metrics.aspects.Timed;
@@ -20,7 +20,6 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -28,8 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.CompletionStage;
 
+import static java.util.stream.Collectors.toList;
 import static no.nav.fo.consumer.transformers.StillingerForOmradeTransformer.getOmradeStillingForKommuner;
 
 public class StillingerEndpoint {
@@ -41,60 +41,38 @@ public class StillingerEndpoint {
     SupportEndpoint supportEndpointUtils;
 
     public StillingerEndpoint() {
-        String maincoreUri = String.format("%s/maincore", System.getProperty("stilling.solr.url"));
+        String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
     }
 
     private Map<String, QueryResponse> queryForKommuner(List<String> kommuner, List<String> filter) {
         String query = "*:*";
-        SolrQuery solrQuery = new SolrQuery(query);
-        solrQuery.addFacetField("ANTALLSTILLINGER");
-        solrQuery.setRows(0);
-
-        if (filter != null) {
-            filter.forEach(solrQuery::addFilterQuery);
-        }
+        String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
+        JavaAsyncSolrClient mainSolrClientAsync = JavaAsyncSolrClient.create(maincoreUri);
 
         Map<String, QueryResponse> responses = new HashMap<>();
+        List<AsyncSolrQuery> asyncQueries = new ArrayList<>();
 
         for (String kommuneid : kommuner) {
+            SolrQuery solrQuery = new SolrQuery(query);
+            if (filter != null) {
+                filter.forEach(solrQuery::addFilterQuery);
+            }
+            solrQuery.setRows(0);
+            solrQuery.addFacetField("ANTALLSTILLINGER");
             String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
             solrQuery.addFilterQuery(filterquery);
-
-            Event event = MetricsFactory.createEvent("StillingerEndpoint.hentLedigeStillingerForKommune." + kommuneid);
-            event.report();
-            Timer spesifikkTimer = MetricsFactory.createTimer("StillingerEndpoint.hentLedigeStillingerForKommune." + kommuneid);
-            Timer generellTimer = MetricsFactory.createTimer("StillingerEndpoint.hentLedigeStillingerForKommune");
-
-            spesifikkTimer.start();
-            generellTimer.start();
-
-            responses.put(kommuneid, doQuery(solrQuery));
-
-            spesifikkTimer.stop();
-            generellTimer.stop();
-
-            spesifikkTimer.report();
-            generellTimer.report();
-
-            solrQuery.removeFilterQuery(filterquery);
+            asyncQueries.add(new AsyncSolrQuery(kommuneid, mainSolrClientAsync.query(solrQuery)));
         }
+
+        asyncQueries.forEach(asyncQuery -> responses.put(asyncQuery.getKommuneid(), asyncQuery.getResponse()));
         return responses;
-    }
-
-    private QueryResponse doQuery(SolrQuery query) {
-        try {
-            return mainSolrClient.query(query);
-        } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av stillinger fra solr", e.getCause());
-            throw new ApplicationException("Feil ved henting av stillinger fra solr", e.getCause());
-        }
     }
 
     private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste) {
         return liste.keySet().stream()
                 .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues()))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     @Timed
@@ -113,7 +91,7 @@ public class StillingerEndpoint {
             timer.report();
             return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID")).stream()
                     .map(yrkesomrade -> yrkesomrade.withAntallStillinger(getAntallStillingerForYrkesomrade(yrkesomrade.getId(), fylker, kommuner)))
-                    .collect(Collectors.toList());
+                    .collect(toList());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
@@ -146,12 +124,11 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable("yrkesgrupperForYrkesomrade")
     public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
         QueryResponse yrkesgruppeResponse = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid, fylker, kommuner);
         return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
                 .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), fylker, kommuner)))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     @Timed
@@ -221,6 +198,24 @@ public class StillingerEndpoint {
 
         if (!statements.isEmpty()) {
             query.addFilterQuery(StringUtils.join(statements, " OR "));
+        }
+    }
+
+    private class AsyncSolrQuery {
+        CompletionStage<QueryResponse> query;
+        String kommuneid;
+
+        AsyncSolrQuery(String kommuneid, CompletionStage<QueryResponse> query) {
+            this.query = query;
+            this.kommuneid = kommuneid;
+        }
+
+        String getKommuneid() {
+            return kommuneid;
+        }
+
+        public QueryResponse getResponse() {
+            return this.query.toCompletableFuture().join();
         }
     }
 }
