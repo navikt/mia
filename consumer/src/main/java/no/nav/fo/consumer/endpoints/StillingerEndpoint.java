@@ -35,6 +35,7 @@ import static no.nav.fo.consumer.transformers.StillingerForOmradeTransformer.get
 public class StillingerEndpoint {
 
     private SolrClient mainSolrClient;
+    private JavaAsyncSolrClient mainSolrClientAsync;
     private Logger logger = LoggerFactory.getLogger(StillingerEndpoint.class);
 
     @Inject
@@ -43,14 +44,12 @@ public class StillingerEndpoint {
     public StillingerEndpoint() {
         String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
+        mainSolrClientAsync = JavaAsyncSolrClient.create(maincoreUri);
     }
 
     @Timed
     private Map<String, QueryResponse> queryForKommuner(List<String> kommuner, List<String> filter) {
         String query = "*:*";
-        String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
-        JavaAsyncSolrClient mainSolrClientAsync = JavaAsyncSolrClient.create(maincoreUri);
-
         Map<String, QueryResponse> responses = new HashMap<>();
         List<AsyncSolrQuery> asyncQueries = new ArrayList<>();
 
