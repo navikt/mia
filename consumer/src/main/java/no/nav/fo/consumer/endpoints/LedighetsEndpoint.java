@@ -1,5 +1,7 @@
 package no.nav.fo.consumer.endpoints;
 
+import no.nav.metrics.MetricsFactory;
+import no.nav.metrics.Timer;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +37,6 @@ public class LedighetsEndpoint {
         ledigestillingerSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(ledigestillingerCoreUri).build();
     }
 
-    @Timed
     public Map<String, Map<String, Integer>> getLedighetForSisteTrettenMaaneder(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
 
@@ -43,8 +44,17 @@ public class LedighetsEndpoint {
         List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).collect(toList());
 
 
+        Timer timer = MetricsFactory.createTimer("LedighetsEndpoint.getArbeidsledighetForSisteTrettenMaaneder");
+        timer.start();
         Map<String, Integer> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesgrupper, fylkesnr, kommunenr);
+        timer.stop();
+        timer.report();
+
+        timer = MetricsFactory.createTimer("LedighetsEndpoint.getLedigeStillingerForSisteTrettenMaaneder");
+        timer.start();
         Map<String, Integer> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesgrupper, fylkesnr, kommunenr);
+        timer.stop();
+        timer.report();
 
         Map<String, Map<String, Integer>> resultat = new HashMap<>();
         resultat.put("arbeidsledighet", arbeidsledighetForSisteTrettenMaaneder);
