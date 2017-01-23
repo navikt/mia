@@ -3,6 +3,7 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
+import {finnIdForKommunenummer} from './kart/kart-utils';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -36,6 +37,7 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.setStyle({ opacity: 0 });
         this.refs.fylker.leafletElement.bringToFront();
         this.refs.map.leafletElement.removeControl(this.landvisningControl);
+        this.props.resetValg();
 
         this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
             layer.feature.properties.valgt = false;
@@ -48,7 +50,7 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
         this.refs.kommuner.leafletElement.bringToFront();
         this.refs.map.leafletElement.addControl(this.landvisningControl);
-    };
+    }
 
     render() {
         const initialPosition = [63, 13];
@@ -75,10 +77,15 @@ class Oversiktskart extends React.Component {
         const clickKommune = e => {
             const properties = e.target.feature.properties;
             const kommuneErValgt = properties.valgt === true;
+            const kommunenummer = finnIdForKommunenummer(properties.komm, this.props.omrader);
+
             if(kommuneErValgt) {
                 e.target.setStyle(highlightStyling);
+                this.props.avvelgKommune(kommunenummer);
+
             } else {
                 e.target.setStyle(selectedStyling);
+                this.props.velgKommune(kommunenummer);
             }
 
             properties.valgt = !kommuneErValgt;

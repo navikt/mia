@@ -9,6 +9,10 @@ export const initialState = {
 export const actions = {
     vis_kart: "VIS_KART",
     vis_tabell: "VIS_TABELL",
+    reset_valg: "RESET_VALG",
+    velg_kommune: "VELG_KOMMUNE",
+    avvelg_kommune: "AVVELG_KOMMUNE",
+    velg_fylke: "VELG_FYLKE",
     modal_velg_kommune: "MODAL_OMRADE_VELG_KOMMUNE",
     modal_avvelg_kommune: "MODAL_OMRADE_AVVELG_KOMMUNE",
     modal_velg_fylke: "MODAL_OMRADE_VELG_FYLKE",
@@ -35,6 +39,14 @@ const reducer = (state=initialState, action) => {
             return {...state, valgteKommunerModal: state.valgteKommunerModal.concat(action.payload)};
         case actions.modal_avvelg_kommune:
             return {...state, valgteKommunerModal: state.valgteKommunerModal.filter(kommune => kommune !== action.payload)};
+        case actions.reset_valg:
+            return {...state, valgteFylker: [], valgteKommuner: []};
+        case actions.velg_kommune:
+            return {...state, valgteFylker: [], valgteKommuner: state.valgteKommuner.concat(action.payload)};
+        case actions.avvelg_kommune:
+            return {...state, valgteKommuner: state.valgteKommuner.filter(kommune => kommune.id === actions.payload)};
+        case actions.velg_fylke:
+            return {...state, valgteKommuner: [], valgteFylker: [actions.payload]};
         default:
             return state;
     }
