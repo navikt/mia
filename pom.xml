@@ -21,6 +21,7 @@
         <module>ear</module>
         <module>domain</module>
         <module>consumer</module>
+        <module>webservice</module>
     </modules>
 
 

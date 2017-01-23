@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,16 +44,22 @@ public class LedighetsEndpoint {
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
         List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).collect(toList());
 
+        Map<String, List<String>> yrkgrLvl2TilStrukturkodeMapping = supportEndpointUtils.getYrkgrLvl2TilStrukturkodeMapping();
+
+        List<String> yrkesgruppeStrukturkoder = new ArrayList<>();
+
+        yrkesgrupper.forEach(yrkgrLvl2 -> yrkesgruppeStrukturkoder.addAll(yrkgrLvl2TilStrukturkodeMapping.get(yrkgrLvl2)));
+
 
         Timer timer = MetricsFactory.createTimer("LedighetsEndpoint.getArbeidsledighetForSisteTrettenMaaneder");
         timer.start();
-        Map<String, Integer> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesgrupper, fylkesnr, kommunenr);
+        Map<String, Integer> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesgruppeStrukturkoder, fylkesnr, kommunenr);
         timer.stop();
         timer.report();
 
         timer = MetricsFactory.createTimer("LedighetsEndpoint.getLedigeStillingerForSisteTrettenMaaneder");
         timer.start();
-        Map<String, Integer> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesgrupper, fylkesnr, kommunenr);
+        Map<String, Integer> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesgruppeStrukturkoder, fylkesnr, kommunenr);
         timer.stop();
         timer.report();
 
@@ -63,12 +70,15 @@ public class LedighetsEndpoint {
         return resultat;
     }
 
-    private Map<String, Integer> getLedighetForSisteTrettenMaaneder(SolrClient client, List<String> yrkesgrupper, List<String> fylkesnr, List<String> kommunenr) {
+    private Map<String, Integer> getLedighetForSisteTrettenMaaneder(SolrClient client, List<String> yrkesgruppeStrukturkoder, List<String> fylkesnr, List<String> kommunenr) {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(0);
 
         solrQuery.addFilterQuery(createFylkeFilter(fylkesnr, kommunenr));
+        if(yrkesgruppeStrukturkoder.size() > 0) {
+            solrQuery.addFilterQuery(String.format("YRKESKODE:(%s)", StringUtils.join(yrkesgruppeStrukturkoder, " OR ")));
+        }
 
         solrQuery.addFacetField("PERIODE");
 
@@ -111,7 +121,7 @@ public class LedighetsEndpoint {
     }
 
     @Timed
-    public Map<String, Integer> getLedighetForOmrader(List<String> fylker, List<String> kommuner) {
+    public Map<String, Integer> getLedighetForOmrader(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportEndpointUtils.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
@@ -124,6 +134,15 @@ public class LedighetsEndpoint {
         LocalDateTime d = LocalDateTime.now().minusMonths(1);
         String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
 
+        Map<String, List<String>> yrkgrLvl2TilStrukturkodeMapping = supportEndpointUtils.getYrkgrLvl2TilStrukturkodeMapping();
+
+        List<String> yrkesgruppeStrukturkoder = new ArrayList<>();
+
+        yrkesgrupper.forEach(yrkgrLvl2 -> yrkesgruppeStrukturkoder.addAll(yrkgrLvl2TilStrukturkodeMapping.get(yrkgrLvl2)));
+
+        if(yrkesgruppeStrukturkoder.size() > 0) {
+            solrQuery.addFilterQuery(String.format("YRKESKODE:(%s)", StringUtils.join(yrkesgruppeStrukturkoder, " OR ")));
+        }
         String filter = createFylkeFilter(fylkesnr, kommunenr);
 
         solrQuery.addFilterQuery(filter);
