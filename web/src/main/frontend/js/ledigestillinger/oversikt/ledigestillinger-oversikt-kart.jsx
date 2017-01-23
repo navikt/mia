@@ -3,7 +3,7 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
-import {finnIdForKommunenummer} from './kart/kart-utils';
+import {finnIdForKommunenummer, getNavnForKommuneId} from './kart/kart-utils';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -50,6 +50,16 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
         this.refs.kommuner.leafletElement.bringToFront();
         this.refs.map.leafletElement.addControl(this.landvisningControl);
+    }
+
+    valgteKommuner() {
+        if(this.props.valgteKommuner.length !== 0) {
+            return (
+                <span>
+                    Valgte kommuner: {this.props.valgteKommuner.map(kommuneid => getNavnForKommuneId(kommuneid, this.props.omrader)).join(', ')}
+                </span>
+            );
+        }
     }
 
     render() {
@@ -145,6 +155,7 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} style={geojsonStyling} onEachFeature={onEachFylke}/>
                     </Map>
+                    {this.valgteKommuner()}
                 </div>
             </div>
         );
