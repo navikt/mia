@@ -3,7 +3,7 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
-import {finnIdForKommunenummer, getNavnForKommuneId} from './kart/kart-utils';
+import {finnIdForKommunenummer, getNavnForKommuneId, finnIdForFylkenummer, getNavnForFylkeId} from './kart/kart-utils';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -17,6 +17,10 @@ const meldinger = defineMessages({
     valgteKommuner: {
         id: 'ledigestillinger.oversikt.valgtekommuner',
         defaultMessage: 'Valgte kommuner:'
+    },
+    valgteFylker: {
+        id: 'ledigestillinger.oversikt.valgtefylker',
+        defaultMessage: 'Valgte fylker:'
     }
 });
 
@@ -59,11 +63,24 @@ class Oversiktskart extends React.Component {
     valgteKommuner() {
         if(this.props.valgteKommuner.length !== 0) {
             return (
-                <p className="valgte-kommuner">
-                    <span className="typo-element valgte-kommuner-tittel">
+                <p className="valgte-omrader">
+                    <span className="typo-element valgte-omrader-tittel">
                         <FormattedMessage {...meldinger.valgteKommuner}/>
                     </span>
                     {this.props.valgteKommuner.map(kommuneid => getNavnForKommuneId(kommuneid, this.props.omrader)).join(', ')}
+                </p>
+            );
+        }
+    }
+
+    valgteFylker() {
+        if(this.props.valgteFylker.length !== 0) {
+            return (
+                <p className="valgte-omrader">
+                    <span className="typo-element valgte-omrader-tittel">
+                        <FormattedMessage {...meldinger.valgteFylker}/>
+                    </span>
+                    {this.props.valgteFylker.map(fylkeid => getNavnForFylkeId(fylkeid, this.props.omrader)).join(', ')}
                 </p>
             );
         }
@@ -94,25 +111,31 @@ class Oversiktskart extends React.Component {
         const clickKommune = e => {
             const properties = e.target.feature.properties;
             const kommuneErValgt = properties.valgt === true;
-            const kommunenummer = finnIdForKommunenummer(properties.komm, this.props.omrader);
+            const kommuneId = finnIdForKommunenummer(properties.komm, this.props.omrader);
 
             if(kommuneErValgt) {
                 e.target.setStyle(highlightStyling);
-                this.props.avvelgKommune(kommunenummer);
+                this.props.avvelgKommune(kommuneId);
 
             } else {
                 e.target.setStyle(selectedStyling);
-                this.props.velgKommune(kommunenummer);
+                this.props.velgKommune(kommuneId);
             }
 
             properties.valgt = !kommuneErValgt;
+        };
+
+        const clickFylke = e => {
+            this.zoomTilFylke(e);
+            const fylkeId = finnIdForFylkenummer(e.target.feature.properties.fylkesnr, this.props.omrader);
+            this.props.velgFylke(fylkeId);
         };
 
         const onEachFylke = (feature, layer) => {
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
-                click: (e) => this.zoomTilFylke(e)
+                click: clickFylke
             });
         };
 
@@ -163,6 +186,7 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} style={geojsonStyling} onEachFeature={onEachFylke}/>
                     </Map>
                     {this.valgteKommuner()}
+                    {this.valgteFylker()}
                 </div>
             </div>
         );
