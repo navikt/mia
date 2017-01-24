@@ -17,24 +17,42 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
 
 public class SupportEndpoint {
 
     private SolrClient supportSolrClient;
     private Map<String, String> strukturkodeTilIdMapping, idTilStrukturkodeMapping;
+    private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilStrukturkodeMapping;
     private Logger logger = LoggerFactory.getLogger(SupportEndpoint.class);
 
     public SupportEndpoint() {
         String supportCoreUri = String.format("%s/supportcore", System.getProperty("stilling.solr.url"));
         supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
-        createStrukturkodeMapping();
+        createStrukturkodeMappingForGeografi();
+        createStrukturkodeMappingForYrkesgruppe();
     }
 
-    private void createStrukturkodeMapping() {
+    Map<String, String> getStrukturkodeTilIdMapping() {
+        return strukturkodeTilIdMapping;
+    }
+
+    Map<String, String> getIdTilStrukturkodeMapping() {
+        return idTilStrukturkodeMapping;
+    }
+
+    public Map<String, List<String>> getStrukturkodeTilYrkgrLvl2Mapping() {
+        return strukturkodeTilYrkgrLvl2Mapping;
+    }
+
+    public Map<String, List<String>> getYrkgrLvl2TilStrukturkodeMapping() {
+        return yrkgrLvl2TilStrukturkodeMapping;
+    }
+
+    private void createStrukturkodeMappingForGeografi() {
         strukturkodeTilIdMapping = new HashMap<>();
         idTilStrukturkodeMapping = new HashMap<>();
         QueryResponse resp = getFylkerOgKommunerFraSolr();
@@ -54,6 +72,51 @@ public class SupportEndpoint {
                 strukturkodeTilIdMapping.put(strukturkode, id);
             }
         });
+    }
+
+    private void createStrukturkodeMappingForYrkesgruppe() {
+        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
+        yrkgrLvl2TilStrukturkodeMapping = new HashMap<>();
+        QueryResponse resp = getStillingstyperFraSolr();
+
+        SolrDocumentList results = resp.getResults();
+
+        results.forEach(document -> {
+            List<String> yrkgrLvl2IdListe = new ArrayList<>();
+
+            Collection<Object> parents = document.getFieldValues("PARENT");
+            if(parents != null) {
+                yrkgrLvl2IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
+            }
+            String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
+            if (strukturkode != null) {
+                strukturkodeTilYrkgrLvl2Mapping.put(strukturkode, yrkgrLvl2IdListe);
+
+                for (String id : yrkgrLvl2IdListe) {
+                    if (yrkgrLvl2TilStrukturkodeMapping.containsKey(id)) {
+                        List<String> p = yrkgrLvl2TilStrukturkodeMapping.get(id);
+                        p.add(strukturkode);
+                    } else {
+                        List<String> strukturkodeListe = new ArrayList<>();
+                        strukturkodeListe.add(strukturkode);
+                        yrkgrLvl2TilStrukturkodeMapping.put(id, strukturkodeListe);
+                    }
+                }
+            }
+        });
+    }
+
+    private QueryResponse getStillingstyperFraSolr() {
+        SolrQuery query = new SolrQuery("*:*");
+        query.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
+        query.setRows(10000);
+
+        try {
+            return supportSolrClient.query(query);
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av stillingstyper fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av stillingstyper fra solr", e.getCause());
+        }
     }
 
     @Timed
@@ -101,7 +164,7 @@ public class SupportEndpoint {
         }
     }
 
-    QueryResponse getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
+    QueryResponse getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
         SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
         henteYrkesgrupperQuery.addFilterQuery("PARENT:" + yrkesomradeid);
         henteYrkesgrupperQuery.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
@@ -113,13 +176,5 @@ public class SupportEndpoint {
             logger.error("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
             throw new ApplicationException("Feil ved henting av stillingstyper fra solr supportcore", e.getCause());
         }
-    }
-
-    Map<String, String> getStrukturkodeTilIdMapping() {
-        return strukturkodeTilIdMapping;
-    }
-
-    Map<String, String> getIdTilStrukturkodeMapping() {
-        return idTilStrukturkodeMapping;
     }
 }

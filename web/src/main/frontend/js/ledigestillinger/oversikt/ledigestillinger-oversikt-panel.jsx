@@ -42,7 +42,6 @@ export class Oversiktspanel extends React.Component {
                         ? <OmradeTabell valgteFylker={fylkerSomSkalVises} omrader={props.omrader}
                                         valgteKommuner={props.valgteKommuner}
                                         stillinger={props.oversiktStillinger.data}
-                                        ledighet={props.oversiktArbeidsledighet.data}
                     />
                         : <noscript/>}
                 </Innholdslaster>
