@@ -33,7 +33,7 @@ public class LedighetsEndpoint {
 
     public LedighetsEndpoint() {
         String ledigehetsCoreUri = System.getProperty("miasolr.solr.arbeidsledigecore.url");
-        String ledigestillingerCoreUri= System.getProperty("miasolr.solr.ledigestillingercore.url");
+        String ledigestillingerCoreUri = System.getProperty("miasolr.solr.ledigestillingercore.url");
         arbeidsledighetSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(ledigehetsCoreUri).build();
         ledigestillingerSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(ledigestillingerCoreUri).build();
     }
@@ -76,7 +76,7 @@ public class LedighetsEndpoint {
         solrQuery.setRows(0);
 
         solrQuery.addFilterQuery(createFylkeFilter(fylkesnr, kommunenr));
-        if(yrkesgruppeStrukturkoder.size() > 0) {
+        if (yrkesgruppeStrukturkoder.size() > 0) {
             solrQuery.addFilterQuery(String.format("YRKESKODE:(%s)", StringUtils.join(yrkesgruppeStrukturkoder, " OR ")));
         }
 
@@ -86,7 +86,7 @@ public class LedighetsEndpoint {
             QueryResponse resp = client.query(solrQuery);
             Map<String, Integer> perioderMedAntall = new HashMap<>();
             resp.getFacetField("PERIODE").getValues()
-                    .forEach(periode -> perioderMedAntall.put(periode.getName(), (int)periode.getCount()));
+                    .forEach(periode -> perioderMedAntall.put(periode.getName(), (int) periode.getCount()));
 
             return perioderMedAntall;
         } catch (SolrServerException | IOException e) {
@@ -111,7 +111,7 @@ public class LedighetsEndpoint {
             QueryResponse resp = arbeidsledighetSolrClient.query(solrQuery);
             Map<String, Integer> ledighetPerFylke = new HashMap<>();
             resp.getFacetField("FYLKESNR").getValues()
-                    .forEach(fylke -> ledighetPerFylke.put(fylke.getName(), (int)fylke.getCount()));
+                    .forEach(fylke -> ledighetPerFylke.put(fylke.getName(), (int) fylke.getCount()));
 
             return ledighetPerFylke;
         } catch (SolrServerException | IOException e) {
@@ -125,7 +125,14 @@ public class LedighetsEndpoint {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportEndpointUtils.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
-        List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).collect(toList());
+        List<String> kommunenr = new ArrayList<>();
+
+        kommuner.forEach(id -> {
+            String strukturkode = idTilStrukturKode.get(id);
+            if (strukturkode != null && !strukturkode.equals("")) {
+                kommunenr.add(strukturkode);
+            }
+        });
 
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
@@ -134,14 +141,14 @@ public class LedighetsEndpoint {
         LocalDateTime d = LocalDateTime.now().minusMonths(1);
         String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
 
-        Map<String, List<String>> yrkgrLvl2TilStrukturkodeMapping = supportEndpointUtils.getYrkgrLvl2TilStrukturkodeMapping();
+//        Map<String, List<String>> yrkgrLvl2TilStrukturkodeMapping = supportEndpointUtils.getYrkgrLvl2TilStrukturkodeMapping();
 
-        List<String> yrkesgruppeStrukturkoder = new ArrayList<>();
+//        List<String> yrkesgruppeStrukturkoder = new ArrayList<>();
 
-        yrkesgrupper.forEach(yrkgrLvl2 -> yrkesgruppeStrukturkoder.addAll(yrkgrLvl2TilStrukturkodeMapping.get(yrkgrLvl2)));
+//        yrkesgrupper.forEach(yrkgrLvl2 -> yrkesgruppeStrukturkoder.addAll(yrkgrLvl2TilStrukturkodeMapping.get(yrkgrLvl2)));
 
-        if(yrkesgruppeStrukturkoder.size() > 0) {
-            solrQuery.addFilterQuery(String.format("YRKESKODE:(%s)", StringUtils.join(yrkesgruppeStrukturkoder, " OR ")));
+        if (yrkesgrupper.size() > 0) {
+            solrQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
         }
         String filter = createFylkeFilter(fylkesnr, kommunenr);
 
@@ -157,7 +164,7 @@ public class LedighetsEndpoint {
                     .forEach(kommune -> {
                         if ((int) kommune.getCount() > 0) {
                             String kommuneid = strukturkodeTilIdMapping.get(kommune.getName());
-                            ledighetPerFylke.put(kommuneid, (int)kommune.getCount());
+                            ledighetPerFylke.put(kommuneid, (int) kommune.getCount());
                         }
                     });
 
@@ -168,7 +175,7 @@ public class LedighetsEndpoint {
         }
     }
 
-    private String createFylkeFilter(List<String> fylker, List<String> kommuner ) {
+    private String createFylkeFilter(List<String> fylker, List<String> kommuner) {
         String filter = "";
 
         if (fylker != null && fylker.size() > 0) {
