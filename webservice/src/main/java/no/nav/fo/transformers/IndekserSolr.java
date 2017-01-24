@@ -51,7 +51,7 @@ public class IndekserSolr {
     private void lesLedigeStillingerCSV() {
         slettSolrIndex(ledigeStillingerCore);
 
-        InputStream inputStreamLedigestillinger = ClassLoader.getSystemClassLoader().getResourceAsStream("statistikk_ledigestillinger.csv");
+        InputStream inputStreamLedigestillinger = IndekserSolr.class.getResourceAsStream("/statistikk_ledigestillinger.csv");
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "LEDIGE_STILLINGER", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(ledigeStillingerCore, inputStreamLedigestillinger, header);
@@ -59,7 +59,7 @@ public class IndekserSolr {
 
     private void lesArbeidsledighetCSV() {
         slettSolrIndex(arbeidsledighetCore);
-        InputStream inputStreamArbeidsledige = ClassLoader.getSystemClassLoader().getResourceAsStream("statistikk_arbeidsledige.csv");
+        InputStream inputStreamArbeidsledige = IndekserSolr.class.getResourceAsStream("/statistikk_arbeidsledige.csv");
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "ARBEIDSLEDIGE", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(arbeidsledighetCore, inputStreamArbeidsledige, header);
