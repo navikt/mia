@@ -20,6 +20,10 @@ export class Oversiktspanel extends React.Component {
     render() {
         const props = this.props;
         const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
+        const fylkerSomSkalVises = valgteFylker.concat(
+            props.omrader.filter(fylke => !valgteFylker.includes(fylke.id) && fylke.underomrader.some(kommune => props.valgteKommuner.includes(kommune.id)))
+        );
+
         const modalId = "velgKommunerOgFylker";
 
         return (
@@ -34,8 +38,8 @@ export class Oversiktspanel extends React.Component {
                     <Modalinnhold />
                 </Modal>
                 <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger, props.oversiktArbeidsledighet]}>
-                    {valgteFylker.length !== 0
-                        ? <OmradeTabell valgteFylker={valgteFylker} omrader={props.omrader}
+                    {fylkerSomSkalVises.length !== 0
+                        ? <OmradeTabell valgteFylker={fylkerSomSkalVises} omrader={props.omrader}
                                         valgteKommuner={props.valgteKommuner}
                                         stillinger={props.oversiktStillinger.data}
                                         ledighet={props.oversiktArbeidsledighet.data}
