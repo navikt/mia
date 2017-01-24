@@ -1,6 +1,9 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl} from 'react-intl';
+import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
+import LandvisningControl from './kart/kart-landvisning-control';
+import {finnIdForKommunenummer, getNavnForKommuneId} from './kart/kart-utils';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -26,28 +29,43 @@ class Oversiktskart extends React.Component {
         map.scrollWheelZoom.disable();
         map.keyboard.disable();
         map.boxZoom.disable();
+        this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
+    }
+
+    zoomTilLandvisning() {
+        this.refs.map.leafletElement.fitBounds(this.worldBounds);
+        this.refs.kommuner.leafletElement.setStyle({ opacity: 0 });
+        this.refs.fylker.leafletElement.bringToFront();
+        this.refs.map.leafletElement.removeControl(this.landvisningControl);
+        this.props.resetValg();
+
+        this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
+            layer.feature.properties.valgt = false;
+            layer.setStyle(geojsonStyling);
+        });
+    }
+
+    zoomTilFylke(e) {
+        this.refs.map.leafletElement.fitBounds(e.target.getBounds());
+        this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
+        this.refs.kommuner.leafletElement.bringToFront();
+        this.refs.map.leafletElement.addControl(this.landvisningControl);
+    }
+
+    valgteKommuner() {
+        if(this.props.valgteKommuner.length !== 0) {
+            return (
+                <span>
+                    Valgte kommuner: {this.props.valgteKommuner.map(kommuneid => getNavnForKommuneId(kommuneid, this.props.omrader)).join(', ')}
+                </span>
+            );
+        }
     }
 
     render() {
         const initialPosition = [63, 13];
         const initialZoom = 5;
         const maxBounds = [[57, 3], [72, 33]];
-
-        const geojsonStyling = {
-            color: "#000000",
-            fillcolor: "transperant",
-            weight: 1,
-            fillOpacity: 0
-        };
-
-        const highlightStyling = {
-            fillOpacity: 0.2,
-            weight: 3
-        };
-
-        const selectedStyling = {
-            fillOpacity: 0.4
-        };
 
         const highlightFeature = e => {
             const layer = e.target;
@@ -66,41 +84,28 @@ class Oversiktskart extends React.Component {
             }
         };
 
-        const zoomTilFylke = e => {
-            this.refs.map.leafletElement.fitBounds(e.target.getBounds());
-            this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
-            this.refs.kommuner.leafletElement.bringToFront();
-
-        };
-
         const clickKommune = e => {
             const properties = e.target.feature.properties;
             const kommuneErValgt = properties.valgt === true;
+            const kommunenummer = finnIdForKommunenummer(properties.komm, this.props.omrader);
+
             if(kommuneErValgt) {
                 e.target.setStyle(highlightStyling);
+                this.props.avvelgKommune(kommunenummer);
+
             } else {
                 e.target.setStyle(selectedStyling);
+                this.props.velgKommune(kommunenummer);
             }
 
             properties.valgt = !kommuneErValgt;
-        };
-
-        const zoomTilLandvisning = () => {
-            this.refs.map.leafletElement.fitBounds(this.worldBounds);
-            this.refs.kommuner.leafletElement.setStyle({ opacity: 0 });
-            this.refs.fylker.leafletElement.bringToFront();
-
-            this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
-                layer.feature.properties.valgt = false;
-                layer.setStyle(geojsonStyling);
-            });
         };
 
         const onEachFylke = (feature, layer) => {
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
-                click: zoomTilFylke
+                click: (e) => this.zoomTilFylke(e)
             });
         };
 
@@ -109,13 +114,14 @@ class Oversiktskart extends React.Component {
                 mouseover: e => {
                     feature.properties.hasFocus = true;
                     highlightFeature(e);
-                    const tekstAttrs = {
-                        kommune: e.target.feature.properties.navn,
-                        arbeidsledige: 0 + '',
-                        stillinger: 22 + ''
-                    };
                     setTimeout(() => {
                         if(feature.properties.hasFocus) {
+                            const tekstAttrs = {
+                                kommune: e.target.feature.properties.navn,
+                                arbeidsledige: 0 + '',
+                                stillinger: 22 + ''
+                            };
+
                             layer.bindPopup(this.props.intl.formatMessage(meldinger.kommunePopup, tekstAttrs)).openPopup();
                         }
                     }, 700);
@@ -149,10 +155,8 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} style={geojsonStyling} onEachFeature={onEachFylke}/>
                     </Map>
+                    {this.valgteKommuner()}
                 </div>
-                <button className="knapp knapp-hoved knapp-liten" onClick={() => {zoomTilLandvisning();}}>
-                    Reset kart
-                </button>
             </div>
         );
     }

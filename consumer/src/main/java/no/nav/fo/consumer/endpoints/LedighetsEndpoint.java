@@ -106,7 +106,6 @@ public class LedighetsEndpoint {
         Map<String, String> strukturkodeTilIdMapping = supportEndpointUtils.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
         List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).collect(toList());
-
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(0);

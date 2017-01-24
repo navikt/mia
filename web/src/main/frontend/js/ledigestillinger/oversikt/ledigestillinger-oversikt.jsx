@@ -22,6 +22,14 @@ const meldinger = defineMessages({
 });
 
 export class Oversikt extends React.Component {
+    constructor(props) {
+        super(props);
+        this.resetValg = this.resetValg.bind(this);
+        this.velgFylke = this.velgFylke.bind(this);
+        this.velgKommune = this.velgKommune.bind(this);
+        this.avvelgKommune = this.avvelgKommune.bind(this);
+    }
+
     togglekart() {
         this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
     }
@@ -32,6 +40,26 @@ export class Oversikt extends React.Component {
 
     lagreModal() {
         this.props.dispatch({ type: actions.modal_lagre });
+        this.oppdaterAlleDatagrunnlag();
+    }
+
+    resetValg() {
+        this.props.dispatch({ type: actions.reset_valg });
+        this.oppdaterAlleDatagrunnlag();
+    }
+
+    velgFylke(fylkeid) {
+        this.props.dispatch({ type: actions.velg_fylke, payload: fylkeid });
+        this.oppdaterAlleDatagrunnlag();
+    }
+
+    velgKommune(kommuneid) {
+        this.props.dispatch({ type: actions.velg_kommune, payload: kommuneid });
+        this.oppdaterAlleDatagrunnlag();
+    }
+
+    avvelgKommune(kommuneid) {
+        this.props.dispatch({ type: actions.avvelg_kommune, payload: kommuneid });
         this.oppdaterAlleDatagrunnlag();
     }
 
@@ -59,7 +87,11 @@ export class Oversikt extends React.Component {
 
         const kartProps = {
             fylkergeojson: this.props.fylkergeojson.data,
-            kommunergeojson: this.props.kommunergeojson.data
+            kommunergeojson: this.props.kommunergeojson.data,
+            resetValg: this.resetValg,
+            velgFylke: this.velgFylke,
+            velgKommune: this.velgKommune,
+            avvelgKommune: this.avvelgKommune
         };
 
         const innhold = this.props.visKart ? <OversiktKart {...oversiktProps} {...kartProps} /> : <Oversiktspanel {...oversiktProps}/>;
