@@ -24,7 +24,7 @@
     "default" : {
       "launch_url" : "http://localhost:8486/mia",
       "selenium_port"  : 4444,
-      "timeout": 5000,
+      "timeout": 15000,
       "selenium_host"  : "localhost",
       "silent": true,
       "desiredCapabilities": {
