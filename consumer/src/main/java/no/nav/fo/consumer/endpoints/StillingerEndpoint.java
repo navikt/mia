@@ -41,6 +41,9 @@ public class StillingerEndpoint {
     @Inject
     SupportEndpoint supportEndpointUtils;
 
+    @Inject
+    LedighetsEndpoint ledighetsEndpoint;
+
     public StillingerEndpoint() {
         String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
@@ -72,10 +75,14 @@ public class StillingerEndpoint {
         return responses;
     }
 
-    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste) {
+    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste, Map<String, Integer> arbeidsledighet) {
         return liste.keySet().stream()
-                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues()))
+                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues(), getAntallArbeidsledige(id, arbeidsledighet)))
                 .collect(toList());
+    }
+
+    private int getAntallArbeidsledige(String id, Map<String, Integer> arbeidsledighet) {
+        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : 0;
     }
 
     @Timed
@@ -128,7 +135,7 @@ public class StillingerEndpoint {
 
     @Timed
     public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
-        QueryResponse yrkesgruppeResponse = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid, fylker, kommuner);
+        QueryResponse yrkesgruppeResponse = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid);
         return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
                 .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), fylker, kommuner)))
                 .collect(toList());
@@ -150,7 +157,17 @@ public class StillingerEndpoint {
 
         Map<String, QueryResponse> responser = queryForKommuner(kommuner, filter);
 
-        return getAntallStillingerForKommuner(responser);
+        // Hent yrkesgrupper for ytrkesomradeid om vi ikke har valgt noen yrkesgrupper.
+
+        if (yrkesgrupper == null || yrkesgrupper.size() == 0) {
+            QueryResponse yrkesgrupperForYrkesomrade = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid);
+            yrkesgrupperForYrkesomrade.getResults().forEach(yrkesgruppe -> yrkesgrupper.add((String)yrkesgruppe.getFieldValue("ID")));
+        }
+
+        Map<String, Integer> ledighetForOmrade = ledighetsEndpoint.getLedighetForOmrader(yrkesgrupper, fylker, kommuner);
+
+
+        return getAntallStillingerForKommuner(responser, ledighetForOmrade);
     }
 
     @Timed

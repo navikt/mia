@@ -33,11 +33,11 @@ public class LedighetsRessurs {
         return ledighetsEndpoint.getLedighetForAlleFylker();
     }
 
-    @GET
-    @Path("/omrader")
-    public Map<String, Integer> hentLedighetForOmrader(@QueryParam("fylker[]") List<String> fylker, @QueryParam("kommuner[]") List<String> kommuner) {
-        return ledighetsEndpoint.getLedighetForOmrader(fylker, kommuner);
-    }
+//    @GET
+//    @Path("/omrader")
+//    public Map<String, Integer> hentLedighetForOmrader(@BeanParam FiltreringParams filtreringParams) {
+//        return ledighetsEndpoint.getLedighetForOmrader(filtreringParams.yrkesgrupper, filtreringParams.fylker, filtreringParams.kommuner);
+//    }
 
     private static class FiltreringParams {
         @QueryParam("yrkesgrupper[]")

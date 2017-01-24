@@ -18,7 +18,7 @@ public class StillingerForOmradeTransformer {
                 .collect(Collectors.toList());
     }
 
-    public static OmradeStilling getOmradeStillingForKommuner(String navn, List<FacetField.Count> antallStillingerPerStillingsannonseForKommune) {
+    public static OmradeStilling getOmradeStillingForKommuner(String navn, List<FacetField.Count> antallStillingerPerStillingsannonseForKommune, int antallArbeidsledigeForKommune) {
        int antallStillinger = 0;
         for (FacetField.Count count : antallStillingerPerStillingsannonseForKommune) {
             if (count.getName() == null) {
@@ -28,6 +28,6 @@ public class StillingerForOmradeTransformer {
             }
         }
 
-        return new OmradeStilling(navn, 0, antallStillinger);
+        return new OmradeStilling(navn, antallArbeidsledigeForKommune, antallStillinger);
     }
 }

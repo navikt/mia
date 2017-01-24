@@ -44,6 +44,5 @@ export default combineReducers({
     kommunergeojson: createRestReducer('kommunergeojson'),
     totantallstillinger: createRestReducer('totantallstillinger'),
     miljovariabler: createRestReducer('miljovariabler'),
-    oversiktArbeidsledighet: createRestReducer('oversikt_arbeidsledighet'),
     statistikk: createRestReducer('statistikk')
 });
