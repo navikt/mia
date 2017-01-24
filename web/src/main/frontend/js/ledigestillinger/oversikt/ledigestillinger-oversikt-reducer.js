@@ -24,7 +24,7 @@ export const actions = {
 const reducer = (state=initialState, action) => {
     switch(action.type) {
         case actions.vis_kart:
-            return {...state, visKart: true};
+            return {...state, visKart: true, valgteKommuner: [], valgteFylker: []};
         case actions.vis_tabell:
             return {...state, visKart: false};
         case actions.modal_reset:
@@ -46,7 +46,7 @@ const reducer = (state=initialState, action) => {
         case actions.avvelg_kommune:
             return {...state, valgteKommuner: state.valgteKommuner.filter(kommune => kommune.id === actions.payload)};
         case actions.velg_fylke:
-            return {...state, valgteKommuner: [], valgteFylker: [actions.payload]};
+            return {...state, valgteKommuner: [], valgteFylker: [action.payload]};
         default:
             return state;
     }

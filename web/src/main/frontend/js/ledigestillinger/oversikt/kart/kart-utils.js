@@ -10,3 +10,5 @@ export const finnIdForKommunenummer = (kommunenummer, omrader) => getAlleKommune
 export const getAlleKommunerForOmrader = omrader => omrader.map(omrade => omrade.underomrader).reduce((a, b) => a.concat(b), []);
 
 export const getNavnForKommuneId = (kommuneid, omrader) => getAlleKommunerForOmrader(omrader).find(omrade => omrade.id === kommuneid).navn;
+
+export const getNavnForFylkeId = (kommuneid, omrader) => omrader.find(omrade => omrade.id === kommuneid).navn;

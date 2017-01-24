@@ -13,3 +13,8 @@ export const highlightStyling = {
 export const selectedStyling = {
     fillOpacity: 0.4
 };
+
+export const selectedFylkeStyling = {
+    fillOpacity: 1,
+    weight: 5
+};
