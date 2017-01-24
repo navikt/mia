@@ -9,6 +9,7 @@ public class StartJetty {
     private static final int PORT = 8486;
 
     public static void main(String[] args) throws Exception {
+
         Jetty jetty = usingWar()
                 .at("/mia")
                 .loadProperties("/test.properties")
