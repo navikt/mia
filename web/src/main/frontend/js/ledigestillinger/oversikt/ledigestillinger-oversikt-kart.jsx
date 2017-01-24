@@ -1,6 +1,6 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
-import {defineMessages, injectIntl} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, getNavnForKommuneId} from './kart/kart-utils';
@@ -13,6 +13,10 @@ const meldinger = defineMessages({
     kommunePopup: {
         id: 'ledigestillinger.oversikt.kommunepopup',
         defaultMessage: '<h3>{kommune}</h3><p>Ledige stillinger: {stillinger}<br />Arbeidsledige: {arbeidsledige}</p>'
+    },
+    valgteKommuner: {
+        id: 'ledigestillinger.oversikt.valgtekommuner',
+        defaultMessage: 'Valgte kommuner:'
     }
 });
 
@@ -55,9 +59,12 @@ class Oversiktskart extends React.Component {
     valgteKommuner() {
         if(this.props.valgteKommuner.length !== 0) {
             return (
-                <span>
-                    Valgte kommuner: {this.props.valgteKommuner.map(kommuneid => getNavnForKommuneId(kommuneid, this.props.omrader)).join(', ')}
-                </span>
+                <p className="valgte-kommuner">
+                    <span className="typo-element valgte-kommuner-tittel">
+                        <FormattedMessage {...meldinger.valgteKommuner}/>
+                    </span>
+                    {this.props.valgteKommuner.map(kommuneid => getNavnForKommuneId(kommuneid, this.props.omrader)).join(', ')}
+                </p>
             );
         }
     }
