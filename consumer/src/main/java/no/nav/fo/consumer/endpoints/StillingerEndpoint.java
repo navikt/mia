@@ -77,8 +77,12 @@ public class StillingerEndpoint {
 
     private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste, Map<String, Integer> arbeidsledighet) {
         return liste.keySet().stream()
-                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues(), arbeidsledighet.get(id)))
+                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues(), getAntallArbeidsledige(id, arbeidsledighet)))
                 .collect(toList());
+    }
+
+    private int getAntallArbeidsledige(String id, Map<String, Integer> arbeidsledighet) {
+        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : 0;
     }
 
     @Timed

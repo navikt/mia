@@ -16,10 +16,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -41,8 +38,8 @@ public class LedighetsEndpoint {
     public Map<String, Map<String, Integer>> getLedighetForSisteTrettenMaaneder(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
 
-        List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
-        List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).collect(toList());
+        List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
+        List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
 
         Map<String, List<String>> yrkgrLvl2TilStrukturkodeMapping = supportEndpointUtils.getYrkgrLvl2TilStrukturkodeMapping();
 
