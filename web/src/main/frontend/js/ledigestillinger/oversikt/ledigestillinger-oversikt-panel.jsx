@@ -37,7 +37,7 @@ export class Oversiktspanel extends React.Component {
                        onLukk={() => this.refs.modalknapp.focus()}>
                     <Modalinnhold />
                 </Modal>
-                <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger, props.oversiktArbeidsledighet]}>
+                <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger]}>
                     {fylkerSomSkalVises.length !== 0
                         ? <OmradeTabell valgteFylker={fylkerSomSkalVises} omrader={props.omrader}
                                         valgteKommuner={props.valgteKommuner}
