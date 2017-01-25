@@ -107,7 +107,7 @@ public class LedighetsEndpoint {
     Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportEndpointUtils.getStrukturkodeTilIdMapping();
-        List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
+        List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
         List<String> kommunenr = new ArrayList<>();
 
         kommuner.forEach(id -> {
