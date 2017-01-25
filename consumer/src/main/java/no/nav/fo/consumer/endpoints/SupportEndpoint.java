@@ -27,6 +27,7 @@ public class SupportEndpoint {
     private SolrClient supportSolrClient;
     private Map<String, String> strukturkodeTilIdMapping, idTilStrukturkodeMapping;
     private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilStrukturkodeMapping;
+    private Map<String, List<String>> yrkgrLvl2TilYrkgrLvl1Mapping;
     private Logger logger = LoggerFactory.getLogger(SupportEndpoint.class);
 
     public SupportEndpoint() {
@@ -34,6 +35,7 @@ public class SupportEndpoint {
         supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
         createStrukturkodeMappingForGeografi();
         createStrukturkodeMappingForYrkesgruppe();
+        createYrkgrLvl1ForYrkgrLvl2Mapping();
     }
 
     Map<String, String> getStrukturkodeTilIdMapping() {
@@ -48,8 +50,8 @@ public class SupportEndpoint {
         return strukturkodeTilYrkgrLvl2Mapping;
     }
 
-    public Map<String, List<String>> getYrkgrLvl2TilStrukturkodeMapping() {
-        return yrkgrLvl2TilStrukturkodeMapping;
+    public Map<String, List<String>> getYrkgrLvl2TilYrkgrLvl1Mapping() {
+        return yrkgrLvl2TilYrkgrLvl1Mapping;
     }
 
     private void createStrukturkodeMappingForGeografi() {
@@ -85,7 +87,7 @@ public class SupportEndpoint {
             List<String> yrkgrLvl2IdListe = new ArrayList<>();
 
             Collection<Object> parents = document.getFieldValues("PARENT");
-            if(parents != null) {
+            if (parents != null) {
                 yrkgrLvl2IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
             }
             String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
@@ -105,6 +107,40 @@ public class SupportEndpoint {
             }
         });
     }
+
+    private void createYrkgrLvl1ForYrkgrLvl2Mapping() {
+        yrkgrLvl2TilYrkgrLvl1Mapping = new HashMap<>();
+
+        yrkgrLvl2TilStrukturkodeMapping.keySet().forEach(lvl2 -> {
+            QueryResponse response = getYrkgrLvl1IdFraSolr(lvl2);
+
+            SolrDocumentList results = response.getResults();
+            if (results.size() > 0) {
+                Collection<Object> parents = results.get(0).getFieldValues("PARENT");
+
+                List<String> yrkgrLvl1IdListe = new ArrayList<>();
+                if (parents != null) {
+                    yrkgrLvl1IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
+                }
+                yrkgrLvl2TilYrkgrLvl1Mapping.put(lvl2, yrkgrLvl1IdListe);
+            }
+        });
+    }
+
+    private QueryResponse getYrkgrLvl1IdFraSolr(String yrkgrLvl2Id) {
+        SolrQuery query = new SolrQuery("*:*");
+        query.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
+        query.addFilterQuery("ID:" + yrkgrLvl2Id);
+        query.setRows(10000);
+
+        try {
+            return supportSolrClient.query(query);
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av stillingstyper fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av stillingstyper fra solr", e.getCause());
+        }
+    }
+
 
     private QueryResponse getStillingstyperFraSolr() {
         SolrQuery query = new SolrQuery("*:*");

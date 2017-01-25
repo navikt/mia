@@ -25,7 +25,7 @@ public class IndekserSolr {
     SupportEndpoint supportEndpointUtils;
 
     private Logger logger = LoggerFactory.getLogger(IndekserSolr.class);
-    private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping;
+    private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilYrkgrLvl1Mapping;
     private SolrClient arbeidsledighetCore, ledigeStillingerCore;
 
     public IndekserSolr() {
@@ -38,12 +38,14 @@ public class IndekserSolr {
 
     public void lesOgSkrivArbeidsledige() {
         strukturkodeTilYrkgrLvl2Mapping = supportEndpointUtils.getStrukturkodeTilYrkgrLvl2Mapping();
+        yrkgrLvl2TilYrkgrLvl1Mapping = supportEndpointUtils.getYrkgrLvl2TilYrkgrLvl1Mapping();
 
         lesArbeidsledighetCSV();
     }
 
     public void lesOgSkrivLedigeStillinger() {
         strukturkodeTilYrkgrLvl2Mapping = supportEndpointUtils.getStrukturkodeTilYrkgrLvl2Mapping();
+        yrkgrLvl2TilYrkgrLvl1Mapping = supportEndpointUtils.getYrkgrLvl2TilYrkgrLvl1Mapping();
 
         lesLedigeStillingerCSV();
     }
@@ -53,7 +55,7 @@ public class IndekserSolr {
 
         InputStream inputStreamLedigestillinger = IndekserSolr.class.getResourceAsStream("/statistikk_ledigestillinger.csv");
 
-        String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "LEDIGE_STILLINGER", "YRKGR_LVL_2_ID"};
+        String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "LEDIGE_STILLINGER", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(ledigeStillingerCore, inputStreamLedigestillinger, header);
     }
 
@@ -61,7 +63,7 @@ public class IndekserSolr {
         slettSolrIndex(arbeidsledighetCore);
         InputStream inputStreamArbeidsledige = IndekserSolr.class.getResourceAsStream("/statistikk_arbeidsledige.csv");
 
-        String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "ARBEIDSLEDIGE", "YRKGR_LVL_2_ID"};
+        String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "ARBEIDSLEDIGE", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(arbeidsledighetCore, inputStreamArbeidsledige, header);
     }
 
@@ -93,11 +95,23 @@ public class IndekserSolr {
 
                     List<String> yrkgrLvl2ider = strukturkodeTilYrkgrLvl2Mapping.get(csvFelter[3]);
 
-                    if (yrkgrLvl2ider == null || yrkgrLvl2ider.size() == 0) {
+                    List<String> yrkgrLvl1ider = new ArrayList<>();
+                    if (yrkgrLvl2ider != null) {
+                        yrkgrLvl2ider.forEach(yrkgrlvl2id -> yrkgrLvl1ider.addAll(yrkgrLvl2TilYrkgrLvl1Mapping.get(yrkgrlvl2id)));
+                    }
+
+                    if (yrkgrLvl1ider.size() == 0) {
                         document.addField(header[5], "-2");
                     } else {
-                        document.addField(header[5], yrkgrLvl2ider);
+                        document.addField(header[5], yrkgrLvl1ider);
                     }
+
+                    if (yrkgrLvl2ider == null || yrkgrLvl2ider.size() == 0) {
+                        document.addField(header[6], "-2");
+                    } else {
+                        document.addField(header[6], yrkgrLvl2ider);
+                    }
+
                     documents.add(document);
                 }
             }
