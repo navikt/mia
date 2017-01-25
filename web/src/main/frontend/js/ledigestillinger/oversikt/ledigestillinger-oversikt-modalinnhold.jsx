@@ -12,11 +12,13 @@ const Omrade = props => {
         classes.push("expanded");
     }
 
+    const valgt = underomradeErValgt || props.omrade.valgt === true;
+
     return (
         <li className="blokk-xxs">
-            <input type="checkbox" className={classes.join(" ")} id={name} checked={props.omrade.valgt === true} name={name} onChange={props.onChange} />
+            <input type="checkbox" className={classes.join(" ")} id={name} checked={valgt} name={name} onChange={props.onChange} />
             <label htmlFor={name}>{props.omrade.navn}</label>
-            { props.omrade.valgt && props.omrade.underomrader.length > 1 ? props.children : null}
+            { valgt && props.omrade.underomrader.length > 1 ? props.children : null}
         </li>
     );
 };
