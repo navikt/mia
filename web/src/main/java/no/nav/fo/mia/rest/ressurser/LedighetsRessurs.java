@@ -33,12 +33,6 @@ public class LedighetsRessurs {
         return ledighetsEndpoint.getLedighetForAlleFylker();
     }
 
-//    @GET
-//    @Path("/omrader")
-//    public Map<String, Integer> hentLedighetForOmrader(@BeanParam FiltreringParams filtreringParams) {
-//        return ledighetsEndpoint.getLedighetForOmrader(filtreringParams.yrkesgrupper, filtreringParams.fylker, filtreringParams.kommuner);
-//    }
-
     private static class FiltreringParams {
         @QueryParam("yrkesgrupper[]")
         public List<String> yrkesgrupper;

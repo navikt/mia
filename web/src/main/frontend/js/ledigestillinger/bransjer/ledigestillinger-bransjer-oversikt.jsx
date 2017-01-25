@@ -6,6 +6,7 @@ import {hentYrkesgrupper} from './ledigestillinger-bransjer-actions';
 import {hentStillinger, hentAntallStillingerForYrkesgruppe} from '../stillinger/ledigestillinger-stillinger-actions';
 import {ALTERNATIV_ALLE} from '../../felles/konstanter';
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
+import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
 
 class BransjerOversikt extends React.Component {
     toggleYrkesgruppe(id) {
@@ -16,6 +17,7 @@ class BransjerOversikt extends React.Component {
         }
         this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
+        this.props.dispatch(hentStatistikk());
     }
 
     velgYrkesomrade(id) {
