@@ -36,7 +36,15 @@ public class SelftestServlet extends SelfTestBaseServlet {
     @Override
     public Collection<? extends Pingable> getPingables() {
         final List<Pingable> pingables = new ArrayList<>(applicationContext.getBeansOfType(Pingable.class).values());
+        pingables.add(pingUrl("stilling-solr", System.getProperty("stilling.solr.url")));
+        pingables.add(pingUrl("mia-solr", getMiaSolrUrl()));
         return pingables;
+    }
+
+    private String getMiaSolrUrl() {
+        String coreUrl = System.getProperty("miasolr.solr.ledigestillingercore.url");
+        int index = coreUrl.lastIndexOf('/');
+        return coreUrl.substring(0, index);
     }
 
     private Pingable pingUrl(final String name, final String url) {
