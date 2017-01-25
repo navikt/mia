@@ -46,6 +46,7 @@ class Oversiktskart extends React.Component {
         this.refs.fylker.leafletElement.bringToFront();
         this.refs.map.leafletElement.removeControl(this.landvisningControl);
         this.props.resetValg();
+        this.fjernSelectedFraFylker();
 
         this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
             layer.feature.properties.valgt = false;
@@ -71,6 +72,12 @@ class Oversiktskart extends React.Component {
                 </p>
             );
         }
+    }
+
+    fjernSelectedFraFylker() {
+        this.refs.fylker.leafletElement.getLayers().forEach(layer => {
+            layer.setStyle({fillOpacity: 0});
+        });
     }
 
     valgteFylker() {
@@ -112,11 +119,11 @@ class Oversiktskart extends React.Component {
             const properties = e.target.feature.properties;
             const kommuneErValgt = properties.valgt === true;
             const kommuneId = finnIdForKommunenummer(properties.komm, this.props.omrader);
+            this.fjernSelectedFraFylker();
 
             if(kommuneErValgt) {
                 e.target.setStyle(highlightStyling);
                 this.props.avvelgKommune(kommuneId);
-
             } else {
                 e.target.setStyle(selectedStyling);
                 this.props.velgKommune(kommuneId);
@@ -125,17 +132,19 @@ class Oversiktskart extends React.Component {
             properties.valgt = !kommuneErValgt;
         };
 
-        const clickFylke = e => {
+        const clickFylke = (e, layer) => {
             this.zoomTilFylke(e);
             const fylkeId = finnIdForFylkenummer(e.target.feature.properties.fylkesnr, this.props.omrader);
             this.props.velgFylke(fylkeId);
+            setTimeout(() => layer.setStyle({fillOpacity: 0.1}), 0);
         };
 
         const onEachFylke = (feature, layer) => {
+            layer.setStyle(geojsonStyling);
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
-                click: clickFylke
+                click: e => clickFylke(e, layer)
             });
         };
 
@@ -170,7 +179,7 @@ class Oversiktskart extends React.Component {
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
                         />
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
-                        <GeoJSON ref="fylker" data={this.props.fylkergeojson} style={geojsonStyling} onEachFeature={onEachFylke}/>
+                        <GeoJSON ref="fylker" data={this.props.fylkergeojson} onEachFeature={onEachFylke}/>
                     </Map>
                     {this.valgteKommuner()}
                     {this.valgteFylker()}
