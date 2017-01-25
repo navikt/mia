@@ -24,6 +24,7 @@ class BransjerOversikt extends React.Component {
         this.props.dispatch({type: actions.yrkesomradeselect, payload: id});
         this.props.dispatch(hentYrkesgrupper());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
+        this.props.dispatch(hentStatistikk());
     }
 
     render() {

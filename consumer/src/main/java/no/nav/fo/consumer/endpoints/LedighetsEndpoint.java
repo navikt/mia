@@ -35,7 +35,7 @@ public class LedighetsEndpoint {
         ledigestillingerSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(ledigestillingerCoreUri).build();
     }
 
-    public Map<String, Map<String, Integer>> getLedighetForSisteTrettenMaaneder(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+    public Map<String, Map<String, Integer>> getLedighetForSisteTrettenMaaneder(String yrkesomrade, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
 
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
@@ -43,13 +43,13 @@ public class LedighetsEndpoint {
 
         Timer timer = MetricsFactory.createTimer("LedighetsEndpoint.getArbeidsledighetForSisteTrettenMaaneder");
         timer.start();
-        Map<String, Integer> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesgrupper, fylkesnr, kommunenr);
+        Map<String, Integer> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesomrade, yrkesgrupper, fylkesnr, kommunenr);
         timer.stop();
         timer.report();
 
         timer = MetricsFactory.createTimer("LedighetsEndpoint.getLedigeStillingerForSisteTrettenMaaneder");
         timer.start();
-        Map<String, Integer> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesgrupper, fylkesnr, kommunenr);
+        Map<String, Integer> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesomrade, yrkesgrupper, fylkesnr, kommunenr);
         timer.stop();
         timer.report();
 
@@ -60,15 +60,8 @@ public class LedighetsEndpoint {
         return resultat;
     }
 
-    private Map<String, Integer> getLedighetForSisteTrettenMaaneder(SolrClient client, List<String> yrkesgrupper, List<String> fylkesnr, List<String> kommunenr) {
-        String query = "*:*";
-        SolrQuery solrQuery = new SolrQuery(query);
-        solrQuery.setRows(0);
-
-        solrQuery.addFilterQuery(createFylkeFilter(fylkesnr, kommunenr));
-        if (yrkesgrupper.size() > 0) {
-            solrQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
-        }
+    private Map<String, Integer> getLedighetForSisteTrettenMaaneder(SolrClient client, String yrkesomrade, List<String> yrkesgrupper, List<String> fylkesnr, List<String> kommunenr) {
+        SolrQuery solrQuery = createSolrQueryForFiltreringsvalg(yrkesomrade, yrkesgrupper, fylkesnr, kommunenr);
 
         solrQuery.addFacetField("PERIODE");
 
@@ -111,7 +104,7 @@ public class LedighetsEndpoint {
     }
 
     @Timed
-    public Map<String, Integer> getLedighetForOmrader(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+    Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportEndpointUtils.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).collect(toList());
@@ -124,19 +117,11 @@ public class LedighetsEndpoint {
             }
         });
 
-        String query = "*:*";
-        SolrQuery solrQuery = new SolrQuery(query);
-        solrQuery.setRows(0);
-
         LocalDateTime d = LocalDateTime.now().minusMonths(1);
         String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
 
-        if (yrkesgrupper.size() > 0) {
-            solrQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
-        }
-        String filter = createFylkeFilter(fylkesnr, kommunenr);
+        SolrQuery solrQuery = createSolrQueryForFiltreringsvalg(yrkesomradeid, yrkesgrupper, fylkesnr, kommunenr);
 
-        solrQuery.addFilterQuery(filter);
         solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
 
         solrQuery.addFacetField("KOMMUNENR");
@@ -157,6 +142,20 @@ public class LedighetsEndpoint {
             logger.error("Feil ved henting av ledighet fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av ledighet fra solr", e.getCause());
         }
+    }
+
+    private SolrQuery createSolrQueryForFiltreringsvalg(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylkesnr, List<String> kommunenr) {
+        String query = "*:*";
+        SolrQuery solrQuery = new SolrQuery(query);
+        solrQuery.setRows(0);
+        if (yrkesgrupper.size() > 0) {
+            solrQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
+        } else if (yrkesomradeid != null) {
+            solrQuery.addFilterQuery("YRKGR_LVL_1_ID:" + yrkesomradeid);
+        }
+
+        solrQuery.addFilterQuery(createFylkeFilter(fylkesnr, kommunenr));
+        return solrQuery;
     }
 
     private String createFylkeFilter(List<String> fylker, List<String> kommuner) {

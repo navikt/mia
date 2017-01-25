@@ -24,7 +24,7 @@ public class LedighetsRessurs {
     @GET
     @Path("/statistikk")
     public Map<String, Map<String, Integer>> hentLedighetForSisteTrettenMaaneder(@BeanParam LedighetsRessurs.FiltreringParams filtrering) {
-        return ledighetsEndpoint.getLedighetForSisteTrettenMaaneder(filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
+        return ledighetsEndpoint.getLedighetForSisteTrettenMaaneder(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
     }
 
     @GET
@@ -34,6 +34,9 @@ public class LedighetsRessurs {
     }
 
     private static class FiltreringParams {
+        @QueryParam("yrkesomrade")
+        public String yrkesomrade;
+
         @QueryParam("yrkesgrupper[]")
         public List<String> yrkesgrupper;
 
