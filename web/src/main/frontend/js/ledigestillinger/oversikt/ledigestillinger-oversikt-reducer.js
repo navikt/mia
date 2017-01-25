@@ -44,7 +44,7 @@ const reducer = (state=initialState, action) => {
         case actions.velg_kommune:
             return {...state, valgteFylker: [], valgteKommuner: state.valgteKommuner.concat(action.payload)};
         case actions.avvelg_kommune:
-            return {...state, valgteKommuner: state.valgteKommuner.filter(kommune => kommune.id === actions.payload)};
+            return {...state, valgteKommuner: state.valgteKommuner.filter(kommuneid => kommuneid === action.payload)};
         case actions.velg_fylke:
             return {...state, valgteKommuner: [], valgteFylker: [action.payload]};
         default:

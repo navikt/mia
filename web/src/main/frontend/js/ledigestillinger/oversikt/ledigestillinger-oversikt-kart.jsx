@@ -142,22 +142,9 @@ class Oversiktskart extends React.Component {
         const onEachKommune = (feature, layer) => {
             layer.on({
                 mouseover: e => {
-                    feature.properties.hasFocus = true;
                     highlightFeature(e);
-                    setTimeout(() => {
-                        if(feature.properties.hasFocus) {
-                            const tekstAttrs = {
-                                kommune: e.target.feature.properties.navn,
-                                arbeidsledige: 0 + '',
-                                stillinger: 22 + ''
-                            };
-
-                            layer.bindPopup(this.props.intl.formatMessage(meldinger.kommunePopup, tekstAttrs)).openPopup();
-                        }
-                    }, 700);
                 },
                 mouseout: e => {
-                    feature.properties.hasFocus = false;
                     resetHighlight(e);
                 },
                 click: clickKommune
