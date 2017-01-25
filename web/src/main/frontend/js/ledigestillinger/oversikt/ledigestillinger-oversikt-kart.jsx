@@ -142,7 +142,10 @@ class Oversiktskart extends React.Component {
         const onEachFylke = (feature, layer) => {
             layer.setStyle(geojsonStyling);
             layer.on({
-                mouseover: highlightFeature,
+                mouseover: e => {
+                    highlightFeature(e);
+                    layer.bindPopup(feature.properties.navn).openPopup();
+                },
                 mouseout: (e) => {
                     if(feature.properties.zoom != true) {
                         resetHighlight(e);
@@ -160,6 +163,7 @@ class Oversiktskart extends React.Component {
             layer.on({
                 mouseover: e => {
                     highlightFeature(e);
+                    layer.bindPopup(feature.properties.navn).openPopup();
                 },
                 mouseout: e => {
                     resetHighlight(e);
