@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
         EnvironmentPropertiesConfig.class,
         EndpointsConfig.class
 })
-@ComponentScan(basePackages = "no.nav.fo.mia.rest")
+@ComponentScan(basePackages = {"no.nav.fo.mia.rest", "no.nav.fo.mia.internal.ressurser"})
 public class ApplicationTestConfig {
 
 }

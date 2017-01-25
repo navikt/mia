@@ -10,7 +10,7 @@ import org.springframework.context.annotation.*;
         MetricsConfig.class,
         CacheConfig.class
 })
-@ComponentScan(basePackages = "no.nav.fo.mia.rest")
+@ComponentScan(basePackages = {"no.nav.fo.mia.rest", "no.nav.fo.mia.internal.ressurser"})
 public class ApplicationConfig {
 
 }
