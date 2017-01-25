@@ -147,7 +147,7 @@ class Oversiktskart extends React.Component {
                     layer.bindPopup(feature.properties.navn).openPopup();
                 },
                 mouseout: (e) => {
-                    if(feature.properties.zoom != true) {
+                    if(feature.properties.zoom !== true) {
                         resetHighlight(e);
                     }
                 },
