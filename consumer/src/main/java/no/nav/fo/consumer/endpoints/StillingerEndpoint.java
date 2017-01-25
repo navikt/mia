@@ -157,15 +157,7 @@ public class StillingerEndpoint {
 
         Map<String, QueryResponse> responser = queryForKommuner(kommuner, filter);
 
-        // Hent yrkesgrupper for ytrkesomradeid om vi ikke har valgt noen yrkesgrupper.
-
-        if (yrkesgrupper == null || yrkesgrupper.size() == 0) {
-            QueryResponse yrkesgrupperForYrkesomrade = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid);
-            yrkesgrupperForYrkesomrade.getResults().forEach(yrkesgruppe -> yrkesgrupper.add((String)yrkesgruppe.getFieldValue("ID")));
-        }
-
-        Map<String, Integer> ledighetForOmrade = ledighetsEndpoint.getLedighetForOmrader(yrkesgrupper, fylker, kommuner);
-
+        Map<String, Integer> ledighetForOmrade = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner);
 
         return getAntallStillingerForKommuner(responser, ledighetForOmrade);
     }

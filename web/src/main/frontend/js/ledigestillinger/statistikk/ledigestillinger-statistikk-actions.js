@@ -1,4 +1,4 @@
-import { STATUS } from './../../felles/konstanter';
+import { STATUS, ALTERNATIV_ALLE } from './../../felles/konstanter';
 import { getActions } from './../../felles/rest/rest-reducer';
 import {
     buildUriParams,
@@ -26,6 +26,10 @@ export const hentStatistikk = () => (dispatch, getState) => {
 
 const getUriParams = state => {
     const params = getParamsForValgteFylkerOgKommuner(state);
+    const yrkesomrade = state.ledigestillinger.bransje.valgtyrkesomrade;
+    if (yrkesomrade != null && yrkesomrade !== ALTERNATIV_ALLE) {
+        params['yrkesomrade'] = yrkesomrade;
+    }
     params.yrkesgrupper = getValgteYrkesgrupperId(state);
     return params;
 };
