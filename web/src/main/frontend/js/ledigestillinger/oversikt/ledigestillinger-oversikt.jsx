@@ -30,6 +30,9 @@ export class Oversikt extends React.Component {
     }
 
     togglekart() {
+        if(!this.props.visKart) {
+            this.resetValg();
+        }
         this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
     }
 
