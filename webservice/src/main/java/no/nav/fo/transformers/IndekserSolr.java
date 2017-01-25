@@ -36,32 +36,29 @@ public class IndekserSolr {
         ledigeStillingerCore = new HttpSolrClient.Builder().withBaseSolrUrl(ledigestillingercoreUri).build();
     }
 
-    public void lesOgSkrivArbeidsledige() {
+    public void lesOgSkrivArbeidsledige(InputStream inputStream) {
         strukturkodeTilYrkgrLvl2Mapping = supportEndpointUtils.getStrukturkodeTilYrkgrLvl2Mapping();
         yrkgrLvl2TilYrkgrLvl1Mapping = supportEndpointUtils.getYrkgrLvl2TilYrkgrLvl1Mapping();
 
-        lesArbeidsledighetCSV();
+        lesArbeidsledighetCSV(inputStream);
     }
 
-    public void lesOgSkrivLedigeStillinger() {
+    public void lesOgSkrivLedigeStillinger(InputStream inputStream) {
         strukturkodeTilYrkgrLvl2Mapping = supportEndpointUtils.getStrukturkodeTilYrkgrLvl2Mapping();
         yrkgrLvl2TilYrkgrLvl1Mapping = supportEndpointUtils.getYrkgrLvl2TilYrkgrLvl1Mapping();
 
-        lesLedigeStillingerCSV();
+        lesLedigeStillingerCSV(inputStream);
     }
 
-    private void lesLedigeStillingerCSV() {
+    private void lesLedigeStillingerCSV(InputStream inputStreamLedigestillinger) {
         slettSolrIndex(ledigeStillingerCore);
-
-        InputStream inputStreamLedigestillinger = IndekserSolr.class.getResourceAsStream("/statistikk_ledigestillinger.csv");
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "LEDIGE_STILLINGER", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(ledigeStillingerCore, inputStreamLedigestillinger, header);
     }
 
-    private void lesArbeidsledighetCSV() {
+    private void lesArbeidsledighetCSV(InputStream inputStreamArbeidsledige) {
         slettSolrIndex(arbeidsledighetCore);
-        InputStream inputStreamArbeidsledige = IndekserSolr.class.getResourceAsStream("/statistikk_arbeidsledige.csv");
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "ARBEIDSLEDIGE", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(arbeidsledighetCore, inputStreamArbeidsledige, header);
