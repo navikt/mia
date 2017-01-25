@@ -136,15 +136,23 @@ class Oversiktskart extends React.Component {
             this.zoomTilFylke(e);
             const fylkeId = finnIdForFylkenummer(e.target.feature.properties.fylkesnr, this.props.omrader);
             this.props.velgFylke(fylkeId);
-            setTimeout(() => layer.setStyle({fillOpacity: 0.1}), 0);
+            layer.setStyle({fillOpacity: 0.1});
         };
 
         const onEachFylke = (feature, layer) => {
             layer.setStyle(geojsonStyling);
             layer.on({
                 mouseover: highlightFeature,
-                mouseout: resetHighlight,
-                click: e => clickFylke(e, layer)
+                mouseout: (e) => {
+                    if(feature.properties.zoom != true) {
+                        resetHighlight(e);
+                    }
+                },
+                click: e => {
+                    feature.properties.zoom = true;
+                    setTimeout(() => feature.properties.zoom = false, 1000);
+                    clickFylke(e, layer);
+                }
             });
         };
 
