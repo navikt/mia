@@ -14,10 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class IndekserSolr {
 
@@ -75,41 +72,18 @@ public class IndekserSolr {
             bufferedReader = new BufferedReader(new InputStreamReader(inputStreamLedigestillinger));
 
             bufferedReader.readLine();
-
+            int teller = 0;
             while ((line = bufferedReader.readLine()) != null) {
+                teller++;
                 String formatertLine = line.replace("\"", "");
                 String[] csvFelter = formatertLine.split(cvsSplitBy);
-
                 int antallArbeidsledige = Integer.parseInt(csvFelter[4]);
 
-                for (int i = 0; i < antallArbeidsledige; i++) {
-                    SolrInputDocument document = new SolrInputDocument();
-                    document.addField(header[0], csvFelter[0]);
-                    document.addField(header[1], csvFelter[1]);
-                    document.addField(header[2], csvFelter[2]);
-                    document.addField(header[3], csvFelter[3]);
-                    document.addField(header[4], csvFelter[4]);
+                documents.addAll(createDocuments(header, csvFelter, antallArbeidsledige));
 
-                    List<String> yrkgrLvl2ider = strukturkodeTilYrkgrLvl2Mapping.get(csvFelter[3]);
-
-                    List<String> yrkgrLvl1ider = new ArrayList<>();
-                    if (yrkgrLvl2ider != null) {
-                        yrkgrLvl2ider.forEach(yrkgrlvl2id -> yrkgrLvl1ider.addAll(yrkgrLvl2TilYrkgrLvl1Mapping.get(yrkgrlvl2id)));
-                    }
-
-                    if (yrkgrLvl1ider.size() == 0) {
-                        document.addField(header[5], "-2");
-                    } else {
-                        document.addField(header[5], yrkgrLvl1ider);
-                    }
-
-                    if (yrkgrLvl2ider == null || yrkgrLvl2ider.size() == 0) {
-                        document.addField(header[6], "-2");
-                    } else {
-                        document.addField(header[6], yrkgrLvl2ider);
-                    }
-
-                    documents.add(document);
+                if(teller % 1000 == 0) {
+                    oppdaterSolrIndex(solrClient, documents);
+                    documents = new ArrayList<>();
                 }
             }
             oppdaterSolrIndex(solrClient, documents);
@@ -125,6 +99,41 @@ public class IndekserSolr {
                 e.printStackTrace();
             }
         }
+    }
+
+    private Collection<SolrInputDocument> createDocuments(String[] header, String[] csvFelter, int antallArbeidsledige) {
+        Collection<SolrInputDocument> documents = new ArrayList<>();
+
+        for (int i = 0; i < antallArbeidsledige; i++) {
+            SolrInputDocument document = new SolrInputDocument();
+            document.addField(header[0], csvFelter[0]);
+            document.addField(header[1], csvFelter[1]);
+            document.addField(header[2], csvFelter[2]);
+            document.addField(header[3], csvFelter[3]);
+            document.addField(header[4], csvFelter[4]);
+
+            List<String> yrkgrLvl2ider = strukturkodeTilYrkgrLvl2Mapping.get(csvFelter[3]);
+
+            List<String> yrkgrLvl1ider = new ArrayList<>();
+            if (yrkgrLvl2ider != null) {
+                yrkgrLvl2ider.forEach(yrkgrlvl2id -> yrkgrLvl1ider.addAll(yrkgrLvl2TilYrkgrLvl1Mapping.get(yrkgrlvl2id)));
+            }
+
+            if (yrkgrLvl1ider.size() == 0) {
+                document.addField(header[5], "-2");
+            } else {
+                document.addField(header[5], yrkgrLvl1ider);
+            }
+
+            if (yrkgrLvl2ider == null || yrkgrLvl2ider.size() == 0) {
+                document.addField(header[6], "-2");
+            } else {
+                document.addField(header[6], yrkgrLvl2ider);
+            }
+
+            documents.add(document);
+        }
+        return documents;
     }
 
     private void slettSolrIndex(SolrClient solrServer) {
