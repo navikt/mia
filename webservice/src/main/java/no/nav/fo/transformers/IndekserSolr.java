@@ -1,6 +1,10 @@
 package no.nav.fo.transformers;
 
 import no.nav.fo.consumer.endpoints.SupportEndpoint;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -26,11 +30,23 @@ public class IndekserSolr {
     private SolrClient arbeidsledighetCore, ledigeStillingerCore;
 
     public IndekserSolr() {
-        String arbeidsledigecoreUri = System.getProperty("miasolr.solr.arbeidsledigecore.url");
-        String ledigestillingercoreUri = System.getProperty("miasolr.solr.ledigestillingercore.url");
+        String uri = System.getProperty("miasolr.solr.url") + "/internal/masternode";
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet(uri);
+        try {
+            HttpResponse response = httpClient.execute(request);
 
-        arbeidsledighetCore = new HttpSolrClient.Builder().withBaseSolrUrl(arbeidsledigecoreUri).build();
-        ledigeStillingerCore = new HttpSolrClient.Builder().withBaseSolrUrl(ledigestillingercoreUri).build();
+            BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            String result = br.readLine();
+
+            String arbeidsledigecoreUri = result + "/arbeidsledigecore";
+            String ledigestillingercoreUri = result + "/ledigestillingercore";
+
+            arbeidsledighetCore = new HttpSolrClient.Builder().withBaseSolrUrl(arbeidsledigecoreUri).build();
+            ledigeStillingerCore = new HttpSolrClient.Builder().withBaseSolrUrl(ledigestillingercoreUri).build();
+        } catch (IOException e) {
+            logger.error("Feil ved henting av masternode fra solr", e.getCause());
+        }
     }
 
     public void lesOgSkrivArbeidsledige(InputStream inputStream) {
