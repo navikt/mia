@@ -76,7 +76,7 @@ class Oversiktskart extends React.Component {
 
     fjernSelectedFraFylker() {
         this.refs.fylker.leafletElement.getLayers().forEach(layer => {
-            layer.setStyle({fillOpacity: 0});
+            layer.setStyle(geojsonStyling);
         });
     }
 

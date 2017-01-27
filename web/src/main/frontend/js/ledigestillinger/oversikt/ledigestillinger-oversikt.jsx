@@ -8,6 +8,7 @@ import {hentStillinger, hentAntallStillingerForYrkesgruppe} from "../stillinger/
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
 import {apneModal} from "../../felles/modal/modal-reducer";
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
+import SwitcherKnapp from '../../felles/switcher/switcher-knapp';
 
 const meldinger = defineMessages({
     lenkeVisKart: {
@@ -34,6 +35,17 @@ export class Oversikt extends React.Component {
             this.resetValg();
         }
         this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
+    }
+
+    visKart() {
+        if(!this.props.visKart) {
+            this.resetValg();
+            this.props.dispatch({ type: actions.vis_kart });
+        }
+    }
+
+    visTabell() {
+        this.props.dispatch({ type: actions.vis_tabell });
     }
 
     apneModal(modalid) {
@@ -99,9 +111,20 @@ export class Oversikt extends React.Component {
         return (
             <div className="panel-oversikt">
                 {innhold}
-                <a href="#" role="button" className="oversikt-toggle" onClick={() => this.togglekart()}>
-                    <FormattedMessage {...(this.props.visKart ? meldinger.lenkeVisTabell : meldinger.lenkeVisKart)}/>
-                </a>
+                <div className="oversikt-toggle">
+                    <SwitcherKnapp
+                        id="switch_kart"
+                        aktiv={this.props.visKart}
+                        onClick={() => this.visKart()}
+                        tekst={<FormattedMessage {...meldinger.lenkeVisKart} />}
+                    />
+                    <SwitcherKnapp
+                        id="switch_tabell"
+                        aktiv={!this.props.visKart}
+                        onClick={() => this.visTabell()}
+                        tekst={<FormattedMessage {...meldinger.lenkeVisTabell} />}
+                    />
+                </div>
             </div>
         );
     }

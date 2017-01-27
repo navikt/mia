@@ -25,15 +25,15 @@ export default function teksterReducer(state = defaultstate, action) {
 }
 
 function leggCmsKeyPaaTekster(dispatch, visCmsKeys) {
-    return ({type, data}) => {
+    return ({type, payload}) => {
         if(visCmsKeys) {
             const meldinger = {};
-            Object.keys(data).forEach(key => {
-                meldinger[key] = `${data[key]} [${key}]`;
+            Object.keys(payload).forEach(key => {
+                meldinger[key] = `${payload[key]} [${key}]`;
             });
             return dispatch({type, payload: meldinger});
         }
-        return data;
+        return payload;
     };
 }
 
