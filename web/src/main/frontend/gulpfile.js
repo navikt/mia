@@ -45,6 +45,7 @@ gulp.task('clean', function (callback) {
     const del = require('del');
     return del([
         OUTPUT_DIRECTORY + 'js/',
+        './messages/js',
         OUTPUT_DIRECTORY + 'css/',
         OUTPUT_DIRECTORY + 'index.html'
     ], {'force': true}, callback);
