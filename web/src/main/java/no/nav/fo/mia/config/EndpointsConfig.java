@@ -37,9 +37,7 @@ public class EndpointsConfig {
 
     @Bean
     public static SupportMappingService supportMappingService() {
-        SupportMappingService supportMappingService = new SupportMappingService();
-        supportMappingService.createMapping();
-        return supportMappingService;
+        return new SupportMappingService();
     }
 
     @Bean

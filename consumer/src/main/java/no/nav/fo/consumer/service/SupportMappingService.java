@@ -4,6 +4,7 @@ import no.nav.fo.consumer.endpoints.SupportEndpoint;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ public class SupportMappingService {
     private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilStrukturkodeMapping;
     private Map<String, List<String>> yrkgrLvl2TilYrkgrLvl1Mapping;
 
+    @PostConstruct
     public void createMapping() {
         createStrukturkodeMappingForGeografi();
         createStrukturkodeMappingForYrkesgruppe();
