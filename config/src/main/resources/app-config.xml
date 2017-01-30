@@ -14,6 +14,7 @@
         <baseUrl mapToProperty="stillingsok.link" alias="stillingsok.link"/>
         <rest mapToProperty="miasolr.solr.ledigestillingercore" alias="miasolr.solr.ledigestillingercore"/>
         <rest mapToProperty="miasolr.solr.arbeidsledigecore" alias="miasolr.solr.arbeidsledigecore"/>
+        <rest mapToProperty="miasolr.solr" alias="miasolr.solr"/>
     </resources>
 
     <selftest>
