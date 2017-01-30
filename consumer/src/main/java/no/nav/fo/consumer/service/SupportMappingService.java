@@ -1,0 +1,114 @@
+package no.nav.fo.consumer.service;
+
+import no.nav.fo.consumer.endpoints.SupportEndpoint;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
+
+import javax.inject.Inject;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class SupportMappingService {
+
+    @Inject
+    SupportEndpoint supportEndpoint;
+
+    private Map<String, String> strukturkodeTilIdMapping, idTilStrukturkodeMapping;
+    private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilStrukturkodeMapping;
+    private Map<String, List<String>> yrkgrLvl2TilYrkgrLvl1Mapping;
+
+    public void createMapping() {
+        createStrukturkodeMappingForGeografi();
+        createStrukturkodeMappingForYrkesgruppe();
+        createYrkgrLvl1ForYrkgrLvl2Mapping();
+    }
+
+    public Map<String, String> getStrukturkodeTilIdMapping() {
+        return strukturkodeTilIdMapping;
+    }
+
+    public Map<String, String> getIdTilStrukturkodeMapping() {
+        return idTilStrukturkodeMapping;
+    }
+
+    public Map<String, List<String>> getStrukturkodeTilYrkgrLvl2Mapping() {
+        return strukturkodeTilYrkgrLvl2Mapping;
+    }
+
+    public Map<String, List<String>> getYrkgrLvl2TilYrkgrLvl1Mapping() {
+        return yrkgrLvl2TilYrkgrLvl1Mapping;
+    }
+
+    private void createStrukturkodeMappingForGeografi() {
+        strukturkodeTilIdMapping = new HashMap<>();
+        idTilStrukturkodeMapping = new HashMap<>();
+        QueryResponse resp = supportEndpoint.getFylkerOgKommunerFraSolr();
+
+        SolrDocumentList results = resp.getResults();
+
+        results.forEach(document -> {
+            String id = (String) document.getFieldValue("ID");
+            String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
+            if (strukturkode != null) {
+                strukturkode = strukturkode.replace("NO", "");
+
+                if (strukturkode.contains(".")) {
+                    strukturkode = strukturkode.split("\\.")[1];
+                }
+                idTilStrukturkodeMapping.put(id, strukturkode);
+                strukturkodeTilIdMapping.put(strukturkode, id);
+            }
+        });
+    }
+
+    private void createStrukturkodeMappingForYrkesgruppe() {
+        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
+        yrkgrLvl2TilStrukturkodeMapping = new HashMap<>();
+        QueryResponse resp = supportEndpoint.getStillingstyperFraSolr();
+
+        SolrDocumentList results = resp.getResults();
+
+        results.forEach(document -> {
+            List<String> yrkgrLvl2IdListe = new ArrayList<>();
+
+            Collection<Object> parents = document.getFieldValues("PARENT");
+            if (parents != null) {
+                yrkgrLvl2IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
+            }
+            String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
+            if (strukturkode != null) {
+                strukturkodeTilYrkgrLvl2Mapping.put(strukturkode, yrkgrLvl2IdListe);
+
+                for (String id : yrkgrLvl2IdListe) {
+                    if (yrkgrLvl2TilStrukturkodeMapping.containsKey(id)) {
+                        List<String> p = yrkgrLvl2TilStrukturkodeMapping.get(id);
+                        p.add(strukturkode);
+                    } else {
+                        List<String> strukturkodeListe = new ArrayList<>();
+                        strukturkodeListe.add(strukturkode);
+                        yrkgrLvl2TilStrukturkodeMapping.put(id, strukturkodeListe);
+                    }
+                }
+            }
+        });
+    }
+
+    private void createYrkgrLvl1ForYrkgrLvl2Mapping() {
+        yrkgrLvl2TilYrkgrLvl1Mapping = new HashMap<>();
+
+        yrkgrLvl2TilStrukturkodeMapping.keySet().forEach(lvl2 -> {
+            QueryResponse response = supportEndpoint.getYrkgrLvl1IdFraSolr(lvl2);
+
+            SolrDocumentList results = response.getResults();
+            if (results.size() > 0) {
+                Collection<Object> parents = results.get(0).getFieldValues("PARENT");
+
+                List<String> yrkgrLvl1IdListe = new ArrayList<>();
+                if (parents != null) {
+                    yrkgrLvl1IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
+                }
+                yrkgrLvl2TilYrkgrLvl1Mapping.put(lvl2, yrkgrLvl1IdListe);
+            }
+        });
+    }
+}
