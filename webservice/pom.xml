@@ -32,7 +32,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.impl.client</groupId>
+            <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
         <dependency>
