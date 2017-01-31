@@ -136,19 +136,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main</directory>
-                <excludes>
-                    <exclude>frontend/**</exclude>
-                </excludes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -167,7 +154,7 @@
                                 <argument>install</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -184,7 +171,7 @@
                                 <argument>buildProd</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -201,7 +188,7 @@
                                 <argument>eslint</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -217,7 +204,7 @@
                                 <argument>test</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>
