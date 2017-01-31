@@ -1,6 +1,6 @@
 package no.nav.fo.mia.internal.ressurser;
 
-import no.nav.fo.transformers.IndekserSolr;
+import no.nav.fo.solr.IndekserSolr;
 import no.nav.metrics.aspects.Timed;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class WebserviceRessurs {
     @Path("/arbeidsledigecore")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response indekserMiASolrArbeidsledighet(@FormDataParam("file") InputStream file) {
-        indekserSolr.lesOgSkrivArbeidsledige(file);
+        indekserSolr.lesArbeidsledighetCSV(file);
         return createRedirectResponse("Arbeidsledighet oppdatert!");
     }
 
@@ -35,7 +35,7 @@ public class WebserviceRessurs {
     @Path("/ledigestillingercore")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response indekserMiASolrLedigeStillinger(@FormDataParam("file") InputStream file) {
-        indekserSolr.lesOgSkrivLedigeStillinger(file);
+        indekserSolr.lesLedigeStillingerCSV(file);
         return createRedirectResponse("Ledige stillinger oppdatert!");
     }
 
