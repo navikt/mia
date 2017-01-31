@@ -44,13 +44,13 @@ public class LedighetsEndpoint {
 
         Timer timer = MetricsFactory.createTimer("LedighetsEndpoint.getArbeidsledighetForSisteTrettenMaaneder");
         timer.start();
-        Map<String, String> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesomrade, yrkesgrupper, fylkesnr, kommunenr);
+        Map<String, String> arbeidsledighetForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(arbeidsledighetSolrClient, yrkesomrade, yrkesgrupper, fylkesnr, kommunenr, true);
         timer.stop();
         timer.report();
 
         timer = MetricsFactory.createTimer("LedighetsEndpoint.getLedigeStillingerForSisteTrettenMaaneder");
         timer.start();
-        Map<String, String> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesomrade, yrkesgrupper, fylkesnr, kommunenr);
+        Map<String, String> ledigeStillingerForSisteTrettenMaaneder = getLedighetForSisteTrettenMaaneder(ledigestillingerSolrClient, yrkesomrade, yrkesgrupper, fylkesnr, kommunenr, false);
         timer.stop();
         timer.report();
 
@@ -61,7 +61,7 @@ public class LedighetsEndpoint {
         return resultat;
     }
 
-    private Map<String, String> getLedighetForSisteTrettenMaaneder(SolrClient client, String yrkesomrade, List<String> yrkesgrupper, List<String> fylkesnr, List<String> kommunenr) {
+    private Map<String, String> getLedighetForSisteTrettenMaaneder(SolrClient client, String yrkesomrade, List<String> yrkesgrupper, List<String> fylkesnr, List<String> kommunenr, boolean arbeidsledighet) {
         SolrQuery solrQuery = createSolrQueryForFiltreringsvalg(yrkesomrade, yrkesgrupper, fylkesnr, kommunenr);
 
         solrQuery.addFacetField("PERIODE");
@@ -70,7 +70,11 @@ public class LedighetsEndpoint {
             QueryResponse resp = client.query(solrQuery);
             Map<String, String> perioderMedAntall = new HashMap<>();
             resp.getFacetField("PERIODE").getValues()
-                    .forEach(periode -> perioderMedAntall.put(periode.getName(), erstattMindreEnn4MedStrek(periode.getCount())));
+                    .forEach(periode -> perioderMedAntall.put(periode.getName(),
+                            arbeidsledighet ?
+                                    erstattMindreEnn4MedStrek(periode.getCount()) :
+                                    Long.toString(periode.getCount()))
+                    );
 
             return perioderMedAntall;
         } catch (SolrServerException | IOException e) {

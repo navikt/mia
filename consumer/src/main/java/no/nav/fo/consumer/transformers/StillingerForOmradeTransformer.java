@@ -14,7 +14,7 @@ public class StillingerForOmradeTransformer {
         omrader.addAll(ledigeStillingerKommune);
 
         return omrader.stream()
-                .map(omrade -> new OmradeStilling(omrade.getName(), "0", (int)omrade.getCount()))
+                .map(omrade -> new OmradeStilling(omrade.getName(), "-", (int)omrade.getCount()))
                 .collect(Collectors.toList());
     }
 

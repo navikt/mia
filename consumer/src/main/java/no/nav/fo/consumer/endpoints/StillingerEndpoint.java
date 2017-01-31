@@ -82,7 +82,7 @@ public class StillingerEndpoint {
     }
 
     private String getAntallArbeidsledige(String id, Map<String, String> arbeidsledighet) {
-        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : "0";
+        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : "-";
     }
 
     @Timed
