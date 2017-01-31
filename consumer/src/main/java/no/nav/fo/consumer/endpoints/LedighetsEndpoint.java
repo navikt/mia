@@ -1,5 +1,6 @@
 package no.nav.fo.consumer.endpoints;
 
+import no.nav.fo.consumer.service.SupportMappingService;
 import no.nav.metrics.MetricsFactory;
 import no.nav.metrics.Timer;
 import no.nav.metrics.aspects.Timed;
@@ -23,7 +24,7 @@ import static java.util.stream.Collectors.toList;
 public class LedighetsEndpoint {
 
     @Inject
-    SupportEndpoint supportEndpointUtils;
+    SupportMappingService supportMappingService;
 
     private SolrClient arbeidsledighetSolrClient, ledigestillingerSolrClient;
     private Logger logger = LoggerFactory.getLogger(StillingerEndpoint.class);
@@ -36,7 +37,7 @@ public class LedighetsEndpoint {
     }
 
     public Map<String, Map<String, Integer>> getLedighetForSisteTrettenMaaneder(String yrkesomrade, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
-        Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
+        Map<String, String> idTilStrukturKode = supportMappingService.getIdTilStrukturkodeMapping();
 
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
         List<String> kommunenr = kommuner.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
@@ -105,8 +106,8 @@ public class LedighetsEndpoint {
 
     @Timed
     Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
-        Map<String, String> idTilStrukturKode = supportEndpointUtils.getIdTilStrukturkodeMapping();
-        Map<String, String> strukturkodeTilIdMapping = supportEndpointUtils.getStrukturkodeTilIdMapping();
+        Map<String, String> idTilStrukturKode = supportMappingService.getIdTilStrukturkodeMapping();
+        Map<String, String> strukturkodeTilIdMapping = supportMappingService.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
         List<String> kommunenr = new ArrayList<>();
 

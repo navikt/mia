@@ -8,126 +8,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
 
 public class SupportEndpoint {
 
-    private SolrClient supportSolrClient;
-    private Map<String, String> strukturkodeTilIdMapping, idTilStrukturkodeMapping;
-    private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilStrukturkodeMapping;
-    private Map<String, List<String>> yrkgrLvl2TilYrkgrLvl1Mapping;
+    @Inject
+    SolrClient supportSolrClient;
+
     private Logger logger = LoggerFactory.getLogger(SupportEndpoint.class);
 
-    public SupportEndpoint() {
-        String supportCoreUri = String.format("%s/supportcore", System.getProperty("stilling.solr.url"));
-        supportSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(supportCoreUri).build();
-        createStrukturkodeMappingForGeografi();
-        createStrukturkodeMappingForYrkesgruppe();
-        createYrkgrLvl1ForYrkgrLvl2Mapping();
-    }
-
-    Map<String, String> getStrukturkodeTilIdMapping() {
-        return strukturkodeTilIdMapping;
-    }
-
-    Map<String, String> getIdTilStrukturkodeMapping() {
-        return idTilStrukturkodeMapping;
-    }
-
-    public Map<String, List<String>> getStrukturkodeTilYrkgrLvl2Mapping() {
-        return strukturkodeTilYrkgrLvl2Mapping;
-    }
-
-    public Map<String, List<String>> getYrkgrLvl2TilYrkgrLvl1Mapping() {
-        return yrkgrLvl2TilYrkgrLvl1Mapping;
-    }
-
-    private void createStrukturkodeMappingForGeografi() {
-        strukturkodeTilIdMapping = new HashMap<>();
-        idTilStrukturkodeMapping = new HashMap<>();
-        QueryResponse resp = getFylkerOgKommunerFraSolr();
-
-        SolrDocumentList results = resp.getResults();
-
-        results.forEach(document -> {
-            String id = (String) document.getFieldValue("ID");
-            String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
-            if (strukturkode != null) {
-                strukturkode = strukturkode.replace("NO", "");
-
-                if (strukturkode.contains(".")) {
-                    strukturkode = strukturkode.split("\\.")[1];
-                }
-                idTilStrukturkodeMapping.put(id, strukturkode);
-                strukturkodeTilIdMapping.put(strukturkode, id);
-            }
-        });
-    }
-
-    private void createStrukturkodeMappingForYrkesgruppe() {
-        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
-        yrkgrLvl2TilStrukturkodeMapping = new HashMap<>();
-        QueryResponse resp = getStillingstyperFraSolr();
-
-        SolrDocumentList results = resp.getResults();
-
-        results.forEach(document -> {
-            List<String> yrkgrLvl2IdListe = new ArrayList<>();
-
-            Collection<Object> parents = document.getFieldValues("PARENT");
-            if (parents != null) {
-                yrkgrLvl2IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
-            }
-            String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
-            if (strukturkode != null) {
-                strukturkodeTilYrkgrLvl2Mapping.put(strukturkode, yrkgrLvl2IdListe);
-
-                for (String id : yrkgrLvl2IdListe) {
-                    if (yrkgrLvl2TilStrukturkodeMapping.containsKey(id)) {
-                        List<String> p = yrkgrLvl2TilStrukturkodeMapping.get(id);
-                        p.add(strukturkode);
-                    } else {
-                        List<String> strukturkodeListe = new ArrayList<>();
-                        strukturkodeListe.add(strukturkode);
-                        yrkgrLvl2TilStrukturkodeMapping.put(id, strukturkodeListe);
-                    }
-                }
-            }
-        });
-    }
-
-    private void createYrkgrLvl1ForYrkgrLvl2Mapping() {
-        yrkgrLvl2TilYrkgrLvl1Mapping = new HashMap<>();
-
-        yrkgrLvl2TilStrukturkodeMapping.keySet().forEach(lvl2 -> {
-            QueryResponse response = getYrkgrLvl1IdFraSolr(lvl2);
-
-            SolrDocumentList results = response.getResults();
-            if (results.size() > 0) {
-                Collection<Object> parents = results.get(0).getFieldValues("PARENT");
-
-                List<String> yrkgrLvl1IdListe = new ArrayList<>();
-                if (parents != null) {
-                    yrkgrLvl1IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
-                }
-                yrkgrLvl2TilYrkgrLvl1Mapping.put(lvl2, yrkgrLvl1IdListe);
-            }
-        });
-    }
-
-    private QueryResponse getYrkgrLvl1IdFraSolr(String yrkgrLvl2Id) {
+    public QueryResponse getYrkgrLvl1IdFraSolr(String yrkgrLvl2Id) {
         SolrQuery query = new SolrQuery("*:*");
         query.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
         query.addFilterQuery("ID:" + yrkgrLvl2Id);
@@ -142,7 +41,7 @@ public class SupportEndpoint {
     }
 
 
-    private QueryResponse getStillingstyperFraSolr() {
+    public QueryResponse getStillingstyperFraSolr() {
         SolrQuery query = new SolrQuery("*:*");
         query.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
         query.setRows(10000);
@@ -162,7 +61,7 @@ public class SupportEndpoint {
         return GeografiTransformer.transformResponseToFylkerOgKommuner(resp.getResults());
     }
 
-    private QueryResponse getFylkerOgKommunerFraSolr() {
+    public QueryResponse getFylkerOgKommunerFraSolr() {
         SolrQuery query = new SolrQuery("NIVAA:[2 TO 3]");
         query.addFilterQuery("DOKUMENTTYPE:GEOGRAFI");
         query.setRows(1000);
