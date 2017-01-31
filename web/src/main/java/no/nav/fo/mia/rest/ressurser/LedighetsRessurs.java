@@ -23,13 +23,13 @@ public class LedighetsRessurs {
 
     @GET
     @Path("/statistikk")
-    public Map<String, Map<String, Integer>> hentLedighetForSisteTrettenMaaneder(@BeanParam LedighetsRessurs.FiltreringParams filtrering) {
+    public Map<String, Map<String, String>> hentLedighetForSisteTrettenMaaneder(@BeanParam LedighetsRessurs.FiltreringParams filtrering) {
         return ledighetsEndpoint.getLedighetForSisteTrettenMaaneder(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
     }
 
     @GET
     @Path("/allefylker")
-    public Map<String, Integer> hentLedighetForAlleFylker() {
+    public Map<String, String> hentLedighetForAlleFylker() {
         return ledighetsEndpoint.getLedighetForAlleFylker();
     }
 

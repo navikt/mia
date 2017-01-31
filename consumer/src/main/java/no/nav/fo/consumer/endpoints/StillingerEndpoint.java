@@ -75,14 +75,14 @@ public class StillingerEndpoint {
         return responses;
     }
 
-    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste, Map<String, Integer> arbeidsledighet) {
+    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste, Map<String, String> arbeidsledighet) {
         return liste.keySet().stream()
                 .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues(), getAntallArbeidsledige(id, arbeidsledighet)))
                 .collect(toList());
     }
 
-    private int getAntallArbeidsledige(String id, Map<String, Integer> arbeidsledighet) {
-        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : 0;
+    private String getAntallArbeidsledige(String id, Map<String, String> arbeidsledighet) {
+        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : "0";
     }
 
     @Timed
@@ -157,7 +157,7 @@ public class StillingerEndpoint {
 
         Map<String, QueryResponse> responser = queryForKommuner(kommuner, filter);
 
-        Map<String, Integer> ledighetForOmrade = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner);
+        Map<String, String> ledighetForOmrade = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner);
 
         return getAntallStillingerForKommuner(responser, ledighetForOmrade);
     }

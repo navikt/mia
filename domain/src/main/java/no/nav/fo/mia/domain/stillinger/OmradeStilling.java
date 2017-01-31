@@ -2,7 +2,7 @@ package no.nav.fo.mia.domain.stillinger;
 
 public class OmradeStilling {
     private String id;
-    private int antallLedige;
+    private String antallLedige;
     private int antallStillinger;
 
     public OmradeStilling() {
@@ -12,7 +12,7 @@ public class OmradeStilling {
         this.id = id;
     }
 
-    public OmradeStilling(String id, int antallLedige, int antallStillinger) {
+    public OmradeStilling(String id, String antallLedige, int antallStillinger) {
         this.id = id;
         this.antallLedige = antallLedige;
         this.antallStillinger = antallStillinger;
@@ -31,15 +31,15 @@ public class OmradeStilling {
         return this;
     }
 
-    public int getAntallLedige() {
+    public String getAntallLedige() {
         return antallLedige;
     }
 
-    public void setAntallLedige(int antallLedige) {
+    public void setAntallLedige(String antallLedige) {
         this.antallLedige = antallLedige;
     }
 
-    public OmradeStilling withAntallLedige(int antallLedige) {
+    public OmradeStilling withAntallLedige(String antallLedige) {
         setAntallLedige(antallLedige);
         return this;
     }

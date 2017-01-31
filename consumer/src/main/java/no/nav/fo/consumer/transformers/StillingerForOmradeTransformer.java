@@ -14,11 +14,11 @@ public class StillingerForOmradeTransformer {
         omrader.addAll(ledigeStillingerKommune);
 
         return omrader.stream()
-                .map(omrade -> new OmradeStilling(omrade.getName(), 0, (int)omrade.getCount()))
+                .map(omrade -> new OmradeStilling(omrade.getName(), "0", (int)omrade.getCount()))
                 .collect(Collectors.toList());
     }
 
-    public static OmradeStilling getOmradeStillingForKommuner(String navn, List<FacetField.Count> antallStillingerPerStillingsannonseForKommune, int antallArbeidsledigeForKommune) {
+    public static OmradeStilling getOmradeStillingForKommuner(String navn, List<FacetField.Count> antallStillingerPerStillingsannonseForKommune, String antallArbeidsledigeForKommune) {
        int antallStillinger = 0;
         for (FacetField.Count count : antallStillingerPerStillingsannonseForKommune) {
             if (count.getName() == null) {
