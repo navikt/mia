@@ -3,6 +3,9 @@ package no.nav.fo.mia.rest.ressurser;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import no.nav.sbl.tekster.TeksterAPI;
+import no.nav.sbl.tekster.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
@@ -23,12 +26,15 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 @Timed
 public class TeksterRessurs {
+    private final Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
+
     @Inject
     TeksterAPI teksterApi;
 
     @GET
-    public ResourceBundle hentTekster(@QueryParam("lang") String lang) {
-        return teksterApi.hentTekster(lang);
+    public Properties hentTekster(@QueryParam("lang") String lang) {
+        logger.info("Henter tekster fra disk");
+        return Utils.convertResourceBundleToProperties(teksterApi.hentTekster(lang));
     }
 
 }
