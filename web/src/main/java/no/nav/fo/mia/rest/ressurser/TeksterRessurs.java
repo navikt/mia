@@ -1,7 +1,6 @@
 package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.metrics.aspects.Timed;
-import no.nav.modig.core.exception.ApplicationException;
 import no.nav.sbl.tekster.TeksterAPI;
 import no.nav.sbl.tekster.Utils;
 import org.slf4j.Logger;
@@ -14,10 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
