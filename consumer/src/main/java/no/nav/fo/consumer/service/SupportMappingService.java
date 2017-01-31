@@ -2,6 +2,7 @@ package no.nav.fo.consumer.service;
 
 import no.nav.fo.consumer.endpoints.SupportEndpoint;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
 import javax.annotation.PostConstruct;
@@ -64,35 +65,44 @@ public class SupportMappingService {
     }
 
     private void createStrukturkodeMappingForYrkesgruppe() {
-        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
         yrkgrLvl2TilStrukturkodeMapping = new HashMap<>();
         QueryResponse resp = supportEndpoint.getStillingstyperFraSolr();
 
         SolrDocumentList results = resp.getResults();
 
         results.forEach(document -> {
-            List<String> yrkgrLvl2IdListe = new ArrayList<>();
-
-            Collection<Object> parents = document.getFieldValues("PARENT");
-            if (parents != null) {
-                yrkgrLvl2IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
-            }
+            List<String> yrkgrLvl2IdListe = addParentIdToList(document);
             String strukturkode = (String) document.getFieldValue("STRUKTURKODE");
             if (strukturkode != null) {
-                strukturkodeTilYrkgrLvl2Mapping.put(strukturkode, yrkgrLvl2IdListe);
-
-                for (String id : yrkgrLvl2IdListe) {
-                    if (yrkgrLvl2TilStrukturkodeMapping.containsKey(id)) {
-                        List<String> p = yrkgrLvl2TilStrukturkodeMapping.get(id);
-                        p.add(strukturkode);
-                    } else {
-                        List<String> strukturkodeListe = new ArrayList<>();
-                        strukturkodeListe.add(strukturkode);
-                        yrkgrLvl2TilStrukturkodeMapping.put(id, strukturkodeListe);
-                    }
-                }
+                addStrukturkodeToList(yrkgrLvl2IdListe, strukturkode);
             }
         });
+    }
+
+    private void addStrukturkodeToList(List<String> yrkgrLvl2IdListe, String strukturkode) {
+        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
+        strukturkodeTilYrkgrLvl2Mapping.put(strukturkode, yrkgrLvl2IdListe);
+
+        for (String id : yrkgrLvl2IdListe) {
+            if (yrkgrLvl2TilStrukturkodeMapping.containsKey(id)) {
+                List<String> p = yrkgrLvl2TilStrukturkodeMapping.get(id);
+                p.add(strukturkode);
+            } else {
+                List<String> strukturkodeListe = new ArrayList<>();
+                strukturkodeListe.add(strukturkode);
+                yrkgrLvl2TilStrukturkodeMapping.put(id, strukturkodeListe);
+            }
+        }
+    }
+
+    private List<String> addParentIdToList(SolrDocument document) {
+        List<String> yrkgrLvl2IdListe = new ArrayList<>();
+
+        Collection<Object> parents = document.getFieldValues("PARENT");
+        if (parents != null) {
+            yrkgrLvl2IdListe.addAll(parents.stream().map(Object::toString).collect(Collectors.toList()));
+        }
+        return yrkgrLvl2IdListe;
     }
 
     private void createYrkgrLvl1ForYrkgrLvl2Mapping() {
