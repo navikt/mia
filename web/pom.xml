@@ -29,6 +29,10 @@
             <groupId>no.nav</groupId>
             <artifactId>metrics</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.sbl</groupId>
+            <artifactId>utave</artifactId>
+        </dependency>
 
         <!-- JERSEY-->
         <dependency>
@@ -38,12 +42,10 @@
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-spring3</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
@@ -106,10 +108,6 @@
             <artifactId>common-types</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.modig</groupId>
-            <artifactId>modig-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
@@ -138,19 +136,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/frontend/</directory>
-                <excludes>
-                    <exclude>**/node_modules/**</exclude>
-                </excludes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -169,7 +154,7 @@
                                 <argument>install</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -186,7 +171,7 @@
                                 <argument>buildProd</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -203,7 +188,7 @@
                                 <argument>eslint</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -219,7 +204,7 @@
                                 <argument>test</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
-                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>

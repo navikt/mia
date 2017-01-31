@@ -2,15 +2,22 @@ package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
+import no.nav.sbl.tekster.TeksterAPI;
+import no.nav.sbl.tekster.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -19,23 +26,15 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 @Timed
 public class TeksterRessurs {
-    private static Properties innebygdeLedetekster = new Properties();
+    private final Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
 
-    static {
-        lastInnebygdeLedetekster();
-    }
+    @Inject
+    TeksterAPI teksterApi;
 
     @GET
-    public Properties hentTekster() {
-        return innebygdeLedetekster;
+    public Properties hentTekster(@QueryParam("lang") String lang) {
+        logger.info("Henter tekster fra disk");
+        return Utils.convertResourceBundleToProperties(teksterApi.hentTekster(lang));
     }
 
-    private static void lastInnebygdeLedetekster() {
-        String path = "/messages/mia_nb.properties";
-        try {
-            innebygdeLedetekster.load(new InputStreamReader(TeksterRessurs.class.getResourceAsStream(path), "UTF-8"));
-        } catch (IOException e) {
-            throw new ApplicationException("Klarte ikke hente tekster fra fil: " + path, e);
-        }
-    }
 }

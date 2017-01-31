@@ -5,7 +5,7 @@ import org.springframework.context.annotation.*;
 @EnableAspectJAutoProxy
 @Configuration
 @Import({
-        EnvironmentPropertiesConfig.class,
+        ContentConfig.class,
         EndpointsConfig.class,
         MetricsConfig.class,
         CacheConfig.class

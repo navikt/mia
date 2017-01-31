@@ -15,6 +15,7 @@
         <rest mapToProperty="miasolr.solr.ledigestillingercore" alias="miasolr.solr.ledigestillingercore"/>
         <rest mapToProperty="miasolr.solr.arbeidsledigecore" alias="miasolr.solr.arbeidsledigecore"/>
         <rest mapToProperty="miasolr.solr" alias="miasolr.solr"/>
+        <fileLibrary alias="mia.ledetekster" mapToProperty="folder.ledetekster" />
     </resources>
 
     <selftest>
