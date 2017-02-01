@@ -8,16 +8,14 @@ import java.util.List;
 public class StillingerForOmradeTransformer {
 
     public static int getAntallStillingerFraQuery(QueryResponse queryResponse) {
-       int antallStillinger = 0;
-       List<FacetField.Count> counts = queryResponse.getFacetField("ANTALLSTILLINGER").getValues();
-        for (FacetField.Count count : counts) {
-            if (count.getName() == null) {
-                antallStillinger += count.getCount();
-            } else {
-                antallStillinger += Integer.parseInt(count.getName()) * count.getCount();
-            }
-        }
+        List<FacetField.Count> counts = queryResponse.getFacetField("ANTALLSTILLINGER").getValues();
+        return counts.stream()
+                .map(StillingerForOmradeTransformer::getAntallForFacet)
+                .mapToInt(Long::intValue)
+                .sum();
+    }
 
-        return antallStillinger;
+    private static Long getAntallForFacet(FacetField.Count count) {
+        return count.getName() == null ? count.getCount() : Integer.parseInt(count.getName()) * count.getCount();
     }
 }
