@@ -20,8 +20,12 @@ export class Oversiktspanel extends React.Component {
     render() {
         const props = this.props;
         const valgteFylker = props.omrader.filter(omrade => props.valgteFylker.includes(omrade.id)) || [];
+
+        const harKommuneSomErValgt = fylke => fylke.underomrader.some(kommune => props.valgteKommuner.includes(kommune.id));
+        const fylkeErAlleredeLagtTil = fylke => valgteFylker.some(f => fylke.id === f.id);
+
         const fylkerSomSkalVises = valgteFylker.concat(
-            props.omrader.filter(fylke => !valgteFylker.includes(fylke.id) && fylke.underomrader.some(kommune => props.valgteKommuner.includes(kommune.id)))
+            props.omrader.filter(fylke => !fylkeErAlleredeLagtTil(fylke) && harKommuneSomErValgt(fylke))
         );
 
         const modalId = "velgKommunerOgFylker";
