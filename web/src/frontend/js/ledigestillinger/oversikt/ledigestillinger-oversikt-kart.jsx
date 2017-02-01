@@ -47,7 +47,10 @@ class Oversiktskart extends React.Component {
         this.refs.map.leafletElement.removeControl(this.landvisningControl);
         this.props.resetValg();
         this.fjernSelectedFraFylker();
+        this.resetKommuner();
+    }
 
+    resetKommuner() {
         this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
             layer.feature.properties.valgt = false;
             layer.setStyle(geojsonStyling);
@@ -59,6 +62,7 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.setStyle({ opacity: 0.3 });
         this.refs.kommuner.leafletElement.bringToFront();
         this.refs.map.leafletElement.addControl(this.landvisningControl);
+        this.resetKommuner();
     }
 
     valgteKommuner() {
