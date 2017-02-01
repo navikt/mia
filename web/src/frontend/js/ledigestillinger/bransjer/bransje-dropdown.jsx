@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
+import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 
 const meldinger = defineMessages({
     velgstillingskategori: {
@@ -10,6 +11,14 @@ const meldinger = defineMessages({
     alternativAlle: {
         id: 'ledigestillinger.bransjer.alle',
         defaultMessage: 'Alle ({antall})'
+    },
+    hjelpetekstTittel: {
+        id: 'ledigestillinger.bransjer.hjelpetekst.tittel',
+        defaultMessage: 'Stillingskatergorier og arbeidsområder'
+    },
+    hjelpetekstTekst: {
+        id: 'ledigestillinger.bransjer.hjelpetekst.innhold',
+        defaultMessage: 'Valgte stillingskategorier og arbeidsområder vil danne grunnlag for statistikken som vises på siden.'
     }
 });
 
@@ -23,9 +32,17 @@ export const BransjeDropdown = (props) => {
 
     return(
         <div className="bransjevalg blokk-s">
-            <label htmlFor="select-bransje">
-                <FormattedMessage {...meldinger.velgstillingskategori} />
-            </label>
+            <div className="hjelpetekst-nedover">
+                <label htmlFor="select-bransje">
+                    <FormattedMessage {...meldinger.velgstillingskategori} />
+                </label>
+                <Hjelpetekst
+                    id="bransje-hjelpetekst"
+                    tittel={<FormattedMessage {...meldinger.hjelpetekstTittel}/>}
+                    tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
+                    inline={true}
+                />
+            </div>
             <div className="select-container input-fullbredde">
                 <select id="select-bransje" value={props.yrkesomrade}
                         onChange={e => props.onClick(e.target.value)}>

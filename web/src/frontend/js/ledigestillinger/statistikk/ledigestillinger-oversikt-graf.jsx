@@ -1,18 +1,27 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import LinjeGraf from '../../felles/graf/linje-graf';
+import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 
-const grafTekster = defineMessages({
+const tekster = defineMessages({
     tabellOverskrift: {
         id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
         defaultMessage: 'Ledighet siste 12 måneder'
+    },
+    hjelpetekstTittel: {
+        id: 'ledigestillinger.graf.hjelpetekst.tittel',
+        defaultMessage: 'Historikk over arbeidsledige og ledigestillinger'
+    },
+    hjelpetekstTekst: {
+        id: 'ledigestillinger.graf.hjelpetekst.innhold',
+        defaultMessage: 'Grafen viser oversikt over antallet arbeidsledige og ledige stillinger siste 13 måneder. Grafen tar hensyn til valgte yrker og områder.'
     }
 });
 
 const LedigestillingerOversiktGraf = ({ tabell }) => {
     const grafData = {
         id: 'arbeidsledighet-graf',
-        tabellOverskrift: grafTekster.tabellOverskrift,
+        tabellOverskrift: tekster.tabellOverskrift,
         tabell,
         periodetype: "Måned",
         yEnhet: '',
@@ -21,7 +30,17 @@ const LedigestillingerOversiktGraf = ({ tabell }) => {
 
     return (
         <div className="ledigestillinger-oversikt-graf">
-            <h2><FormattedMessage {...grafTekster.tabellOverskrift} /></h2>
+            <div className="blokk-s hjelpetekst-overskrift">
+                <h2 className="typo-innholdstittel">
+                    <FormattedMessage {...tekster.tabellOverskrift} />
+                </h2>
+                <Hjelpetekst
+                    id="graf-hjelpetekst"
+                    tittel={<FormattedMessage {...tekster.hjelpetekstTittel}/>}
+                    tekst={<FormattedMessage {...tekster.hjelpetekstTekst}/>}
+                    inline={true}
+                />
+            </div>
             <LinjeGraf {...grafData} />
         </div>
     );

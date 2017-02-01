@@ -13,3 +13,35 @@
 .spinner {
     margin: 1rem auto;
 }
+
+.hjelpetekst-overskrift .hjelpetekst {
+    top: 12px;
+}
+
+@media (min-width: @screen-large) {
+    .hjelpetekst-nedover {
+        .hjelpetekst-tooltip {
+            top: 40px;
+            bottom: auto;
+        }
+        .hjelpetekst-tooltip:before {
+            top: -20px;
+            border-color: transparent;
+            border-bottom-color: @tooltip-background-color;
+        }
+    }
+
+    .hjelpetekst-hoyre {
+        .hjelpetekst-tooltip {
+            top: -15px;
+            left: 60px;
+            bottom: auto;
+        }
+        .hjelpetekst-tooltip:before {
+            top: 15px;
+            left: -20px;
+            border-color: transparent;
+            border-right-color: @tooltip-background-color;
+        }
+    }
+}

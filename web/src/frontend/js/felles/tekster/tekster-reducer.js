@@ -41,7 +41,7 @@ export function lastTekster(visCmsKeys) {
     return function (dispatch) {
         dispatch({type: LASTER_TEKSTER});
 
-        return fetchToJson('/tekster?lang=nb_NO')
+        return fetchToJson('/tekster?lang=nb')
             .then(sendResultatTilDispatch(dispatch, LASTET_TEKSTER))
             .then(leggCmsKeyPaaTekster(dispatch, visCmsKeys))
             .catch(handterFeil(dispatch, FEIL_TEKSTER));
