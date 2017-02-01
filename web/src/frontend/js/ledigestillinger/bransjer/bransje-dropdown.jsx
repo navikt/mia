@@ -33,7 +33,7 @@ export const BransjeDropdown = (props) => {
     return(
         <div className="bransjevalg blokk-s">
             <div className="hjelpetekst-nedover">
-                <label className="inline" htmlFor="select-bransje">
+                <label htmlFor="select-bransje">
                     <FormattedMessage {...meldinger.velgstillingskategori} />
                 </label>
                 <Hjelpetekst
