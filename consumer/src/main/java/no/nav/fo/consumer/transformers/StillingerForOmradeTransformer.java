@@ -1,33 +1,21 @@
 package no.nav.fo.consumer.transformers;
 
-import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.QueryResponse;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StillingerForOmradeTransformer {
-    static List<OmradeStilling> getStillingerForKommuner(List<FacetField.Count> ledigeStillingerKommune, List<FacetField.Count> ledigeStillingerFylke) {
-        List<FacetField.Count> omrader = new ArrayList<>();
-        omrader.addAll(ledigeStillingerFylke);
-        omrader.addAll(ledigeStillingerKommune);
 
-        return omrader.stream()
-                .map(omrade -> new OmradeStilling(omrade.getName(), 0, (int)omrade.getCount()))
-                .collect(Collectors.toList());
+    public static int getAntallStillingerFraQuery(QueryResponse queryResponse) {
+        List<FacetField.Count> counts = queryResponse.getFacetField("ANTALLSTILLINGER").getValues();
+        return counts.stream()
+                .map(StillingerForOmradeTransformer::getAntallForFacet)
+                .mapToInt(Long::intValue)
+                .sum();
     }
 
-    public static OmradeStilling getOmradeStillingForKommuner(String navn, List<FacetField.Count> antallStillingerPerStillingsannonseForKommune, int antallArbeidsledigeForKommune) {
-       int antallStillinger = 0;
-        for (FacetField.Count count : antallStillingerPerStillingsannonseForKommune) {
-            if (count.getName() == null) {
-                antallStillinger += count.getCount();
-            } else {
-                antallStillinger += Integer.parseInt(count.getName()) * count.getCount();
-            }
-        }
-
-        return new OmradeStilling(navn, antallArbeidsledigeForKommune, antallStillinger);
+    private static Long getAntallForFacet(FacetField.Count count) {
+        return count.getName() == null ? count.getCount() : Integer.parseInt(count.getName()) * count.getCount();
     }
 }

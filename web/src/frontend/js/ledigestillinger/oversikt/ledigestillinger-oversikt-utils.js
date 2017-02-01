@@ -8,7 +8,7 @@ export function getKommuneMedData(kommune, stillinger) {
     return {
         navn: kommune.navn,
         id: kommune.id,
-        antallLedige: stillingdata.antallLedige || 0,
+        antallLedige: stillingdata.antallLedige,
         antallStillinger: stillingdata.antallStillinger || 0
     };
 }

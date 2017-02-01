@@ -9,7 +9,7 @@ const meldinger = defineMessages({
     },
     tabellOverskriftLedige: {
         id: 'ledigestillinger.oversikt.tabell.overskriftledige',
-        defaultMessage: 'Arbeidsledige ({antall, number})'
+        defaultMessage: 'Arbeidsledige ({antall})'
     },
     tabellOverskriftStillinger: {
         id: 'ledigestillinger.oversikt.tabell.overskriftstillinger',
@@ -20,13 +20,15 @@ const meldinger = defineMessages({
 export const KommuneTabellRad = props => (
     <tr key={props.kommune.kommunenummer}>
         <td scope="row">{props.kommune.navn}</td>
-        <td className="text-center">{props.kommune.antallLedige}</td>
+        <td className="text-center">{props.kommune.antallLedige == null ? "<4" : props.kommune.antallLedige}</td>
         <td className="text-center">{props.kommune.antallStillinger}</td>
     </tr>
 );
 
 export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
     const stillingerTotalt = getStillingerTotalt(kommuner, stillinger);
+    const skalHaKrokodilleTegn = stillinger.some(stilling => stilling.antallLedige == null);
+    const antallArbeidsledigeTekst = (skalHaKrokodilleTegn ? ">" : "" ) + stillingerTotalt.antallLedige;
     const fylkenavn = fylke != null ? fylke.navn : "";
     const tabellrad = kommuner.sort(compareOmrader)
         .map(kommune => getKommuneMedData(kommune, stillinger))
@@ -42,7 +44,7 @@ export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
                             <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
                         </th>
                         <th scope="col" className="text-center typo-etikett-stor">
-                            <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: stillingerTotalt.antallLedige}}/>
+                            <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: antallArbeidsledigeTekst}}/>
                         </th>
                         <th scope="col" className="text-center typo-etikett-stor">
                             <FormattedMessage {...meldinger.tabellOverskriftStillinger} />

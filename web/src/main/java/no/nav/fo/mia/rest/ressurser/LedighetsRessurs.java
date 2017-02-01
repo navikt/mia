@@ -1,13 +1,15 @@
 package no.nav.fo.mia.rest.ressurser;
 
 import no.nav.fo.consumer.endpoints.LedighetsEndpoint;
+import no.nav.fo.mia.domain.Filtervalg;
+import no.nav.fo.mia.utils.SensureringUtils;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -23,27 +25,16 @@ public class LedighetsRessurs {
 
     @GET
     @Path("/statistikk")
-    public Map<String, Map<String, Integer>> hentLedighetForSisteTrettenMaaneder(@BeanParam LedighetsRessurs.FiltreringParams filtrering) {
-        return ledighetsEndpoint.getLedighetForSisteTrettenMaaneder(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
+    public Map<String, Map<String, Integer>> hentLedighetForSisteTrettenMaaneder(@BeanParam Filtervalg filtervalg) {
+        Map<String, Map<String, Integer>> statistikk = new HashMap<>();
+        statistikk.put("arbeidsledighet", SensureringUtils.sensurerStatistikkdata(ledighetsEndpoint.getArbeidsledighetForSisteTrettenMaaneder(filtervalg)));
+        statistikk.put("ledigestillinger", ledighetsEndpoint.getLedigestillingerForSisteTrettenMaaneder(filtervalg));
+        return statistikk;
     }
 
     @GET
     @Path("/allefylker")
     public Map<String, Integer> hentLedighetForAlleFylker() {
         return ledighetsEndpoint.getLedighetForAlleFylker();
-    }
-
-    private static class FiltreringParams {
-        @QueryParam("yrkesomrade")
-        public String yrkesomrade;
-
-        @QueryParam("yrkesgrupper[]")
-        public List<String> yrkesgrupper;
-
-        @QueryParam("fylker[]")
-        public List<String> fylker;
-
-        @QueryParam("kommuner[]")
-        public List<String> kommuner;
     }
 }

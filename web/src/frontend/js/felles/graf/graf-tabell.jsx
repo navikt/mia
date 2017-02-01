@@ -55,7 +55,7 @@ export const GrafTabell = ({overskrifter, rader, serieNavn, tabelloverskrift, ta
                 <th id={lagUnikId(serieNavn[coly], coly)}>{serieNavn[coly]}</th>
                 {
                     rad.map( (kolonne, colx)=>{
-                        var innhold = kolonne === null ? '-' : Number(kolonne).toLocaleString('nb', {maximumFractionDigits: 1});
+                        var innhold = kolonne === null ? '<4' : Number(kolonne).toLocaleString('nb', {maximumFractionDigits: 1});
                         return <td headers={headers(colx, coly)} key={colx}>{innhold}</td>;
                         })
                     }
