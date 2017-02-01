@@ -35,7 +35,7 @@ const LedigestillingerOversiktGraf = ({ tabell }) => {
                     <FormattedMessage {...tekster.tabellOverskrift} />
                 </h2>
                 <Hjelpetekst
-                    id="bransje-hjelpetekst"
+                    id="graf-hjelpetekst"
                     tittel={<FormattedMessage {...tekster.hjelpetekstTittel}/>}
                     tekst={<FormattedMessage {...tekster.hjelpetekstTekst}/>}
                     inline={true}
