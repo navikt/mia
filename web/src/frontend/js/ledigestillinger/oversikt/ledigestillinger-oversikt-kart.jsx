@@ -50,6 +50,10 @@ class Oversiktskart extends React.Component {
         this.resetKommuner();
     }
 
+    erLandvisningZoom() {
+        return this.refs.map.leafletElement.getZoom() === 5;
+    }
+
     resetKommuner() {
         this.refs.kommuner.leafletElement.getLayers().forEach(layer => {
             layer.feature.properties.valgt = false;
@@ -147,18 +151,20 @@ class Oversiktskart extends React.Component {
             layer.setStyle(geojsonStyling);
             layer.on({
                 mouseover: e => {
-                    highlightFeature(e);
+                    if(this.erLandvisningZoom()) {
+                        highlightFeature(e);
+                    }
                     layer.bindPopup(feature.properties.navn).openPopup();
                 },
                 mouseout: (e) => {
                     layer.closePopup();
-                    if(feature.properties.zoom !== true) {
+                    if(this.erLandvisningZoom() && !feature.properties.isZooming) {
                         resetHighlight(e);
                     }
                 },
                 click: e => {
-                    feature.properties.zoom = true;
-                    setTimeout(() => feature.properties.zoom = false, 1000);
+                    feature.properties.isZooming = true;
+                    setTimeout(() => feature.properties.isZooming = false, 1000);
                     clickFylke(e, layer);
                 }
             });
