@@ -16,7 +16,10 @@ public class SensureringUtils {
 
     public static List<OmradeStilling> sensurerOmrader(List<OmradeStilling> omrader) {
         return omrader.stream()
-                .map(omrade -> new OmradeStilling(omrade.getId(), getSensurertAntall(omrade.getAntallLedige()), omrade.getAntallStillinger()))
+                .map(omrade -> {
+                    Integer antallLedige = omrade.getId().startsWith("110011") ? omrade.getAntallLedige() : getSensurertAntall(omrade.getAntallLedige());
+                    return new OmradeStilling(omrade.getId(), antallLedige, omrade.getAntallStillinger());
+                })
                 .collect(Collectors.toList());
     }
 
