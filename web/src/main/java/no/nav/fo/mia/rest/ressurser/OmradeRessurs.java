@@ -5,6 +5,7 @@ import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.mia.domain.Filtervalg;
 import no.nav.fo.mia.domain.geografi.Omrade;
 import no.nav.fo.mia.domain.stillinger.OmradeStilling;
+import no.nav.fo.mia.utils.SensureringUtils;
 import no.nav.metrics.aspects.Timed;
 import org.springframework.stereotype.Controller;
 
@@ -35,6 +36,6 @@ public class OmradeRessurs {
     @GET
     @Path("/kommunedata")
     public List<OmradeStilling> hentKommunedata(@BeanParam Filtervalg filtrering) {
-        return stillingerEndpoint.getLedighetstallForOmrader(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner);
+        return SensureringUtils.sensurerOmrader(stillingerEndpoint.getLedighetstallForOmrader(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner));
     }
 }
