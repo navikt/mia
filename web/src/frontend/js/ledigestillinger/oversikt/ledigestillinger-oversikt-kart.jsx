@@ -147,6 +147,7 @@ class Oversiktskart extends React.Component {
                     layer.bindPopup(feature.properties.navn).openPopup();
                 },
                 mouseout: (e) => {
+                    layer.closePopup();
                     if(feature.properties.zoom !== true) {
                         resetHighlight(e);
                     }
@@ -166,6 +167,7 @@ class Oversiktskart extends React.Component {
                     layer.bindPopup(feature.properties.navn).openPopup();
                 },
                 mouseout: e => {
+                    layer.closePopup();
                     resetHighlight(e);
                 },
                 click: clickKommune
