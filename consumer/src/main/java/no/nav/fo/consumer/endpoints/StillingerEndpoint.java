@@ -4,6 +4,7 @@ import io.ino.solrs.JavaAsyncSolrClient;
 import no.nav.fo.consumer.extractor.AntallStillingerExtractor;
 import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.consumer.transformers.StillingTransformer;
+import no.nav.fo.consumer.transformers.StillingerForOmradeTransformer;
 import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
 import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.fo.mia.domain.stillinger.OmradeStilling;
@@ -30,7 +31,6 @@ import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.stream.Collectors.toList;
-import static no.nav.fo.consumer.transformers.StillingerForOmradeTransformer.getOmradeStillingForKommuner;
 
 public class StillingerEndpoint {
 
@@ -48,41 +48,6 @@ public class StillingerEndpoint {
         String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
         mainSolrClientAsync = JavaAsyncSolrClient.create(maincoreUri);
-    }
-
-    private Map<String, QueryResponse> queryForKommuner(List<String> kommuner, List<String> filter) {
-        String query = "*:*";
-        Map<String, QueryResponse> responses = new HashMap<>();
-        List<AsyncSolrQuery> asyncQueries = new ArrayList<>();
-        Timer metricsTimer = MetricsFactory.createTimer(this.getClass().toString() + ".hentLedigeStillingerForKommuner");
-        metricsTimer.start();
-
-        for (String kommuneid : kommuner) {
-            SolrQuery solrQuery = new SolrQuery(query);
-            if (filter != null) {
-                filter.forEach(solrQuery::addFilterQuery);
-            }
-            solrQuery.setRows(0);
-            solrQuery.addFacetField("ANTALLSTILLINGER");
-            String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
-            solrQuery.addFilterQuery(filterquery);
-            asyncQueries.add(new AsyncSolrQuery(kommuneid, mainSolrClientAsync.query(solrQuery)));
-        }
-
-        asyncQueries.forEach(asyncQuery -> responses.put(asyncQuery.getKommuneid(), asyncQuery.getResponse()));
-        metricsTimer.stop();
-        metricsTimer.report();
-        return responses;
-    }
-
-    private List<OmradeStilling> getAntallStillingerForKommuner(Map<String, QueryResponse> liste, Map<String, String> arbeidsledighet) {
-        return liste.keySet().stream()
-                .map(id -> getOmradeStillingForKommuner(id, liste.get(id).getFacetField("ANTALLSTILLINGER").getValues(), getAntallArbeidsledige(id, arbeidsledighet)))
-                .collect(toList());
-    }
-
-    private String getAntallArbeidsledige(String id, Map<String, String> arbeidsledighet) {
-        return arbeidsledighet.containsKey(id) ? arbeidsledighet.get(id) : "-";
     }
 
     @Timed
@@ -142,7 +107,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    public List<OmradeStilling> getAntallStillingerForFiltrering(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+    public List<OmradeStilling> getLedighetstallForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         if (fylker.size() > 0) {
             kommuner.addAll(supportEndpointUtils.finnKommunerTilFylke(fylker));
         }
@@ -155,11 +120,16 @@ public class StillingerEndpoint {
             filter.add(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
         }
 
-        Map<String, QueryResponse> responser = queryForKommuner(kommuner, filter);
+        Map<String, Integer> ledigestillingerForOmrader = hentLedigeStillingerForKommuner(kommuner, filter);
+        Map<String, Integer> ledighetForOmrader = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner);
 
-        Map<String, String> ledighetForOmrade = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner);
+        return lagOmradestillinger(kommuner, ledigestillingerForOmrader, ledighetForOmrader);
+    }
 
-        return getAntallStillingerForKommuner(responser, ledighetForOmrade);
+    private List<OmradeStilling> lagOmradestillinger(List<String> kommuner, Map<String, Integer> ledigeStillinger, Map<String, Integer> arbeidledighet) {
+        return kommuner.stream()
+                .map(kommune -> new OmradeStilling(kommune, arbeidledighet.getOrDefault(kommune, 0), ledigeStillinger.getOrDefault(kommune, 0)))
+                .collect(toList());
     }
 
     @Timed
@@ -211,6 +181,31 @@ public class StillingerEndpoint {
         if (!statements.isEmpty()) {
             query.addFilterQuery(StringUtils.join(statements, " OR "));
         }
+    }
+
+    private Map<String, Integer> hentLedigeStillingerForKommuner(List<String> kommuner, List<String> filter) {
+        String query = "*:*";
+        Map<String, Integer> responses = new HashMap<>();
+        List<AsyncSolrQuery> asyncQueries = new ArrayList<>();
+        Timer metricsTimer = MetricsFactory.createTimer(this.getClass().toString() + ".hentLedigeStillingerForKommuner");
+        metricsTimer.start();
+
+        for (String kommuneid : kommuner) {
+            SolrQuery solrQuery = new SolrQuery(query);
+            if (filter != null) {
+                filter.forEach(solrQuery::addFilterQuery);
+            }
+            solrQuery.setRows(0);
+            solrQuery.addFacetField("ANTALLSTILLINGER");
+            String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
+            solrQuery.addFilterQuery(filterquery);
+            asyncQueries.add(new AsyncSolrQuery(kommuneid, mainSolrClientAsync.query(solrQuery)));
+        }
+
+        asyncQueries.forEach(asyncQuery -> responses.put(asyncQuery.getKommuneid(), StillingerForOmradeTransformer.getAntallStillingerFraQuery(asyncQuery.getResponse())));
+        metricsTimer.stop();
+        metricsTimer.report();
+        return responses;
     }
 
     private class AsyncSolrQuery {
