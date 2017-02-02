@@ -59,11 +59,7 @@ public class StillingerEndpoint {
         solrQuery.setRows(0);
 
         try {
-            Timer timer = MetricsFactory.createTimer("StillingerEndpoint.getYrkesomrader");
-            timer.start();
             QueryResponse resp = mainSolrClient.query(solrQuery);
-            timer.stop();
-            timer.report();
             return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID")).stream()
                     .map(yrkesomrade -> yrkesomrade.withAntallStillinger(getAntallStillingerForYrkesomrade(yrkesomrade.getId(), fylker, kommuner)))
                     .collect(toList());
@@ -107,7 +103,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    public List<OmradeStilling> getLedighetstallForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+    public List<OmradeStilling> getLedighetstallForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         if (fylker.size() > 0) {
             kommuner.addAll(supportEndpointUtils.finnKommunerTilFylke(fylker));
         }
@@ -121,7 +117,7 @@ public class StillingerEndpoint {
         }
 
         Map<String, Integer> ledigestillingerForOmrader = hentLedigeStillingerForKommuner(kommuner, filter);
-        Map<String, Integer> ledighetForOmrader = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner);
+        Map<String, Integer> ledighetForOmrader = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner, periode);
 
         return lagOmradestillinger(kommuner, ledigestillingerForOmrader, ledighetForOmrader);
     }

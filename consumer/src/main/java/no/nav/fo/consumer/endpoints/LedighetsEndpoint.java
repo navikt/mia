@@ -2,8 +2,6 @@ package no.nav.fo.consumer.endpoints;
 
 import no.nav.fo.consumer.service.SupportMappingService;
 import no.nav.fo.mia.domain.Filtervalg;
-import no.nav.metrics.*;
-import no.nav.metrics.Timer;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -75,32 +72,29 @@ public class LedighetsEndpoint {
     }
 
     @Timed
-    public Map<String, Integer> getLedighetForAlleFylker() {
+    public String getSisteOpplastedeMaaned() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(0);
-
-        LocalDateTime d = LocalDateTime.now().minusMonths(1);
-        String sistePeriodeFilter = d.getYear() + "" + d.getMonthValue() + "";
-
-        solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
-        solrQuery.addFacetField("FYLKESNR");
+        solrQuery.addFacetField("PERIODE");
 
         try {
-            QueryResponse resp = arbeidsledighetSolrClient.query(solrQuery);
-            Map<String, Integer> ledighetPerFylke = new HashMap<>();
-            resp.getFacetField("FYLKESNR").getValues()
-                    .forEach(fylke -> ledighetPerFylke.put(fylke.getName(), (int)fylke.getCount()));
+            QueryResponse response = arbeidsledighetSolrClient.query(solrQuery);
 
-            return ledighetPerFylke;
+            List<String> dates = response.getFacetField("PERIODE").getValues().stream()
+                    .map(FacetField.Count::getName)
+                    .sorted()
+                    .collect(toList());
+
+            return dates.get(dates.size() -1);
         } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av ledighet fra solr", e.getCause());
-            throw new ApplicationException("Feil ved henting av ledighet fra solr", e.getCause());
+            logger.error("Feil ved henting av perioder fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av perioder fra solr", e.getCause());
         }
     }
 
     @Timed
-    Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+    public Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         Map<String, String> idTilStrukturKode = supportMappingService.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportMappingService.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
@@ -113,10 +107,8 @@ public class LedighetsEndpoint {
             }
         });
 
-        String sistePeriodeFilter = getSisteOpplastedeMaaned();
-
         SolrQuery solrQuery = createSolrQueryForFiltreringsvalg(yrkesomradeid, yrkesgrupper, fylkesnr, kommunenr);
-        solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
+        solrQuery.addFilterQuery("PERIODE:" + periode);
         solrQuery.addFacetField("KOMMUNENR");
 
         try {
@@ -130,33 +122,6 @@ public class LedighetsEndpoint {
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av ledighet fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av ledighet fra solr", e.getCause());
-        }
-    }
-
-    private String getSisteOpplastedeMaaned() {
-        String query = "*:*";
-        SolrQuery solrQuery = new SolrQuery(query);
-        solrQuery.setRows(0);
-        solrQuery.addFacetField("PERIODE");
-
-        try {
-            Timer timer = MetricsFactory.createTimer("LedighetsEndpoint.getSisteOpplastedeMaaned");
-            timer.start();
-
-            QueryResponse response = arbeidsledighetSolrClient.query(solrQuery);
-
-            timer.stop();
-            timer.report();
-
-            List<String> dates = response.getFacetField("PERIODE").getValues().stream()
-                    .map(FacetField.Count::getName)
-                    .sorted()
-                    .collect(toList());
-
-            return dates.get(dates.size() -1);
-        } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av perioder fra solr", e.getCause());
-            throw new ApplicationException("Feil ved henting av perioder fra solr", e.getCause());
         }
     }
 
