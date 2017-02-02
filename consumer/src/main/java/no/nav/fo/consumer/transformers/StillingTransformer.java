@@ -31,12 +31,18 @@ public class StillingTransformer {
                 .withStillingstype(getValue(stilling, "STILLINGSTYPE_5"))
                 .withSoknadfrist(getDateString((Date)stilling.getFieldValue("SOKNADSFRIST")))
                 .withYrkesgrupper(yrkesgrupper)
-                .withYrkesomrader(yrkesomrader);
+                .withYrkesomrader(yrkesomrader)
+                .withAntallStillinger(getAntallStillinger(stilling));
     }
 
     private static String getValue(SolrDocument document, String fieldname) {
         Object fieldvalue = document.getFieldValue(fieldname);
         return fieldvalue != null ? fieldvalue.toString() : null;
+    }
+
+    private static int getAntallStillinger(SolrDocument document) {
+        Integer antallstillinger = (Integer) document.getFieldValue("ANTALLSTILLINGER");
+        return antallstillinger != null ? antallstillinger : 1;
     }
 
     private static String getDateString(Date date) {

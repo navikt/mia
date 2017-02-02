@@ -18,10 +18,13 @@ export const Stilling = (props) => {
             <td>
                 <a href={stillingUrl} target="_blank">{props.stilling.tittel}</a>
             </td>
+            <td className="text-center">
+                <span>{props.stilling.antallStillinger}</span>
+            </td>
             <td>
                 <span>{props.stilling.arbeidsgivernavn}</span>
             </td>
-            <td>
+            <td className="text-right">
                 <span>{getSoknadsfrist(props.stilling.soknadfrist)}</span>
             </td>
         </tr>

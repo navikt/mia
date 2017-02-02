@@ -11,6 +11,7 @@ public class Stilling {
     private List<String> yrkesomrader = new ArrayList<>();
     private String soknadfrist;
     private String stillingstype;
+    private int antallStillinger;
 
     public Stilling() {
     }
@@ -68,6 +69,22 @@ public class Stilling {
         this.soknadfrist = soknadfrist;
     }
 
+    public String getStillingstype() {
+        return stillingstype;
+    }
+
+    public void setStillingstype(String stillingstype) {
+        this.stillingstype = stillingstype;
+    }
+
+    public Integer getAntallStillinger() {
+        return antallStillinger;
+    }
+
+    public void setAntallStillinger(int antallStillinger) {
+        this.antallStillinger = antallStillinger;
+    }
+
     public Stilling withTittel(String tittel) {
         this.setTittel(tittel);
         return this;
@@ -98,16 +115,13 @@ public class Stilling {
         return this;
     }
 
-    public String getStillingstype() {
-        return stillingstype;
-    }
-
-    public void setStillingstype(String stillingstype) {
-        this.stillingstype = stillingstype;
-    }
-
     public Stilling withStillingstype(String stillingstype) {
         this.setStillingstype(stillingstype);
+        return this;
+    }
+
+    public Stilling withAntallStillinger(int antallStillinger) {
+        this.setAntallStillinger(antallStillinger);
         return this;
     }
 }
