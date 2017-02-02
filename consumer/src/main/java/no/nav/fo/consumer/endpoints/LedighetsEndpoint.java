@@ -2,6 +2,8 @@ package no.nav.fo.consumer.endpoints;
 
 import no.nav.fo.consumer.service.SupportMappingService;
 import no.nav.fo.mia.domain.Filtervalg;
+import no.nav.metrics.*;
+import no.nav.metrics.Timer;
 import no.nav.metrics.aspects.Timed;
 import no.nav.modig.core.exception.ApplicationException;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +11,7 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,30 +113,50 @@ public class LedighetsEndpoint {
             }
         });
 
-        LocalDateTime d = LocalDateTime.now().minusMonths(1);
-        String sistePeriodeFilter = String.format("%d%02d", d.getYear(), d.getMonthValue());
+        String sistePeriodeFilter = getSisteOpplastedeMaaned();
 
         SolrQuery solrQuery = createSolrQueryForFiltreringsvalg(yrkesomradeid, yrkesgrupper, fylkesnr, kommunenr);
-
         solrQuery.addFilterQuery("PERIODE:" + sistePeriodeFilter);
-
         solrQuery.addFacetField("KOMMUNENR");
 
         try {
             QueryResponse resp = arbeidsledighetSolrClient.query(solrQuery);
             Map<String, Integer> ledighetPerFylke = new HashMap<>();
-            resp.getFacetField("KOMMUNENR").getValues()
-                    .forEach(kommune -> {
-                        if ((int) kommune.getCount() > 0) {
-                            String kommuneid = strukturkodeTilIdMapping.get(kommune.getName());
-                            ledighetPerFylke.put(kommuneid, (int)kommune.getCount());
-                        }
-                    });
+            resp.getFacetField("KOMMUNENR").getValues().stream()
+                    .filter(kommune -> (int) kommune.getCount() > 0)
+                    .forEach(kommune -> ledighetPerFylke.put(strukturkodeTilIdMapping.get(kommune.getName()), (int)kommune.getCount()));
 
             return ledighetPerFylke;
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av ledighet fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av ledighet fra solr", e.getCause());
+        }
+    }
+
+    private String getSisteOpplastedeMaaned() {
+        String query = "*:*";
+        SolrQuery solrQuery = new SolrQuery(query);
+        solrQuery.setRows(0);
+        solrQuery.addFacetField("PERIODE");
+
+        try {
+            Timer timer = MetricsFactory.createTimer("LedighetsEndpoint.getSisteOpplastedeMaaned");
+            timer.start();
+
+            QueryResponse response = arbeidsledighetSolrClient.query(solrQuery);
+
+            timer.stop();
+            timer.report();
+
+            List<String> dates = response.getFacetField("PERIODE").getValues().stream()
+                    .map(FacetField.Count::getName)
+                    .sorted()
+                    .collect(toList());
+
+            return dates.get(dates.size() -1);
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av perioder fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av perioder fra solr", e.getCause());
         }
     }
 
