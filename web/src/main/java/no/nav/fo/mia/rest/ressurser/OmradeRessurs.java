@@ -1,5 +1,6 @@
 package no.nav.fo.mia.rest.ressurser;
 
+import no.nav.fo.consumer.endpoints.LedighetsEndpoint;
 import no.nav.fo.consumer.endpoints.SupportEndpoint;
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.mia.domain.Filtervalg;
@@ -26,6 +27,9 @@ public class OmradeRessurs {
     StillingerEndpoint stillingerEndpoint;
 
     @Inject
+    LedighetsEndpoint ledighetsEndpoint;
+
+    @Inject
     SupportEndpoint supportEndpoint;
 
     @GET
@@ -36,6 +40,7 @@ public class OmradeRessurs {
     @GET
     @Path("/kommunedata")
     public List<OmradeStilling> hentKommunedata(@BeanParam Filtervalg filtrering) {
-        return SensureringUtils.sensurerOmrader(stillingerEndpoint.getLedighetstallForOmrader(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner));
+        String periode = ledighetsEndpoint.getSisteOpplastedeMaaned();
+        return SensureringUtils.sensurerOmrader(stillingerEndpoint.getLedighetstallForOmrader(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner, periode));
     }
 }

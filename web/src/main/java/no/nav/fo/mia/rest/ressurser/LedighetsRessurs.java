@@ -31,10 +31,4 @@ public class LedighetsRessurs {
         statistikk.put("ledigestillinger", ledighetsEndpoint.getLedigestillingerForSisteTrettenMaaneder(filtervalg));
         return statistikk;
     }
-
-    @GET
-    @Path("/allefylker")
-    public Map<String, Integer> hentLedighetForAlleFylker() {
-        return ledighetsEndpoint.getLedighetForAlleFylker();
-    }
 }
