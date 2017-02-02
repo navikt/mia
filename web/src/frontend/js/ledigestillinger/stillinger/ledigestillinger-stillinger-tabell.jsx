@@ -7,6 +7,10 @@ export const meldinger = defineMessages({
         id: 'ledigestillinger.stillinger.stilling',
         defaultMessage: 'Stilling'
     },
+    antallStillinger: {
+        id: 'ledigestillinger.stillinger.antallstillinger',
+        defaultMessage: 'Antall stillinger'
+    },
     arbeidsgiver: {
         id: 'ledigestillinger.stillinger.arbeidsgiver',
         defaultMessage: 'Arbeidsgiver'
@@ -30,6 +34,7 @@ export const StillingTabell = ({ stillinger }) => {
             <thead>
                 <tr>
                     <th scope="col" className="typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></th>
+                    <th scope="col" className="stillinger-antallstillinger typo-etikett-stor"><FormattedMessage {...meldinger.antallStillinger} /></th>
                     <th scope="col" className="stillinger-arbeidsgiver typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></th>
                     <th scope="col" className="stillinger-soknadsfrist typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></th>
                 </tr>
