@@ -41,8 +41,8 @@ public class StillingTransformer {
     }
 
     private static int getAntallStillinger(SolrDocument document) {
-        Object antallstillinger = document.getFieldValue("ANTALLSTILLINGER");
-        return antallstillinger != null ? (int)antallstillinger : 1;
+        Integer antallstillinger = (Integer) document.getFieldValue("ANTALLSTILLINGER");
+        return antallstillinger != null ? antallstillinger : 1;
     }
 
     private static String getDateString(Date date) {
