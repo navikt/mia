@@ -1,7 +1,9 @@
 package no.nav.fo.mia.domain;
 
 import javax.ws.rs.QueryParam;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Filtervalg {
     @QueryParam("yrkesomrade")
@@ -15,4 +17,22 @@ public class Filtervalg {
 
     @QueryParam("kommuner[]")
     public List<String> kommuner;
+
+    public String toString() {
+        return this.yrkesomrade + listToString(this.yrkesgrupper) + listToString(this.fylker) + listToString(this.kommuner);
+    }
+
+    private static <T> String listToString(List<T> list) {
+        if(list == null) {
+            return "";
+        }
+
+        List<String> listString = (new HashSet<>(list)).stream()
+                .sorted()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+        return String.join("", listString);
+
+    }
 }

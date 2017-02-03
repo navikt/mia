@@ -13,6 +13,7 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -36,11 +37,13 @@ public class LedighetsEndpoint {
     }
 
     @Timed
+    @Cacheable(value = "arbeidsledighetHistorikk", key = "#filtervalg.toString()")
     public Map<String, Integer> getArbeidsledighetForSisteTrettenMaaneder(Filtervalg filtervalg) {
         return getStatistikkSisteTrettenMaaneder(arbeidsledighetSolrClient, filtervalg);
     }
 
     @Timed
+    @Cacheable(value = "ledigestillingerHistorikk", key = "#filtervalg.toString()")
     public Map<String, Integer> getLedigestillingerForSisteTrettenMaaneder(Filtervalg filtervalg) {
         return getStatistikkSisteTrettenMaaneder(ledigestillingerSolrClient, filtervalg);
     }
@@ -72,6 +75,7 @@ public class LedighetsEndpoint {
     }
 
     @Timed
+    @Cacheable("sisteOpplastedeMaaned")
     public String getSisteOpplastedeMaaned() {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);

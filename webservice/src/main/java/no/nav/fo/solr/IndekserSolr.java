@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
@@ -48,14 +49,16 @@ public class IndekserSolr {
         }
     }
 
-    public void lesLedigeStillingerCSV(InputStream inputStreamLedigestillinger) {
+    @CacheEvict(value = { "ledigestillingerHistorikk" }, allEntries = true)
+    public void lesLedigeStillingerCSVOgSkrivTilSolr(InputStream inputStreamLedigestillinger) {
         slettSolrIndex(ledigeStillingerCore);
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "LEDIGE_STILLINGER", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(ledigeStillingerCore, inputStreamLedigestillinger, header);
     }
 
-    public void lesArbeidsledighetCSV(InputStream inputStreamArbeidsledige) {
+    @CacheEvict(value = { "sisteOpplastedeMaaned", "arbeidsledighetHistorikk" }, allEntries = true)
+    public void lesArbeidsledighetCSVOgSkrivTilSolr(InputStream inputStreamArbeidsledige) {
         slettSolrIndex(arbeidsledighetCore);
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "ARBEIDSLEDIGE", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};

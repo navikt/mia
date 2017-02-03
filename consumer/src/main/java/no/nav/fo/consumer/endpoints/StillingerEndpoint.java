@@ -21,6 +21,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class StillingerEndpoint {
     private Logger logger = LoggerFactory.getLogger(StillingerEndpoint.class);
 
     @Inject
-    SupportEndpoint supportEndpointUtils;
+    SupportEndpoint supportEndpoint;
 
     @Inject
     LedighetsEndpoint ledighetsEndpoint;
@@ -51,6 +52,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
+    @Cacheable(value = "yrkesomrader", keyGenerator = "cacheKeyGenerator")
     public List<Bransje> getYrkesomrader(String fylkesnummer, List<String> fylker, List<String> kommuner) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
@@ -96,7 +98,7 @@ public class StillingerEndpoint {
 
     @Timed
     public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
-        QueryResponse yrkesgruppeResponse = supportEndpointUtils.getYrkesgrupperForYrkesomrade(yrkesomradeid);
+        QueryResponse yrkesgruppeResponse = supportEndpoint.getYrkesgrupperForYrkesomrade(yrkesomradeid);
         return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
                 .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), fylker, kommuner)))
                 .collect(toList());
@@ -105,7 +107,7 @@ public class StillingerEndpoint {
     @Timed
     public List<OmradeStilling> getLedighetstallForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         if (fylker.size() > 0) {
-            kommuner.addAll(supportEndpointUtils.finnKommunerTilFylke(fylker));
+            kommuner.addAll(supportEndpoint.finnKommunerTilFylker(fylker));
         }
 
         List<String> filter = new ArrayList<>();
@@ -150,6 +152,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
+    @Cacheable(value = "stillingsannonser", keyGenerator = "cacheKeyGenerator")
     public List<Stilling> getStillinger(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
         SolrQuery stillingerQuery = new SolrQuery("*:*");
         stillingerQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
