@@ -3,6 +3,8 @@ package no.nav.fo.mia.internal.ressurser;
 import no.nav.fo.solr.IndekserSolr;
 import no.nav.metrics.aspects.Timed;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
@@ -20,6 +22,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Timed
 public class WebserviceRessurs {
 
+    private final Logger logger = LoggerFactory.getLogger(WebserviceRessurs.class);
+
     @Inject
     IndekserSolr indekserSolr;
 
@@ -27,6 +31,7 @@ public class WebserviceRessurs {
     @Path("/arbeidsledigecore")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response indekserMiASolrArbeidsledighet(@FormDataParam("file") InputStream file) {
+        logger.info("Oppdaterer solr-core med arbeidsledige-tall");
         indekserSolr.lesArbeidsledighetCSV(file);
         return createRedirectResponse("Arbeidsledighet oppdatert!");
     }
@@ -35,6 +40,7 @@ public class WebserviceRessurs {
     @Path("/ledigestillingercore")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response indekserMiASolrLedigeStillinger(@FormDataParam("file") InputStream file) {
+        logger.info("Oppdaterer solr-core med historikk");
         indekserSolr.lesLedigeStillingerCSV(file);
         return createRedirectResponse("Ledige stillinger oppdatert!");
     }
