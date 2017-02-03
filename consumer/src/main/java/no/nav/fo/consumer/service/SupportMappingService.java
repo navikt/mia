@@ -66,6 +66,8 @@ public class SupportMappingService {
 
     private void createStrukturkodeMappingForYrkesgruppe() {
         yrkgrLvl2TilStrukturkodeMapping = new HashMap<>();
+        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
+
         QueryResponse resp = supportEndpoint.getStillingstyperFraSolr();
 
         SolrDocumentList results = resp.getResults();
@@ -80,7 +82,6 @@ public class SupportMappingService {
     }
 
     private void addStrukturkodeToList(List<String> yrkgrLvl2IdListe, String strukturkode) {
-        strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
         strukturkodeTilYrkgrLvl2Mapping.put(strukturkode, yrkgrLvl2IdListe);
 
         for (String id : yrkgrLvl2IdListe) {

@@ -84,7 +84,7 @@ public class IndekserSolr {
             }
             oppdaterSolrIndex(solrClient, documents);
         } catch (IOException e) {
-            logger.error("Feil ved lesing/skriving av fil " + e.getMessage());
+            logger.error("Feil ved lesing/skriving av fil " + e.getMessage(), e.getCause());
         }
     }
 
