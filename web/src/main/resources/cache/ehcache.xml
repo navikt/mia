@@ -58,7 +58,7 @@
     </cache-template>
     <cache-template name="daily">
         <expiry>
-            <ttl unit="seconds">60</ttl>
+            <ttl unit="hours">24</ttl>
         </expiry>
     </cache-template>
 </config>

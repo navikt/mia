@@ -99,7 +99,7 @@ public class SupportEndpoint {
         }
     }
 
-    @Cacheable("yrkesgrupperForYrkesomrade")
+    @Cacheable(value = "yrkesgrupperForYrkesomrade", key = "#yrkesomradeid")
     public QueryResponse getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
         SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
         henteYrkesgrupperQuery.addFilterQuery("PARENT:" + yrkesomradeid);
