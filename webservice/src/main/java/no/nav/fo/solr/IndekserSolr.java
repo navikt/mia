@@ -57,7 +57,7 @@ public class IndekserSolr {
         skrivCSVTilSolrClient(ledigeStillingerCore, inputStreamLedigestillinger, header);
     }
 
-    @CacheEvict(value = { "sisteOpplastedeMaaned", "arbeidsledighetHistorikk" }, allEntries = true)
+    @CacheEvict(value = { "sisteOpplastedeMaaned", "arbeidsledighetHistorikk", "arbeidsledighetForOmrader" }, allEntries = true)
     public void lesArbeidsledighetCSVOgSkrivTilSolr(InputStream inputStreamArbeidsledige) {
         slettSolrIndex(arbeidsledighetCore);
 

@@ -98,6 +98,7 @@ public class LedighetsEndpoint {
     }
 
     @Timed
+    @Cacheable(value = "arbeidsledighetForOmrader", keyGenerator = "cacheKeyGenerator")
     public Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         Map<String, String> idTilStrukturKode = supportMappingService.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportMappingService.getStrukturkodeTilIdMapping();

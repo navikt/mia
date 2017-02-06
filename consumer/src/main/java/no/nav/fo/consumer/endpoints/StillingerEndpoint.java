@@ -97,6 +97,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
+    @Cacheable(value = "yrkesgrupperMedAntallStillinger", keyGenerator = "cacheKeyGenerator")
     public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
         QueryResponse yrkesgruppeResponse = supportEndpoint.getYrkesgrupperForYrkesomrade(yrkesomradeid);
         return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
@@ -105,6 +106,7 @@ public class StillingerEndpoint {
     }
 
     @Timed
+    @Cacheable(value = "ledighetstallForOmrader", keyGenerator = "cacheKeyGenerator")
     public List<OmradeStilling> getLedighetstallForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         if (fylker.size() > 0) {
             kommuner.addAll(supportEndpoint.finnKommunerTilFylker(fylker));
