@@ -245,17 +245,6 @@
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.jsr107.ri</groupId>
-                <artifactId>cache-ri-impl</artifactId>
-                <version>1.0.0</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>javax.inject</groupId>
-                        <artifactId>javax.inject</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
 
             <!-- JERSEY -->
             <dependency>
