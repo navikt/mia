@@ -1,0 +1,64 @@
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.2.xsd"
+>
+
+    <!-- Stillinger endpoint -->
+    <cache alias="yrkesgrupperMedAntallStillinger" uses-template="minute">
+        <heap>20</heap>
+    </cache>
+    <cache alias="ledighetstallForOmrader" uses-template="minute">
+        <heap>20</heap>
+    </cache>
+    <cache alias="yrkesomrader" uses-template="minute">
+        <heap>20</heap>
+    </cache>
+    <cache alias="stillingsannonser" uses-template="minute">
+        <heap>100</heap>
+    </cache>
+
+    <!-- Ledighets endpoint -->
+    <cache alias="arbeidsledighetForOmrader" uses-template="daily">
+        <heap>100</heap>
+    </cache>
+    <cache alias="sisteOpplastedeMaaned" uses-template="daily">
+        <heap>10</heap>
+    </cache>
+    <cache alias="sisteOpplastedeMaaned" uses-template="daily">
+        <heap>10</heap>
+    </cache>
+    <cache alias="arbeidsledighetHistorikk" uses-template="daily">
+        <heap>100</heap>
+    </cache>
+    <cache alias="ledigestillingerHistorikk" uses-template="daily">
+        <heap>100</heap>
+    </cache>
+
+    <!-- Support endpoint -->
+    <cache alias="yrkesgrupperForYrkesomrade" uses-template="daily">
+        <heap>100</heap>
+    </cache>
+    <cache alias="fylkerOgKommuner" uses-template="daily">
+        <heap>10</heap>
+    </cache>
+
+
+    <!-- templates -->
+    <cache-template name="minute">
+        <expiry>
+            <ttl unit="seconds">60</ttl>
+        </expiry>
+    </cache-template>
+    <cache-template name="hourly">
+        <expiry>
+            <ttl unit="minutes">60</ttl>
+        </expiry>
+    </cache-template>
+    <cache-template name="daily">
+        <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache-template>
+</config>

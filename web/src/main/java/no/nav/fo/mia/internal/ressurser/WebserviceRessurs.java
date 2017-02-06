@@ -32,7 +32,7 @@ public class WebserviceRessurs {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response indekserMiASolrArbeidsledighet(@FormDataParam("file") InputStream file) {
         logger.info("Oppdaterer solr-core med arbeidsledige-tall");
-        indekserSolr.lesArbeidsledighetCSV(file);
+        indekserSolr.lesArbeidsledighetCSVOgSkrivTilSolr(file);
         return createRedirectResponse("Arbeidsledighet oppdatert!");
     }
 
@@ -41,7 +41,7 @@ public class WebserviceRessurs {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response indekserMiASolrLedigeStillinger(@FormDataParam("file") InputStream file) {
         logger.info("Oppdaterer solr-core med historikk");
-        indekserSolr.lesLedigeStillingerCSV(file);
+        indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(file);
         return createRedirectResponse("Ledige stillinger oppdatert!");
     }
 

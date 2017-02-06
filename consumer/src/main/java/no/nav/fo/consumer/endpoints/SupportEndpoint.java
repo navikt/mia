@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class SupportEndpoint {
 
     @Inject
-    SolrClient supportSolrClient;
+    private SolrClient supportSolrClient;
 
     private Logger logger = LoggerFactory.getLogger(SupportEndpoint.class);
 
@@ -74,7 +74,7 @@ public class SupportEndpoint {
         }
     }
 
-    List<String> finnKommunerTilFylke(List<String> fylker) {
+    public List<String> finnKommunerTilFylker(List<String> fylker) {
         SolrQuery kommunerTilFylkeQuery = new SolrQuery("*:*");
         kommunerTilFylkeQuery.addFilterQuery("DOKUMENTTYPE:GEOGRAFI");
         kommunerTilFylkeQuery.addFilterQuery("NIVAA:3");
@@ -99,7 +99,8 @@ public class SupportEndpoint {
         }
     }
 
-    QueryResponse getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
+    @Cacheable(value = "yrkesgrupperForYrkesomrade", key = "#yrkesomradeid")
+    public QueryResponse getYrkesgrupperForYrkesomrade(String yrkesomradeid) {
         SolrQuery henteYrkesgrupperQuery = new SolrQuery("*:*");
         henteYrkesgrupperQuery.addFilterQuery("PARENT:" + yrkesomradeid);
         henteYrkesgrupperQuery.addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE");
