@@ -46,7 +46,7 @@ public class StillingerEndpoint {
     LedighetsEndpoint ledighetsEndpoint;
 
     public StillingerEndpoint() {
-        String maincoreUri = String.format("%smaincore", System.getProperty("stilling.solr.url"));
+        String maincoreUri = String.format("%s/mainwithlocal", System.getProperty("stilling.solr.url"));
         mainSolrClient = new HttpSolrClient.Builder().withBaseSolrUrl(maincoreUri).build();
         mainSolrClientAsync = JavaAsyncSolrClient.create(maincoreUri);
     }
