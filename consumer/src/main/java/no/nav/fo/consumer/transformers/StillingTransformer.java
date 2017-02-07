@@ -32,7 +32,8 @@ public class StillingTransformer {
                 .withSoknadfrist(getDateString((Date)stilling.getFieldValue("SOKNADSFRIST")))
                 .withYrkesgrupper(yrkesgrupper)
                 .withYrkesomrader(yrkesomrader)
-                .withAntallStillinger(getAntallStillinger(stilling));
+                .withAntallStillinger(getAntallStillinger(stilling))
+                .withLokal("LOK".equalsIgnoreCase(getValue(stilling, "PRESENTASJONSFORMKODE")));
     }
 
     private static String getValue(SolrDocument document, String fieldname) {

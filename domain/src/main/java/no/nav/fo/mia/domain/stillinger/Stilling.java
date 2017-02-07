@@ -12,6 +12,7 @@ public class Stilling {
     private String soknadfrist;
     private String stillingstype;
     private int antallStillinger;
+    private boolean lokal;
 
     public Stilling() {
     }
@@ -85,6 +86,14 @@ public class Stilling {
         this.antallStillinger = antallStillinger;
     }
 
+    public boolean isLokal() {
+        return lokal;
+    }
+
+    public void setLokal(boolean lokal) {
+        this.lokal = lokal;
+    }
+
     public Stilling withTittel(String tittel) {
         this.setTittel(tittel);
         return this;
@@ -122,6 +131,11 @@ public class Stilling {
 
     public Stilling withAntallStillinger(int antallStillinger) {
         this.setAntallStillinger(antallStillinger);
+        return this;
+    }
+
+    public Stilling withLokal(boolean erLokal) {
+        this.setLokal(erLokal);
         return this;
     }
 }

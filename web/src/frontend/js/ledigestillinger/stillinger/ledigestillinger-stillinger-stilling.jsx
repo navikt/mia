@@ -12,11 +12,12 @@ export const Stilling = (props) => {
     };
     const baseUrl = props.miljovariabler["stillingsok.link.url"];
     const stillingUrl = `${baseUrl}stilling?ID=${props.stilling.id}`;
+    const stillingCell = props.stilling.lokal ? props.stilling.tittel :  <a href={stillingUrl} target="_blank">{props.stilling.tittel}</a>;
 
     return (
         <tr>
             <td>
-                <a href={stillingUrl} target="_blank">{props.stilling.tittel}</a>
+                {stillingCell}
             </td>
             <td className="text-center">
                 <span>{props.stilling.antallStillinger}</span>
