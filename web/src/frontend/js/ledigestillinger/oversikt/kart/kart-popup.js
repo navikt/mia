@@ -11,8 +11,8 @@ export const getPopupForOmrade = (navn, data) => {
     return `
             <div>
                 <h3 class="typo-etikett blokk-xxs">${navn}</h3>
-                <span>Arbeidsledige: ${data.antallLedige}:</span><br />
-                <span>Ledige stillinger: ${data.antallStillinger}:</span>
+                <span>Arbeidsledige: ${data.antallLedige == null ? "<4" : data.antallLedige}</span><br />
+                <span>Ledige stillinger: ${data.antallStillinger == null ? 0 : data.antallStillinger}</span>
             </div>`;
 };
 
