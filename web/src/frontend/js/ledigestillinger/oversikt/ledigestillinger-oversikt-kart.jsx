@@ -106,8 +106,6 @@ class Oversiktskart extends React.Component {
         const initialPosition = [63, 13];
         const initialZoom = 5;
         const maxBounds = [[57, 0], [72, 33]];
-        const yrkesomrade = this.props.valgtYrkesomrade;
-        const yrkesgrupper = this.props.valgteYrkesgrupper;
 
         const highlightFeature = e => {
             const layer = e.target;
@@ -157,6 +155,8 @@ class Oversiktskart extends React.Component {
                     if(this.erLandvisningZoom()) {
                         highlightFeature(e);
                     }
+                    const yrkesomrade = this.props.valgtYrkesomrade;
+                    const yrkesgrupper = this.props.valgteYrkesgrupper;
                     const fylkeId = finnIdForFylkenummer(feature.properties.fylkesnr, this.props.omrader);
                     layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
                     feature.properties.harFokus = true;
@@ -186,6 +186,8 @@ class Oversiktskart extends React.Component {
             layer.on({
                 mouseover: e => {
                     highlightFeature(e);
+                    const yrkesomrade = this.props.valgtYrkesomrade;
+                    const yrkesgrupper = this.props.valgteYrkesgrupper;
                     feature.properties.harFokus = true;
                     const kommuneId = finnIdForKommunenummer(feature.properties.komm, this.props.omrader);
                     layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
