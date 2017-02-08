@@ -39,8 +39,15 @@ public class OmradeRessurs {
 
     @GET
     @Path("/kommunedata")
-    public List<OmradeStilling> hentKommunedata(@BeanParam Filtervalg filtrering) {
+    public List<OmradeStilling> hentKommunedataForKommuner(@BeanParam Filtervalg filtrering) {
         String periode = ledighetsEndpoint.getSisteOpplastedeMaaned();
-        return SensureringUtils.sensurerOmrader(stillingerEndpoint.getLedighetstallForOmrader(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner, periode));
+        return SensureringUtils.sensurerOmrader(stillingerEndpoint.getLedighetstallForKommuner(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, filtrering.kommuner, periode));
+    }
+
+    @GET
+    @Path("/fylkesdata")
+    public List<OmradeStilling> hentKommunedataForFylker(@BeanParam Filtervalg filtrering) {
+        String periode = ledighetsEndpoint.getSisteOpplastedeMaaned();
+        return SensureringUtils.sensurerOmrader(stillingerEndpoint.getLedighetstallForFylker(filtrering.yrkesomrade, filtrering.yrkesgrupper, filtrering.fylker, periode));
     }
 }

@@ -4,19 +4,20 @@ import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, getNavnForKommuneId, finnIdForFylkenummer, getNavnForFylkeId} from './kart/kart-utils';
+import {getPopupForOmrade, getPopupMedInnholdslaster, hentDataForFylke, hentDataForKommune} from './kart/kart-popup';
 
 const meldinger = defineMessages({
     kartplaceholder: {
         id: 'ledigestillinger.oversikt.kartplaceholder',
         defaultMessage: 'Kart for å velge fylker og kommuner.'
     },
-    kommunePopup: {
-        id: 'ledigestillinger.oversikt.kommunepopup',
-        defaultMessage: '<h3>{kommune}</h3><p>Ledige stillinger: {stillinger}<br />Arbeidsledige: {arbeidsledige}</p>'
-    },
     valgteKommuner: {
         id: 'ledigestillinger.oversikt.valgtekommuner',
         defaultMessage: 'Valgte kommuner:'
+    },
+    kommunePopup: {
+        id: 'ledigestillinger.oversikt.kommunepopup',
+        defaultMessage: '<h3 class="typo-element">{kommune}</h3><p>Ledige stillinger: {stillinger}<br />Arbeidsledige: {arbeidsledige}</p>'
     },
     valgteFylker: {
         id: 'ledigestillinger.oversikt.valgtefylker',
@@ -104,7 +105,9 @@ class Oversiktskart extends React.Component {
     render() {
         const initialPosition = [63, 13];
         const initialZoom = 5;
-        const maxBounds = [[57, 3], [72, 33]];
+        const maxBounds = [[57, 0], [72, 33]];
+        const yrkesomrade = this.props.valgtYrkesomrade;
+        const yrkesgrupper = this.props.valgteYrkesgrupper;
 
         const highlightFeature = e => {
             const layer = e.target;
@@ -154,9 +157,18 @@ class Oversiktskart extends React.Component {
                     if(this.erLandvisningZoom()) {
                         highlightFeature(e);
                     }
-                    layer.bindPopup(feature.properties.navn).openPopup();
+                    const fylkeId = finnIdForFylkenummer(feature.properties.fylkesnr, this.props.omrader);
+                    layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
+                    feature.properties.harFokus = true;
+
+                    hentDataForFylke(fylkeId, yrkesomrade, yrkesgrupper).then(result => {
+                        if(feature.properties.harFokus) {
+                            layer.bindPopup(getPopupForOmrade(feature.properties.navn, result[0])).openPopup();
+                        }
+                    });
                 },
                 mouseout: (e) => {
+                    feature.properties.harFokus = false;
                     layer.closePopup();
                     if(this.erLandvisningZoom() && !feature.properties.isZooming) {
                         resetHighlight(e);
@@ -174,10 +186,19 @@ class Oversiktskart extends React.Component {
             layer.on({
                 mouseover: e => {
                     highlightFeature(e);
-                    layer.bindPopup(feature.properties.navn).openPopup();
+                    feature.properties.harFokus = true;
+                    const kommuneId = finnIdForKommunenummer(feature.properties.komm, this.props.omrader);
+                    layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
+
+                    hentDataForKommune(kommuneId, yrkesomrade, yrkesgrupper).then(result => {
+                        if(feature.properties.harFokus) {
+                            layer.bindPopup(getPopupForOmrade(feature.properties.navn, result[0])).openPopup();
+                        }
+                    });
                 },
                 mouseout: e => {
                     layer.closePopup();
+                    feature.properties.harFokus = false;
                     resetHighlight(e);
                 },
                 click: clickKommune

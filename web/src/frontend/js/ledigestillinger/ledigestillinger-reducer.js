@@ -6,7 +6,7 @@ import statistikkReducer from './statistikk/ledigestillinger-statistikk-reducer'
 const reducers = combineReducers({
     oversikt: oversiktReducer,
     bransje: bransjeReducer,
-    statistikk: statistikkReducer
+    statistikk: statistikkReducer,
 });
 
 export default reducers;

@@ -55,6 +55,7 @@ function getUriParam(key, param) {
 
 export function buildUriParams(params) {
     return reduceParamList(Object.keys(params)
+        .filter(key => params[key] != null)
         .map(key => getUriParam(key, params[key])));
 }
 

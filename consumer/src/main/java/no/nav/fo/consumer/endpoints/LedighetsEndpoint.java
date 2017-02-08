@@ -98,8 +98,8 @@ public class LedighetsEndpoint {
     }
 
     @Timed
-    @Cacheable(value = "arbeidsledighetForOmrader", keyGenerator = "cacheKeyGenerator")
-    public Map<String, Integer> getLedighetForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
+    @Cacheable(value = "arbeidsledighetForKommuner", keyGenerator = "cacheKeyGenerator")
+    public Map<String, Integer> getLedighetForKommuner(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         Map<String, String> idTilStrukturKode = supportMappingService.getIdTilStrukturkodeMapping();
         Map<String, String> strukturkodeTilIdMapping = supportMappingService.getStrukturkodeTilIdMapping();
         List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
@@ -125,7 +125,33 @@ public class LedighetsEndpoint {
 
             return ledighetPerFylke;
         } catch (SolrServerException | IOException e) {
-            logger.error("Feil ved henting av ledighet fra solr", e.getCause());
+            logger.error("Feil ved henting av ledighet for kommune fra solr", e.getCause());
+            throw new ApplicationException("Feil ved henting av ledighet fra solr", e.getCause());
+        }
+    }
+
+    @Timed
+    @Cacheable(value = "arbeidsledighetForFylker", keyGenerator = "cacheKeyGenerator")
+    public Map<String, Integer> getLedighetForFylker(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, String periode) {
+        Map<String, String> idTilStrukturKode = supportMappingService.getIdTilStrukturkodeMapping();
+        Map<String, String> strukturkodeTilIdMapping = supportMappingService.getStrukturkodeTilIdMapping();
+        List<String> fylkesnr = fylker.stream().map(idTilStrukturKode::get).filter(Objects::nonNull).collect(toList());
+
+
+        SolrQuery solrQuery = createSolrQueryForFiltreringsvalg(yrkesomradeid, yrkesgrupper, fylkesnr, null);
+        solrQuery.addFilterQuery("PERIODE:" + periode);
+        solrQuery.addFacetField("FYLKESNR");
+
+        try {
+            QueryResponse resp = arbeidsledighetSolrClient.query(solrQuery);
+            Map<String, Integer> ledighetPerFylke = new HashMap<>();
+            resp.getFacetField("FYLKESNR").getValues().stream()
+                    .filter(fylke -> (int) fylke.getCount() > 0)
+                    .forEach(fylke -> ledighetPerFylke.put(strukturkodeTilIdMapping.get(fylke.getName()), (int)fylke.getCount()));
+
+            return ledighetPerFylke;
+        } catch (SolrServerException | IOException e) {
+            logger.error("Feil ved henting av ledighet for fylke fra solr", e.getCause());
             throw new ApplicationException("Feil ved henting av ledighet fra solr", e.getCause());
         }
     }
