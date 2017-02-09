@@ -231,7 +231,8 @@
                         <configuration>
                             <executable>npm</executable>
                             <arguments>
-                                <argument>test</argument>
+                                <argument>run</argument>
+                                <argument>coverage</argument>
                             </arguments>
                             <skip>${skip.frontend}</skip>
                             <workingDirectory>src/frontend</workingDirectory>
@@ -253,5 +254,17 @@
             </properties>
         </profile>
     </profiles>
+
+    <properties>
+        <sonar.language>js</sonar.language>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.sources>src/frontend/js</sonar.sources>
+        <sonar.javascript.jstest.reportsPath>target/surefire-reports</sonar.javascript.jstest.reportsPath>
+        <sonar.javascript.lcov.reportPath>target/js-coverage/lcov.info</sonar.javascript.lcov.reportPath>
+        <sonar.coverage.exclusions>
+            src/frontend/js/**/*spec.js,
+            src/frontend/app/js/vendors.js
+        </sonar.coverage.exclusions>
+    </properties>
 
 </project>
