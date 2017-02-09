@@ -4,7 +4,7 @@ import {getNavnForYrkesgruppeId, getNavnForYrkesomradeId} from '../../ledigestil
 import {FormattedMessage} from 'react-intl';
 
 export const ValgteFylker = props => (
-    <p className="valgte-omrader">
+    <p className={props.class}>
         <span className="typo-element valgte-omrader-tittel">
             <FormattedMessage {...props.tekst}/>
         </span>
@@ -13,7 +13,7 @@ export const ValgteFylker = props => (
 );
 
 export const ValgteKommuner = props => (
-    <p className="valgte-omrader">
+    <p className={props.class}>
         <span className="typo-element valgte-omrader-tittel">
             <FormattedMessage {...props.tekst}/>
         </span>
@@ -21,8 +21,8 @@ export const ValgteKommuner = props => (
     </p>
 );
 
-export const ValgteStillingskategorier = props => (
-    <p className="valgte-omrader">
+export const ValgtStillingskategori = props => (
+    <p>
         <span className="typo-element valgte-omrader-tittel">
             <FormattedMessage {...props.tekst}/>
         </span>
@@ -33,7 +33,7 @@ export const ValgteStillingskategorier = props => (
 export const ValgteArbeidsomrader = props => {
     const valgteOmraderListe = props.valgteYrkesgrupper.map(yrkesgruppeid => getNavnForYrkesgruppeId(yrkesgruppeid, props.yrkesgrupper.data)).join(', ');
     return valgteOmraderListe.length === 0 ? <noscript /> :
-        <p className="valgte-omrader">
+        <p>
             <span className="typo-element valgte-omrader-tittel">
                 <FormattedMessage {...props.tekst}/>
             </span>
@@ -42,7 +42,7 @@ export const ValgteArbeidsomrader = props => {
 };
 
 export const ValgtHeleNorge = props => (
-    <p className="valgte-omrader">
+    <p>
         <span className="typo-element valgte-omrader-tittel">
             <FormattedMessage {...props.valgtOmrade}/>
         </span>

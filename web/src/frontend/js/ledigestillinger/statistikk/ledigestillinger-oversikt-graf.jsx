@@ -2,7 +2,7 @@ import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import LinjeGraf from '../../felles/graf/linje-graf';
 import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
-import {ValgteFylker, ValgteKommuner, ValgteStillingskategorier, ValgteArbeidsomrader, ValgtHeleNorge} from '../../felles/filtervalg/filtervalgVisning';
+import {ValgteFylker, ValgteKommuner, ValgtStillingskategori, ValgteArbeidsomrader, ValgtHeleNorge} from '../../felles/filtervalg/filtervalgVisning';
 
 const tekster = defineMessages({
     tabellOverskrift: {
@@ -59,7 +59,7 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
 
     const valgteFylkerVisning = harData(valgteFylker) ? <ValgteFylker valgteFylker={valgteFylker} tekst={tekster.valgteFylker} omrader={omrader} /> : <noscript />;
     const valgteKommunerVisning = harData(valgteKommuner) ? <ValgteKommuner valgteKommuner={valgteKommuner} tekst={tekster.valgteKommuner} omrader={omrader} /> : <noscript />;
-    const valgteYrkesomradeVisning = harData(valgtyrkesomrade) ? <ValgteStillingskategorier valgtYrkesomrade={valgtyrkesomrade} yrkesomrader={yrkesomrader} tekst={tekster.valgtStillingskategori} /> : <noscript />;
+    const valgteYrkesomradeVisning = harData(valgtyrkesomrade) ? <ValgtStillingskategori valgtYrkesomrade={valgtyrkesomrade} yrkesomrader={yrkesomrader} tekst={tekster.valgtStillingskategori} /> : <noscript />;
     const valgteYrkesgrupperVisning = harData(valgteyrkesgrupper) ? <ValgteArbeidsomrader valgteYrkesgrupper={valgteyrkesgrupper} yrkesgrupper={yrkesgrupper} tekst={tekster.valgteArbeidsomrader} /> : <noscript />;
     const valgtHeleLandet = !harData(valgteFylker) && !harData(valgteKommuner) ? <ValgtHeleNorge valgtOmrade={tekster.valgtOmrade} heleNorge={tekster.heleNorge} />: <noscript />;
 

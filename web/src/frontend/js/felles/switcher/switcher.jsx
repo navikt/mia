@@ -23,18 +23,14 @@ export class Switcher extends Component {
     render() {
         const { id, elementer, switchere } = this.props;
         const domId = 'switcher-' + id;
-
         const vistValgNr = switchere[id] ? switchere[id] : 0;
-
         const ariaDescribedBy = `${domId}-${vistValgNr}-knapp`;
+
         return (
             <div id={domId}>
-
-                <div role="tablist" className="blokk-s">
+                <div role="tablist" className="blokk-s text-right">
                     {this.lagKnapper(domId, elementer, vistValgNr)}
                 </div>
-
-
                 <div id={`${domId}-${vistValgNr}`}
                      role="tabpanel"
                      aria-describedby={ariaDescribedBy}>

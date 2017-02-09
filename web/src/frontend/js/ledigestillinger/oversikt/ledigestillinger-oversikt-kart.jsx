@@ -180,8 +180,8 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} onEachFeature={onEachFylke}/>
                     </Map>
-                    {this.props.valgteKommuner.length !== 0 ? <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} /> : <noscript />}
-                    {this.props.valgteFylker.length !== 0 ? <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} /> : <noscript />}
+                    {this.props.valgteKommuner.length !== 0 ? <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} /> : <noscript />}
+                    {this.props.valgteFylker.length !== 0 ? <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} /> : <noscript />}
                 </div>
             </div>
         );

@@ -11,7 +11,7 @@ export class Statistikk extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="panel panel-fremhevet">
                 <Innholdslaster avhengigheter={[this.props.statistikk]}>
                     <OversiktGraf tabell={this.props.statistikk.data}
                                   valgteFylker={this.props.valgteFylker}
