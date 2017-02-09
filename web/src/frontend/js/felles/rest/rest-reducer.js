@@ -10,15 +10,20 @@ export const getActions = navn => {
         }, {});
 };
 
-const defaultState = {
+const defaultStateObj = {
     status: STATUS.initialisert,
     data: {}
 };
 
-export function createRestReducer(navn) {
+const defaultStateList = {
+    status: STATUS.initialisert,
+    data: []
+};
+
+export function createRestReducer(navn, initialState = defaultStateObj) {
     const actions = getActions(navn);
 
-    return function(state = defaultState, action) {
+    return function(state = initialState, action) {
         switch(action.type) {
             case actions[STATUS.initialisert]:
                 return {...state, status: STATUS.initialisert};
@@ -35,14 +40,14 @@ export function createRestReducer(navn) {
 }
 
 export default combineReducers({
-    omrader: createRestReducer('omrader'),
+    omrader: createRestReducer('omrader', defaultStateList),
     oversiktStillinger: createRestReducer('oversikt_stillinger'),
-    yrkesomrader: createRestReducer('yrkesomrader'),
-    yrkesgrupper: createRestReducer('yrkesgrupper'),
-    stillinger: createRestReducer('stillinger'),
+    yrkesomrader: createRestReducer('yrkesomrader', defaultStateList),
+    yrkesgrupper: createRestReducer('yrkesgrupper', defaultStateList),
+    stillinger: createRestReducer('stillinger', defaultStateList),
     fylkergeojson: createRestReducer('fylkergeojson'),
     kommunergeojson: createRestReducer('kommunergeojson'),
     totantallstillinger: createRestReducer('totantallstillinger'),
-    miljovariabler: createRestReducer('miljovariabler'),
+    miljovariabler: createRestReducer('miljovariabler', defaultStateList),
     statistikk: createRestReducer('statistikk')
 });
