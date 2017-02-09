@@ -113,7 +113,7 @@ public class SupportMappingService {
             QueryResponse response = supportEndpoint.getYrkgrLvl1IdFraSolr(lvl2);
 
             SolrDocumentList results = response.getResults();
-            if (results.size() > 0) {
+            if (!results.isEmpty()) {
                 Collection<Object> parents = results.get(0).getFieldValues("PARENT");
 
                 List<String> yrkgrLvl1IdListe = new ArrayList<>();
