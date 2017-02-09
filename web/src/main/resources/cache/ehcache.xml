@@ -9,8 +9,11 @@
     <cache alias="yrkesgrupperMedAntallStillinger" uses-template="minute">
         <heap>20</heap>
     </cache>
-    <cache alias="ledighetstallForOmrader" uses-template="minute">
-        <heap>20</heap>
+    <cache alias="ledighetstallForKommuner" uses-template="minute">
+        <heap>100</heap>
+    </cache>
+    <cache alias="ledighetstallForFylker" uses-template="minute">
+        <heap>100</heap>
     </cache>
     <cache alias="yrkesomrader" uses-template="minute">
         <heap>20</heap>
@@ -20,7 +23,10 @@
     </cache>
 
     <!-- Ledighets endpoint -->
-    <cache alias="arbeidsledighetForOmrader" uses-template="daily">
+    <cache alias="arbeidsledighetForKommuner" uses-template="daily">
+        <heap>100</heap>
+    </cache>
+    <cache alias="arbeidsledighetForFylker" uses-template="daily">
         <heap>100</heap>
     </cache>
     <cache alias="sisteOpplastedeMaaned" uses-template="daily">

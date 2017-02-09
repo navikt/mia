@@ -100,6 +100,8 @@ export class Oversikt extends React.Component {
         const kartProps = {
             fylkergeojson: this.props.fylkergeojson.data,
             kommunergeojson: this.props.kommunergeojson.data,
+            valgtYrkesomrade: this.props.valgtYrkesomrade,
+            valgteYrkesgrupper: this.props.valgteYrkesgrupper,
             resetValg: this.resetValg,
             velgFylke: this.velgFylke,
             velgKommune: this.velgKommune,
@@ -134,6 +136,8 @@ const stateToProps = state => ({
     visKart: state.ledigestillinger.oversikt.visKart,
     valgteFylker: state.ledigestillinger.oversikt.valgteFylker,
     valgteKommuner: state.ledigestillinger.oversikt.valgteKommuner,
+    valgtYrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade,
+    valgteYrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
     omrader: state.rest.omrader,
     oversiktStillinger: state.rest.oversiktStillinger,
     totantallstillinger: state.rest.totantallstillinger,

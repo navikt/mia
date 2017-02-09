@@ -1,0 +1,4 @@
+instrumentation:
+    excludes: ["**spec.js*", "**mock**"]
+reporting:
+    dir: ../../target/js-coverage
