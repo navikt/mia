@@ -21,8 +21,10 @@
         <sonar.javascript.lcov.reportPath>target/js-coverage/lcov.info</sonar.javascript.lcov.reportPath>
         <sonar.coverage.exclusions>
             src/frontend/js/**/*spec.js,
+            src/frontend/js/**/*spec.jsx,
             src/frontend/js/*.js,
-            src/frontend/js/*.jsx
+            src/frontend/js/*.jsx,
+            src/frontend/js/felles/konstanter.js
         </sonar.coverage.exclusions>
     </properties>
 
