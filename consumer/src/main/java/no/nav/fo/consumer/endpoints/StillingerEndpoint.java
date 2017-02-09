@@ -108,7 +108,7 @@ public class StillingerEndpoint {
     @Timed
     @Cacheable(value = "ledighetstallForKommuner", keyGenerator = "cacheKeyGenerator")
     public List<OmradeStilling> getLedighetstallForKommuner(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
-        if (fylker.size() > 0) {
+        if (!fylker.isEmpty()) {
             kommuner.addAll(supportEndpoint.finnKommunerTilFylker(fylker));
         }
 
@@ -134,7 +134,7 @@ public class StillingerEndpoint {
         if (yrkesomrade != null) {
             filter.add(String.format("YRKGR_LVL_1_ID:(%s)", yrkesomrade));
         }
-        if (yrkesgrupper.size() > 0) {
+        if (!yrkesgrupper.isEmpty()) {
             filter.add(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
         }
         return filter;

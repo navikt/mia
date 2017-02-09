@@ -15,7 +15,7 @@ export class Hjelpetekst extends Component {
 
     toggle(event) {
         if (this.erApen()) {
-            this.skjul(event);
+            this.skjul();
         } else {
             this.vis(event);
         }

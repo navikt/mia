@@ -160,7 +160,7 @@ public class LedighetsEndpoint {
         String query = "*:*";
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(0);
-        if (yrkesgrupper.size() > 0) {
+        if (!yrkesgrupper.isEmpty()) {
             solrQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
         } else if (yrkesomradeid != null) {
             solrQuery.addFilterQuery("YRKGR_LVL_1_ID:" + yrkesomradeid);
@@ -173,15 +173,15 @@ public class LedighetsEndpoint {
     private String createFylkeFilter(List<String> fylker, List<String> kommuner) {
         String filter = "";
 
-        if (fylker != null && fylker.size() > 0) {
+        if (fylker != null && !fylker.isEmpty()) {
             filter += String.format("FYLKESNR:(%s)", StringUtils.join(fylker, " OR "));
         }
 
-        if (fylker != null && fylker.size() > 0 && kommuner != null && kommuner.size() > 0) {
+        if (fylker != null && !fylker.isEmpty() && kommuner != null && !kommuner.isEmpty()) {
             filter += " OR ";
         }
 
-        if (kommuner != null && kommuner.size() > 0) {
+        if (kommuner != null && !kommuner.isEmpty()) {
             filter += String.format("KOMMUNENR:(%s)", StringUtils.join(kommuner, " OR "));
         }
         return filter;
