@@ -40,7 +40,6 @@ class Application extends React.Component {
                     <Innholdslaster avhengigheter={avhengigheter}>
                         <Hodefot />
                         <div className="hovedinnhold side-midtstilt">
-                            <Hovedmeny />
                             { this.props.children }
                         </div>
                     </Innholdslaster>
