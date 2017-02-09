@@ -11,9 +11,17 @@ export class Statistikk extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="panel panel-fremhevet">
                 <Innholdslaster avhengigheter={[this.props.statistikk]}>
-                    <OversiktGraf tabell={this.props.statistikk.data} />
+                    <OversiktGraf tabell={this.props.statistikk.data}
+                                  valgteFylker={this.props.valgteFylker}
+                                  valgteKommuner={this.props.valgteKommuner}
+                                  omrader={this.props.omrader}
+                                  yrkesomrader={this.props.yrkesomrader}
+                                  yrkesgrupper={this.props.yrkesgrupper}
+                                  valgtyrkesomrade={this.props.valgtyrkesomrade}
+                                  valgteyrkesgrupper={this.props.valgteyrkesgrupper}
+                    />
                 </Innholdslaster>
             </div>
         );
@@ -21,7 +29,14 @@ export class Statistikk extends React.Component {
 }
 
 const stateToProps = state => ({
-    statistikk: state.rest.statistikk
+    statistikk: state.rest.statistikk,
+    omrader: state.rest.omrader.data,
+    valgtyrkesomrade: state.ledigestillinger.bransje.valgtyrkesomrade,
+    valgteyrkesgrupper: state.ledigestillinger.bransje.valgteyrkesgrupper,
+    yrkesomrader: state.rest.yrkesomrader,
+    yrkesgrupper: state.rest.yrkesgrupper,
+    valgteFylker: state.ledigestillinger.oversikt.valgteFylker,
+    valgteKommuner: state.ledigestillinger.oversikt.valgteKommuner
 });
 
 export default connect(stateToProps)(Statistikk);
