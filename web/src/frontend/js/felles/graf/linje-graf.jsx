@@ -6,14 +6,18 @@ import {standardGrafConfig, konfigurerSerie, lagTidsserier, lagManeder} from './
 import GrafSwitcher from './../../felles/switcher/grafswitcher.jsx';
 import tekster from './graf-tekster';
 
-export const LinjeGraf = ({id, tabell, tabellOverskrift, yTittel='', yEnhet='', periodetype="Kvartal", intl: { formatMessage }}) => {
+export const LinjeGraf = ({id, tabell, tabellOverskrift, yTittel='', yEnhet='', periodetype="Kvartal", intl}) => {
+    if (tabell == null) {
+        return null;
+    }
+
     const serienavn = [
-        formatMessage(tekster.serieArbeidsledighet),
-        formatMessage(tekster.serieLedigeStillinger)
+        intl.formatMessage(tekster.serieArbeidsledighet),
+        intl.formatMessage(tekster.serieLedigeStillinger)
     ];
     const serienavnKort = [
-        formatMessage(tekster.serieArbeidsledighet),
-        formatMessage(tekster.serieLedigeStillinger)
+        intl.formatMessage(tekster.serieArbeidsledighet),
+        intl.formatMessage(tekster.serieLedigeStillinger)
     ];
 
     const aarMaaned = Object.keys(tabell["arbeidsledighet"]);
@@ -21,9 +25,11 @@ export const LinjeGraf = ({id, tabell, tabellOverskrift, yTittel='', yEnhet='', 
 
     const kategorier = lagTidsserier(katBase);
 
+    const getValues = object => Object.keys(object).map(key => object[key]);
+
     const rawData = [
-        Object.values(tabell["arbeidsledighet"]),
-        Object.values(tabell["ledigestillinger"])
+        getValues(tabell["arbeidsledighet"]),
+        getValues(tabell["ledigestillinger"])
     ];
     const serier = rawData.map(konfigurerSerie(serienavn, serienavnKort));
     const conf = standardGrafConfig({ kategorier, serier, yEnhet, yTittel });
