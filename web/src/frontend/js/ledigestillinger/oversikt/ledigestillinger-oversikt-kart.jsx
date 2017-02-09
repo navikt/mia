@@ -209,7 +209,8 @@ class Oversiktskart extends React.Component {
             zoom: initialZoom,
             maxBounds: maxBounds,
             minZoom: initialZoom,
-            maxZoom: 8
+            maxZoom: 8,
+            zoomControl: false
         };
 
         return (
