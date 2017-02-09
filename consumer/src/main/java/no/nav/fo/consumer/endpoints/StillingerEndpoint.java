@@ -106,29 +106,43 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    @Cacheable(value = "ledighetstallForOmrader", keyGenerator = "cacheKeyGenerator")
-    public List<OmradeStilling> getLedighetstallForOmrader(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
+    @Cacheable(value = "ledighetstallForKommuner", keyGenerator = "cacheKeyGenerator")
+    public List<OmradeStilling> getLedighetstallForKommuner(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, List<String> kommuner, String periode) {
         if (fylker.size() > 0) {
             kommuner.addAll(supportEndpoint.finnKommunerTilFylker(fylker));
         }
 
+        List<String> filter = getFilterForYrker(yrkesomradeid, yrkesgrupper);
+        Map<String, Integer> ledigestillingerForOmrader = hentLedigeStillingerForOmrader(kommuner, filter, "KOMMUNE_ID");
+        Map<String, Integer> ledighetForOmrader = ledighetsEndpoint.getLedighetForKommuner(yrkesomradeid, yrkesgrupper, fylker, kommuner, periode);
+        return lagOmradestillinger(kommuner, ledigestillingerForOmrader, ledighetForOmrader);
+    }
+
+    @Timed
+    @Cacheable(value = "ledighetstallForFylker", keyGenerator = "cacheKeyGenerator")
+    public List<OmradeStilling> getLedighetstallForFylker(String yrkesomradeid, List<String> yrkesgrupper, List<String> fylker, String periode) {
+        List<String> filter = getFilterForYrker(yrkesomradeid, yrkesgrupper);
+
+        Map<String, Integer> ledigestillingerForOmrader = hentLedigeStillingerForOmrader(fylker, filter, "FYLKE_ID");
+        Map<String, Integer> ledighetForOmrader = ledighetsEndpoint.getLedighetForFylker(yrkesomradeid, yrkesgrupper, fylker, periode);
+
+        return lagOmradestillinger(fylker, ledigestillingerForOmrader, ledighetForOmrader);
+    }
+
+    private List<String> getFilterForYrker(String yrkesomrade, List<String> yrkesgrupper) {
         List<String> filter = new ArrayList<>();
-        if (yrkesomradeid != null) {
-            filter.add(String.format("YRKGR_LVL_1_ID:(%s)", yrkesomradeid));
+        if (yrkesomrade != null) {
+            filter.add(String.format("YRKGR_LVL_1_ID:(%s)", yrkesomrade));
         }
         if (yrkesgrupper.size() > 0) {
             filter.add(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
         }
-
-        Map<String, Integer> ledigestillingerForOmrader = hentLedigeStillingerForKommuner(kommuner, filter);
-        Map<String, Integer> ledighetForOmrader = ledighetsEndpoint.getLedighetForOmrader(yrkesomradeid, yrkesgrupper, fylker, kommuner, periode);
-
-        return lagOmradestillinger(kommuner, ledigestillingerForOmrader, ledighetForOmrader);
+        return filter;
     }
 
-    private List<OmradeStilling> lagOmradestillinger(List<String> kommuner, Map<String, Integer> ledigeStillinger, Map<String, Integer> arbeidledighet) {
-        return kommuner.stream()
-                .map(kommune -> new OmradeStilling(kommune, arbeidledighet.getOrDefault(kommune, 0), ledigeStillinger.getOrDefault(kommune, 0)))
+    private List<OmradeStilling> lagOmradestillinger(List<String> omrader, Map<String, Integer> ledigeStillinger, Map<String, Integer> arbeidledighet) {
+        return omrader.stream()
+                .map(omrade -> new OmradeStilling(omrade, arbeidledighet.getOrDefault(omrade, 0), ledigeStillinger.getOrDefault(omrade, 0)))
                 .collect(toList());
     }
 
@@ -184,21 +198,21 @@ public class StillingerEndpoint {
         }
     }
 
-    private Map<String, Integer> hentLedigeStillingerForKommuner(List<String> kommuner, List<String> filter) {
+    private Map<String, Integer> hentLedigeStillingerForOmrader(List<String> omrader, List<String> filter, String filterKeyNavn) {
         String query = "*:*";
         Map<String, Integer> responses = new HashMap<>();
         List<AsyncSolrQuery> asyncQueries = new ArrayList<>();
-        Timer metricsTimer = MetricsFactory.createTimer(this.getClass().toString() + ".hentLedigeStillingerForKommuner");
+        Timer metricsTimer = MetricsFactory.createTimer(this.getClass().toString() + ".hentLedigeStillingerForOmrader");
         metricsTimer.start();
 
-        for (String kommuneid : kommuner) {
+        for (String kommuneid : omrader) {
             SolrQuery solrQuery = new SolrQuery(query);
             if (filter != null) {
                 filter.forEach(solrQuery::addFilterQuery);
             }
             solrQuery.setRows(0);
             solrQuery.addFacetField("ANTALLSTILLINGER");
-            String filterquery = "KOMMUNE_ID" + ":" + kommuneid;
+            String filterquery = filterKeyNavn + ":" + kommuneid;
             solrQuery.addFilterQuery(filterquery);
             asyncQueries.add(new AsyncSolrQuery(kommuneid, mainSolrClientAsync.query(solrQuery)));
         }

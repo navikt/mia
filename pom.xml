@@ -31,7 +31,10 @@
             **/mock/**,
             **/selftest/**,
             **/sikkerhet/**,
-            **/rest/providers/**
+            **/rest/providers/**,
+            **/internal/**,
+            **/endpoints/**,
+            **/*Servlet.java
         </sonar.exclusions>
 
         <!-- Java  -->
