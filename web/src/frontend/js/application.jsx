@@ -6,7 +6,6 @@ import {defineMessages, injectIntl} from 'react-intl';
 import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import {lastTekster} from './felles/tekster/tekster-reducer';
 import restActionCreator from './felles/rest/rest-action';
-import Hovedmeny from './felles/hovedmeny/hovedmeny';
 import Hodefot from './felles/hodefot/hodefot';
 
 const meldinger = defineMessages({

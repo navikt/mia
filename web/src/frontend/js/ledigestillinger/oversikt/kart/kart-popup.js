@@ -17,11 +17,11 @@ export const getPopupForOmrade = (navn, data) => {
 };
 
 export const hentDataForKommune = (id, yrkesomrade, yrkesgrupper) => {
-    return hentDataForOmrade(id, null, yrkesomrade, yrkesgrupper, "/omrader/kommunedata")
+    return hentDataForOmrade(id, null, yrkesomrade, yrkesgrupper, "/omrader/kommunedata");
 };
 
 export const hentDataForFylke = (id, yrkesomrade, yrkesgrupper) => {
-    return hentDataForOmrade(null, id, yrkesomrade, yrkesgrupper, "/omrader/fylkesdata")
+    return hentDataForOmrade(null, id, yrkesomrade, yrkesgrupper, "/omrader/fylkesdata");
 };
 
 const hentDataForOmrade = (kommune, fylke, yrkesomrade, yrkesgrupper, baseUri) => {
