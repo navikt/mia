@@ -57,10 +57,6 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
         return valgtData.length !== 0;
     };
 
-    const valgteFylkerVisning = harData(valgteFylker) ? <ValgteFylker valgteFylker={valgteFylker} tekst={tekster.valgteFylker} omrader={omrader} /> : <noscript />;
-    const valgteKommunerVisning = harData(valgteKommuner) ? <ValgteKommuner valgteKommuner={valgteKommuner} tekst={tekster.valgteKommuner} omrader={omrader} /> : <noscript />;
-    const valgteYrkesomradeVisning = harData(valgtyrkesomrade) ? <ValgtStillingskategori valgtYrkesomrade={valgtyrkesomrade} yrkesomrader={yrkesomrader} tekst={tekster.valgtStillingskategori} /> : <noscript />;
-    const valgteYrkesgrupperVisning = harData(valgteyrkesgrupper) ? <ValgteArbeidsomrader valgteYrkesgrupper={valgteyrkesgrupper} yrkesgrupper={yrkesgrupper} tekst={tekster.valgteArbeidsomrader} /> : <noscript />;
     const valgtHeleLandet = !harData(valgteFylker) && !harData(valgteKommuner) ? <ValgtHeleNorge valgtOmrade={tekster.valgtOmrade} heleNorge={tekster.heleNorge} />: <noscript />;
 
     return (
@@ -78,10 +74,10 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
             </div>
             <div>
                 {valgtHeleLandet}
-                {valgteFylkerVisning}
-                {valgteKommunerVisning}
-                {valgteYrkesomradeVisning}
-                {valgteYrkesgrupperVisning}
+                <ValgteFylker valgteFylker={valgteFylker} tekst={tekster.valgteFylker} omrader={omrader} />
+                <ValgteKommuner valgteKommuner={valgteKommuner} tekst={tekster.valgteKommuner} omrader={omrader} />
+                <ValgtStillingskategori valgtYrkesomrade={valgtyrkesomrade} yrkesomrader={yrkesomrader} tekst={tekster.valgtStillingskategori} />
+                <ValgteArbeidsomrader valgteYrkesgrupper={valgteyrkesgrupper} yrkesgrupper={yrkesgrupper} tekst={tekster.valgteArbeidsomrader} />
             </div>
             <LinjeGraf {...grafData} />
         </div>

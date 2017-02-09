@@ -5,6 +5,7 @@ import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-sty
 import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, finnIdForFylkenummer} from './kart/kart-utils';
 import {getPopupForOmrade, getPopupMedInnholdslaster, hentDataForFylke, hentDataForKommune} from './kart/kart-popup';
+import {ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -198,8 +199,8 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} onEachFeature={onEachFylke}/>
                     </Map>
-                    {this.props.valgteKommuner.length !== 0 ? <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} /> : <noscript />}
-                    {this.props.valgteFylker.length !== 0 ? <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} /> : <noscript />}
+                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
+                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
                 </div>
             </div>
         );
