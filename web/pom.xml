@@ -23,8 +23,7 @@
             src/frontend/js/**/*spec.js,
             src/frontend/js/**/*spec.jsx,
             src/frontend/js/*.js,
-            src/frontend/js/*.jsx,
-            src/frontend/js/felles/konstanter.js
+            src/frontend/js/*.jsx
         </sonar.coverage.exclusions>
     </properties>
 
