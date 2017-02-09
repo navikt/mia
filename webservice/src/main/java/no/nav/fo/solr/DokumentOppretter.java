@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DokumentOppretter {
-    private final int PERIODE = 0, FYLKESNR = 1, KOMMUNENR = 2, YRKESKODE = 3, ANTALL = 4, YRKLVL1ID = 5, YRKLVL2ID = 6;
+    private static final int PERIODE = 0, FYLKESNR = 1, KOMMUNENR = 2, YRKESKODE = 3, ANTALL = 4, YRKLVL1ID = 5, YRKLVL2ID = 6;
 
     @Inject
     SupportMappingService supportMappingService;
