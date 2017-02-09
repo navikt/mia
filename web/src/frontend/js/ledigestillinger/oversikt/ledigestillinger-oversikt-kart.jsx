@@ -15,10 +15,6 @@ const meldinger = defineMessages({
         id: 'ledigestillinger.oversikt.valgtekommuner',
         defaultMessage: 'Valgte kommuner:'
     },
-    kommunePopup: {
-        id: 'ledigestillinger.oversikt.kommunepopup',
-        defaultMessage: '<h3 class="typo-element">{kommune}</h3><p>Ledige stillinger: {stillinger}<br />Arbeidsledige: {arbeidsledige}</p>'
-    },
     valgteFylker: {
         id: 'ledigestillinger.oversikt.valgtefylker',
         defaultMessage: 'Valgte fylker:'
