@@ -1,4 +1,4 @@
-import {expect, React} from '../../../test-helper';
+import {expect, React} from '../../../test/test-helper';
 import {shallow} from 'enzyme';
 import {Hjelpetekst} from './hjelpetekst.jsx';
 
