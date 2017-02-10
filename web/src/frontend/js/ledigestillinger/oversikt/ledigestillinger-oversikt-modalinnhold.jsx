@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {actions} from './ledigestillinger-oversikt-reducer';
 import {compareOmrader} from './ledigestillinger-oversikt-utils';
 
-const Omrade = props => {
+export const Omrade = props => {
     const name = `checkbox_${props.omrade.id}`;
     const underomradeErValgt = props.omrade.underomrader && props.omrade.underomrader.some(omrade => omrade.valgt === true);
 

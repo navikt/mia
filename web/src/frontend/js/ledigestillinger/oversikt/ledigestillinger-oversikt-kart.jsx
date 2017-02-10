@@ -22,7 +22,7 @@ const meldinger = defineMessages({
     }
 });
 
-class Oversiktskart extends React.Component {
+export class Oversiktskart extends React.Component {
     constructor(props) {
         super(props);
         this.worldBounds = [[58, 3], [71, 31]];

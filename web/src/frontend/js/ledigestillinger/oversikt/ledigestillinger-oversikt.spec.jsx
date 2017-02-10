@@ -2,6 +2,7 @@ import {expect, sinon, React} from '../../../test/test-helper';
 import {shallow} from "enzyme";
 
 import OversiktReducer, {actions, initialState} from './ledigestillinger-oversikt-reducer';
+import Modal from './../../felles/modal/modal';
 import {Oversikt} from "./ledigestillinger-oversikt";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import Oversiktspanel from "./ledigestillinger-oversikt-panel";
