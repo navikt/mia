@@ -117,5 +117,20 @@ describe('bransjer', () => {
                 expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesgruppeselect });
             });
         });
+
+        describe('velgYrkesomrade', function() {
+            beforeEach(() => {
+                this.props = {
+                    dispatch: sinon.spy(),
+                    valgtyrkesomrade: ""
+                };
+            });
+
+           it('skal selecte yrkesområde', () => {
+               const bransjeOversikt = new BransjerOversikt(this.props);
+               bransjeOversikt.velgYrkesomrade("1");
+               expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesomradeselect });
+           });
+        });
     });
 });
