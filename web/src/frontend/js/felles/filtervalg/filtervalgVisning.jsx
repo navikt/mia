@@ -48,7 +48,7 @@ export const ValgteArbeidsomrader = props => {
 };
 
 export const ValgtHeleNorge = props => (
-    <p>
+    <p className={props.class}>
         <span className="typo-element valgte-omrader-tittel">
             <FormattedMessage {...props.valgtOmrade}/>
         </span>

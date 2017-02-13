@@ -5,7 +5,7 @@ import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-sty
 import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, finnIdForFylkenummer} from './kart/kart-utils';
 import {getPopupForOmrade, getPopupMedInnholdslaster, hentDataForFylke, hentDataForKommune} from './kart/kart-popup';
-import {ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
+import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -19,6 +19,14 @@ const meldinger = defineMessages({
     valgteFylker: {
         id: 'ledigestillinger.oversikt.valgtefylker',
         defaultMessage: 'Valgte fylker:'
+    },
+    valgtOmrade: {
+        id: 'ledigestillinger.oversikt.statistikk.valgtomrade',
+        defaultMessage: 'Valgt område:'
+    },
+    heleNorge: {
+        id: 'ledigestillinger.oversikt.statistikk.helenorge',
+        defaultMessage: 'Hele Norge'
     }
 });
 
@@ -188,8 +196,17 @@ class Oversiktskart extends React.Component {
             zoomControl: false
         };
 
+        const harData = valgtData => {
+            return valgtData.length !== 0;
+        };
+
+        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} class={'valgte-omrader'} />: <noscript />;
+
         return (
-            <div>
+            <div className="valgte-omrader-container">
+                {valgtHeleLandet}
+                <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
+                <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
                         <TileLayer
@@ -199,8 +216,6 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} onEachFeature={onEachFylke}/>
                     </Map>
-                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
-                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
                 </div>
             </div>
         );
