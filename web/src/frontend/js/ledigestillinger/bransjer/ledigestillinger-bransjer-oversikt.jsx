@@ -8,7 +8,7 @@ import {ALTERNATIV_ALLE} from '../../felles/konstanter';
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
 
-class BransjerOversikt extends React.Component {
+export class BransjerOversikt extends React.Component {
     toggleYrkesgruppe(id) {
         if (this.props.valgteyrkesgrupper.includes(id)) {
             this.props.dispatch({type: actions.yrkesgruppedeselect, payload: id});

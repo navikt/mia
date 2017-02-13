@@ -1,10 +1,11 @@
 import React from 'react';
-import {expect} from '../../../test/test-helper';
+import {expect, sinon} from '../../../test/test-helper';
 import {shallow} from 'enzyme';
 
 import BransjeReducer, {actions} from './ledigestillinger-bransjer-reducer';
 import {getNavnForYrkesomradeId, getNavnForYrkesgruppeId} from './ledigestillinger-bransjer-util';
-import {BransjeDropdown} from './bransje-dropdown';
+import DropdownMedIntl, {BransjeDropdown} from './bransje-dropdown';
+import {BransjerOversikt} from './ledigestillinger-bransjer-oversikt';
 
 describe('bransjer', () => {
     let yrkedata = {};
@@ -49,8 +50,6 @@ describe('bransjer', () => {
     });
 
     describe('bransjer-util', () => {
-
-
         it('skal returnere riktig navn for yrkesområde basert på yrkesområdeid', () => {
             const yrkesomradenavnHandel = getNavnForYrkesomradeId("1", yrkedata);
             const yrkesomradenavnReiseliv = getNavnForYrkesomradeId("2", yrkedata);
@@ -87,6 +86,36 @@ describe('bransjer', () => {
             />);
             expect(wrapper.is('div')).to.be.true;
             expect(wrapper.find('select').length).to.equal(1);
+        });
+    });
+
+    describe('bransjer-oversikt', () => {
+        it('skal rendre bransjeoversikt med en bransjedropdown', () => {
+            const wrapper = shallow(<BransjerOversikt yrkesomrader={yrkedata.data}
+                                                      totantallstillinger={11} />);
+            expect(wrapper.is('div')).to.be.true;
+            expect(wrapper).to.have.descendants(DropdownMedIntl);
+        });
+
+        describe('toggleYrkesgrupper', function() {
+            beforeEach(() => {
+                this.props = {
+                    dispatch: sinon.spy(),
+                    valgteyrkesgrupper: []
+                };
+            });
+
+            it('skal deselecte yrkesgruppe', () => {
+                const bransjeOversikt = new BransjerOversikt({...this.props, valgteyrkesgrupper: ["1"]});
+                bransjeOversikt.toggleYrkesgruppe("1");
+                expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesgruppedeselect });
+            });
+
+            it('skal selecte yrkesgruppe', () => {
+                const bransjeOversikt = new BransjerOversikt(this.props);
+                bransjeOversikt.toggleYrkesgruppe("1");
+                expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesgruppeselect });
+            });
         });
     });
 });
