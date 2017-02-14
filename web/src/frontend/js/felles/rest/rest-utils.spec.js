@@ -22,7 +22,6 @@ describe('rest_utils', () => {
 
 
     describe('handterFeil', () => {
-
         it('skal dispatche riktig actiontype med feilmeldingen som data om generell feil', () => {
             let dispatch = sinon.spy();
             const feilHandterer = utils.handterFeil(dispatch, 'ACTION_FEIL');
@@ -33,26 +32,5 @@ describe('rest_utils', () => {
 
             expect(dispatch).to.have.been.calledWith({type: 'ACTION_FEIL', payload: 'Error: feilfeil'});
         });
-
-        it('skal resolve om feilen kom fra en response', (done) => {
-            let response = {status: 200, json: () => Promise.resolve('datadata')};
-
-            let dispatch = sinon.spy();
-            const feilHandterer = utils.handterFeil(dispatch, 'ACTION_FEIL');
-
-            const error = new Error('feilfeil');
-            error.response = response;
-
-            feilHandterer(error);
-
-            setTimeout(() => {
-                expect(dispatch).to.have.been.calledWith({
-                    type: 'ACTION_FEIL',
-                    data: {payload: 'datadata', response: response}
-                });
-                done();
-            });
-        });
-
     });
 });
