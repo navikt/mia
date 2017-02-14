@@ -22,7 +22,7 @@ const meldinger = defineMessages({
     }
 });
 
-const feilmodal = props => {
+const feilmodal = () => {
     const onClickOppdater = () => location.reload();
 
     return (
