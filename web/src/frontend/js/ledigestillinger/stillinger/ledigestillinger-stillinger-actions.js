@@ -28,7 +28,7 @@ export const hentStillinger = () => (dispatch, getState) => {
     fetchToJson(uri)
         .then(
             sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
-            handterFeil(dispatch, actions[STATUS.feilet])
+            handterFeil(dispatch, actions[STATUS.feilet], false)
         );
 };
 

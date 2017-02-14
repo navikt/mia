@@ -1,4 +1,5 @@
 import {RESTURL} from '../konstanter.js';
+import {apne_modal as apne_feilmodal} from '../../feilmodal/feilmodal-actions';
 
 export function sjekkStatuskode(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -7,6 +8,7 @@ export function sjekkStatuskode(response) {
     var error = new Error(response.statusText);
     error.response = response;
     throw error;
+    return Promise.reject(error);
 }
 
 export function toJson(response) {
@@ -17,16 +19,12 @@ export function sendResultatTilDispatch(dispatch, action) {
     return data => dispatch({type: action, payload: data});
 }
 
-export function handterFeil(dispatch, action) {
+export function handterFeil(dispatch, action, visPopup=true) {
     return error => {
-        if (error.response){
-            error.response.json().then((data) => {
-                console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({type: action, data: {response: error.response, payload: data}});
-            });
-        } else {
-            console.error(error, error.stack); // eslint-disable-line no-console
-            dispatch({type: action, payload: error.toString()});
+        console.error(error, error.stack); // eslint-disable-line no-console
+        dispatch({type: action, payload: error.toString()});
+        if(visPopup) {
+            dispatch(apne_feilmodal);
         }
     };
 }
@@ -39,7 +37,7 @@ export function fetchToJson(url, config = {}) {
 
     return fetch(RESTURL + url, {...secConfig, ...config, headers})
         .then(sjekkStatuskode)
-        .then(toJson);
+        .then(toJson, err => Promise.reject(err));
 }
 
 function reduceParamList(paramlist) {
