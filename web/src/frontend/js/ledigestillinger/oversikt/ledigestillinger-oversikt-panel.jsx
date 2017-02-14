@@ -32,7 +32,7 @@ export class Oversiktspanel extends React.Component {
 
         return (
             <div className="panel panel-fremhevet">
-                <div className="text-center blokk">
+                <div className="velg-omrader text-center blokk">
                     <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)} ref="modalknapp">
                         <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
                     </button>

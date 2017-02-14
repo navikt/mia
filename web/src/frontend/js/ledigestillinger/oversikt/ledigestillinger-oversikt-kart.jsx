@@ -1,11 +1,12 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
-import {defineMessages, injectIntl} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
-import {ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
+import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
+import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -19,6 +20,22 @@ const meldinger = defineMessages({
     valgteFylker: {
         id: 'ledigestillinger.oversikt.valgtefylker',
         defaultMessage: 'Valgte fylker:'
+    },
+    valgtOmrade: {
+        id: 'ledigestillinger.oversikt.statistikk.valgtomrade',
+        defaultMessage: 'Valgt område:'
+    },
+    heleNorge: {
+        id: 'ledigestillinger.oversikt.statistikk.helenorge',
+        defaultMessage: 'Hele Norge'
+    },
+    hjelpetekstTittel: {
+        id: 'ledigestillinger.oversikt.hjelpeteksttittel',
+        defaultMessage: 'Valgte fylker og kommuner'
+    },
+    hjelpetekstTekst: {
+        id: 'ledigestillinger.oversikt.hjelpeteksttekst',
+        defaultMessage: 'Valgte fylker og kommuner vil danne grunnlag for all data som vises på siden.'
     }
 });
 
@@ -151,8 +168,24 @@ class Oversiktskart extends React.Component {
             zoomControl: false
         };
 
+        const harData = valgtData => {
+            return valgtData.length !== 0;
+        };
+
+        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} className={'valgte-omrader'} />: <noscript />;
+
         return (
-            <div>
+            <div className="kart-omrader-container">
+                <div className="valgte-omrader-container hjelpetekst-nedover">
+                    <Hjelpetekst
+                        id="valgtomrade-hjelpetekst"
+                        tittel={<FormattedMessage {...meldinger.hjelpetekstTittel}/>}
+                        tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
+                    />
+                    {valgtHeleLandet}
+                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
+                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
+                </div>
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
                         <TileLayer
@@ -162,8 +195,6 @@ class Oversiktskart extends React.Component {
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
                         <GeoJSON ref="fylker" data={this.props.fylkergeojson} onEachFeature={onEachFylke}/>
                     </Map>
-                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
-                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
                 </div>
             </div>
         );
