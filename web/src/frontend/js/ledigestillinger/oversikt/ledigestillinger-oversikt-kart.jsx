@@ -172,7 +172,7 @@ class Oversiktskart extends React.Component {
             return valgtData.length !== 0;
         };
 
-        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} class={'valgte-omrader'} />: <noscript />;
+        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} className={'valgte-omrader'} />: <noscript />;
 
         return (
             <div className="kart-omrader-container">
@@ -183,8 +183,8 @@ class Oversiktskart extends React.Component {
                         tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
                     />
                     {valgtHeleLandet}
-                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
-                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
+                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
+                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
                 </div>
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>

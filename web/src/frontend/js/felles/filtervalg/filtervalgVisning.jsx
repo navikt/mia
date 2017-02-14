@@ -5,7 +5,7 @@ import {FormattedMessage} from 'react-intl';
 
 export const ValgteFylker = props => {
     return props.valgteFylker.length !== 0 ?
-        <p className={props.class}>
+        <p className={props.className}>
             <span className="typo-element valgte-omrader-tittel">
                 <FormattedMessage {...props.tekst}/>
             </span>
@@ -16,7 +16,7 @@ export const ValgteFylker = props => {
 
 export const ValgteKommuner = props => {
     return props.valgteKommuner.length !== 0 ?
-        <p className={props.class}>
+        <p className={props.className}>
             <span className="typo-element valgte-omrader-tittel">
                 <FormattedMessage {...props.tekst}/>
             </span>
@@ -48,7 +48,7 @@ export const ValgteArbeidsomrader = props => {
 };
 
 export const ValgtHeleNorge = props => (
-    <p className={props.class}>
+    <p className={props.className}>
         <span className="typo-element valgte-omrader-tittel">
             <FormattedMessage {...props.valgtOmrade}/>
         </span>
