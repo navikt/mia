@@ -10,13 +10,13 @@ describe('HovedmenyVisning', () => {
         switchere: {},
         elementer: [{
             tekst: 'element1',
-            element: <div id="element1"></div>
+            element: <div id="element1" />
         }, {
             tekst: 'element2',
-            element: <div id="element2"></div>
+            element: <div id="element2"/>
         }, {
             tekst: 'element3',
-            element: <div id="element3"></div>
+            element: <div id="element3"/>
         }]
     });
 

@@ -1,4 +1,4 @@
-import {highlightStyling, selectedStyling, geojsonStyling} from './kart-styling'
+import {highlightStyling, selectedStyling, geojsonStyling} from './kart-styling';
 
 const harStrukturkode = omrade => omrade.strukturkode != null;
 
