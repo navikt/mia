@@ -3,8 +3,8 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
-import {finnIdForKommunenummer, finnIdForFylkenummer} from './kart/kart-utils';
-import {getPopupForOmrade, getPopupMedInnholdslaster, hentDataForFylke, hentDataForKommune} from './kart/kart-popup';
+import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
+import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 
 const meldinger = defineMessages({
@@ -73,51 +73,34 @@ class Oversiktskart extends React.Component {
         });
     }
 
+    clickKommune(e) {
+        const properties = e.target.feature.properties;
+        const kommuneErValgt = properties.valgt === true;
+        const kommuneId = finnIdForKommunenummer(properties.id, this.props.omrader);
+        this.fjernSelectedFraFylker();
+
+        if(kommuneErValgt) {
+            e.target.setStyle(highlightStyling);
+            this.props.avvelgKommune(kommuneId);
+        } else {
+            e.target.setStyle(selectedStyling);
+            this.props.velgKommune(kommuneId);
+        }
+
+        properties.valgt = !kommuneErValgt;
+    }
+
+    clickFylke(e, layer) {
+        this.zoomTilFylke(e);
+        const fylkeId = finnIdForFylkenummer(e.target.feature.properties.id, this.props.omrader);
+        this.props.velgFylke(fylkeId);
+        layer.setStyle({fillOpacity: 0.1});
+    }
+
     render() {
         const initialPosition = [63, 13];
         const initialZoom = 5;
         const maxBounds = [[57, 0], [72, 33]];
-
-        const highlightFeature = e => {
-            const layer = e.target;
-            let styling = highlightStyling;
-
-            if(layer.feature.properties.valgt === true) {
-                styling = {...styling, ...selectedStyling};
-            }
-            layer.setStyle(styling);
-        };
-
-        const resetHighlight = e =>  {
-            e.target.setStyle(geojsonStyling);
-            if(e.target.feature.properties.valgt === true) {
-                e.target.setStyle(selectedStyling);
-            }
-        };
-
-        const clickKommune = e => {
-            const properties = e.target.feature.properties;
-            const kommuneErValgt = properties.valgt === true;
-            const kommuneId = finnIdForKommunenummer(properties.id, this.props.omrader);
-            this.fjernSelectedFraFylker();
-
-            if(kommuneErValgt) {
-                e.target.setStyle(highlightStyling);
-                this.props.avvelgKommune(kommuneId);
-            } else {
-                e.target.setStyle(selectedStyling);
-                this.props.velgKommune(kommuneId);
-            }
-
-            properties.valgt = !kommuneErValgt;
-        };
-
-        const clickFylke = (e, layer) => {
-            this.zoomTilFylke(e);
-            const fylkeId = finnIdForFylkenummer(e.target.feature.properties.id, this.props.omrader);
-            this.props.velgFylke(fylkeId);
-            layer.setStyle({fillOpacity: 0.1});
-        };
 
         const onEachFylke = (feature, layer) => {
             layer.setStyle(geojsonStyling);
@@ -126,17 +109,7 @@ class Oversiktskart extends React.Component {
                     if(this.erLandvisningZoom()) {
                         highlightFeature(e);
                     }
-                    const yrkesomrade = this.props.valgtYrkesomrade;
-                    const yrkesgrupper = this.props.valgteYrkesgrupper;
-                    const fylkeId = finnIdForFylkenummer(feature.properties.id, this.props.omrader);
-                    layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
-                    feature.properties.harFokus = true;
-
-                    hentDataForFylke(fylkeId, yrkesomrade, yrkesgrupper).then(result => {
-                        if(feature.properties.harFokus) {
-                            layer.bindPopup(getPopupForOmrade(feature.properties.navn, result[0])).openPopup();
-                        }
-                    });
+                    visPopupForFylke(e, this.props, feature, layer);
                 },
                 mouseout: (e) => {
                     feature.properties.harFokus = false;
@@ -148,7 +121,7 @@ class Oversiktskart extends React.Component {
                 click: e => {
                     feature.properties.isZooming = true;
                     setTimeout(() => feature.properties.isZooming = false, 1000);
-                    clickFylke(e, layer);
+                    this.clickFylke(e, layer);
                 }
             });
         };
@@ -157,26 +130,14 @@ class Oversiktskart extends React.Component {
             layer.on({
                 mouseover: e => {
                     highlightFeature(e);
-                    const yrkesomrade = this.props.valgtYrkesomrade;
-                    const yrkesgrupper = this.props.valgteYrkesgrupper;
-                    feature.properties.harFokus = true;
-                    console.log(feature.properties, feature.properties.id);
-
-                    const kommuneId = finnIdForKommunenummer(feature.properties.id, this.props.omrader);
-                    layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
-
-                    hentDataForKommune(kommuneId, yrkesomrade, yrkesgrupper).then(result => {
-                        if(feature.properties.harFokus) {
-                            layer.bindPopup(getPopupForOmrade(feature.properties.navn, result[0])).openPopup();
-                        }
-                    });
+                    visPopupForKommune(e, this.props, feature, layer);
                 },
                 mouseout: e => {
                     layer.closePopup();
                     feature.properties.harFokus = false;
                     resetHighlight(e);
                 },
-                click: clickKommune
+                click: e => this.clickKommune(e)
             });
         };
 
