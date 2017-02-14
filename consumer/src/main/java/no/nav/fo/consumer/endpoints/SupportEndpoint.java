@@ -62,7 +62,7 @@ public class SupportEndpoint {
     }
 
     public QueryResponse getFylkerOgKommunerFraSolr() {
-        SolrQuery query = new SolrQuery("NIVAA:[2 TO 3]");
+        SolrQuery query = new SolrQuery("NIVAA:[1 TO 3]");
         query.addFilterQuery("DOKUMENTTYPE:GEOGRAFI");
         query.setRows(1000);
 

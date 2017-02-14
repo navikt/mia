@@ -13,7 +13,7 @@ public class GeografiTransformer {
     public static List<Omrade> transformResponseToFylkerOgKommuner(SolrDocumentList solrDocuments) {
         List<Omrade> alleOmrader = solrDocuments.stream()
                 .map(GeografiTransformer::createOmradeFromDocument)
-                .filter(omrade -> omrade.getStrukturkode() != null || omrade.getId().startsWith(GENERELT_FOR_FYLKE_PREFIX))
+                .filter(omrade -> omrade.getStrukturkode() != null || omrade.getId().startsWith(GENERELT_FOR_FYLKE_PREFIX) || erEOSEU(omrade) || erRestenAvVerden(omrade))
                 .filter(omrade -> !fjernUtgaatteKommuner(omrade))
                 .collect(Collectors.toList());
 
@@ -57,5 +57,13 @@ public class GeografiTransformer {
     private static String getFieldValue(String name, SolrDocument document) {
         Object value = document.getFieldValue(name);
         return value != null ? value.toString() : null;
+    }
+
+    private static boolean erEOSEU(Omrade omrade) {
+        return omrade != null && (omrade.getParentIds().contains("EOSEU") || omrade.getStrukturkode().equalsIgnoreCase("EU"));
+    }
+
+    private static boolean erRestenAvVerden(Omrade omrade) {
+        return omrade != null && (omrade.getParentIds().contains("resten av verden") && !omrade.getStrukturkode().equalsIgnoreCase("EU"));
     }
 }
