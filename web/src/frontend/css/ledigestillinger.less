@@ -45,9 +45,28 @@
 }
 
 .panel-oversikt .oversikt-toggle {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0.5rem;
+    display: inline-block;
+    float: right;
+    margin: 0.5rem;
+}
+
+.panel-oversikt .velg-omrader {
+    margin-top: 2rem;
+}
+
+.valgte-omrader-container {
+    display: inline;
+
+    .hjelpetekst {
+        position: relative;
+        float: right;
+        margin-top: 16px;
+        margin-right: 5px;
+    }
+}
+
+.kart-omrader-container {
+    height: 800px;
 }
 
 .kommune-navn {
@@ -57,7 +76,6 @@
 .oversikt-kart {
     display: inline-block;
     width: 100%;
-    min-height: ~"calc(800px + 3rem)";
 
     .leaflet-container {
         height: 800px;
