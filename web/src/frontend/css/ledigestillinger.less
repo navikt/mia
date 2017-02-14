@@ -55,7 +55,18 @@
 }
 
 .valgte-omrader-container {
-    height: 300px;
+    display: inline;
+
+    .hjelpetekst {
+        position: relative;
+        float: right;
+        margin-top: 16px;
+        margin-right: 5px;
+    }
+}
+
+.kart-omrader-container {
+    height: 800px;
 }
 
 .kommune-navn {
@@ -65,7 +76,6 @@
 .oversikt-kart {
     display: inline-block;
     width: 100%;
-    min-height: ~"calc(800px + 3rem)";
 
     .leaflet-container {
         height: 800px;

@@ -1,11 +1,12 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
-import {defineMessages, injectIntl} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, finnIdForFylkenummer} from './kart/kart-utils';
 import {getPopupForOmrade, getPopupMedInnholdslaster, hentDataForFylke, hentDataForKommune} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
+import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -27,6 +28,14 @@ const meldinger = defineMessages({
     heleNorge: {
         id: 'ledigestillinger.oversikt.statistikk.helenorge',
         defaultMessage: 'Hele Norge'
+    },
+    hjelpetekstTittel: {
+        id: 'ledigestillinger.oversikt.hjelpeteksttittel',
+        defaultMessage: 'Valgte fylker og kommuner'
+    },
+    hjelpetekstTekst: {
+        id: 'ledigestillinger.oversikt.hjelpeteksttekst',
+        defaultMessage: 'Valgte fylker og kommuner vil danne grunnlag for all data som vises på siden.'
     }
 });
 
@@ -203,10 +212,17 @@ class Oversiktskart extends React.Component {
         const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} class={'valgte-omrader'} />: <noscript />;
 
         return (
-            <div className="valgte-omrader-container">
-                {valgtHeleLandet}
-                <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
-                <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
+            <div className="kart-omrader-container">
+                <div className="valgte-omrader-container hjelpetekst-nedover">
+                    <Hjelpetekst
+                        id="valgtomrade-hjelpetekst"
+                        tittel={<FormattedMessage {...meldinger.hjelpetekstTittel}/>}
+                        tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
+                    />
+                    {valgtHeleLandet}
+                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} class={'valgte-omrader'} />
+                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} class={'valgte-omrader'} />
+                </div>
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
                         <TileLayer
