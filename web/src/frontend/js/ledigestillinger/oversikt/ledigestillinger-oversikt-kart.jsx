@@ -98,7 +98,7 @@ class Oversiktskart extends React.Component {
         const clickKommune = e => {
             const properties = e.target.feature.properties;
             const kommuneErValgt = properties.valgt === true;
-            const kommuneId = finnIdForKommunenummer(properties.komm, this.props.omrader);
+            const kommuneId = finnIdForKommunenummer(properties.id, this.props.omrader);
             this.fjernSelectedFraFylker();
 
             if(kommuneErValgt) {
@@ -114,7 +114,7 @@ class Oversiktskart extends React.Component {
 
         const clickFylke = (e, layer) => {
             this.zoomTilFylke(e);
-            const fylkeId = finnIdForFylkenummer(e.target.feature.properties.fylkesnr, this.props.omrader);
+            const fylkeId = finnIdForFylkenummer(e.target.feature.properties.id, this.props.omrader);
             this.props.velgFylke(fylkeId);
             layer.setStyle({fillOpacity: 0.1});
         };
@@ -128,7 +128,7 @@ class Oversiktskart extends React.Component {
                     }
                     const yrkesomrade = this.props.valgtYrkesomrade;
                     const yrkesgrupper = this.props.valgteYrkesgrupper;
-                    const fylkeId = finnIdForFylkenummer(feature.properties.fylkesnr, this.props.omrader);
+                    const fylkeId = finnIdForFylkenummer(feature.properties.id, this.props.omrader);
                     layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
                     feature.properties.harFokus = true;
 
@@ -160,7 +160,9 @@ class Oversiktskart extends React.Component {
                     const yrkesomrade = this.props.valgtYrkesomrade;
                     const yrkesgrupper = this.props.valgteYrkesgrupper;
                     feature.properties.harFokus = true;
-                    const kommuneId = finnIdForKommunenummer(feature.properties.komm, this.props.omrader);
+                    console.log(feature.properties, feature.properties.id);
+
+                    const kommuneId = finnIdForKommunenummer(feature.properties.id, this.props.omrader);
                     layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
 
                     hentDataForKommune(kommuneId, yrkesomrade, yrkesgrupper).then(result => {
