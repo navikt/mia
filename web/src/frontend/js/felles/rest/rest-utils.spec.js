@@ -22,7 +22,7 @@ describe('rest_utils', () => {
 
 
     describe('handterFeil', () => {
-        it('skal dispatche riktig actiontype med feilmeldingen som data om generell feil', () => {
+        it('skal dispatche riktig actiontype om generell feil', () => {
             let dispatch = sinon.spy();
             const feilHandterer = utils.handterFeil(dispatch, 'ACTION_FEIL');
 
@@ -31,6 +31,26 @@ describe('rest_utils', () => {
             feilHandterer(error);
 
             expect(dispatch).to.have.been.calledWith({type: 'ACTION_FEIL', payload: undefined});
+        });
+
+        it('skal dispatche med call_id om det er med i feilen', (done) => {
+            let response = {status: 500, json: () => Promise.resolve({callId: 'callId'})};
+
+            let dispatch = sinon.spy();
+            const feilHandterer = utils.handterFeil(dispatch, 'ACTION_FEIL');
+
+            const error = new Error('feilfeil');
+            error.response = response;
+
+            feilHandterer(error);
+
+            setTimeout(() => {
+                expect(dispatch).to.have.been.calledWith({
+                    type: 'ACTION_FEIL',
+                    payload: 'callId'
+                });
+                done();
+            });
         });
     });
 });
