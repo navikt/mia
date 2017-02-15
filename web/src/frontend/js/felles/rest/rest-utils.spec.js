@@ -30,7 +30,7 @@ describe('rest_utils', () => {
 
             feilHandterer(error);
 
-            expect(dispatch).to.have.been.calledWith({type: 'ACTION_FEIL', payload: 'Error: feilfeil'});
+            expect(dispatch).to.have.been.calledWith({type: 'ACTION_FEIL', payload: undefined});
         });
     });
 });
