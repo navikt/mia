@@ -19,11 +19,25 @@ export function sendResultatTilDispatch(dispatch, action) {
 }
 
 export function handterFeil(dispatch, action, visPopup=true) {
-    return error => {
-        console.error(error, error.stack); // eslint-disable-line no-console
-        dispatch({type: action, payload: error.toString()});
+    const visFeilmelding = (error, data) => {
+        console.error(error, error.stack, data); // eslint-disable-line no-console
+        dispatch({type: action, payload: data});
         if(visPopup) {
-            dispatch(apne_feilmodal);
+            dispatch({...apne_feilmodal, feilkode: data});
+        }
+    };
+
+    return error => {
+        if (error.response && error.response.json){
+            try {
+                error.response.json().then((data) => {
+                    visFeilmelding(error, data.callId);
+                });
+            } catch (e) {
+                visFeilmelding(error);
+            }
+        } else {
+            visFeilmelding(error);
         }
     };
 }

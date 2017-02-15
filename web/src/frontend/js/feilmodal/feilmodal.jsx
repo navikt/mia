@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {feilmodalId} from './feilmodal-actions';
 import Modal from '../felles/modal/modal';
 import {defineMessages, FormattedMessage} from 'react-intl';
@@ -19,20 +20,28 @@ const meldinger = defineMessages({
     knappLukk: {
         id: 'feilmodal.knapp.lukk',
         defaultMessage: 'Fortsett'
+    },
+    feilkode: {
+        id: 'feilmodal.feilkode',
+        defaultMessage: 'Feilkode: {feilkode}'
     }
 });
 
-const feilmodal = () => {
+const feilmodal = (props) => {
     const onClickOppdater = () => location.reload();
+    const callIdMelding = (props.feil == null) ? null : <p><FormattedMessage {...meldinger.feilkode} values={{feilkode: props.feil}}/></p>;
 
     return (
         <Modal id={feilmodalId} tittel={meldinger.feilmeldingTittel} feilmodal={true} onLagre={onClickOppdater}>
             <div>
                 <div className="blokk">
-                    <FormattedMessage {...meldinger.feilmeldingTekst} />
+                    <p><FormattedMessage {...meldinger.feilmeldingTekst} /></p>
+                    {callIdMelding}
                 </div>
             </div>
         </Modal>
     );
 };
-export default feilmodal;
+
+const stateToProps = state => ({feil: state.modal.feilkode});
+export default connect(stateToProps)(feilmodal);

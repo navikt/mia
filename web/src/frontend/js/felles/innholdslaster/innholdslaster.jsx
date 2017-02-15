@@ -15,7 +15,11 @@ const meldinger = defineMessages({
     },
     tekst: {
         id: 'feilmeldingspanel.tekst',
-        defaultMessage: 'Noe gikk galt ved henting av data fra våre baksystem. Vi kan derfor ikke vise innholder for dette elementet. Du kan prøve å oppdatere siden for å laste inn dataene på nytt.'
+        defaultMessage: 'Noe gikk galt ved henting av data fra våre baksystem. Vi kan derfor ikke vise innholdet for dette elementet. Du kan prøve å oppdatere siden for å laste inn dataene på nytt.'
+    },
+    feilkode: {
+        id: 'feilmeldingspanel.feilkode',
+        defaultMessage: 'Feilkode: {feilkode}'
     }
 });
 
@@ -27,6 +31,9 @@ const Innholdslaster = ({avhengigheter, children, spinnerForInitialisert = true,
         return <div>{children}</div>;
     }
     if(harFeilet(avhengigheter)) {
+        const feil = avhengigheter.filter(harStatus(STATUS.feilet)).find(a => a.data != null);
+        const callIdMelding = (feil == null) ? null : <p><FormattedMessage {...meldinger.feilkode} values={{feilkode: feil.data}}/></p>;
+
         return (
             <div className="panel panel-ramme">
                 <h3 className="hode hode-dekorert hode-advarsel hode-undertittel">
@@ -35,6 +42,7 @@ const Innholdslaster = ({avhengigheter, children, spinnerForInitialisert = true,
                 <p>
                     <FormattedMessage {...feilmelding.tekst} />
                 </p>
+                {callIdMelding}
             </div>
         );
     }
