@@ -13,7 +13,7 @@ export default function modalReducer(state = DEFAULT_STATE, action) {
         case UPDATE_LOCATION:
             return {... state, apenmodal: null};
         case APNE_MODAL:
-            return {... state, apenmodal: action.modalid};
+            return {... state, apenmodal: action.modalid, feilkode: action.feilkode};
         default:
             return state;
     }
