@@ -32,7 +32,7 @@ export function createRestReducer(navn, initialState = defaultStateObj) {
             case actions[STATUS.lastet]:
                 return {data: action.payload, status: STATUS.lastet};
             case actions[STATUS.feilet]:
-                return {...state, status: STATUS.feilet};
+                return {...state, status: STATUS.feilet, data: action.payload};
             default:
                 return state;
         }

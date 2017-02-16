@@ -1,4 +1,5 @@
 import {RESTURL} from '../konstanter.js';
+import {apne_modal as apne_feilmodal} from '../../feilmodal/feilmodal-actions';
 
 export function sjekkStatuskode(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -17,16 +18,26 @@ export function sendResultatTilDispatch(dispatch, action) {
     return data => dispatch({type: action, payload: data});
 }
 
-export function handterFeil(dispatch, action) {
+export function handterFeil(dispatch, action, visPopup=true) {
+    const visFeilmelding = (error, data) => {
+        console.error(error, error.stack, data); // eslint-disable-line no-console
+        dispatch({type: action, payload: data});
+        if(visPopup) {
+            dispatch({...apne_feilmodal, feilkode: data});
+        }
+    };
+
     return error => {
-        if (error.response){
-            error.response.json().then((data) => {
-                console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({type: action, data: {response: error.response, payload: data}});
-            });
+        if (error.response && error.response.json){
+            try {
+                error.response.json().then((data) => {
+                    visFeilmelding(error, data.callId);
+                });
+            } catch (e) {
+                visFeilmelding(error);
+            }
         } else {
-            console.error(error, error.stack); // eslint-disable-line no-console
-            dispatch({type: action, payload: error.toString()});
+            visFeilmelding(error);
         }
     };
 }
@@ -39,7 +50,7 @@ export function fetchToJson(url, config = {}) {
 
     return fetch(RESTURL + url, {...secConfig, ...config, headers})
         .then(sjekkStatuskode)
-        .then(toJson);
+        .then(toJson, err => Promise.reject(err));
 }
 
 function reduceParamList(paramlist) {
