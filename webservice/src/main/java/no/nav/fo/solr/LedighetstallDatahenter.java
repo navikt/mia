@@ -1,12 +1,13 @@
 package no.nav.fo.solr;
 
+import no.nav.fo.consumer.fillager.Fillager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.inject.Inject;
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class LedighetstallDatahenter {
@@ -23,6 +24,9 @@ public class LedighetstallDatahenter {
     @Inject
     IndekserSolr indekserSolr;
 
+    @Inject
+    Fillager fillager;
+
     @Value("${mia.datadir}")
     private String ledighetstallFolder;
 
@@ -35,7 +39,9 @@ public class LedighetstallDatahenter {
 
     private void oppdaterArbeidsledighetHvisFilErEndret() {
         String arbedsledighetFullPath = String.format("%s/%s", ledighetstallFolder, ARBEIDSLEDIGHET_FILNAVN);
-        long sistOppdatert = getLastModified(arbedsledighetFullPath);
+        long sistOppdatert = fillager.getLastModified(arbedsledighetFullPath);
+
+
         if(arbeidsledighetLastModified == 0) {
             arbeidsledighetLastModified = sistOppdatert;
         }
@@ -44,18 +50,18 @@ public class LedighetstallDatahenter {
             logger.info("Fant ny versjon av arbeidsledighet, oppdaterer SOLR...");
             arbeidsledighetLastModified = sistOppdatert;
 
-            InputStream fileInputStream = ClassLoader.getSystemResourceAsStream(arbedsledighetFullPath);
-            if(fileInputStream != null) {
-                indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(fileInputStream);
-            } else {
-                logger.error("Kunne ikke lese filen for arbeidsledighet fra disk...");
+            try {
+                InputStream fileInputStream = fillager.getFileAsStream(arbedsledighetFullPath);
+                indekserSolr.lesArbeidsledighetCSVOgSkrivTilSolr(fileInputStream);
+            } catch(IOException e) {
+                logger.error("Kunne ikke lese filen for arbeidsledighet fra disk.", e);
             }
         }
     }
 
     private void oppdaterLedigestillingerHvisFilErEndret() {
         String ledigestillingerFullPath = String.format("%s/%s", ledighetstallFolder, LEDIGESTILLINGER_FILNAVN);
-        long sistOppdatert = getLastModified(ledigestillingerFullPath);
+        long sistOppdatert = fillager.getLastModified(ledigestillingerFullPath);
         if(ledigeStillingerLastModified == 0) {
             ledigeStillingerLastModified = sistOppdatert;
         }
@@ -64,18 +70,12 @@ public class LedighetstallDatahenter {
             logger.info("Fant ny versjon av ledigeStillinger, oppdaterer SOLR...");
             ledigeStillingerLastModified = sistOppdatert;
 
-            InputStream fileInputStream = ClassLoader.getSystemResourceAsStream(ledigestillingerFullPath);
-            if(fileInputStream != null) {
+            try {
+                InputStream fileInputStream = fillager.getFileAsStream(ledigestillingerFullPath);
                 indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(fileInputStream);
-            } else {
-                logger.error("Kunne ikke lese filen for ledigestillinger fra disk...");
+            } catch(IOException e) {
+                logger.error("Kunne ikke lese filen for ledigestillinger fra disk.", e);
             }
-
         }
-    }
-
-    private long getLastModified(String path) {
-        File fil = new File(path);
-        return fil.lastModified();
     }
 }
