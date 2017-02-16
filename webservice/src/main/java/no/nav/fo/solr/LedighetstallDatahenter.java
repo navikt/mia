@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.io.InputStream;
 
 public class LedighetstallDatahenter {
     private static final long HVERT_5_MINUTT = 5 * 60 * 1000;
@@ -42,7 +43,13 @@ public class LedighetstallDatahenter {
         if(sistOppdatert > arbeidsledighetLastModified) {
             logger.info("Fant ny versjon av arbeidsledighet, oppdaterer SOLR...");
             arbeidsledighetLastModified = sistOppdatert;
-            indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(ClassLoader.getSystemResourceAsStream(arbedsledighetFullPath));
+
+            InputStream fileInputStream = ClassLoader.getSystemResourceAsStream(arbedsledighetFullPath);
+            if(fileInputStream != null) {
+                indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(fileInputStream);
+            } else {
+                logger.error("Kunne ikke lese filen for arbeidsledighet fra disk...");
+            }
         }
     }
 
@@ -56,7 +63,14 @@ public class LedighetstallDatahenter {
         if(sistOppdatert > ledigeStillingerLastModified) {
             logger.info("Fant ny versjon av ledigeStillinger, oppdaterer SOLR...");
             ledigeStillingerLastModified = sistOppdatert;
-            indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(ClassLoader.getSystemResourceAsStream(ledigestillingerFullPath));
+
+            InputStream fileInputStream = ClassLoader.getSystemResourceAsStream(ledigestillingerFullPath);
+            if(fileInputStream != null) {
+                indekserSolr.lesLedigeStillingerCSVOgSkrivTilSolr(fileInputStream);
+            } else {
+                logger.error("Kunne ikke lese filen for ledigestillinger fra disk...");
+            }
+
         }
     }
 
