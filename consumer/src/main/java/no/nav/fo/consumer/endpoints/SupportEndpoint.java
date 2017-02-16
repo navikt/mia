@@ -58,7 +58,7 @@ public class SupportEndpoint {
     @Cacheable("fylkerOgKommuner")
     public List<Omrade> getFylkerOgKommuner() {
         QueryResponse resp = getFylkerOgKommunerFraSolr();
-        return GeografiTransformer.transformResponseToFylkerOgKommuner(resp.getResults());
+        return GeografiTransformer.transformResponseToRelevanteOmrader(resp.getResults());
     }
 
     public QueryResponse getFylkerOgKommunerFraSolr() {

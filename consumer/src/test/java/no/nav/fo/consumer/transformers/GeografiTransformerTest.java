@@ -26,7 +26,7 @@ public class GeografiTransformerTest {
                 )
         );
 
-        List<Omrade> omrader = GeografiTransformer.transformResponseToFylkerOgKommuner(documentList);
+        List<Omrade> omrader = GeografiTransformer.transformResponseToRelevanteOmrader(documentList);
 
         assertThat(omrader.get(0).getNavn()).isEqualTo("FYLKE1");
         assertThat(omrader.get(0).getUnderomrader().size()).isEqualTo(2);
