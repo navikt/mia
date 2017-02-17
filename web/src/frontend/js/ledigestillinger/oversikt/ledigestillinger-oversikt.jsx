@@ -112,7 +112,8 @@ export class Oversikt extends React.Component {
 
         return (
             <div className="panel-oversikt">
-                <div className="oversikt-toggle text-right">
+                {innhold}
+                <div className="oversikt-toggle blokk-xs">
                     <SwitcherKnapp
                         id="switch_kart"
                         aktiv={this.props.visKart}
@@ -126,7 +127,6 @@ export class Oversikt extends React.Component {
                         tekst={<FormattedMessage {...meldinger.lenkeVisTabell} />}
                     />
                 </div>
-                {innhold}
             </div>
         );
     }

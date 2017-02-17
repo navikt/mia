@@ -19,6 +19,14 @@ const messages = defineMessages({
     lagre: {
         id: 'modal.lagre',
         defaultMessage: 'Lagre'
+    },
+    fortsett: {
+        id: 'modal.fortsett',
+        defaultMessage: 'Fortsett'
+    },
+    oppdater: {
+        id: 'modal.oppdater',
+        defaultMessage: 'Oppdater'
     }
 });
 
@@ -61,8 +69,8 @@ export class ModalVisning extends Component {
     removeEventListeners() {
         this.refs.modal.removeEventListener('keydown', this.closeOnEscape);
         this.refs.lukk.removeEventListener('keydown', this.preventShiftTab);
-        this.refs.avbryt.removeEventListener('keydown', this.preventTab);
         this.pagewrapper.removeEventListener('focusin', this.forceFocusModal);
+        this.refs.avbryt.removeEventListener('keydown', this.preventTab);
     }
 
     onLukk() {
@@ -107,6 +115,39 @@ export class ModalVisning extends Component {
         }
     }
 
+    getMeny(lagreTekst, avbrytTekst) {
+        return (
+            <div className="knapperad knapperad-adskilt">
+                <ul className="ustilet liste-ustilet">
+                    <li className="blokk-xs">
+                        <button type="button" onClick={this.lagreOgLukk} className="knapp knapp-hoved js-test-lagre">
+                            <FormattedMessage {...lagreTekst} />
+                        </button>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" role="button" className="lenke js-test-avbryt" onClick={this.onLukk} ref="avbryt">
+                            <FormattedMessage {...avbrytTekst} />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        );
+    }
+
+    getMenyForFeilmodal() {
+        return this.getMeny(messages.oppdater, messages.fortsett);
+    }
+
+
+    getLagremeny() {
+        return this.getMeny(messages.lagre, messages.avbryt);
+    }
+
+    getCssKlasserForHeader() {
+        const hodeKlasser = "tittel-dekorert typo-innholdstittel blokk";
+        return this.props.feilmodal ? hodeKlasser + " hode hode-dekorert hode-feil" : hodeKlasser;
+    }
+
     render() {
         return (
             <Portal target="#modal">
@@ -115,24 +156,11 @@ export class ModalVisning extends Component {
                         <section className="modal-vindu panel panel-ramme side-innhold blokk-xl">
                             <button className="modal-lukk" onClick={this.onLukk} ref="lukk">
                                 <FormattedMessage {...messages.lukk}/></button>
-                            <h1 className="tittel-dekorert typo-innholdstittel blokk">
+                            <h1 className={this.getCssKlasserForHeader()}>
                                 <FormattedMessage {...this.props.tittel}/></h1>
 
                             <div>{React.cloneElement(this.props.children)}</div>
-                            <div className="knapperad knapperad-adskilt">
-
-                                <ul className="ustilet liste-ustilet">
-                                    <li className="blokk-xs">
-                                        <button type="button" onClick={this.lagreOgLukk} className="knapp knapp-hoved js-test-lagre">
-                                            <FormattedMessage {...messages.lagre} />
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" role="button" className="lenke js-test-avbryt" onClick={this.onLukk} ref="avbryt">
-                                            <FormattedMessage {...messages.avbryt}/></a>
-                                    </li>
-                                </ul>
-                            </div>
+                            {this.props.feilmodal ? this.getMenyForFeilmodal() : this.getLagremeny() }
                         </section>
                     </div>
                 </div>

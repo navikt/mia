@@ -17,7 +17,8 @@ Modal.propTypes = {
     id: PT.string.isRequired,
     tittel: PT.object.isRequired,
     onLukk: PT.func,
-    onLagre: PT.func.isRequired
+    onLagre: PT.func,
+    feilmodal: PT.bool
 };
 
 const mapToProps = (state) => {

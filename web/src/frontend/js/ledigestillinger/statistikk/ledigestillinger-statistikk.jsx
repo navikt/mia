@@ -1,9 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {defineMessages} from 'react-intl';
 import Innholdslaster from './../../felles/innholdslaster/innholdslaster';
 import { hentStatistikk } from './ledigestillinger-statistikk-actions';
 import OversiktGraf from './ledigestillinger-oversikt-graf';
 import {bareValgtEOSRestenAvVerden} from '../../felles/filtervalg/filtrering-andre-omrader';
+
+const feilmeldinger = defineMessages({
+    tittel: {
+        id: 'statistikk.feilmeldingspanel.tittel',
+        defaultMessage: 'Feil ved henting av statistikkdata'
+    },
+    tekst: {
+        id: 'statistikk.feilmeldingspanel.tekst',
+        defaultMessage: 'Noe gikk galt ved hentingen av statistikkdata fra våre baksystemer. Du kan prøve å oppdatere siden og se om feilen vedvarer.'
+    }
+});
 
 export class Statistikk extends React.Component {
     componentDidMount() {
@@ -14,7 +26,7 @@ export class Statistikk extends React.Component {
         return bareValgtEOSRestenAvVerden(this.props.oversikt) ? null :
         (
             <div className="panel panel-fremhevet">
-                <Innholdslaster avhengigheter={[this.props.statistikk]}>
+                <Innholdslaster avhengigheter={[this.props.statistikk]} feilmelding={feilmeldinger}>
                     <OversiktGraf tabell={this.props.statistikk.data}
                                   valgteFylker={this.props.oversikt.valgteFylker}
                                   valgteKommuner={this.props.oversikt.valgteKommuner}

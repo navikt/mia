@@ -7,6 +7,7 @@ import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import {lastTekster} from './felles/tekster/tekster-reducer';
 import restActionCreator from './felles/rest/rest-action';
 import Hodefot from './felles/hodefot/hodefot';
+import Feilmodal from './feilmodal/feilmodal';
 
 const meldinger = defineMessages({
     appTitle: {
@@ -45,6 +46,7 @@ class Application extends React.Component {
                     <div aria-hidden="true">
                         <Devtools />
                     </div>
+                    <Feilmodal />
                 </div>
             </DocumentTitle>
         );

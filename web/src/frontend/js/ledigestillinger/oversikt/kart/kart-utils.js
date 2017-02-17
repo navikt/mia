@@ -2,14 +2,36 @@ import {highlightStyling, selectedStyling, geojsonStyling} from './kart-styling'
 
 const harStrukturkode = omrade => omrade.strukturkode != null;
 
-export const finnIdForFylkenummer = (fylkenummer, omrader) => omrader.filter(harStrukturkode).find(omrade => omrade.strukturkode.endsWith(fylkenummer)).id;
+export const finnFylkeForFylkenummer = (fylkenummer, omrader) => omrader.filter(harStrukturkode).find(omrade => omrade.strukturkode.endsWith(fylkenummer));
 
-export const finnIdForKommunenummer = (kommunenummer, omrader) => {
+export const finnKommuneForKommunenummer = (kommunenummer, omrader) => {
     const kommune = getAlleKommunerForOmrader(omrader)
         .filter(harStrukturkode)
         .find(omrade => omrade.strukturkode.endsWith(kommunenummer));
+    return kommune == null ? null : kommune;
+};
+
+
+export const finnIdForFylkenummer = (fylkenummer, omrader) => {
+    const fylke = finnFylkeForFylkenummer(fylkenummer, omrader);
+    return fylke == null ? null : fylke.id;
+};
+
+export const finnIdForKommunenummer = (kommunenummer, omrader) => {
+    const kommune = finnKommuneForKommunenummer(kommunenummer, omrader);
     return kommune == null ? null : kommune.id;
 };
+
+export const finnNavnForFylkenummer = (fylkenummer, omrader) => {
+    const fylke = finnFylkeForFylkenummer(fylkenummer, omrader);
+    return fylke == null ? null : fylke.navn;
+};
+
+export const finnNavnForKommunenummer = (kommunenummer, omrader) => {
+    const kommune = finnKommuneForKommunenummer(kommunenummer, omrader);
+    return kommune == null ? null : kommune.navn;
+};
+
 
 export const getAlleKommunerForOmrader = omrader => omrader.map(omrade => omrade.underomrader).reduce((a, b) => a.concat(b), []);
 
