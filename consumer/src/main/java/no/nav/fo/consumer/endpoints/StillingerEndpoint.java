@@ -6,6 +6,7 @@ import no.nav.fo.consumer.transformers.BransjeForFylkeTransformer;
 import no.nav.fo.consumer.transformers.StillingTransformer;
 import no.nav.fo.consumer.transformers.StillingerForOmradeTransformer;
 import no.nav.fo.consumer.transformers.StillingstypeForYrkesomradeTransformer;
+import no.nav.fo.mia.domain.Filtervalg;
 import no.nav.fo.mia.domain.stillinger.Bransje;
 import no.nav.fo.mia.domain.stillinger.OmradeStilling;
 import no.nav.fo.mia.domain.stillinger.Stilling;
@@ -53,7 +54,7 @@ public class StillingerEndpoint {
 
     @Timed
     @Cacheable(value = "yrkesomrader", keyGenerator = "cacheKeyGenerator")
-    public List<Bransje> getYrkesomrader(String fylkesnummer, List<String> fylker, List<String> kommuner) {
+    public List<Bransje> getYrkesomrader(String fylkesnummer, Filtervalg filtervalg) {
         String query = String.format("FYLKE_ID:%s", fylkesnummer == null ? "*" : fylkesnummer);
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.addFacetField("YRKGR_LVL_1");
@@ -63,7 +64,7 @@ public class StillingerEndpoint {
         try {
             QueryResponse resp = mainSolrClient.query(solrQuery);
             return BransjeForFylkeTransformer.getBransjeForFylke(resp.getFacetField("YRKGR_LVL_1"), resp.getFacetField("YRKGR_LVL_1_ID")).stream()
-                    .map(yrkesomrade -> yrkesomrade.withAntallStillinger(getAntallStillingerForYrkesomrade(yrkesomrade.getId(), fylker, kommuner)))
+                    .map(yrkesomrade -> yrkesomrade.withAntallStillinger(getAntallStillingerForYrkesomrade(yrkesomrade.getId(), filtervalg)))
                     .collect(toList());
         } catch (SolrServerException | IOException e) {
             logger.error("Feil ved henting av bransjer(lvl1) fra solr", e.getCause());
@@ -71,19 +72,19 @@ public class StillingerEndpoint {
         }
     }
 
-    private int getAntallStillingerForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
+    private int getAntallStillingerForYrkesomrade(String yrkesomradeid, Filtervalg filtervalg) {
         String filter = "YRKGR_LVL_1_ID:" + yrkesomradeid;
-        return getAntallStillingerForFiltrering(fylker, kommuner, filter, "StillingerEndpoint.getAntallStillingerForYrkesomrade");
+        return getAntallStillingerForFiltrering(filtervalg, filter, "StillingerEndpoint.getAntallStillingerForYrkesomrade");
     }
 
-    private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, List<String> fylker, List<String> kommuner) {
+    private int getAntallStillingerForYrkesgruppe(String yrkesgruppeid, Filtervalg filtervalg) {
         String filter = "YRKGR_LVL_2_ID:" + yrkesgruppeid;
-        return getAntallStillingerForFiltrering(fylker, kommuner, filter, "StillingerEndpoint.getAntallStillingerForYrkesgruppe");
+        return getAntallStillingerForFiltrering(filtervalg, filter, "StillingerEndpoint.getAntallStillingerForYrkesgruppe");
     }
 
-    private int getAntallStillingerForFiltrering(List<String> fylker, List<String> kommuner, String filter, String timernavn) {
+    private int getAntallStillingerForFiltrering(Filtervalg filtervalg, String filter, String timernavn) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
-        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
+        addOmradeFilter(henteAntallStillingerQuery, filtervalg);
         henteAntallStillingerQuery.addFilterQuery(filter);
         henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
         henteAntallStillingerQuery.setRows(0);
@@ -98,10 +99,10 @@ public class StillingerEndpoint {
 
     @Timed
     @Cacheable(value = "yrkesgrupperMedAntallStillinger", keyGenerator = "cacheKeyGenerator")
-    public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, List<String> fylker, List<String> kommuner) {
+    public List<Bransje> getYrkesgrupperForYrkesomrade(String yrkesomradeid, Filtervalg filtervalg) {
         QueryResponse yrkesgruppeResponse = supportEndpoint.getYrkesgrupperForYrkesomrade(yrkesomradeid);
         return StillingstypeForYrkesomradeTransformer.getStillingstyperForYrkesgrupper(yrkesgruppeResponse.getResults()).stream()
-                .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), fylker, kommuner)))
+                .map(stillingstype -> stillingstype.withAntallStillinger(getAntallStillingerForYrkesgruppe(stillingstype.getId(), filtervalg)))
                 .collect(toList());
     }
 
@@ -147,10 +148,10 @@ public class StillingerEndpoint {
     }
 
     @Timed
-    public int getAntallStillingerForValgtOmrade(List<String> fylker, List<String> kommuner) {
+    public int getAntallStillingerForValgtOmrade(Filtervalg filtervalg) {
         SolrQuery henteAntallStillingerQuery = new SolrQuery("*:*");
 
-        addFylkerOgKommunerFilter(henteAntallStillingerQuery, fylker, kommuner);
+        addOmradeFilter(henteAntallStillingerQuery, filtervalg);
         henteAntallStillingerQuery.addFacetField("ANTALLSTILLINGER");
         henteAntallStillingerQuery.setRows(0);
 
@@ -169,10 +170,10 @@ public class StillingerEndpoint {
 
     @Timed
     @Cacheable(value = "stillingsannonser", keyGenerator = "cacheKeyGenerator")
-    public List<Stilling> getStillinger(List<String> yrkesgrupper, List<String> fylker, List<String> kommuner) {
+    public List<Stilling> getStillinger(List<String> yrkesgrupper, Filtervalg filtervalg) {
         SolrQuery stillingerQuery = new SolrQuery("*:*");
         stillingerQuery.addFilterQuery(String.format("YRKGR_LVL_2_ID:(%s)", StringUtils.join(yrkesgrupper, " OR ")));
-        addFylkerOgKommunerFilter(stillingerQuery, fylker, kommuner);
+        addOmradeFilter(stillingerQuery, filtervalg);
         stillingerQuery.setRows(Integer.MAX_VALUE);
 
         try {
@@ -183,14 +184,22 @@ public class StillingerEndpoint {
         }
     }
 
-    private void addFylkerOgKommunerFilter(SolrQuery query, List<String> fylker, List<String> kommuner) {
+    private void addOmradeFilter(SolrQuery query, Filtervalg filtervalg) {
         List<String> statements = new ArrayList<>();
 
-        if (fylker != null && !fylker.isEmpty()) {
-            statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(fylker, " OR ")));
+        if (filtervalg.fylker != null && !filtervalg.fylker.isEmpty()) {
+            statements.add(String.format("FYLKE_ID:(%s)", StringUtils.join(filtervalg.fylker, " OR ")));
         }
-        if (kommuner != null && !kommuner.isEmpty()) {
-            statements.add(String.format("KOMMUNE_ID:(%s)", StringUtils.join(kommuner, " OR ")));
+        if (filtervalg.kommuner != null && !filtervalg.kommuner.isEmpty()) {
+            statements.add(String.format("KOMMUNE_ID:(%s)", StringUtils.join(filtervalg.kommuner, " OR ")));
+        }
+
+        if(filtervalg.eoseu) {
+            statements.add("LANDGRUPPE:EOSEU");
+        }
+
+        if(filtervalg.restenavverden) {
+            statements.add("LANDGRUPPE:\"resten av verden\"");
         }
 
         if (!statements.isEmpty()) {

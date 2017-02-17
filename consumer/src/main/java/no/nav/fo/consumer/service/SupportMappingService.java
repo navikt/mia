@@ -45,7 +45,7 @@ public class SupportMappingService {
     private void createStrukturkodeMappingForGeografi() {
         strukturkodeTilIdMapping = new HashMap<>();
         idTilStrukturkodeMapping = new HashMap<>();
-        QueryResponse resp = supportEndpoint.getFylkerOgKommunerFraSolr();
+        QueryResponse resp = supportEndpoint.getRelevanteOmraderFraSolr();
 
         SolrDocumentList results = resp.getResults();
 

@@ -22,11 +22,12 @@ export function getStillingerTotalt(kommuner, stillinger) {
 }
 
 export const compareOmrader = (k1, k2) => {
-    const erGenereltOmrade = omrade => omrade.id.startsWith('110011');
+    const genereltForOgUtenforNorge = omrade =>
+        omrade.id.startsWith('110011') || omrade.id === "EOSEU" || omrade.id === "resten av verden" ;
 
-    if(erGenereltOmrade(k1) && !erGenereltOmrade(k2)) {
+    if(genereltForOgUtenforNorge(k1) && !genereltForOgUtenforNorge(k2)) {
         return 1;
-    } else if(!erGenereltOmrade(k1) && erGenereltOmrade(k2)) {
+    } else if(!genereltForOgUtenforNorge(k1) && genereltForOgUtenforNorge(k2)) {
         return -1;
     }
     return k1.navn.localeCompare(k2.navn);

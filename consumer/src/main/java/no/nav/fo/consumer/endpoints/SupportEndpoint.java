@@ -57,11 +57,11 @@ public class SupportEndpoint {
     @Timed
     @Cacheable("fylkerOgKommuner")
     public List<Omrade> getFylkerOgKommuner() {
-        QueryResponse resp = getFylkerOgKommunerFraSolr();
+        QueryResponse resp = getRelevanteOmraderFraSolr();
         return GeografiTransformer.transformResponseToRelevanteOmrader(resp.getResults());
     }
 
-    public QueryResponse getFylkerOgKommunerFraSolr() {
+    public QueryResponse getRelevanteOmraderFraSolr() {
         SolrQuery query = new SolrQuery("NIVAA:[1 TO 3]");
         query.addFilterQuery("DOKUMENTTYPE:GEOGRAFI");
         query.setRows(1000);

@@ -13,34 +13,14 @@ public class GeografiTransformer {
     public static List<Omrade> transformResponseToRelevanteOmrader(SolrDocumentList solrDocuments) {
         List<Omrade> alleOmrader = transformerTilOmrader(solrDocuments);
         List<Omrade> alleRelevanteOmrader = lagAlleFylkerOgKommuner(alleOmrader);
-        alleRelevanteOmrader.add(lagEOSEU(alleOmrader));
-        alleRelevanteOmrader.add(lagRestenAvVerden(alleOmrader));
+
+        Omrade restenAvVerden = new Omrade("1", "resten av verden", "Resten av verden", "resten av verden");
+        Omrade eoseu = new Omrade("1", "EOSEU", "EØS", "EOSEU");
+
+        alleRelevanteOmrader.add(eoseu);
+        alleRelevanteOmrader.add(restenAvVerden);
 
         return alleRelevanteOmrader;
-    }
-
-    private static Omrade lagRestenAvVerden(List<Omrade> alleOmrader) {
-        Omrade restenAvVerden = new Omrade("1", "resten av verden", "Resten av verden", "resten av verden");
-        restenAvVerden.withUnderomrader(
-            alleOmrader.stream()
-                .filter(GeografiTransformer::erRestenAvVerden)
-                .filter(omrade -> omrade.hasParent(restenAvVerden.getId()))
-                .collect(Collectors.toList())
-        );
-
-        return restenAvVerden;
-    }
-
-    private static Omrade lagEOSEU(List<Omrade> alleOmrader) {
-        Omrade eoseu = new Omrade("1", "EOSEU", "EØS", "EOSEU");
-        eoseu.withUnderomrader(
-            alleOmrader.stream()
-                .filter(GeografiTransformer::erEOSEU)
-                .filter(omrade -> omrade.hasParent(eoseu.getId()))
-                .collect(Collectors.toList())
-        );
-
-        return eoseu;
     }
 
     private static List<Omrade> lagAlleFylkerOgKommuner(List<Omrade> alleOmrader) {
