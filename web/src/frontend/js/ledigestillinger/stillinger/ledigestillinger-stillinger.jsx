@@ -28,7 +28,7 @@ export class Stillinger extends React.Component {
 
         return (
             <Innholdslaster avhengigheter={[this.props.stillingerRest]} feilmelding={feilmeldinger}>
-                {this.props.yrkesgrupper.map(yrkesgruppe => <Stillingspanel key={yrkesgruppe.id} yrkesgruppe={yrkesgruppe} />)}
+                {this.props.yrkesgrupper.reverse().map(yrkesgruppe => <Stillingspanel key={yrkesgruppe.id} yrkesgruppe={yrkesgruppe} />)}
             </Innholdslaster>
         );
     }
