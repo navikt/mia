@@ -18,7 +18,7 @@ public class ContentConfig {
     }
 
     @Bean
-    public static Fillager fillageg() {
+    public static Fillager fillager() {
         return new Fillager();
     }
 
