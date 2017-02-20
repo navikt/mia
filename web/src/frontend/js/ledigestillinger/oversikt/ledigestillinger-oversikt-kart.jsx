@@ -3,10 +3,12 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
+import UtenforNorgeControl from './kart/kart-utenfornorge-controls';
 import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
+import {EOS_EU, RESTEN_AV_VERDEN} from '../../felles/konstanter';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -43,6 +45,8 @@ class Oversiktskart extends React.Component {
     constructor(props) {
         super(props);
         this.worldBounds = [[58, 3], [71, 31]];
+        this.velgRestenAvVerden = this.velgRestenAvVerden.bind(this);
+        this.velgUtenforEos = this.velgUtenforEos.bind(this);
     }
 
     componentDidMount() {
@@ -53,6 +57,18 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
+        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, "Stillinger utenfor EØS");
+        this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, "Stillingen i resten av verden");
+        this.refs.map.leafletElement.addControl(this.utenforEosControl);
+        this.refs.map.leafletElement.addControl(this.restenAvVerdenControl);
+    }
+
+    velgUtenforEos() {
+        this.props.velgFylke(EOS_EU);
+    }
+
+    velgRestenAvVerden() {
+        this.props.velgFylke(RESTEN_AV_VERDEN);
     }
 
     zoomTilLandvisning() {
