@@ -286,11 +286,6 @@
                 <version>${jersey.version}</version>
                 <scope>runtime</scope>
             </dependency>
-            <dependency>
-                <groupId>org.glassfish.jersey.media</groupId>
-                <artifactId>jersey-media-multipart</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
 
             <!-- JAXB json -->
             <dependency>

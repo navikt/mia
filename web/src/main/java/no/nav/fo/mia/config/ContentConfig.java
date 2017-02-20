@@ -1,5 +1,6 @@
 package no.nav.fo.mia.config;
 
+import no.nav.fo.consumer.fillager.Fillager;
 import no.nav.sbl.tekster.TeksterAPI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,11 @@ public class ContentConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Bean
+    public static Fillager fillager() {
+        return new Fillager();
     }
 
     @Bean
