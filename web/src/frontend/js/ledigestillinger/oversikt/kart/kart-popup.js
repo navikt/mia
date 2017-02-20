@@ -40,7 +40,7 @@ export const visPopupForFylke = (e, props, feature, layer) => {
     const yrkesomrade = props.valgtYrkesomrade;
     const yrkesgrupper = props.valgteYrkesgrupper;
     const fylke = finnFylkeForFylkenummer(feature.properties.id, props.omrader);
-    layer.bindPopup(getPopupMedInnholdslaster(feature.properties.navn)).openPopup();
+    layer.bindPopup(getPopupMedInnholdslaster(fylke.navn)).openPopup();
     feature.properties.harFokus = true;
 
     hentDataForFylke(fylke.id, yrkesomrade, yrkesgrupper).then(result => {
