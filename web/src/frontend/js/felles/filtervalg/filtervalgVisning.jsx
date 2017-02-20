@@ -1,13 +1,24 @@
 import React from 'react';
 import {getNavnForFylkeId, getNavnForKommuneId} from '../../ledigestillinger/oversikt/kart/kart-utils';
 import {getNavnForYrkesgruppeId, getNavnForYrkesomradeId} from '../../ledigestillinger/bransjer/ledigestillinger-bransjer-util';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
+
+const meldinger = defineMessages({
+    valgtOmrade: {
+        id: 'ledigestillinger.valgtomrade',
+        defaultMessage: '{antall, plural, one {Valgt område} other {Valgte områder}}:'
+    },
+    heleNorge: {
+        id: 'ledigestillinger.helenorge',
+        defaultMessage: 'Hele Norge'
+    }
+});
 
 export const ValgteFylker = props => {
     return props.valgteFylker.length !== 0 ?
         <p className={props.className}>
             <span className="typo-element valgte-omrader-tittel">
-                <FormattedMessage {...props.tekst}/>
+                <FormattedMessage {...meldinger.valgtOmrade} values={{antall: props.valgteFylker.length}}/>
             </span>
             {props.valgteFylker.map(fylkeid => getNavnForFylkeId(fylkeid, props.omrader)).join(', ')}
         </p> :
@@ -18,7 +29,7 @@ export const ValgteKommuner = props => {
     return props.valgteKommuner.length !== 0 ?
         <p className={props.className}>
             <span className="typo-element valgte-omrader-tittel">
-                <FormattedMessage {...props.tekst}/>
+                <FormattedMessage {...meldinger.valgtOmrade} values={{antall: props.valgteKommuner.length}}/>
             </span>
             {props.valgteKommuner.map(kommuneid => getNavnForKommuneId(kommuneid, props.omrader)).join(', ')}
         </p> :
@@ -50,8 +61,8 @@ export const ValgteArbeidsomrader = props => {
 export const ValgtHeleNorge = props => (
     <p className={props.className}>
         <span className="typo-element valgte-omrader-tittel">
-            <FormattedMessage {...props.valgtOmrade}/>
+            <FormattedMessage {...meldinger.valgtOmrade}  values={{antall: 1}}/>
         </span>
-        <FormattedMessage {...props.heleNorge}/>
+        <FormattedMessage {...meldinger.heleNorge}/>
     </p>
 );

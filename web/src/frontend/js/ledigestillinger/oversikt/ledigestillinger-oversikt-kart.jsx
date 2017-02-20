@@ -15,18 +15,6 @@ const meldinger = defineMessages({
         id: 'ledigestillinger.oversikt.kartplaceholder',
         defaultMessage: 'Kart for å velge fylker og kommuner.'
     },
-    valgteKommuner: {
-        id: 'ledigestillinger.oversikt.valgtekommuner',
-        defaultMessage: 'Valgte kommuner:'
-    },
-    valgteFylker: {
-        id: 'ledigestillinger.oversikt.valgtefylker',
-        defaultMessage: 'Valgte fylker:'
-    },
-    valgtOmrade: {
-        id: 'ledigestillinger.oversikt.statistikk.valgtomrade',
-        defaultMessage: 'Valgt område:'
-    },
     heleNorge: {
         id: 'ledigestillinger.oversikt.statistikk.helenorge',
         defaultMessage: 'Hele Norge'
@@ -59,8 +47,7 @@ class Oversiktskart extends React.Component {
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
         this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, "Stillinger utenfor EØS");
         this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, "Stillingen i resten av verden");
-        this.refs.map.leafletElement.addControl(this.utenforEosControl);
-        this.refs.map.leafletElement.addControl(this.restenAvVerdenControl);
+        this.leggTilUtenforNorgeControls();
     }
 
     velgUtenforEos() {
@@ -71,12 +58,23 @@ class Oversiktskart extends React.Component {
         this.props.velgFylke(RESTEN_AV_VERDEN);
     }
 
+    leggTilUtenforNorgeControls() {
+        this.refs.map.leafletElement.addControl(this.utenforEosControl);
+        this.refs.map.leafletElement.addControl(this.restenAvVerdenControl);
+    }
+
+    fjernUtenforNorgeControls() {
+        this.refs.map.leafletElement.removeControl(this.utenforEosControl);
+        this.refs.map.leafletElement.removeControl(this.restenAvVerdenControl);
+    }
+
     zoomTilLandvisning() {
         this.refs.map.leafletElement.fitBounds(this.worldBounds);
         this.refs.kommuner.leafletElement.setStyle({ opacity: 0 });
         this.refs.fylker.leafletElement.bringToFront();
         this.refs.map.leafletElement.removeControl(this.landvisningControl);
         this.props.resetValg();
+        this.leggTilUtenforNorgeControls();
         this.fjernSelectedFraFylker();
         this.resetKommuner();
     }
@@ -98,6 +96,7 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.bringToFront();
         this.refs.map.leafletElement.addControl(this.landvisningControl);
         this.resetKommuner();
+        this.fjernUtenforNorgeControls();
     }
 
     fjernSelectedFraFylker() {
@@ -188,7 +187,7 @@ class Oversiktskart extends React.Component {
             return valgtData.length !== 0;
         };
 
-        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} className={'valgte-omrader'} />: <noscript />;
+        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.valgtOmrade} className={'valgte-omrader'} />: <noscript />;
 
         return (
             <div className="kart-omrader-container">
@@ -199,8 +198,8 @@ class Oversiktskart extends React.Component {
                         tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
                     />
                     {valgtHeleLandet}
-                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
-                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
+                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
+                    <ValgteFylker valgteFylker={this.props.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
                 </div>
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
