@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"
-        xmlns="http://utviklerportal.adeo.no"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://utviklerportal.adeo.no http://utviklerportalen.adeo.no/xsd/appconfig.xsd"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://appconfig.aura.nav.no
+             http://maven.adeo.no/xsd/appconfig.xsd ">
 
-<application>
     <name>mia</name>
     <artifacts>
         <ear groupId="no.nav.fo" artifactId="mia-ear"/>
@@ -15,7 +15,7 @@
         <rest mapToProperty="miasolr.solr.ledigestillingercore" alias="miasolr.solr.ledigestillingercore"/>
         <rest mapToProperty="miasolr.solr.arbeidsledigecore" alias="miasolr.solr.arbeidsledigecore"/>
         <rest mapToProperty="miasolr.solr" alias="miasolr.solr"/>
-        <fileLibrary alias="mia.ledetekster" mapToProperty="folder.ledetekster"/>
+        <fileLibrary alias="mia.ledetekster" mapToProperty="folder.ledetekster" />
 
         <directory name="mia.datadir" mapToProperty="mia.datadir">
             <mountOnCifs alias="mia.cifs"/>
@@ -30,4 +30,5 @@
     <loadBalancer>
         <lbHealthMonitor type="HTTPS" isAliveUrl="mia/internal/isAlive" interval="5" timeout="16"/>
     </loadBalancer>
+
 </application>
