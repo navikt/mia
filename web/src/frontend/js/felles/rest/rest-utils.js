@@ -1,4 +1,4 @@
-import {RESTURL} from '../konstanter.js';
+import {RESTURL, EOS_EU, RESTEN_AV_VERDEN} from '../konstanter.js';
 import {apne_modal as apne_feilmodal} from '../../feilmodal/feilmodal-actions';
 
 export function sjekkStatuskode(response) {
@@ -72,7 +72,9 @@ export function buildUriParams(params) {
 
 export function getParamsForValgteFylkerOgKommuner(state) {
     const valgteKommuner = state.ledigestillinger.oversikt.valgteKommuner;
-    const valgteFylker = state.ledigestillinger.oversikt.valgteFylker;
+    const valgteFylkerOgLandomrader = state.ledigestillinger.oversikt.valgteFylker;
+    const landomrader = [EOS_EU, RESTEN_AV_VERDEN];
+    const valgteFylker = valgteFylkerOgLandomrader.filter(omrade => !landomrader.includes(omrade));
 
     const harIkkeValgtKommuneIFylke = valgtFylke => {
         return !state.rest.omrader.data.find(fylke => fylke.id === valgtFylke).underomrader.find(kommune => valgteKommuner.includes(kommune.id));
@@ -81,6 +83,8 @@ export function getParamsForValgteFylkerOgKommuner(state) {
     const params = {};
     params['fylker'] = valgteFylker.filter(harIkkeValgtKommuneIFylke);
     params['kommuner'] = valgteKommuner;
+    params['eoseu'] = valgteFylkerOgLandomrader.some(omrade => omrade === EOS_EU);
+    params['restenavverden'] = valgteFylkerOgLandomrader.some(omrade => omrade === RESTEN_AV_VERDEN);
     return params;
 }
 

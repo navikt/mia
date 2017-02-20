@@ -17,14 +17,6 @@ const tekster = defineMessages({
         id: 'ledigestillinger.graf.hjelpetekst.innhold',
         defaultMessage: 'Grafen viser oversikt over antallet arbeidsledige og ledige stillinger siste 13 måneder. Grafen tar hensyn til valgte yrker og områder.'
     },
-    valgteKommuner: {
-        id: 'ledigestillinger.oversikt.statistikk.valgtekommuner',
-        defaultMessage: 'Valgte kommuner:'
-    },
-    valgteFylker: {
-        id: 'ledigestillinger.oversikt.statistikk.valgtefylker',
-        defaultMessage: 'Valgte fylker:'
-    },
     valgtStillingskategori: {
         id: 'ledigestillinger.oversikt.statistikk.valgtstillingskategori',
         defaultMessage: 'Valgt stillingskategori:'
@@ -32,14 +24,6 @@ const tekster = defineMessages({
     valgteArbeidsomrader: {
         id: 'ledigestillinger.oversikt.statistikk.valgtearbeidsomrader',
         defaultMessage: 'Valgte arbeidsområder:'
-    },
-    valgtOmrade: {
-        id: 'ledigestillinger.oversikt.statistikk.valgtomrade',
-        defaultMessage: 'Valgt område:'
-    },
-    heleNorge: {
-        id: 'ledigestillinger.oversikt.statistikk.helenorge',
-        defaultMessage: 'Hele Norge'
     }
 });
 
@@ -57,7 +41,7 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
         return valgtData.length !== 0;
     };
 
-    const valgtHeleLandet = !harData(valgteFylker) && !harData(valgteKommuner) ? <ValgtHeleNorge valgtOmrade={tekster.valgtOmrade} heleNorge={tekster.heleNorge} />: <noscript />;
+    const valgtHeleLandet = !harData(valgteFylker) && !harData(valgteKommuner) ? <ValgtHeleNorge valgtOmrade={tekster.valgtOmrade} />: <noscript />;
 
     return (
         <div className="ledigestillinger-oversikt-graf">
@@ -74,8 +58,8 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
             </div>
             <div>
                 {valgtHeleLandet}
-                <ValgteFylker valgteFylker={valgteFylker} tekst={tekster.valgteFylker} omrader={omrader} />
-                <ValgteKommuner valgteKommuner={valgteKommuner} tekst={tekster.valgteKommuner} omrader={omrader} />
+                <ValgteFylker valgteFylker={valgteFylker} omrader={omrader} />
+                <ValgteKommuner valgteKommuner={valgteKommuner} omrader={omrader} />
                 <ValgtStillingskategori valgtYrkesomrade={valgtyrkesomrade} yrkesomrader={yrkesomrader} tekst={tekster.valgtStillingskategori} />
                 <ValgteArbeidsomrader valgteYrkesgrupper={valgteyrkesgrupper} yrkesgrupper={yrkesgrupper} tekst={tekster.valgteArbeidsomrader} />
             </div>

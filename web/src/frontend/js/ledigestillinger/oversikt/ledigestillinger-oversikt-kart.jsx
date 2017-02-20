@@ -3,27 +3,17 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
+import UtenforNorgeControl from './kart/kart-utenfornorge-controls';
 import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
+import {EOS_EU, RESTEN_AV_VERDEN} from '../../felles/konstanter';
 
 const meldinger = defineMessages({
     kartplaceholder: {
         id: 'ledigestillinger.oversikt.kartplaceholder',
         defaultMessage: 'Kart for å velge fylker og kommuner.'
-    },
-    valgteKommuner: {
-        id: 'ledigestillinger.oversikt.valgtekommuner',
-        defaultMessage: 'Valgte kommuner:'
-    },
-    valgteFylker: {
-        id: 'ledigestillinger.oversikt.valgtefylker',
-        defaultMessage: 'Valgte fylker:'
-    },
-    valgtOmrade: {
-        id: 'ledigestillinger.oversikt.statistikk.valgtomrade',
-        defaultMessage: 'Valgt område:'
     },
     heleNorge: {
         id: 'ledigestillinger.oversikt.statistikk.helenorge',
@@ -43,6 +33,8 @@ class Oversiktskart extends React.Component {
     constructor(props) {
         super(props);
         this.worldBounds = [[58, 3], [71, 31]];
+        this.velgRestenAvVerden = this.velgRestenAvVerden.bind(this);
+        this.velgUtenforEos = this.velgUtenforEos.bind(this);
     }
 
     componentDidMount() {
@@ -53,6 +45,27 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
+        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, "Stillinger utenfor EØS");
+        this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, "Stillingen i resten av verden");
+        this.leggTilUtenforNorgeControls();
+    }
+
+    velgUtenforEos() {
+        this.props.velgFylke(EOS_EU);
+    }
+
+    velgRestenAvVerden() {
+        this.props.velgFylke(RESTEN_AV_VERDEN);
+    }
+
+    leggTilUtenforNorgeControls() {
+        this.refs.map.leafletElement.addControl(this.utenforEosControl);
+        this.refs.map.leafletElement.addControl(this.restenAvVerdenControl);
+    }
+
+    fjernUtenforNorgeControls() {
+        this.refs.map.leafletElement.removeControl(this.utenforEosControl);
+        this.refs.map.leafletElement.removeControl(this.restenAvVerdenControl);
     }
 
     zoomTilLandvisning() {
@@ -61,6 +74,7 @@ class Oversiktskart extends React.Component {
         this.refs.fylker.leafletElement.bringToFront();
         this.refs.map.leafletElement.removeControl(this.landvisningControl);
         this.props.resetValg();
+        this.leggTilUtenforNorgeControls();
         this.fjernSelectedFraFylker();
         this.resetKommuner();
     }
@@ -82,6 +96,7 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.bringToFront();
         this.refs.map.leafletElement.addControl(this.landvisningControl);
         this.resetKommuner();
+        this.fjernUtenforNorgeControls();
     }
 
     fjernSelectedFraFylker() {
@@ -172,7 +187,7 @@ class Oversiktskart extends React.Component {
             return valgtData.length !== 0;
         };
 
-        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.heleNorge} className={'valgte-omrader'} />: <noscript />;
+        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.valgtOmrade} className={'valgte-omrader'} />: <noscript />;
 
         return (
             <div className="kart-omrader-container">
@@ -183,8 +198,8 @@ class Oversiktskart extends React.Component {
                         tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
                     />
                     {valgtHeleLandet}
-                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} tekst={meldinger.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
-                    <ValgteFylker valgteFylker={this.props.valgteFylker} tekst={meldinger.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
+                    <ValgteKommuner valgteKommuner={this.props.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
+                    <ValgteFylker valgteFylker={this.props.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
                 </div>
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>

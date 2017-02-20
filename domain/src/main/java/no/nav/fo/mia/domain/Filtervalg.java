@@ -18,8 +18,14 @@ public class Filtervalg {
     @QueryParam("kommuner[]")
     public List<String> kommuner;
 
+    @QueryParam("eoseu")
+    public boolean eoseu;
+
+    @QueryParam("restenavverden")
+    public boolean restenavverden;
+
     public String toString() {
-        return this.yrkesomrade + listToString(this.yrkesgrupper) + listToString(this.fylker) + listToString(this.kommuner);
+        return this.yrkesomrade + listToString(this.yrkesgrupper) + listToString(this.fylker) + listToString(this.kommuner) + "eoseu" + eoseu + "restenavverden" + restenavverden;
     }
 
     private static <T> String listToString(List<T> list) {

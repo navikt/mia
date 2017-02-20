@@ -33,7 +33,7 @@ public class OmradeRessurs {
     SupportEndpoint supportEndpoint;
 
     @GET
-    public List<Omrade> hentFylkerOgKommuner() {
+    public List<Omrade> hentRelevanteOmrader() {
         return supportEndpoint.getFylkerOgKommuner();
     }
 

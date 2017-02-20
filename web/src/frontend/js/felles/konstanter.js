@@ -6,3 +6,6 @@ export const STATUS = {
     initialisert: 'INITIALISERT'
 };
 export const ALTERNATIV_ALLE = "alle";
+
+export const EOS_EU = "EOSEU";
+export const RESTEN_AV_VERDEN = "resten av verden";
