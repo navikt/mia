@@ -7,15 +7,15 @@ import {ValgteFylker, ValgteKommuner, ValgtStillingskategori, ValgteArbeidsomrad
 const tekster = defineMessages({
     tabellOverskrift: {
         id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
-        defaultMessage: 'Ledighet siste 12 måneder'
+        defaultMessage: 'Ledighet siste 13 måneder'
     },
     hjelpetekstTittel: {
         id: 'ledigestillinger.graf.hjelpetekst.tittel',
-        defaultMessage: 'Historikk over arbeidsledige og ledigestillinger'
+        defaultMessage: 'Ledighet siste 13 måneder'
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.graf.hjelpetekst.innhold',
-        defaultMessage: 'Grafen viser oversikt over antallet arbeidsledige og ledige stillinger siste 13 måneder. Grafen tar hensyn til valgte yrker og områder.'
+        defaultMessage: 'Grafen/tabellen viser utviklingen i antall helt arbeidsledige og tilgang på ledige stillinger.'
     },
     valgtStillingskategori: {
         id: 'ledigestillinger.oversikt.statistikk.valgtstillingskategori',

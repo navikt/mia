@@ -17,11 +17,11 @@ const meldinger = defineMessages({
     },
     hjelpetekstTittel: {
         id: 'ledigestillinger.oversikt.hjelpeteksttittel',
-        defaultMessage: 'Valgte fylker og kommuner'
+        defaultMessage: 'Valgte områder'
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.oversikt.hjelpeteksttekst',
-        defaultMessage: 'Valgte fylker og kommuner vil danne grunnlag for all data som vises på siden.'
+        defaultMessage: 'Valgte geografiske områder danner grunnlag for stillingene og statistikken som vises på siden.'
     },
     stillingerEUEOS: {
         id: 'ledigestillinger.kart.stillingereueos',

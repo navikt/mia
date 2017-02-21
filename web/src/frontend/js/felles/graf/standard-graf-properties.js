@@ -146,7 +146,7 @@ const standardGrafConfig = ({tittel = '', undertittel = '', legend = '', yTittel
             return [denneSerie, ...overlappendeSerier].map((s) => {
                 const name = s.userOptions.tooltipName || s.name;
                 return `
-                    <span class="typo-etikett-liten">${name}</span>
+                    <span class="typo-avsnitt">${name}</span>
                     <span>${this.x}: </span>
                     <span>${formatterTall(s.processedYData[index])}
                         <span class="yEnhet">${yEnhet}</span>

@@ -14,11 +14,11 @@ const meldinger = defineMessages({
     },
     hjelpetekstTittel: {
         id: 'ledigestillinger.bransjer.hjelpetekst.tittel',
-        defaultMessage: 'Stillingskatergorier og arbeidsområder'
+        defaultMessage: 'Valgte stillingskategorier og arbeidsområder'
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.bransjer.hjelpetekst.innhold',
-        defaultMessage: 'Valgte stillingskategorier og arbeidsområder vil danne grunnlag for statistikken som vises på siden.'
+        defaultMessage: 'Valgte stillingskategorier og arbeidsområder danner grunnlag for stillingene og statistikken som vises på siden.'
     }
 });
 
