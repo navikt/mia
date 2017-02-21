@@ -10,7 +10,7 @@ const meldinger = defineMessages({
     },
     heleNorge: {
         id: 'ledigestillinger.helenorge',
-        defaultMessage: 'Hele Norge'
+        defaultMessage: 'Hele Norge, EØS, resten av verden'
     }
 });
 
@@ -61,7 +61,7 @@ export const ValgteArbeidsomrader = props => {
 export const ValgtHeleNorge = props => (
     <p className={props.className}>
         <span className="typo-element valgte-omrader-tittel">
-            <FormattedMessage {...meldinger.valgtOmrade}  values={{antall: 1}}/>
+            <FormattedMessage {...meldinger.valgtOmrade}  values={{antall: 3}}/>
         </span>
         <FormattedMessage {...meldinger.heleNorge}/>
     </p>

@@ -15,10 +15,6 @@ const meldinger = defineMessages({
         id: 'ledigestillinger.oversikt.kartplaceholder',
         defaultMessage: 'Kart for å velge fylker og kommuner.'
     },
-    heleNorge: {
-        id: 'ledigestillinger.oversikt.statistikk.helenorge',
-        defaultMessage: 'Hele Norge'
-    },
     hjelpetekstTittel: {
         id: 'ledigestillinger.oversikt.hjelpeteksttittel',
         defaultMessage: 'Valgte fylker og kommuner'
@@ -29,7 +25,7 @@ const meldinger = defineMessages({
     },
     stillingerEUEOS: {
         id: 'ledigestillinger.kart.stillingereueos',
-        defaultMessage: 'Stillinger i EU/EØS'
+        defaultMessage: 'Stillinger i EØS'
     },
     stillingerVerden: {
         id: 'ledigestillinger.kart.stillingerrestenavverden',
@@ -41,8 +37,8 @@ class Oversiktskart extends React.Component {
     constructor(props) {
         super(props);
         this.worldBounds = [[58, 3], [71, 31]];
-        this.velgRestenAvVerden = this.velgRestenAvVerden.bind(this);
-        this.velgUtenforEos = this.velgUtenforEos.bind(this);
+        this.restenAvVerdenClick = this.restenAvVerdenClick.bind(this);
+        this.utenforEosClick = this.utenforEosClick.bind(this);
     }
 
     componentDidMount() {
@@ -53,17 +49,25 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
-        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, this.props.intl.formatMessage(meldinger.stillingerEUEOS));
-        this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, this.props.intl.formatMessage(meldinger.stillingerVerden));
+        this.utenforEosControl = new UtenforNorgeControl(this.utenforEosClick, this.props.intl.formatMessage(meldinger.stillingerEUEOS));
+        this.restenAvVerdenControl = new UtenforNorgeControl(this.restenAvVerdenClick, this.props.intl.formatMessage(meldinger.stillingerVerden));
         this.leggTilUtenforNorgeControls();
     }
 
-    velgUtenforEos() {
-        this.props.velgFylke(EOS_EU);
+    utenforEosClick() {
+        if(this.props.valgteFylker.includes(EOS_EU)) {
+            this.props.resetValg();
+        } else {
+            this.props.velgFylke(EOS_EU);
+        }
     }
 
-    velgRestenAvVerden() {
-        this.props.velgFylke(RESTEN_AV_VERDEN);
+    restenAvVerdenClick() {
+        if(this.props.valgteFylker.includes(RESTEN_AV_VERDEN)) {
+            this.props.resetValg();
+        } else {
+            this.props.velgFylke(RESTEN_AV_VERDEN);
+        }
     }
 
     leggTilUtenforNorgeControls() {
@@ -195,7 +199,7 @@ class Oversiktskart extends React.Component {
             return valgtData.length !== 0;
         };
 
-        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} heleNorge={meldinger.valgtOmrade} className={'valgte-omrader'} />: <noscript />;
+        const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} className={'valgte-omrader'} />: <noscript />;
 
         return (
             <div className="kart-omrader-container">
