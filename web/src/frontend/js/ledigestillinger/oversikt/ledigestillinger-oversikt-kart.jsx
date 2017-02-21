@@ -26,6 +26,14 @@ const meldinger = defineMessages({
     hjelpetekstTekst: {
         id: 'ledigestillinger.oversikt.hjelpeteksttekst',
         defaultMessage: 'Valgte fylker og kommuner vil danne grunnlag for all data som vises på siden.'
+    },
+    stillingerEUEOS: {
+        id: 'ledigestillinger.kart.stillingereueos',
+        defaultMessage: 'Stillinger i EU/EØS'
+    },
+    stillingerVerden: {
+        id: 'ledigestillinger.kart.stillingerrestenavverden',
+        defaultMessage: 'Stillinger i resten av verden'
     }
 });
 
@@ -45,8 +53,8 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
-        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, "Stillinger i EU/EØS");
-        this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, "Stillingen i resten av verden");
+        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, this.props.intl.formatMessage(meldinger.stillingerEUEOS));
+        this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, this.props.intl.formatMessage(meldinger.stillingerVerden));
         this.leggTilUtenforNorgeControls();
     }
 
