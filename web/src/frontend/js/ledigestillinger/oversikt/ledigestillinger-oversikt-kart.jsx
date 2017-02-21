@@ -45,7 +45,7 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
-        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, "Stillinger utenfor EØS");
+        this.utenforEosControl = new UtenforNorgeControl(this.velgUtenforEos, "Stillinger i EU/EØS");
         this.restenAvVerdenControl = new UtenforNorgeControl(this.velgRestenAvVerden, "Stillingen i resten av verden");
         this.leggTilUtenforNorgeControls();
     }
