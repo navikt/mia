@@ -4,6 +4,8 @@ import no.nav.fo.consumer.endpoints.LedighetsEndpoint;
 import no.nav.fo.consumer.endpoints.StillingerEndpoint;
 import no.nav.fo.consumer.endpoints.SupportEndpoint;
 import no.nav.fo.consumer.service.SupportMappingService;
+import no.nav.fo.solr.DokumentOppretter;
+import no.nav.fo.solr.IndekserSolr;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,5 +38,15 @@ public class EndpointsConfig {
     @Bean
     public static SupportMappingService supportMappingService() {
         return new SupportMappingService();
+    }
+
+    @Bean
+    public static IndekserSolr indekserSolr() {
+        return new IndekserSolr();
+    }
+
+    @Bean
+    public static DokumentOppretter dokumentoppretter() {
+        return new DokumentOppretter();
     }
 }

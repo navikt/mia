@@ -8,7 +8,6 @@ import org.springframework.context.annotation.*;
         ContentConfig.class,
         EndpointsConfig.class,
         MetricsConfig.class,
-        LedighetstallConfig.class,
         CacheConfig.class
 })
 @ComponentScan(basePackages = {"no.nav.fo.mia.rest", "no.nav.fo.mia.internal.ressurser"})

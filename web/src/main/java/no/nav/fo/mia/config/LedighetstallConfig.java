@@ -1,12 +1,13 @@
 package no.nav.fo.mia.config;
 
-import no.nav.fo.solr.DokumentOppretter;
-import no.nav.fo.solr.IndekserSolr;
+import no.nav.fo.consumer.fillager.Fillager;
 import no.nav.fo.solr.LedighetstallDatahenter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
+@EnableScheduling
 public class LedighetstallConfig {
     @Bean
     public LedighetstallDatahenter ledighetstallDatahenter() {
@@ -14,12 +15,7 @@ public class LedighetstallConfig {
     }
 
     @Bean
-    public static IndekserSolr indekserSolr() {
-        return new IndekserSolr();
-    }
-
-    @Bean
-    public static DokumentOppretter dokumentoppretter() {
-        return new DokumentOppretter();
+    public Fillager fillager() {
+        return new Fillager();
     }
 }
