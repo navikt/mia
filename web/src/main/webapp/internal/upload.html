@@ -1,0 +1,19 @@
+<html>
+    <body>
+    <h1>Oppdater mia-solr med arbeidsledighetstatistikk og ledige stillinger-statistikk &#x1F469;</h1>
+    <section>
+        <h2>Last opp ledige stillinger csv</h2>
+        <form method="POST" action="/mia/internal/rest/indeksersolr/ledigestillingercore" enctype="multipart/form-data">
+            <input type="file" name="file" id="ledigestillingerfile" />
+            <input type="submit" value="Last opp"/>
+        </form>
+    </section>
+    <section>
+        <h2>Last opp arbeidsledighet csv</h2>
+        <form method="POST" action="/mia/internal/rest/indeksersolr/arbeidsledigecore" enctype="multipart/form-data">
+            <input type="file" name="file" id="arbeidsledigefile" />
+            <input type="submit" value="Last opp"/>
+        </form>
+    </section>
+    </body>
+</html>
