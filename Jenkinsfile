@@ -74,6 +74,12 @@ node {
         }
     }
 
+    stage('Sonar') {
+        withSonarQubeEnv('SBL sonar') {
+            sh "mvn ${SONAR_MAVEN_GOAL} ${SONAR_HOST_URL} -Dsonar.branch=${env.BRANCH_NAME}"
+        }
+    }
+
     stage('Deploy nexus') {
         try {
             sh "mvn -B deploy -DskipTests -P pipeline"
