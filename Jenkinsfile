@@ -75,9 +75,7 @@ node {
                 sh "mvn -B deploy -DskipTests -P pipeline"
                 currentBuild.description = "Version: ${version}"
                 sh "mvn versions:set -DnewVersion=${pom.version}"
-                if (useSnapshot != 'true') {
-                    sh "git tag -a ${version} -m ${version} HEAD && git push --tags"
-                }
+                sh "git tag -a ${version} -m ${version} HEAD && git push --tags"
             } catch (Exception e) {
                 notifyFailed("Deploy av artifakt til nexus feilet", e)
             }
