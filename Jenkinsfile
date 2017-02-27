@@ -17,11 +17,20 @@ node {
     stage('Checkout') {
         checkout([$class: 'GitSCM', doGenerateSubmoduleConfigurations: false, extensions: [], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[url: 'ssh://git@stash.devillo.no:7999/fo/mia.git']]])
         step([$class: 'StashNotifier'])
-
-        pom = readMavenPom file: 'pom.xml'
-        version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
-        sh "mvn versions:set -DnewVersion=${version}"
     }
+
+    if(env.BRANCH_NAME == 'master') {
+        stage('Set version') {
+            pom = readMavenPom file: 'pom.xml'
+            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
+            sh "mvn versions:set -DnewVersion=${version}"
+        }
+    } else {
+        stage('Merge master') {
+            sh "git merge origin/master"
+        }
+    }
+
 
     stage('Build (java)') {
         try {
@@ -60,52 +69,57 @@ node {
         }
     }
 
-    stage('Deploy nexus') {
-        try {
-            sh "mvn -B deploy -DskipTests -P pipeline"
-            currentBuild.description = "Version: ${version}"
-            sh "mvn versions:set -DnewVersion=${pom.version}"
-            if (useSnapshot != 'true') {
-                sh "git tag -a ${version} -m ${version} HEAD && git push --tags"
+    if(env.BRANCH_NAME == 'master') {
+        stage('Deploy nexus') {
+            try {
+                sh "mvn -B deploy -DskipTests -P pipeline"
+                currentBuild.description = "Version: ${version}"
+                sh "mvn versions:set -DnewVersion=${pom.version}"
+                if (useSnapshot != 'true') {
+                    sh "git tag -a ${version} -m ${version} HEAD && git push --tags"
+                }
+            } catch (Exception e) {
+                notifyFailed("Deploy av artifakt til nexus feilet", e)
             }
-        } catch(Exception e) {
-            notifyFailed("Deploy av artifakt til nexus feilet", e)
         }
     }
 }
 
-stage("Deploy app") {
-    callback = "${env.BUILD_URL}input/Deploy/"
-    node {
-        def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
-        def deploy = commonLib.deployApp('mia', version, "${miljo}", callback, author).key
+if(env.BRANCH_NAME == 'master') {
+    stage("Deploy app") {
+        callback = "${env.BUILD_URL}input/Deploy/"
+        node {
+            def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
+            def deploy = commonLib.deployApp('mia', version, "${miljo}", callback, author).key
 
-        try {
-            timeout(time: 15, unit: 'MINUTES') {
-                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
+            try {
+                timeout(time: 15, unit: 'MINUTES') {
+                    input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
+                }
+            } catch(Exception e) {
+                msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
+                notifyFailed(msg, e)
             }
-        } catch(Exception e) {
-            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
-            notifyFailed(msg, e)
         }
     }
-}
 
-stage("Int. tester") {
-    node {
-        try {
-            dir("web/src/frontend") {
-                //sh("node nightwatch.js --env phantomjs --url https://modapp-t1.adeo.no/mia")
+    stage("Int. tester") {
+        node {
+            try {
+                dir("web/src/frontend") {
+                    //sh("node nightwatch.js --env phantomjs --url https://modapp-t1.adeo.no/mia")
+                }
+            } catch (Exception e) {
+                notifyFailed("Integrasjonstester feilet", e)
+                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
             }
-        } catch (Exception e) {
-            notifyFailed("Integrasjonstester feilet", e)
-            step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-        }
 
-        currentBuild.result = 'SUCCESS'
-        step([$class: 'StashNotifier'])
+            currentBuild.result = 'SUCCESS'
+            step([$class: 'StashNotifier'])
+        }
     }
+
+    chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) Bygg og deploy OK**\n\n${commonLib.getChangeString()}"
+    mattermostSend channel: 'fo-mia', color: '#00FF00', message: chatmsg
 }
 
-chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) Bygg og deploy OK**\n\n${commonLib.getChangeString()}"
-mattermostSend channel: 'fo-mia', color: '#00FF00', message: chatmsg
