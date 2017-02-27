@@ -7,7 +7,7 @@ def notifyFailed(reason, error) {
     chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) ${reason} **\n\n${changelog}"
     mattermostSend channel: 'fo-mia', color: '#FF0000', message: chatmsg
     currentBuild.result = 'FAILED'
-    step([$class: 'StashNotifier'])
+    step([$class: 'StashNotifier', commitSha1: env.GIT_COMMIT])
     throw error
 }
 
@@ -113,11 +113,14 @@ if(env.BRANCH_NAME == 'master') {
             }
 
             currentBuild.result = 'SUCCESS'
-            step([$class: 'StashNotifier'])
         }
     }
 
     chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) Bygg og deploy OK**\n\n${commonLib.getChangeString()}"
     mattermostSend channel: 'fo-mia', color: '#00FF00', message: chatmsg
+}
+
+node {
+    step([$class: 'StashNotifier', commitSha1: env.GIT_COMMIT])
 }
 
