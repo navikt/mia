@@ -115,8 +115,6 @@ if(env.BRANCH_NAME == 'master') {
                 notifyFailed("Integrasjonstester feilet", e)
                 step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
             }
-
-            currentBuild.result = 'SUCCESS'
         }
     }
 
@@ -125,6 +123,7 @@ if(env.BRANCH_NAME == 'master') {
 }
 
 node {
+    currentBuild.result = 'SUCCESS'
     step([$class: 'StashNotifier'])
 }
 
