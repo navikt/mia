@@ -88,7 +88,7 @@ if(env.BRANCH_NAME == 'master') {
         callback = "${env.BUILD_URL}input/Deploy/"
         node {
             def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
-            def deploy = commonLib.deployApp('mia', version, "${miljo}", callback, author).key
+            def deploy = commonLib.deployApp('mia', version, "t1", callback, author).key
 
             try {
                 timeout(time: 15, unit: 'MINUTES') {
