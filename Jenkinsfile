@@ -7,7 +7,7 @@ def notifyFailed(reason, error) {
     chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) ${reason} **\n\n${changelog}"
     mattermostSend channel: 'fo-mia', color: '#FF0000', message: chatmsg
     currentBuild.result = 'FAILED'
-    step([$class: 'StashNotifier', commitSha1: env.GIT_COMMIT])
+    step([$class: 'StashNotifier'])
     throw error
 }
 
@@ -15,17 +15,17 @@ node {
     commonLib.setupTools("Maven 3.3.3", "java8")
 
     stage('Checkout') {
-        checkout([$class: 'GitSCM', doGenerateSubmoduleConfigurations: false, extensions: [], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[url: 'ssh://git@stash.devillo.no:7999/fo/mia.git']]])
+        checkout scm
         step([$class: 'StashNotifier'])
     }
 
     stage('Set version') {
         pom = readMavenPom file: 'pom.xml'
-        commitShaShort = env.GIT_COMMIT.substring(0, 7)
+        commitShaShort = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().substring(0, 6)
         if(env.BRANCH_NAME == 'master') {
-            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}.${commitShaShort}")
+            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
         } else {
-            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}.${commitShaShort}-SNAPSHOT")
+            version = pom.version.replace("-SNAPSHOT", ".${commitShaShort}-SNAPSHOT")
         }
         sh "mvn versions:set -DnewVersion=${version}"
     }
@@ -115,8 +115,6 @@ if(env.BRANCH_NAME == 'master') {
                 notifyFailed("Integrasjonstester feilet", e)
                 step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
             }
-
-            currentBuild.result = 'SUCCESS'
         }
     }
 
@@ -125,6 +123,7 @@ if(env.BRANCH_NAME == 'master') {
 }
 
 node {
-    step([$class: 'StashNotifier', commitSha1: env.GIT_COMMIT])
+    currentBuild.result = 'SUCCESS'
+    step([$class: 'StashNotifier'])
 }
 
