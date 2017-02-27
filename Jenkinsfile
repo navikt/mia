@@ -19,13 +19,18 @@ node {
         step([$class: 'StashNotifier'])
     }
 
-    if(env.BRANCH_NAME == 'master') {
-        stage('Set version') {
-            pom = readMavenPom file: 'pom.xml'
-            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
-            sh "mvn versions:set -DnewVersion=${version}"
+    stage('Set version') {
+        pom = readMavenPom file: 'pom.xml'
+        commitShaShort = env.GIT_COMMIT.substring(0, 7)
+        if(env.BRANCH_NAME == 'master') {
+            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}.${commitShaShort}")
+        } else {
+            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}.${commitShaShort}-SNAPSHOT")
         }
-    } else {
+        sh "mvn versions:set -DnewVersion=${version}"
+    }
+
+    if(env.BRANCH_NAME != "master") {
         stage('Merge master') {
             sh "git merge origin/master"
         }
@@ -69,16 +74,15 @@ node {
         }
     }
 
-    if(env.BRANCH_NAME == 'master') {
-        stage('Deploy nexus') {
-            try {
-                sh "mvn -B deploy -DskipTests -P pipeline"
-                currentBuild.description = "Version: ${version}"
-                sh "mvn versions:set -DnewVersion=${pom.version}"
+    stage('Deploy nexus') {
+        try {
+            sh "mvn -B deploy -DskipTests -P pipeline"
+            currentBuild.description = "Version: ${version}"
+            if(env.BRANCH_NAME == "master") {
                 sh "git tag -a ${version} -m ${version} HEAD && git push --tags"
-            } catch (Exception e) {
-                notifyFailed("Deploy av artifakt til nexus feilet", e)
             }
+        } catch (Exception e) {
+            notifyFailed("Deploy av artifakt til nexus feilet", e)
         }
     }
 }
