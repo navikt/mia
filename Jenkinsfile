@@ -74,6 +74,16 @@ node {
         }
     }
 
+    stage('Sonar') {
+        withSonarQubeEnv('SBL sonar') {
+            if(env.BRANCH_NAME == "master") {
+                sh "mvn ${SONAR_MAVEN_GOAL} ${SONAR_HOST_URL}"
+            } else {
+                sh "mvn ${SONAR_MAVEN_GOAL} -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.branch=pr"
+            }
+        }
+    }
+
     stage('Deploy nexus') {
         try {
             sh "mvn -B deploy -DskipTests -P pipeline"
