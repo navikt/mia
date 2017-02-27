@@ -19,11 +19,7 @@ node {
         step([$class: 'StashNotifier'])
 
         pom = readMavenPom file: 'pom.xml'
-        if (useSnapshot == 'true') {
-            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}-SNAPSHOT")
-        } else {
-            version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
-        }
+        version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
         sh "mvn versions:set -DnewVersion=${version}"
     }
 
@@ -99,7 +95,7 @@ stage("Int. tester") {
     node {
         try {
             dir("web/src/frontend") {
-                //sh("node nightwatch.js --env phantomjs --url ${testurl}")
+                //sh("node nightwatch.js --env phantomjs --url https://modapp-t1.adeo.no/mia")
             }
         } catch (Exception e) {
             notifyFailed("Integrasjonstester feilet", e)
