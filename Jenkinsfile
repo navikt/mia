@@ -76,7 +76,11 @@ node {
 
     stage('Sonar') {
         withSonarQubeEnv('SBL sonar') {
-            sh "mvn ${SONAR_MAVEN_GOAL} ${SONAR_HOST_URL} -Dsonar.branch=${env.BRANCH_NAME}"
+            if(env.BRANCH_NAME == "master") {
+                sh "mvn ${SONAR_MAVEN_GOAL} ${SONAR_HOST_URL}"
+            } else {
+                sh "mvn ${SONAR_MAVEN_GOAL} ${SONAR_HOST_URL} -Dsonar.branch=pr"
+            }
         }
     }
 
