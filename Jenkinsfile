@@ -19,6 +19,12 @@ node {
         step([$class: 'StashNotifier'])
     }
 
+    if(env.BRANCH_NAME != "master") {
+        stage('Merge master') {
+            sh "git merge origin/master"
+        }
+    }
+
     stage('Set version') {
         pom = readMavenPom file: 'pom.xml'
         commitShaShort = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().substring(0, 6)
@@ -28,12 +34,6 @@ node {
             version = pom.version.replace("-SNAPSHOT", ".${commitShaShort}-SNAPSHOT")
         }
         sh "mvn versions:set -DnewVersion=${version}"
-    }
-
-    if(env.BRANCH_NAME != "master") {
-        stage('Merge master') {
-            sh "git merge origin/master"
-        }
     }
 
 
