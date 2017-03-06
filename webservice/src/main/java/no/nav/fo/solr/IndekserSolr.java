@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 
 import javax.inject.Inject;
@@ -25,6 +26,9 @@ public class IndekserSolr {
 
     @Inject
     DokumentOppretter dokumentOppretter;
+
+    @Inject
+    CacheManager cacheManager;
 
     private Logger logger = LoggerFactory.getLogger(IndekserSolr.class);
     private SolrClient arbeidsledighetCore, ledigeStillingerCore;
@@ -49,20 +53,24 @@ public class IndekserSolr {
         }
     }
 
-    @CacheEvict(value = { "ledigestillingerHistorikk" }, allEntries = true)
     public void lesLedigeStillingerCSVOgSkrivTilSolr(InputStream inputStreamLedigestillinger) {
         slettSolrIndex(ledigeStillingerCore);
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "LEDIGE_STILLINGER", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(ledigeStillingerCore, inputStreamLedigestillinger, header);
+        clearCache();
     }
 
-    @CacheEvict(value = { "sisteOpplastedeMaaned", "arbeidsledighetHistorikk", "arbeidsledighetForKommuner", "arbeidsledighetForFylker" }, allEntries = true)
     public void lesArbeidsledighetCSVOgSkrivTilSolr(InputStream inputStreamArbeidsledige) {
         slettSolrIndex(arbeidsledighetCore);
 
         String[] header = new String[]{"PERIODE", "FYLKESNR", "KOMMUNENR", "YRKESKODE", "ARBEIDSLEDIGE", "YRKGR_LVL_1_ID", "YRKGR_LVL_2_ID"};
         skrivCSVTilSolrClient(arbeidsledighetCore, inputStreamArbeidsledige, header);
+        clearCache();
+    }
+
+    private void clearCache() {
+        cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
     }
 
     private void skrivCSVTilSolrClient(SolrClient solrClient, InputStream inputStreamLedigestillinger, String[] header) {
