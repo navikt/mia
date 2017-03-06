@@ -4,6 +4,8 @@ import no.nav.fo.consumer.endpoints.SupportEndpoint;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -15,6 +17,7 @@ public class SupportMappingService {
     @Inject
     SupportEndpoint supportEndpoint;
 
+    private Logger logger = LoggerFactory.getLogger(SupportMappingService.class);
     private Map<String, String> strukturkodeTilIdMapping, idTilStrukturkodeMapping;
     private Map<String, List<String>> strukturkodeTilYrkgrLvl2Mapping, yrkgrLvl2TilStrukturkodeMapping;
     private Map<String, List<String>> yrkgrLvl2TilYrkgrLvl1Mapping;
@@ -43,6 +46,7 @@ public class SupportMappingService {
     }
 
     private void createStrukturkodeMappingForGeografi() {
+        logger.info("Lager ny mapping for geografi");
         strukturkodeTilIdMapping = new HashMap<>();
         idTilStrukturkodeMapping = new HashMap<>();
         QueryResponse resp = supportEndpoint.getRelevanteOmraderFraSolr();
@@ -65,6 +69,7 @@ public class SupportMappingService {
     }
 
     private void createStrukturkodeMappingForYrkesgruppe() {
+        logger.info("Lager ny mapping for yrkesgrupper");
         yrkgrLvl2TilStrukturkodeMapping = new HashMap<>();
         strukturkodeTilYrkgrLvl2Mapping = new HashMap<>();
 
@@ -107,6 +112,7 @@ public class SupportMappingService {
     }
 
     private void createYrkgrLvl1ForYrkgrLvl2Mapping() {
+        logger.info("Lager yrkesgrupper lvl1 for lvl2 mapping");
         yrkgrLvl2TilYrkgrLvl1Mapping = new HashMap<>();
 
         yrkgrLvl2TilStrukturkodeMapping.keySet().forEach(lvl2 -> {

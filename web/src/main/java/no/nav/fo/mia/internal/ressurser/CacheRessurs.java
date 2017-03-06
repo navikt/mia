@@ -1,5 +1,6 @@
 package no.nav.fo.mia.internal.ressurser;
 
+import no.nav.fo.consumer.service.SupportMappingService;
 import no.nav.metrics.aspects.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import javax.ws.rs.Produces;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Controller
-@Path("/cache")
+@Path("/clearcache")
 @Produces(APPLICATION_JSON)
 @Timed
 public class CacheRessurs {
@@ -24,11 +25,14 @@ public class CacheRessurs {
     @Inject
     CacheManager cacheManager;
 
+    @Inject
+    SupportMappingService supportMappingService;
+
     @GET
-    @Path("/clear")
     public String indekserMiASolrArbeidsledighet() {
-        logger.info("Sletter alle cacher etter manuell trigger!");
+        logger.info("Sletter alle cacher og lager ny mapping etter manuell trigger!");
         cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+        supportMappingService.createMapping();
         return "Alle cacher slettet!";
     }
 }

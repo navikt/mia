@@ -1,5 +1,6 @@
 package no.nav.fo.solr;
 
+import no.nav.fo.consumer.service.SupportMappingService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -28,6 +29,9 @@ public class IndekserSolr {
 
     @Inject
     CacheManager cacheManager;
+
+    @Inject
+    SupportMappingService supportMappingService;
 
     private Logger logger = LoggerFactory.getLogger(IndekserSolr.class);
     private SolrClient arbeidsledighetCore, ledigeStillingerCore;
@@ -105,6 +109,7 @@ public class IndekserSolr {
         } catch (SolrServerException | IOException e) {
             e.printStackTrace();
         }
+        supportMappingService.createMapping();
     }
 
     private void oppdaterSolrIndex(SolrClient solrServer, Collection<SolrInputDocument> dokumenter) {
