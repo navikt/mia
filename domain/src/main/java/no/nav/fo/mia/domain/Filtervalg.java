@@ -49,18 +49,4 @@ public class Filtervalg {
         result = 31 * result + (restenavverden ? 1 : 0);
         return result;
     }
-
-    private static <T> String listToString(List<T> list) {
-        if(list == null) {
-            return "";
-        }
-
-        List<String> listString = (new HashSet<>(list)).stream()
-                .sorted()
-                .map(Object::toString)
-                .collect(Collectors.toList());
-
-        return String.join(",", listString);
-
-    }
 }
