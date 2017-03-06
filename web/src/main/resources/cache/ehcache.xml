@@ -46,9 +46,6 @@
     <cache alias="fylkerOgKommuner" uses-template="short">
         <heap>10</heap>
     </cache>
-    <cache alias="supportMapping" uses-template="hourly">
-        <heap>10</heap>
-    </cache>
 
 
     <!-- templates -->
