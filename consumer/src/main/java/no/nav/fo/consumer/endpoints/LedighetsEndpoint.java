@@ -37,13 +37,13 @@ public class LedighetsEndpoint {
     }
 
     @Timed
-    @Cacheable(value = "arbeidsledighetHistorikk", key = "#filtervalg.toString()")
+    @Cacheable(value = "arbeidsledighetHistorikk", key = "#filtervalg.hashCode()")
     public Map<String, Integer> getArbeidsledighetForSisteTrettenMaaneder(Filtervalg filtervalg) {
         return getStatistikkSisteTrettenMaaneder(arbeidsledighetSolrClient, filtervalg);
     }
 
     @Timed
-    @Cacheable(value = "ledigestillingerHistorikk", key = "#filtervalg.toString()")
+    @Cacheable(value = "ledigestillingerHistorikk", key = "#filtervalg.hashCode()")
     public Map<String, Integer> getLedigestillingerForSisteTrettenMaaneder(Filtervalg filtervalg) {
         return getStatistikkSisteTrettenMaaneder(ledigestillingerSolrClient, filtervalg);
     }

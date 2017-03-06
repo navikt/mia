@@ -13,13 +13,13 @@ public class CacheKeyGenerator implements KeyGenerator {
         for(Object param : params) {
             if (param instanceof Collection) {
                 for(Object e : (Collection)param) {
-                    key += e.toString();
+                    key += e.hashCode();
                 }
             } else if(param != null) {
-                key += param.toString();
+                key += param.hashCode();
             }
         }
 
-        return key;
+        return key.hashCode();
     }
 }

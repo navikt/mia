@@ -24,8 +24,30 @@ public class Filtervalg {
     @QueryParam("restenavverden")
     public boolean restenavverden;
 
-    public String toString() {
-        return this.yrkesomrade + listToString(this.yrkesgrupper) + listToString(this.fylker) + listToString(this.kommuner) + "eoseu" + eoseu + "restenavverden" + restenavverden;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Filtervalg that = (Filtervalg) o;
+
+        if (eoseu != that.eoseu) return false;
+        if (restenavverden != that.restenavverden) return false;
+        if (yrkesomrade != null ? !yrkesomrade.equals(that.yrkesomrade) : that.yrkesomrade != null) return false;
+        if (yrkesgrupper != null ? !yrkesgrupper.equals(that.yrkesgrupper) : that.yrkesgrupper != null) return false;
+        if (fylker != null ? !fylker.equals(that.fylker) : that.fylker != null) return false;
+        return kommuner != null ? kommuner.equals(that.kommuner) : that.kommuner == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = yrkesomrade != null ? yrkesomrade.hashCode() : 0;
+        result = 31 * result + (yrkesgrupper != null ? yrkesgrupper.hashCode() : 0);
+        result = 31 * result + (fylker != null ? fylker.hashCode() : 0);
+        result = 31 * result + (kommuner != null ? kommuner.hashCode() : 0);
+        result = 31 * result + (eoseu ? 1 : 0);
+        result = 31 * result + (restenavverden ? 1 : 0);
+        return result;
     }
 
     private static <T> String listToString(List<T> list) {
@@ -38,7 +60,7 @@ public class Filtervalg {
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-        return String.join("", listString);
+        return String.join(",", listString);
 
     }
 }
