@@ -23,22 +23,19 @@
     </cache>
 
     <!-- Ledighets endpoint -->
-    <cache alias="arbeidsledighetForKommuner" uses-template="daily">
+    <cache alias="arbeidsledighetForKommuner" uses-template="hourly">
         <heap>100</heap>
     </cache>
-    <cache alias="arbeidsledighetForFylker" uses-template="daily">
+    <cache alias="arbeidsledighetForFylker" uses-template="hourly">
         <heap>100</heap>
     </cache>
-    <cache alias="sisteOpplastedeMaaned" uses-template="daily">
+    <cache alias="sisteOpplastedeMaaned" uses-template="hourly">
         <heap>10</heap>
     </cache>
-    <cache alias="sisteOpplastedeMaaned" uses-template="daily">
-        <heap>10</heap>
-    </cache>
-    <cache alias="arbeidsledighetHistorikk" uses-template="daily">
+    <cache alias="arbeidsledighetHistorikk" uses-template="hourly">
         <heap>100</heap>
     </cache>
-    <cache alias="ledigestillingerHistorikk" uses-template="daily">
+    <cache alias="ledigestillingerHistorikk" uses-template="hourly">
         <heap>100</heap>
     </cache>
 
