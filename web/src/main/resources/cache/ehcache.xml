@@ -23,27 +23,27 @@
     </cache>
 
     <!-- Ledighets endpoint -->
-    <cache alias="arbeidsledighetForKommuner" uses-template="hourly">
+    <cache alias="arbeidsledighetForKommuner" uses-template="short">
         <heap>100</heap>
     </cache>
-    <cache alias="arbeidsledighetForFylker" uses-template="hourly">
+    <cache alias="arbeidsledighetForFylker" uses-template="short">
         <heap>100</heap>
     </cache>
-    <cache alias="sisteOpplastedeMaaned" uses-template="hourly">
+    <cache alias="sisteOpplastedeMaaned" uses-template="short">
         <heap>10</heap>
     </cache>
-    <cache alias="arbeidsledighetHistorikk" uses-template="hourly">
+    <cache alias="arbeidsledighetHistorikk" uses-template="short">
         <heap>100</heap>
     </cache>
-    <cache alias="ledigestillingerHistorikk" uses-template="hourly">
+    <cache alias="ledigestillingerHistorikk" uses-template="short">
         <heap>100</heap>
     </cache>
 
     <!-- Support endpoint -->
-    <cache alias="yrkesgrupperForYrkesomrade" uses-template="daily">
+    <cache alias="yrkesgrupperForYrkesomrade" uses-template="short">
         <heap>100</heap>
     </cache>
-    <cache alias="fylkerOgKommuner" uses-template="daily">
+    <cache alias="fylkerOgKommuner" uses-template="short">
         <heap>10</heap>
     </cache>
 
@@ -52,6 +52,11 @@
     <cache-template name="minute">
         <expiry>
             <ttl unit="seconds">60</ttl>
+        </expiry>
+    </cache-template>
+    <cache-template name="short">
+        <expiry>
+            <ttl unit="minutes">3</ttl>
         </expiry>
     </cache-template>
     <cache-template name="hourly">
