@@ -1,3 +1,6 @@
+@Library('common') import common
+def commonLib = new common()
+
 def notifyFailed(reason, error) {
     currentBuild.result = 'FAILED'
     step([$class: 'StashNotifier'])
