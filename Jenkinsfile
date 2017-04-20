@@ -100,7 +100,7 @@ node {
 
 if(env.BRANCH_NAME == 'master') {
     stage("Deploy app") {
-        callback = "${env.BUILD_URL}input/Deploy/"
+        callback = "${env.BUILD_URL}input/deploy"
         node {
             def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
             def deploy = commonLib.deployApp('mia', version, "t1", callback, author).key
@@ -128,9 +128,6 @@ if(env.BRANCH_NAME == 'master') {
             }
         }
     }
-
-    chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) Bygg og deploy OK**\n\n${commonLib.getChangeString()}"
-    mattermostSend channel: 'fo-mia', color: '#00FF00', message: chatmsg
 }
 
 node {
