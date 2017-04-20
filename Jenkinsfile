@@ -12,7 +12,7 @@ def notifyFailed(reason, error) {
 }
 
 node {
-    commonLib.setupTools("Maven 3.3.3", "java8")
+    commonLib.setupTools("maven3", "java8")
 
     stage('Checkout') {
         checkout scm
