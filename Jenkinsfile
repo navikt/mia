@@ -100,7 +100,7 @@ node {
 
 if(env.BRANCH_NAME == 'master') {
     stage("Deploy app") {
-        callback = "${env.BUILD_URL}input/Deploy/"
+        callback = "${env.BUILD_URL}input/Deploy"
         node {
             def author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
             def deploy = commonLib.deployApp('mia', version, "t1", callback, author).key
