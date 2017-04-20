@@ -1,19 +1,10 @@
-@Library('common') import common
-def commonLib = new common()
-
 def notifyFailed(reason, error) {
-    def commons = new common()
-    changelog = commons.getChangeString()
-    chatmsg = "**[mia ${version}](https://modapp-t1.adeo.no/mia/) ${reason} **\n\n${changelog}"
-    mattermostSend channel: 'fo-mia', color: '#FF0000', message: chatmsg
     currentBuild.result = 'FAILED'
     step([$class: 'StashNotifier'])
     throw error
 }
 
 node {
-    commonLib.setupTools("maven3", "java8")
-
     stage('Checkout') {
         checkout scm
         step([$class: 'StashNotifier'])
