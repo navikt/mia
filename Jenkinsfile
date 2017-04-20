@@ -8,6 +8,8 @@ def notifyFailed(reason, error) {
 }
 
 node {
+    commonLib.setupTools("maven3", "java8")
+
     stage('Checkout') {
         checkout scm
         step([$class: 'StashNotifier'])
