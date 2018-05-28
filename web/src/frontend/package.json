@@ -14,7 +14,8 @@
     "lint": "gulp eslint",
     "eslint": "gulp eslint",
     "integration": "node nightwatch.js",
-    "test:coverage": "babel-node ./node_modules/babel-istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha"
+    "test:coverage": "babel-node ./node_modules/babel-istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha",
+    "coverage": "babel-node ./node_modules/babel-istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha"
   },
   "author": "",
   "license": "ISC",
