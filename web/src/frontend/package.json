@@ -11,6 +11,7 @@
     "dev": "gulp watch",
     "test": "mocha",
     "tdd": "mocha -w",
+    "lint": "gulp eslint",
     "eslint": "gulp eslint",
     "integration": "node nightwatch.js",
     "coverage": "babel-node ./node_modules/babel-istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha"
