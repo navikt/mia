@@ -1,3 +1,0 @@
-[submodule "web/src/frontend/selenium"]
-	path = web/src/frontend/selenium
-	url = ssh://git@stash.devillo.no:7999/felles/selenium.git

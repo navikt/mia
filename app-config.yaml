@@ -1,0 +1,13 @@
+# vi: se sw=2 sts=2 ts=2 et:
+image: docker.adeo.no:5000/fo/mia
+replicas:
+  min: 2
+  max: 3
+port: 8080
+healthcheck:
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 60
+  readiness:
+    path: /internal/isReady
+    initialDelay: 60

@@ -1,0 +1,8 @@
+server:
+  port: 8800
+  servlet:
+    context-path: /mia
+
+spring:
+  profiles:
+    active: prod
