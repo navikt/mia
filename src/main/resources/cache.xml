@@ -1,0 +1,39 @@
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.2.xsd"
+>
+    <cache alias="veradeploys" uses-template="medium">
+        <heap>100</heap>
+    </cache>
+    <cache alias="teamconfig" uses-template="long">
+        <heap>1000</heap>
+    </cache>
+    <cache alias="stashcommits" uses-template="medium">
+        <heap>200</heap>
+    </cache>
+    <cache alias="stashtags" uses-template="medium">
+        <heap>200</heap>
+    </cache>
+    <cache alias="jiraissue" uses-template="medium">
+        <heap>300</heap>
+    </cache>
+
+    <!-- templates -->
+    <cache-template name="short">
+        <expiry>
+            <ttl unit="minutes">1</ttl>
+        </expiry>
+    </cache-template>
+    <cache-template name="medium">
+        <expiry>
+            <ttl unit="minutes">3</ttl>
+        </expiry>
+    </cache-template>
+    <cache-template name="long">
+        <expiry>
+            <ttl unit="minutes">30</ttl>
+        </expiry>
+    </cache-template>
+</config>
