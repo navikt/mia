@@ -52,7 +52,17 @@ class StillingerConsumerImpl: StillingerConsumer {
 @Profile("mock")
 class StillingerConsumerMock: StillingerConsumer {
     override fun getYrkesomrader(fylkesnummer: String, filtervalg: Filtervalg): List<Bransje> {
-        Bransje()
+        val faker = Faker(Random(stringToSeed(fylkesnummer + filtervalg.toString())))
+        val numBransjer = faker.number().numberBetween(3, 9)
+        return (1..numBransjer).map {
+            val navn = faker.company().industry()
+            Bransje(
+                    navn = navn,
+                    id = navn,
+                    strukturkode = faker.code().imei(),
+                    antallStillinger = faker.number().numberBetween(1, 1000)
+            )
+        }
     }
 
     override fun getLedighetstallForValgtOmrade(filtervalg: Filtervalg): Int =

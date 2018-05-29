@@ -4,7 +4,7 @@ data class Bransje (
         val navn: String,
         val id: String,
         val strukturkode: String,
-        val parent: List<String>,
+        val parent: List<String> = emptyList(),
         val antallStillinger: Int
 )
 
@@ -21,7 +21,7 @@ data class Stilling (
         val arbeidsgivernavn: String,
         val id: String,
         val tittel: String,
-        val soknadsfrist: String = null,
+        val soknadsfrist: String? = null,
         val stillingstype: String,
         val antallStillinger: Int,
         val lokal: Boolean,

@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.ws.rs.BeanParam
 
 @RestController
-@RequestMapping("/bransjer")
+@RequestMapping("/rest/bransjer")
 class BransjerController @Inject
 constructor(
         val stillingerConsumer: StillingerConsumer
