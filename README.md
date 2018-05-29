@@ -1,25 +1,13 @@
-# Brukerflate - test2335534664
+# Muligheter i Arbeidsmarkedet
 
-## Oppsett lokalt
+Muligheter i Arbeidsmarkedet er en applikasjon hvor man kan få oversikt over arbeidsmarkedet
+gjennom å se på ulike bransjer om områder. Tjenesten har en kartløsning for å lett presentere
+dataene på en forstålig måte.
 
-1. Kjør `mvn clean install`
-2. Start jetty-test: `web/src/test/java/no/nav/fo/StartJetty`
+## Utvikling lokalt
 
-## Ved utvikling
-
-For utvikling har vi satt opp en del hjelpekommandoer som kan kjøres gjennom npm.
-Alle kommandoene kan kjøres fra kommandilinjen i mappen `web/src/frontend`.
-
-| Kommando              | Beskrivelse                                                       |
-| ----------------------|-------------------------------------------------------------------|
-| `npm install`         | Installerer frontend-avhengigheter                                |
-| `npm run build`       | Bygger frontenden (i dev-modus)                                   |
-| `npm run buildProd`   | Bygger frontenden for produksjon (minifisert)                     |
-| `npm run dev`         | Setter opp kontinuerlig bygging frontend-koden                    |
-| `npm run test`        | Kjører frontendtestene                                            |
-| `npm run eslint`      | Vil kjøre linting av frontend (kodekvalitetstets)                 |
-| `npm run integration` | Starter integrasjonstestene. Støtter både chrome og phantomjs     |
-
+Applikasjonen er delt i 2 ulike delere. En backend og en frontend. Backenden kan kjøres opp ved å starte
+Main-metoden i `Application.kt`, mens frontenden kan startes ved å kjøre `npm run start` i mappen `src/frontend`.
 
 ## Lage nye geojson-filer for ønsket nøyaktighet:
 

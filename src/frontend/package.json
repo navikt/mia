@@ -4,14 +4,47 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
+    "classnames": "^2.2.5",
+    "highcharts": "^6.1.0",
+    "history": "^4.7.2",
+    "intl-messageformat": "^2.2.0",
+    "leaflet": "^1.3.1",
+    "nav-frontend-core": "^4.0.5",
+    "nav-frontend-knapper": "^1.0.9",
+    "nav-frontend-knapper-style": "^0.3.9",
+    "nav-frontend-lukknapp": "^1.0.4",
+    "nav-frontend-lukknapp-style": "^0.2.5",
+    "nav-frontend-modal": "^1.0.4",
+    "nav-frontend-modal-style": "^0.3.9",
+    "nav-frontend-paneler": "^1.0.6",
+    "nav-frontend-paneler-style": "^0.3.8",
+    "prop-types": "^15.6.1",
     "react": "^16.4.0",
+    "react-document-title": "^2.0.3",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "react-highcharts": "^16.0.2",
+    "react-intl": "^2.4.0",
+    "react-leaflet": "^1.9.1",
+    "react-modal": "^3.4.4",
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm-run-all -p start:*",
+    "start:js": "react-scripts start",
+    "start:less": "autoless --source-map --intervall 100 ./src ./public",
+    "build": "npm run build:less && npm run build:js",
+    "build:js": "react-scripts build",
+    "build:less": "node ./node_modules/less/bin/lessc/ src/index.less ./public/index.css",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "autoless": "^0.1.7",
+    "less": "^3.0.4",
+    "npm-run-all": "^4.1.3"
   }
 }

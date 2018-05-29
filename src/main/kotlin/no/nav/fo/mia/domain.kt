@@ -21,7 +21,7 @@ data class Stilling (
         val arbeidsgivernavn: String,
         val id: String,
         val tittel: String,
-        val soknadsfrist: String,
+        val soknadsfrist: String = null,
         val stillingstype: String,
         val antallStillinger: Int,
         val lokal: Boolean,
