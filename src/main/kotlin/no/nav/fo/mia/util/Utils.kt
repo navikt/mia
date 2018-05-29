@@ -13,3 +13,7 @@ fun setupTruststore() {
     getOptionalProperty("NAV_TRUSTSTORE_PATH")?.let { System.setProperty(truststore, it) }
     getOptionalProperty("NAV_TRUSTSTORE_PASSWORD")?.let { System.setProperty(truststorepassword, it) }
 }
+
+fun stringToSeed(text: String): Long =
+        text.map { it.toLong() }
+                .fold(11L) { acc, i -> (acc * 31 ) + i }
