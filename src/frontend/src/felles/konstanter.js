@@ -1,4 +1,6 @@
-export const RESTURL = "/mia/rest";
+import { erDev } from './utils/dev'
+
+export const RESTURL = erDev() ? "http://localhost:8800/mia/rest" : "/mia/rest";
 export const STATUS = {
     feilet: 'FEILET',
     lastet: 'LASTET',

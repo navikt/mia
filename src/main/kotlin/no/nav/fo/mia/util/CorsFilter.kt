@@ -28,6 +28,7 @@ class CorsFilter: Filter {
         val httpServletResponse = response as HttpServletResponse
         httpServletResponse.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, originHeader)
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true")
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"))
         httpServletResponse.setHeader("Access-Control-Allow-Methods", ALLOWED_METHODS)
 
         chain.doFilter(request, response)
