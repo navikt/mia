@@ -9,6 +9,9 @@ dataene på en forstålig måte.
 Applikasjonen er delt i 2 ulike delere. En backend og en frontend. Backenden kan kjøres opp ved å starte
 Main-metoden i `Application.kt`, mens frontenden kan startes ved å kjøre `npm run start` i mappen `src/frontend`.
 
+Ved å sette miljøvariabelen `USE_MOCK=true` vil backenden starte opp med mock-profilen, og mocke alle
+konsument-tjenestene.
+
 ## Lage nye geojson-filer for ønsket nøyaktighet:
 
 Applikasjonen bruker vektordata for å tegne opp grensene for ulike fylker og kommuner i kartet. Disse kartdataene er hentet

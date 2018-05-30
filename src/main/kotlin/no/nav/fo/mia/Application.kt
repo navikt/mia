@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
+import no.nav.fo.mia.util.getOptionalProperty
 import no.nav.fo.mia.util.setupTruststore
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -16,7 +17,11 @@ open class Application
 
 fun main(args: Array<String>) {
     setupTruststore()
-    SpringApplication.run(Application::class.java, *args)
+    val app = SpringApplication(Application::class.java)
+    if (getOptionalProperty("USE_MOCK") == "true") {
+        app.setAdditionalProfiles("mock")
+    }
+    app.run(*args)
 }
 
 @Inject

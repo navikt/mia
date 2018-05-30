@@ -216,7 +216,7 @@ class Oversiktskart extends React.Component {
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
                         <TileLayer
-                            url="/mia/map/{z}_{x}_{y}.png"
+                            url="/mia/tiles/{z}_{x}_{y}.png"
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
                         />
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
