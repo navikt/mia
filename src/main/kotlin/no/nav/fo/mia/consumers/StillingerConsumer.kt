@@ -1,74 +1,78 @@
 package no.nav.fo.mia.consumers
 
-import no.nav.fo.mia.Bransje
 import no.nav.fo.mia.Filtervalg
-import no.nav.fo.mia.OmradeStilling
-import no.nav.fo.mia.Stilling
+import no.nav.fo.mia.util.solrQueryMedOmradeFilter
+import org.apache.solr.client.solrj.SolrClient
+import org.apache.solr.client.solrj.SolrQuery
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
+import java.lang.Integer.parseInt
+import javax.inject.Inject
 
 interface StillingerConsumer {
-    fun getYrkesomrader(fylkesnummer: String, filtervalg: Filtervalg): List<Bransje>
-    fun getLedighetstallForValgtOmrade(filtervalg: Filtervalg): Int
-    fun getStillinger(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling>
-    fun getYrkesgrupperForYrkesomrade(yrkesomradeid: String, filtervalg: Filtervalg): List<Bransje>
-    fun getLedighetstallForKommuner(periode: String, filtervalg: Filtervalg): List<OmradeStilling>
-    fun getLedighetstallForFylker(periode: String, filtervalg: Filtervalg): List<OmradeStilling>
+    fun getYrkesomrader(): List<YrkesomradeDTO>
+    fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int
+    fun getAntallStillingerForYrkesgruppe(yrkesomrade: String, filtervalg: Filtervalg): Int
 }
 
 @Service
 @Profile("!mock")
-class StillingerConsumerImpl: StillingerConsumer {
-    override fun getYrkesomrader(fylkesnummer: String, filtervalg: Filtervalg): List<Bransje> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class StillingerConsumerImpl @Inject
+constructor (
+        val stillingSolrClient: SolrClient
+): StillingerConsumer {
+    override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int =
+            getAntallStillinger("YRKGR_LVL_2_ID:$yrkesgruppe", filtervalg)
+
+    override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int =
+            getAntallStillinger("YRKGR_LVL_1_ID:$yrkesomrade", filtervalg)
+
+    private fun getAntallStillinger(filter: String, filtervalg: Filtervalg): Int {
+        val query = solrQueryMedOmradeFilter(filtervalg = filtervalg)
+                .addFilterQuery(filter)
+                .addFacetField("ANTALLSTILLINGER")
+                .setRows(0)
+
+        val antallStillingerFacet = stillingSolrClient.query(query).getFacetField("ANTALLSTILLINGER")
+        if (antallStillingerFacet == null || antallStillingerFacet.valueCount == 0) {
+            return 0
+        }
+
+        return antallStillingerFacet.values
+                .map { it.count * parseInt(it.name?: "1")}
+                .sum().toInt()
     }
 
-    override fun getLedighetstallForValgtOmrade(filtervalg: Filtervalg): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getYrkesomrader(): List<YrkesomradeDTO> {
+        val query = SolrQuery("*:*")
+        query.addFacetField("YRKGR_LVL_1")
+                .addFacetField("YRKGR_LVL_1_ID")
+                .rows = 0
 
-    override fun getStillinger(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val response = stillingSolrClient.query(query)
+        val navnFacets = response.getFacetField("YRKGR_LVL_1")
+        val idFacets = response.getFacetField("YRKGR_LVL_1_ID")
+        return (0..navnFacets.valueCount).map {
+            YrkesomradeDTO(
+                    id = idFacets.values[it]?.name ?: "",
+                    navn = navnFacets.values[it]?.name ?: ""
+            )
+        }
     }
-
-    override fun getYrkesgrupperForYrkesomrade(yrkesomradeid: String, filtervalg: Filtervalg): List<Bransje> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getLedighetstallForKommuner(periode: String, filtervalg: Filtervalg): List<OmradeStilling> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getLedighetstallForFylker(periode: String, filtervalg: Filtervalg): List<OmradeStilling> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }
 
 @Service
 @Profile("mock")
 class StillingerConsumerMock: StillingerConsumer {
-    override fun getYrkesomrader(fylkesnummer: String, filtervalg: Filtervalg): List<Bransje> {
+    override fun getYrkesomrader(): List<YrkesomradeDTO> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getLedighetstallForValgtOmrade(filtervalg: Filtervalg): Int {
+    override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getStillinger(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getYrkesgrupperForYrkesomrade(yrkesomradeid: String, filtervalg: Filtervalg): List<Bransje> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getLedighetstallForKommuner(periode: String, filtervalg: Filtervalg): List<OmradeStilling> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getLedighetstallForFylker(periode: String, filtervalg: Filtervalg): List<OmradeStilling> {
+    override fun getAntallStillingerForYrkesgruppe(yrkesomrade: String, filtervalg: Filtervalg): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

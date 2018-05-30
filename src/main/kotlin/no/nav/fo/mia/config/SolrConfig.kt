@@ -15,6 +15,10 @@ open class SolrConfig {
             getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}supportcore")
 
     @Bean
+    open fun stillingSolrClient(): SolrClient =
+            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}mainwithlocal")
+
+    @Bean
     open fun arbeidsledighetSolrClient(): SolrClient =
             getClientForUri(getRequiredProperty("MIASOLR_SOLR_ARBEIDSLEDIGECORE_URL"))
 

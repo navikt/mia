@@ -7,3 +7,15 @@ data class OmradeDTO (
         val navn: String,
         val parent: String?
 )
+
+data class YrkesomradeDTO (
+        val id: String,
+        val navn: String
+)
+
+data class YrkesgruppeDTO (
+        val id: String,
+        val navn: String,
+        val strukturkode: String,
+        val parents: List<String>
+)

@@ -3,7 +3,7 @@ package no.nav.fo.mia
 data class Bransje (
         val navn: String,
         val id: String,
-        val strukturkode: String,
+        val strukturkode: String? = null,
         val parent: List<String> = emptyList(),
         val antallStillinger: Int
 )
