@@ -29,18 +29,5 @@ open class WebMvcConfig : WebMvcConfigurer {
                         return location.createRelative(resourcePath)
                     }
                 })
-
-        registry.addResourceHandler("/**/*")
-                .addResourceLocations("classpath:/static/")
-                .resourceChain(true)
-                .addResolver(object : PathResourceResolver() {
-                    override fun getResource(resourcePath: String, location: Resource): Resource {
-                        val requestedResource = location.createRelative(resourcePath)
-                        return if (requestedResource.exists() && requestedResource.isReadable)
-                            requestedResource
-                        else
-                            ClassPathResource("/static/index.html")
-                    }
-                })
     }
 }

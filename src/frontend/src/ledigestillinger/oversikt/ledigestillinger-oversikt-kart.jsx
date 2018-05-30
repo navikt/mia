@@ -9,6 +9,7 @@ import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 import {EOS_EU, RESTEN_AV_VERDEN} from '../../felles/konstanter';
+import {erDev} from '../../felles/utils/dev';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -200,6 +201,7 @@ class Oversiktskart extends React.Component {
         };
 
         const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} className={'valgte-omrader'} />: <noscript />;
+        const tilesBaseUrl = erDev() ? "http://localhost:8800/mia" : "/mia";
 
         return (
             <div className="kart-omrader-container">
@@ -216,7 +218,7 @@ class Oversiktskart extends React.Component {
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
                         <TileLayer
-                            url="/mia/tiles/{z}_{x}_{y}.png"
+                            url={tilesBaseUrl + "/tiles/{z}_{x}_{y}.png"}
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
                         />
                         <GeoJSON ref="kommuner" data={this.props.kommunergeojson} style={{...geojsonStyling, opacity: 0, weight: 1}} onEachFeature={onEachKommune} />
