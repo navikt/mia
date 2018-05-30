@@ -13,8 +13,8 @@ data class Omrade (
         val id: String,
         val navn: String,
         val strukturkode: String,
-        val underomrader: List<Omrade> = emptyList(),
-        val parentIds: List<String> = emptyList()
+        val parent: String? = null,
+        val underomrader: List<Omrade> = emptyList()
 )
 
 data class Stilling (
