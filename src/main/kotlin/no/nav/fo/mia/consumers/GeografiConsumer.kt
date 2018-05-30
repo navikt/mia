@@ -38,10 +38,10 @@ constructor(
     private fun documentToOmrade(document: SolrDocument): OmradeDTO =
             OmradeDTO(
                     id = document.getFieldValue("ID") as String,
-                    strukturkode = document.getFieldValue("STRUKTURKODE") as String,
+                    strukturkode = document.getFieldValue("STRUKTURKODE") as String? ?: "",
                     navn = document.getFieldValue("NAVN") as String,
                     nivaa = document.getFieldValue("NIVAA") as String,
-                    parent = document.getFieldValues("PARENT").first() as String
+                    parent = document.getFieldValues("PARENT")?.first() as String?
             )
 }
 

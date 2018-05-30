@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile
 open class SolrConfig {
     @Bean
     open fun supportSolrClient(): SolrClient =
-            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}/supportcore")
+            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}supportcore")
 
     @Bean
     open fun arbeidsledighetSolrClient(): SolrClient =
