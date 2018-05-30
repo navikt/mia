@@ -21,6 +21,7 @@
         <javax.rs.version>2.0-m16</javax.rs.version>
         <kotlin.version>1.2.40</kotlin.version>
         <annotations.version>16.0.1</annotations.version>
+        <solr.version>7.3.1</solr.version>
     </properties>
 
     <dependencyManagement>
@@ -66,6 +67,11 @@
             <groupId>no.finn.unleash</groupId>
             <artifactId>unleash-client-java</artifactId>
             <version>${unleash.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>${solr.version}</version>
         </dependency>
 
         <!-- logging -->
