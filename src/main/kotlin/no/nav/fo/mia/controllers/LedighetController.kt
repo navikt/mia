@@ -2,6 +2,7 @@ package no.nav.fo.mia.controllers
 
 import no.nav.fo.mia.Filtervalg
 import no.nav.fo.mia.consumers.LedighetConsumer
+import no.nav.fo.mia.util.sensurerData
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -23,7 +24,4 @@ constructor(
         statistikk["ledigestillinger"] = ledighetConsumer.getLedigestillingerForSisteTrettenMaaneder(filtervalg)
         return statistikk
     }
-
-    private fun sensurerData(statistik: Map<String, Int>): Map<String, Int?> =
-            statistik.map { Pair(it.key, if (it.value > 4) it.value else null) }.toMap()
 }
