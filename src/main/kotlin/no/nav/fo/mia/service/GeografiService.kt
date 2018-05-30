@@ -11,7 +11,6 @@ class GeografiService @Inject
 constructor(
         val geografiConsumer: GeografiConsumer
 ) {
-
     fun hentAlleRelevanteOmrader(): List<Omrade> {
         val alleOmrader = geografiConsumer.hentAlleOmrader()
         val fylkerMedKommuner = alleOmrader

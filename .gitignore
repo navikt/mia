@@ -12,5 +12,5 @@ src/frontend/build/
 
 target/
 node_modules/
-static/
-public/
+src/main/resources/static/
+src/main/resources/public/
