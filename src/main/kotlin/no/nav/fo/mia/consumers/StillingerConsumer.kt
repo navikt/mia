@@ -52,7 +52,8 @@ constructor (
         val response = stillingSolrClient.query(query)
         val navnFacets = response.getFacetField("YRKGR_LVL_1")
         val idFacets = response.getFacetField("YRKGR_LVL_1_ID")
-        return (0..navnFacets.valueCount).map {
+
+        return (0 until navnFacets.valueCount).map {
             YrkesomradeDTO(
                     id = idFacets.values[it]?.name ?: "",
                     navn = navnFacets.values[it]?.name ?: ""
