@@ -9,9 +9,9 @@ class SolrBransjeMappingService @Inject
 constructor (
         val stillingstypeConsumer: StillingstypeConsumer
 ) {
-    private val strukturkodeTilYrkgrLvl2Mapoing = createStrukturkodeTilYrkgrLvl2Mapping()
-    private val yrkgrLvl2TilStrukturkodeMapping = createYrkgrLvl2TilStrukturkodeMapping()
-    private val yrkgrLvl2TilYrkgrLvl1Mapping = createYrkgrLvl2TilYrkgrLvl1Mapping()
+    //private val strukturkodeTilYrkgrLvl2Mapoing = createStrukturkodeTilYrkgrLvl2Mapping()
+    //private val yrkgrLvl2TilStrukturkodeMapping = createYrkgrLvl2TilStrukturkodeMapping()
+    //private val yrkgrLvl2TilYrkgrLvl1Mapping = createYrkgrLvl2TilYrkgrLvl1Mapping()
 
 
     private fun createStrukturkodeTilYrkgrLvl2Mapping(): Map<String, List<String>> {

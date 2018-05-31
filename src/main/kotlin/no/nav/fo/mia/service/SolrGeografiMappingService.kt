@@ -30,7 +30,7 @@ constructor (
 
     private fun vaskStrukturkode(strukturkode: String): String {
         if (strukturkode.contains(".")) {
-            return strukturkode.replace("NO", "").split("\\.")[1]
+            return strukturkode.replace("NO", "").split(".")[1]
         }
         return strukturkode.replace("NO", "")
     }

@@ -13,6 +13,7 @@ interface StillingerConsumer {
     fun getYrkesomrader(): List<YrkesomradeDTO>
     fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int
     fun getAntallStillingerForYrkesgruppe(yrkesomrade: String, filtervalg: Filtervalg): Int
+    fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int
 }
 
 @Service
@@ -21,11 +22,16 @@ class StillingerConsumerImpl @Inject
 constructor (
         val stillingSolrClient: SolrClient
 ): StillingerConsumer {
+    override fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int =
+            getAntallStillinger("*:*", filtervalg)
+
     override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int =
             getAntallStillinger("YRKGR_LVL_2_ID:$yrkesgruppe", filtervalg)
 
     override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int =
             getAntallStillinger("YRKGR_LVL_1_ID:$yrkesomrade", filtervalg)
+
+
 
     private fun getAntallStillinger(filter: String, filtervalg: Filtervalg): Int {
         val query = solrQueryMedOmradeFilter(filtervalg = filtervalg)
@@ -65,6 +71,10 @@ constructor (
 @Service
 @Profile("mock")
 class StillingerConsumerMock: StillingerConsumer {
+    override fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getYrkesomrader(): List<YrkesomradeDTO> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

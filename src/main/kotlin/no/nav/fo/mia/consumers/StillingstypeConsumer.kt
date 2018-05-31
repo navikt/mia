@@ -26,7 +26,7 @@ constructor (
             YrkesgruppeDTO(
                     id = it.getFieldValue("ID") as String,
                     navn = it.getFieldValue("NAVN") as String,
-                    strukturkode = it.getFieldValue("STRUKTURKODE") as String,
+                    strukturkode = it.getFieldValue("STRUKTURKODE") as String?,
                     parents = it.getFieldValues("PARENT").map { it as String }
             )
         }

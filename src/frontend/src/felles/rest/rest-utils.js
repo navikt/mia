@@ -59,7 +59,7 @@ function reduceParamList(paramlist) {
 
 function getUriParam(key, param) {
     if(Array.isArray(param)) {
-        return reduceParamList(param.map(p => `${key}[]=${p}`));
+        return reduceParamList(param.map(p => `${key}=${p}`));
     }
     return `${key}=${param}`;
 }

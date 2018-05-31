@@ -50,6 +50,7 @@ constructor (
                 fylkesnr = filtervalg.fylker.map { solrGeografiMappingService.getStrukturkodeForId(it) }.filterNotNull(),
                 kommunenr = filtervalg.kommuner.map { solrGeografiMappingService.getStrukturkodeForId(it) }.filterNotNull()
         )
+        query.addFacetField("PERIODE").rows = 0
 
         return client.query(query).getFacetField("PERIODE").values
                 .map { it.name to it.count.toInt() }

@@ -34,4 +34,7 @@ constructor (
                                 antallStillinger = stillingerConsumer.getAntallStillingerForYrkesgruppe(it.id, filtervalg)
                         )
                     }
+
+    fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int =
+            stillingerConsumer.getAntallStillingerForValgtOmrade(filtervalg)
 }

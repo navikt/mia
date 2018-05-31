@@ -16,6 +16,6 @@ data class YrkesomradeDTO (
 data class YrkesgruppeDTO (
         val id: String,
         val navn: String,
-        val strukturkode: String,
+        val strukturkode: String?,
         val parents: List<String>
 )

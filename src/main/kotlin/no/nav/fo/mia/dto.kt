@@ -6,13 +6,13 @@ class Filtervalg {
     @QueryParam("yrkesomrade")
     var yrkesomrade: String? = null
 
-    @QueryParam("yrkesgrupper[]")
+    @QueryParam("yrkesgrupper")
     var yrkesgrupper: List<String> = emptyList()
 
-    @QueryParam("fylker[]")
+    @QueryParam("fylker")
     var fylker: List<String> = emptyList()
 
-    @QueryParam("kommuner[]")
+    @QueryParam("kommuner")
     var kommuner: List<String> = emptyList()
 
     @QueryParam("eoseu")
