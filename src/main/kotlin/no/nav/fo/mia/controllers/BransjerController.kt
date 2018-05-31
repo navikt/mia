@@ -20,7 +20,7 @@ constructor(
     fun hentYrkesomrader(@BeanParam filtervalg: Filtervalg) =
             stillingerService.getYrkesomraderMedAntallStillinger(filtervalg)
 
-    @GetMapping("/yrkesgrupper")
+    @GetMapping("/yrkesgruppe")
     fun hentYrkesgrupper(@RequestParam("yrkesomrade") yrkesomrade: String, @BeanParam filtervalg: Filtervalg) =
             stillingerService.getYrkesgrupperMedAntallStillinger(yrkesomrade, filtervalg)
 }
