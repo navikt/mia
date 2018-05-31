@@ -2,7 +2,9 @@ package no.nav.fo.mia.util
 
 import no.nav.fo.mia.Filtervalg
 import org.apache.solr.client.solrj.SolrQuery
-import java.util.ArrayList
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 fun solrQueryMedOmradeFilter(query: String = "*:*", filtervalg: Filtervalg): SolrQuery {
     val solrQuery = SolrQuery("*:*")
@@ -27,4 +29,8 @@ fun solrQueryMedOmradeFilter(query: String = "*:*", filtervalg: Filtervalg): Sol
         solrQuery.addFilterQuery(statements.joinToString(" OR "))
     }
     return solrQuery
+}
+
+fun dateToString(date: Date): String? {
+    return date.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 }

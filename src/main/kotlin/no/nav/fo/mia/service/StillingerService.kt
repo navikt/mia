@@ -2,6 +2,7 @@ package no.nav.fo.mia.service
 
 import no.nav.fo.mia.Bransje
 import no.nav.fo.mia.Filtervalg
+import no.nav.fo.mia.Stilling
 import no.nav.fo.mia.consumers.StillingerConsumer
 import no.nav.fo.mia.consumers.StillingstypeConsumer
 import org.springframework.stereotype.Service
@@ -37,4 +38,7 @@ constructor (
 
     fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int =
             stillingerConsumer.getAntallStillingerForValgtOmrade(filtervalg)
+
+    fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> =
+            stillingerConsumer.getStillingsannonser(yrkesgrupper, filtervalg)
 }

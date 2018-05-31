@@ -47,8 +47,8 @@ constructor (
         val query = createSolrQueryForFiltreringsvalg(
                 yrkesomradeid = filtervalg.yrkesomrade,
                 yrkesgrupper = filtervalg.yrkesgrupper,
-                fylkesnr = filtervalg.fylker.map { solrGeografiMappingService.getStrukturkodeForId(it) }.filterNotNull(),
-                kommunenr = filtervalg.kommuner.map { solrGeografiMappingService.getStrukturkodeForId(it) }.filterNotNull()
+                fylkesnr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) },
+                kommunenr = filtervalg.kommuner.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
         )
         query.addFacetField("PERIODE").rows = 0
 

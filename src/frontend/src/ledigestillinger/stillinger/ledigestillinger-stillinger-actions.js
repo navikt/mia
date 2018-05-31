@@ -24,7 +24,7 @@ export const hentStillinger = () => (dispatch, getState) => {
     }
 
     dispatch({type: actions[STATUS.laster]});
-    const uri = "/bransjer/stillinger?" + buildUriParams(getUriParams(state));
+    const uri = "/stillinger?" + buildUriParams(getUriParams(state));
     fetchToJson(uri)
         .then(
             sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
