@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 interface StillingerConsumer {
     fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int
-    fun getAntallStillingerForYrkesgruppe(yrkesomrade: String, filtervalg: Filtervalg): Int
+    fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int
     fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int
     fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling>
     fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int
@@ -37,19 +37,19 @@ constructor (
 
     override fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
         val query = solrQueryMedOmradeFilter("*:*", filtervalg)
-                .addFilterQuery("YRKGR_LVL_2_ID:${yrkesgrupper.joinToString(" OR ")}")
+                .addFilterQuery(yrkesgrupper.joinToString(" OR ") { "YRKGR_LVL_2_ID:$it" })
                 .setRows(Int.MAX_VALUE)
 
         return stillingSolrClient.query(query).results
                 .map {
                     Stilling(
-                            id = it.getFieldValue("ID") as String,
+                            id = (it.getFieldValue("ID") as Int).toString(),
                             arbeidsgivernavn = it.getFieldValue("ARBEIDSGIVERNAVN") as String,
                             tittel = it.getFieldValue("TITTEL") as String,
                             stillingstype = it.getFieldValue("STILLINGSTYPE_5") as String,
                             lokal = "LOK" == it.getFieldValue("PRESENTASJONSFORMKODE"),
-                            antallStillinger = (it.getFieldValue("ANTALLSTILLINGER") as String?)?.toIntOrNull() ?: 1,
-                            soknadsfrist = dateToString(it.getFieldValue("SOKNADSFRIST") as Date),
+                            antallStillinger = (it.getFieldValue("ANTALLSTILLINGER") as Int?) ?: 1,
+                            soknadsfrist = dateToString(it.getFieldValue("SOKNADSFRIST") as Date?),
                             yrkesgrupper = it.getFieldValues("YRKGR_LVL_2_ID").map { it.toString() },
                             yrkesomrader = it.getFieldValues("YRKGR_LVL_1_ID").map { it.toString() }
                     )
@@ -92,7 +92,7 @@ constructor (
         }
 
         return antallStillingerFacet.values
-                .map { it.count * parseInt(it.name?: "1")}
+                .map { it.count * parseInt(it.name ?: "1") }
                 .sum().toInt()
     }
 }

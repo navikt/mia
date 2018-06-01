@@ -43,6 +43,5 @@ fun filterForYrker(yrkesomrade: String?, yrkesgrupper: List<String>): List<Strin
     return filter
 }
 
-fun dateToString(date: Date): String? {
-    return date.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-}
+fun dateToString(date: Date?): String? =
+        date?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
