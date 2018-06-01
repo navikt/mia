@@ -9,20 +9,28 @@ class SolrBransjeMappingService @Inject
 constructor (
         val stillingstypeConsumer: StillingstypeConsumer
 ) {
-    //private val strukturkodeTilYrkgrLvl2Mapoing = createStrukturkodeTilYrkgrLvl2Mapping()
-    //private val yrkgrLvl2TilStrukturkodeMapping = createYrkgrLvl2TilStrukturkodeMapping()
-    //private val yrkgrLvl2TilYrkgrLvl1Mapping = createYrkgrLvl2TilYrkgrLvl1Mapping()
+    private val idTilStrukturkodeMapping = createIdTilStrukturkodeMapping()
+    private val strukturkodeTilId = createStrukturkodeTilIdMapping()
+    private val yrkesgruppeTilYrkesomradeMapping = createYrkesgruppeTilYrkesomradeMapping()
 
+    fun getIdForStrukturkode(strukturkode: String): String? =
+            strukturkodeTilId[strukturkode]
 
-    private fun createStrukturkodeTilYrkgrLvl2Mapping(): Map<String, List<String>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    fun getStrukturkodeForId(id: String): String? =
+            idTilStrukturkodeMapping[id]
 
-    private fun createYrkgrLvl2TilStrukturkodeMapping(): Map<String, List<String>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private fun createStrukturkodeTilIdMapping(): Map<String, String> =
+            stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
+                    .map { it.strukturkode!! to it.id }
+                    .toMap()
 
-    private fun createYrkgrLvl2TilYrkgrLvl1Mapping(): Map<String, List<String>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private fun createIdTilStrukturkodeMapping(): Map<String, String> =
+            stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
+                    .map { it.id to it.strukturkode!! }
+                    .toMap()
+
+    private fun createYrkesgruppeTilYrkesomradeMapping(): Map<String, List<String>> =
+            stillingstypeConsumer.getYrkesomrader()
+                    .map { it.id to stillingstypeConsumer.getYrkesgrupperForYrkesomrade(it.id).map { it.id } }
+                    .toMap()
 }

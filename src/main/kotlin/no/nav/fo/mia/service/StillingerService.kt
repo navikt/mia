@@ -15,7 +15,7 @@ constructor (
         val stillingstypeConsumer: StillingstypeConsumer
 ) {
     fun getYrkesomraderMedAntallStillinger(filtervalg: Filtervalg): List<Bransje> =
-            stillingerConsumer.getYrkesomrader()
+            stillingstypeConsumer.getYrkesomrader()
                     .map {
                         Bransje(
                                 navn = it.navn,
@@ -41,4 +41,16 @@ constructor (
 
     fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> =
             stillingerConsumer.getStillingsannonser(yrkesgrupper, filtervalg)
+
+    // TODO: Burde kjøre i parallell
+    fun getAntallStillingerForValgteFylker(filtervalg: Filtervalg): Map<String, Int> =
+            filtervalg.fylker
+                    .map { it to stillingerConsumer.getLedigeStillingerForFylke(it, filtervalg) }
+                    .toMap()
+
+    // TODO: Burde kjøre i parallell
+    fun getAntallStillingerForValgteKommuner(filtervalg: Filtervalg): Map<String, Int> =
+            filtervalg.kommuner
+                    .map { it to stillingerConsumer.getLedigeStillingerForKommune(it, filtervalg) }
+                    .toMap()
 }

@@ -12,9 +12,9 @@ import javax.inject.Inject
 interface LedighetConsumer {
     fun getArbeidsledighetForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int>
     fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int>
+    fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int>
+    fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int>
     fun getSisteOpplastedeMaaned(): String
-    fun getLedighetForKommuner(filtervalg: Filtervalg): Map<String, Int>
-    fun getLedighetForFylker(filtervalg: Filtervalg): Map<String, Int>
 }
 
 @Service
@@ -31,16 +31,54 @@ constructor (
     override fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int> =
             getStatistikkSisteTrettenMaaneder(ledigestillingSolrClient, filtervalg)
 
+    override fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+        val fylkesnr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
+        val kommuneNr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
+        val solrQuery = createSolrQueryForFiltreringsvalg(
+                yrkesomradeid = filtervalg.yrkesomrade,
+                yrkesgrupper = filtervalg.yrkesgrupper,
+                fylkesnr = fylkesnr,
+                kommunenr = kommuneNr
+        )
+
+        solrQuery.
+                addFilterQuery("PERIODE:$periode")
+                .addFacetField("KOMMUNENR")
+
+        return arbeidsledighetSolrClient.query(solrQuery).getFacetField("KOMMUNENR").values
+                .filter { it.count > 0 }
+                .map { solrGeografiMappingService.getIdForStrukturkode(it.name)!! to it.count.toInt() }
+                .toMap()
+    }
+
+    override fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+        val fylkesnr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
+        val solrQuery = createSolrQueryForFiltreringsvalg(
+                yrkesomradeid = filtervalg.yrkesomrade,
+                yrkesgrupper = filtervalg.yrkesgrupper,
+                fylkesnr = fylkesnr,
+                kommunenr = emptyList()
+        )
+
+        solrQuery.
+                addFilterQuery("PERIODE:$periode")
+                .addFacetField("FYLKESNR")
+
+        return arbeidsledighetSolrClient.query(solrQuery).getFacetField("FYLKESNR").values
+                .filter { it.count > 0 }
+                .map { solrGeografiMappingService.getIdForStrukturkode(it.name)!! to it.count.toInt() }
+                .toMap()
+    }
+
     override fun getSisteOpplastedeMaaned(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        val query = SolrQuery("*:")
+                .addFacetField("PERIODE")
+                .setRows(0)
 
-    override fun getLedighetForKommuner(filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getLedighetForFylker(filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return arbeidsledighetSolrClient.query(query).getFacetField("PERIODE").values
+                .map { it.name }
+                .sorted()
+                .last()
     }
 
     private fun getStatistikkSisteTrettenMaaneder(client: SolrClient, filtervalg: Filtervalg): Map<String, Int> {
@@ -92,6 +130,14 @@ constructor (
 @Service
 @Profile("mock")
 class LedighetConsumerMock: LedighetConsumer {
+    override fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getArbeidsledighetForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -103,13 +149,4 @@ class LedighetConsumerMock: LedighetConsumer {
     override fun getSisteOpplastedeMaaned(): String {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    override fun getLedighetForKommuner(filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getLedighetForFylker(filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }

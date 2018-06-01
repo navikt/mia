@@ -5,6 +5,7 @@ import org.apache.solr.client.solrj.SolrQuery
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun solrQueryMedOmradeFilter(query: String = "*:*", filtervalg: Filtervalg): SolrQuery {
     val solrQuery = SolrQuery("*:*")
@@ -29,6 +30,17 @@ fun solrQueryMedOmradeFilter(query: String = "*:*", filtervalg: Filtervalg): Sol
         solrQuery.addFilterQuery(statements.joinToString(" OR "))
     }
     return solrQuery
+}
+
+fun filterForYrker(yrkesomrade: String?, yrkesgrupper: List<String>): List<String> {
+    val filter = ArrayList<String>()
+    if (yrkesomrade != null) {
+        filter.add("YRKGR_LVL_1_ID:${yrkesomrade}")
+    }
+    if (yrkesgrupper.isNotEmpty()) {
+        filter.add("YRKGR_LVL_2_ID:(${yrkesgrupper.joinToString(" OR ")})")
+    }
+    return filter
 }
 
 fun dateToString(date: Date): String? {

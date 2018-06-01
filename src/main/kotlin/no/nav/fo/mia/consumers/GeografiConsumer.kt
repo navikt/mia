@@ -27,6 +27,10 @@ constructor(
     }
 
     override fun hentKommunerforFylker(fylker: List<String>): List<OmradeDTO> {
+        if (fylker.isEmpty()) {
+            return emptyList()
+        }
+
         val query = SolrQuery("*:*")
                 .addFilterQuery("DOKUMENTTYPE:GEOGRAFI")
                 .addFilterQuery("NIVAA:3")
