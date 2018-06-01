@@ -104,7 +104,7 @@ class StillingerConsumerMock: StillingerConsumer {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getAntallStillingerForYrkesgruppe(yrkesomrade: String, filtervalg: Filtervalg): Int {
+    override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
