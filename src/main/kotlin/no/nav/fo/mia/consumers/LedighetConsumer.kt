@@ -33,7 +33,7 @@ constructor (
 
     override fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val fylkesnr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
-        val kommuneNr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
+        val kommuneNr = filtervalg.kommuner.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
         val solrQuery = createSolrQueryForFiltreringsvalg(
                 yrkesomradeid = filtervalg.yrkesomrade,
                 yrkesgrupper = filtervalg.yrkesgrupper,
@@ -71,7 +71,7 @@ constructor (
     }
 
     override fun getSisteOpplastedeMaaned(): String {
-        val query = SolrQuery("*:")
+        val query = SolrQuery("*:*")
                 .addFacetField("PERIODE")
                 .setRows(0)
 
