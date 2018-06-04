@@ -31,6 +31,6 @@ data class Stilling (
 
 data class OmradeStilling (
         val id: String,
-        val antallLedige: Int,
+        val antallLedige: Int?,
         val antallStillinger: Int
 )

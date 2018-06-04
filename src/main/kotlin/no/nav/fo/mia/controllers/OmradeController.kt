@@ -6,6 +6,7 @@ import no.nav.fo.mia.OmradeStilling
 import no.nav.fo.mia.service.ArbeidsledighetService
 import no.nav.fo.mia.service.GeografiService
 import no.nav.fo.mia.service.StillingerService
+import no.nav.fo.mia.util.sensurerData
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -32,7 +33,7 @@ constructor(
                 .map {
                     OmradeStilling(
                             id = it,
-                            antallLedige = arbeidsledighetForFylker[it]?: 0,
+                            antallLedige = arbeidsledighetForFylker[it],
                             antallStillinger = ledigestillingerForFylker[it]?: 0
                     )
                 }
@@ -46,7 +47,7 @@ constructor(
                 .map {
                     OmradeStilling(
                             id = it,
-                            antallLedige = arbeidsledighetForKommuner[it]?: 0,
+                            antallLedige = arbeidsledighetForKommuner[it],
                             antallStillinger = ledigestillingerForKommuner[it]?: 0
                     )
                 }

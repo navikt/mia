@@ -2,6 +2,8 @@ package no.nav.fo.mia.controllers
 
 import no.nav.fo.mia.Filtervalg
 import no.nav.fo.mia.consumers.LedighetConsumer
+import no.nav.fo.mia.service.ArbeidsledighetService
+import no.nav.fo.mia.service.StillingerService
 import no.nav.fo.mia.util.sensurerData
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,14 +16,15 @@ import javax.ws.rs.BeanParam
 @RequestMapping("/rest/ledighet")
 class LedighetController @Inject
 constructor(
-        val ledighetConsumer: LedighetConsumer
+        val stillingerService: StillingerService,
+        val arbeidsledighetService: ArbeidsledighetService
 ) {
 
     @GetMapping("/statistikk")
     fun hentLedighetForSisteTrettenMaaneder(@BeanParam filtervalg: Filtervalg): Map<String, Map<String, Int?>> {
         val statistikk = HashMap<String, Map<String, Int?>>()
-        statistikk["arbeidsledighet"] = sensurerData(ledighetConsumer.getArbeidsledighetForSisteTrettenMaaneder(filtervalg))
-        statistikk["ledigestillinger"] = ledighetConsumer.getLedigestillingerForSisteTrettenMaaneder(filtervalg)
+        statistikk["arbeidsledighet"] = arbeidsledighetService.getArbeidsledighetForSisteTrettenMaaneder(filtervalg)
+        statistikk["ledigestillinger"] = stillingerService.getLedigestillingerForSisteTrettenMaaneder(filtervalg)
         return statistikk
     }
 }

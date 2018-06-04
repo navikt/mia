@@ -3,6 +3,7 @@ package no.nav.fo.mia.service
 import no.nav.fo.mia.Bransje
 import no.nav.fo.mia.Filtervalg
 import no.nav.fo.mia.Stilling
+import no.nav.fo.mia.consumers.LedighetConsumer
 import no.nav.fo.mia.consumers.StillingerConsumer
 import no.nav.fo.mia.consumers.StillingstypeConsumer
 import org.springframework.stereotype.Service
@@ -12,7 +13,8 @@ import javax.inject.Inject
 class StillingerService @Inject
 constructor (
         val stillingerConsumer: StillingerConsumer,
-        val stillingstypeConsumer: StillingstypeConsumer
+        val stillingstypeConsumer: StillingstypeConsumer,
+        val ledighetConsumer: LedighetConsumer
 ) {
     fun getYrkesomraderMedAntallStillinger(filtervalg: Filtervalg): List<Bransje> =
             stillingstypeConsumer.getYrkesomrader()
@@ -41,6 +43,9 @@ constructor (
 
     fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> =
             stillingerConsumer.getStillingsannonser(yrkesgrupper, filtervalg)
+
+    fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int?> =
+            ledighetConsumer.getLedigestillingerForSisteTrettenMaaneder(filtervalg)
 
     // TODO: Burde kjøre i parallell
     fun getAntallStillingerForValgteFylker(filtervalg: Filtervalg): Map<String, Int> =
