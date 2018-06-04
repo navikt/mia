@@ -1,7 +1,8 @@
 import React from 'react';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
-import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
+import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 
 const meldinger = defineMessages({
     velgstillingskategori: {
@@ -36,12 +37,14 @@ export const BransjeDropdown = (props) => {
                 <label htmlFor="select-bransje">
                     <FormattedMessage {...meldinger.velgstillingskategori} />
                 </label>
-                <Hjelpetekst
-                    id="bransje-hjelpetekst"
-                    tittel={<FormattedMessage {...meldinger.hjelpetekstTittel}/>}
-                    tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
-                    inline={true}
-                />
+                <HjelpetekstUnder id="bransje-dropdown-hjelpetekst">
+                    <div>
+                        <Undertittel className="blokk-xxs">
+                            <FormattedMessage {...meldinger.hjelpetekstTittel}/>
+                        </Undertittel>
+                        <FormattedMessage {...meldinger.hjelpetekstTekst}/>
+                    </div>
+                </HjelpetekstUnder>
             </div>
             <div className="select-container input-fullbredde">
                 <select id="select-bransje" value={props.yrkesomrade}

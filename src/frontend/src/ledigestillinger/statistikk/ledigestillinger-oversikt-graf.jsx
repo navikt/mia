@@ -1,7 +1,8 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import {Undertittel} from 'nav-frontend-typografi';
 import LinjeGraf from '../../felles/graf/linje-graf';
-import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 import {ValgteFylker, ValgteKommuner, ValgtStillingskategori, ValgteArbeidsomrader, ValgtHeleNorge} from '../../felles/filtervalg/filtervalgVisning';
 
 const tekster = defineMessages({
@@ -45,16 +46,19 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
 
     return (
         <div className="ledigestillinger-oversikt-graf">
-            <div className="blokk-s hjelpetekst-overskrift">
-                <h2 className="typo-innholdstittel">
+            <div className="blokk-s">
+                <h2 className="typo-innholdstittel hjelpetekst-overskrift">
                     <FormattedMessage {...tekster.tabellOverskrift} />
                 </h2>
-                <Hjelpetekst
-                    id="graf-hjelpetekst"
-                    tittel={<FormattedMessage {...tekster.hjelpetekstTittel}/>}
-                    tekst={<FormattedMessage {...tekster.hjelpetekstTekst}/>}
-                    inline={true}
-                />
+                <Hjelpetekst id="hjelpetekst.bransjer">
+                    <div>
+                        <Undertittel className={"blokk-xxs"}>
+                            <FormattedMessage {...tekster.hjelpetekstTittel} />
+                        </Undertittel>
+                        <FormattedMessage {...tekster.hjelpetekstTekst} />
+                    </div>
+                </Hjelpetekst>
+
             </div>
             <div>
                 {valgtHeleLandet}

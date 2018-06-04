@@ -1,13 +1,14 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
+import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
 import UtenforNorgeControl from './kart/kart-utenfornorge-controls';
 import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
-import Hjelpetekst from '../../felles/hjelpetekst/hjelpetekst';
 import {EOS_EU, RESTEN_AV_VERDEN} from '../../felles/konstanter';
 import {erDev} from '../../felles/utils/dev';
 
@@ -206,12 +207,17 @@ class Oversiktskart extends React.Component {
         return (
             <div className="kart-omrader-container">
                 <div className="valgte-omrader-container hjelpetekst-nedover">
-                    <Hjelpetekst
-                        id="valgtomrade-hjelpetekst"
-                        tittel={<FormattedMessage {...meldinger.hjelpetekstTittel}/>}
-                        tekst={<FormattedMessage {...meldinger.hjelpetekstTekst}/>}
-                    />
+                    <HjelpetekstUnder id="valgtomrade-hjelpetekst">
+                        <div>
+                            <Undertittel className="blokk-xxs">
+                                <FormattedMessage {...meldinger.hjelpetekstTittel}/>
+                            </Undertittel>
+                            <FormattedMessage {...meldinger.hjelpetekstTekst}/>
+                        </div>
+                    </HjelpetekstUnder>
+
                     {valgtHeleLandet}
+
                     <ValgteKommuner valgteKommuner={this.props.valgteKommuner} omrader={this.props.omrader} className={'valgte-omrader'} />
                     <ValgteFylker valgteFylker={this.props.valgteFylker} omrader={this.props.omrader} className={'valgte-omrader'} />
                 </div>
