@@ -40,6 +40,7 @@
     "build:js": "react-scripts build",
     "build:less": "node ./node_modules/less/bin/lessc/ src/index.less ./public/index.css",
     "test": "react-scripts test --env=jsdom",
+    "lint": "echo \"Eslint kjøres som en del av create-react-app\"",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

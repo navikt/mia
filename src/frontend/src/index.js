@@ -9,8 +9,8 @@ import 'whatwg-fetch';
 const store = createStore();
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Application />
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <Application />
+  </Provider>,
+  document.getElementById('root'),
 );

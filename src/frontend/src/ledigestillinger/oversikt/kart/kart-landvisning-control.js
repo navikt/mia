@@ -1,27 +1,27 @@
 import * as L from 'leaflet';
 
 const landvisningControl = L.Control.extend({
-    initialize(onClickFunction) {
-        this.onClick = onClickFunction;
-    },
+  initialize(onClickFunction) {
+    this.onClick = onClickFunction;
+  },
 
-    options: {
-        position: 'topleft'
-    },
+  options: {
+    position: 'topleft',
+  },
 
-    onAdd: function() {
-        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-        container.style.background = "rgba(255, 255, 255, 0.7)";
-        container.style["background-image"] = "url('/mia/img/norway.svg')";
-        container.style["background-size"] = "100% 100%";
-        container.style.width = '120px';
-        container.style.height = '120px';
-        container.style.cursor = 'pointer';
+  onAdd() {
+    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+    container.style.background = 'rgba(255, 255, 255, 0.7)';
+    container.style['background-image'] = "url('/mia/img/norway.svg')";
+    container.style['background-size'] = '100% 100%';
+    container.style.width = '120px';
+    container.style.height = '120px';
+    container.style.cursor = 'pointer';
 
-        container.onclick = this.onClick;
+    container.onclick = this.onClick;
 
-        return container;
-    }
+    return container;
+  },
 });
 
 export default landvisningControl;

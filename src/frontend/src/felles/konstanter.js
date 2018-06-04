@@ -1,13 +1,13 @@
-import { erDev } from './utils/dev'
+import { erDev } from './utils/dev';
 
-export const RESTURL = erDev() ? "http://localhost:8800/mia/rest" : "/mia/rest";
+export const RESTURL = erDev() ? 'http://localhost:8800/mia/rest' : '/mia/rest';
 export const STATUS = {
-    feilet: 'FEILET',
-    lastet: 'LASTET',
-    laster: 'LASTER',
-    initialisert: 'INITIALISERT'
+  feilet: 'FEILET',
+  lastet: 'LASTET',
+  laster: 'LASTER',
+  initialisert: 'INITIALISERT',
 };
-export const ALTERNATIV_ALLE = "alle";
+export const ALTERNATIV_ALLE = 'alle';
 
-export const EOS_EU = "EOSEU";
-export const RESTEN_AV_VERDEN = "resten av verden";
+export const EOS_EU = 'EOSEU';
+export const RESTEN_AV_VERDEN = 'resten av verden';
