@@ -3560,16 +3560,16 @@ body {
   box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
 }
 .bransje-boks-container:active {
-  background-color: #5EAEC7;
+  background-color: #254b6d;
   color: #FFF;
   box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
 }
 .aktiv-bransjeboks {
-  background-color: #5EAEC7;
+  background-color: #19548a;
   color: #FFF;
 }
 .aktiv-bransjeboks:hover {
-  background-color: #194d62;
+  background-color: #0c5ea8;
   color: #FFF;
 }
 .bransje-boks-container:focus {
