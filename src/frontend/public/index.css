@@ -3343,7 +3343,9 @@ table caption {
   border-top: 2px solid #78706A;
 }
 .tabell a {
-  border-bottom: 1px dashed #005B82;
+  color: #0067C5;
+  border-bottom: 1px dashed #0067C5;
+  text-decoration: none;
 }
 .tabell a:hover {
   border-bottom-style: solid;
