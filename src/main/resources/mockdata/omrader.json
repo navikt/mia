@@ -1,0 +1,3933 @@
+[
+  {
+    "nivaa": "2",
+    "id": "93678",
+    "navn": "Øvrige områder",
+    "strukturkode": "NO99",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "62996",
+        "navn": "Svalbard",
+        "strukturkode": "NO99.2100",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62997",
+        "navn": "Longyearbyen",
+        "strukturkode": "NO99.2111",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62998",
+        "navn": "Bjørnøya",
+        "strukturkode": "NO99.2121",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62999",
+        "navn": "Hopen",
+        "strukturkode": "NO99.2131",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63000",
+        "navn": "Nordsjøen",
+        "strukturkode": "NO99.2201",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63001",
+        "navn": "Jan Mayen",
+        "strukturkode": "NO99.2211",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63002",
+        "navn": "Sokkelen sør for 62 brgr",
+        "strukturkode": "NO99.2311",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63004",
+        "navn": "Sokkelen nord for 62 brgr",
+        "strukturkode": "NO99.2321",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "128066",
+        "navn": "Biland",
+        "strukturkode": "NO99.2390",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "128065",
+        "navn": "Kildeskatt utland",
+        "strukturkode": "NO99.2435",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "129866",
+        "navn": "Ny-Ålesund",
+        "strukturkode": "NO99.2112",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "129867",
+        "navn": "Barentsburg",
+        "strukturkode": "NO99.2113",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "129868",
+        "navn": "Sveagruva",
+        "strukturkode": "NO99.2115",
+        "parent": "93678",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001193678",
+        "navn": "Generelt for Øvrige områder",
+        "strukturkode": "",
+        "parent": "93678",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62870",
+    "navn": "Østfold",
+    "strukturkode": "NO01",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63170",
+        "navn": "Moss",
+        "strukturkode": "NO01.0104",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63171",
+        "navn": "Sarpsborg",
+        "strukturkode": "NO01.0105",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63172",
+        "navn": "Fredrikstad",
+        "strukturkode": "NO01.0106",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63173",
+        "navn": "Hvaler",
+        "strukturkode": "NO01.0111",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63174",
+        "navn": "Aremark",
+        "strukturkode": "NO01.0118",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63175",
+        "navn": "Marker",
+        "strukturkode": "NO01.0119",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63176",
+        "navn": "Rømskog",
+        "strukturkode": "NO01.0121",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63177",
+        "navn": "Trøgstad",
+        "strukturkode": "NO01.0122",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63178",
+        "navn": "Spydeberg",
+        "strukturkode": "NO01.0123",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63179",
+        "navn": "Askim",
+        "strukturkode": "NO01.0124",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63180",
+        "navn": "Eidsberg",
+        "strukturkode": "NO01.0125",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63181",
+        "navn": "Skiptvet",
+        "strukturkode": "NO01.0127",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63182",
+        "navn": "Rakkestad",
+        "strukturkode": "NO01.0128",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63183",
+        "navn": "Råde",
+        "strukturkode": "NO01.0135",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63184",
+        "navn": "Rygge",
+        "strukturkode": "NO01.0136",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63185",
+        "navn": "Våler i Østfold",
+        "strukturkode": "NO01.0137",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63186",
+        "navn": "Hobøl",
+        "strukturkode": "NO01.0138",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "61354",
+        "navn": "Halden",
+        "strukturkode": "NO01.0101",
+        "parent": "62870",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162870",
+        "navn": "Generelt for Østfold",
+        "strukturkode": "",
+        "parent": "62870",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62871",
+    "navn": "Akershus",
+    "strukturkode": "NO02",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63187",
+        "navn": "Vestby",
+        "strukturkode": "NO02.0211",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63188",
+        "navn": "Ski",
+        "strukturkode": "NO02.0213",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63189",
+        "navn": "Ås",
+        "strukturkode": "NO02.0214",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63190",
+        "navn": "Frogn",
+        "strukturkode": "NO02.0215",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63191",
+        "navn": "Nesodden",
+        "strukturkode": "NO02.0216",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63192",
+        "navn": "Oppegård",
+        "strukturkode": "NO02.0217",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63193",
+        "navn": "Bærum",
+        "strukturkode": "NO02.0219",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63194",
+        "navn": "Asker",
+        "strukturkode": "NO02.0220",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63195",
+        "navn": "Aurskog-Høland",
+        "strukturkode": "NO02.0221",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63196",
+        "navn": "Sørum",
+        "strukturkode": "NO02.0226",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63197",
+        "navn": "Fet",
+        "strukturkode": "NO02.0227",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63198",
+        "navn": "Rælingen",
+        "strukturkode": "NO02.0228",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63199",
+        "navn": "Enebakk",
+        "strukturkode": "NO02.0229",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63200",
+        "navn": "Lørenskog",
+        "strukturkode": "NO02.0230",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63201",
+        "navn": "Skedsmo",
+        "strukturkode": "NO02.0231",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63202",
+        "navn": "Nittedal",
+        "strukturkode": "NO02.0233",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63203",
+        "navn": "Gjerdrum",
+        "strukturkode": "NO02.0234",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63204",
+        "navn": "Ullensaker",
+        "strukturkode": "NO02.0235",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63205",
+        "navn": "Nes i Akershus",
+        "strukturkode": "NO02.0236",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63206",
+        "navn": "Eidsvoll",
+        "strukturkode": "NO02.0237",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63207",
+        "navn": "Nannestad",
+        "strukturkode": "NO02.0238",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63208",
+        "navn": "Hurdal",
+        "strukturkode": "NO02.0239",
+        "parent": "62871",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162871",
+        "navn": "Generelt for Akershus",
+        "strukturkode": "",
+        "parent": "62871",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62872",
+    "navn": "Oslo",
+    "strukturkode": "NO03",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63209",
+        "navn": "Oslo",
+        "strukturkode": "NO03.0301",
+        "parent": "62872",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162872",
+        "navn": "Generelt for Oslo",
+        "strukturkode": "",
+        "parent": "62872",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62873",
+    "navn": "Hedmark",
+    "strukturkode": "NO04",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63210",
+        "navn": "Kongsvinger",
+        "strukturkode": "NO04.0402",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63211",
+        "navn": "Hamar",
+        "strukturkode": "NO04.0403",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63212",
+        "navn": "Ringsaker",
+        "strukturkode": "NO04.0412",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63213",
+        "navn": "Løten",
+        "strukturkode": "NO04.0415",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63214",
+        "navn": "Stange",
+        "strukturkode": "NO04.0417",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63215",
+        "navn": "Nord-Odal",
+        "strukturkode": "NO04.0418",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63216",
+        "navn": "Sør-Odal",
+        "strukturkode": "NO04.0419",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63217",
+        "navn": "Eidskog",
+        "strukturkode": "NO04.0420",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63218",
+        "navn": "Grue",
+        "strukturkode": "NO04.0423",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63219",
+        "navn": "Åsnes",
+        "strukturkode": "NO04.0425",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63220",
+        "navn": "Våler i Solør",
+        "strukturkode": "NO04.0426",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63221",
+        "navn": "Elverum",
+        "strukturkode": "NO04.0427",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63222",
+        "navn": "Trysil",
+        "strukturkode": "NO04.0428",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63223",
+        "navn": "Åmot",
+        "strukturkode": "NO04.0429",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63224",
+        "navn": "Stor-Elvdal",
+        "strukturkode": "NO04.0430",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63225",
+        "navn": "Rendalen",
+        "strukturkode": "NO04.0432",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63226",
+        "navn": "Engerdal",
+        "strukturkode": "NO04.0434",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63227",
+        "navn": "Tolga",
+        "strukturkode": "NO04.0436",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63228",
+        "navn": "Tynset",
+        "strukturkode": "NO04.0437",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63229",
+        "navn": "Alvdal",
+        "strukturkode": "NO04.0438",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63230",
+        "navn": "Folldal",
+        "strukturkode": "NO04.0439",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63231",
+        "navn": "Os i Østerdalen",
+        "strukturkode": "NO04.0441",
+        "parent": "62873",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162873",
+        "navn": "Generelt for Hedmark",
+        "strukturkode": "",
+        "parent": "62873",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62874",
+    "navn": "Oppland",
+    "strukturkode": "NO05",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63232",
+        "navn": "Lillehammer",
+        "strukturkode": "NO05.0501",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63233",
+        "navn": "Gjøvik",
+        "strukturkode": "NO05.0502",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63234",
+        "navn": "Dovre",
+        "strukturkode": "NO05.0511",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63235",
+        "navn": "Lesja",
+        "strukturkode": "NO05.0512",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63236",
+        "navn": "Skjåk",
+        "strukturkode": "NO05.0513",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63237",
+        "navn": "Lom",
+        "strukturkode": "NO05.0514",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63238",
+        "navn": "Vågå",
+        "strukturkode": "NO05.0515",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63239",
+        "navn": "Nord-Fron",
+        "strukturkode": "NO05.0516",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63240",
+        "navn": "Sel",
+        "strukturkode": "NO05.0517",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63241",
+        "navn": "Sør-Fron",
+        "strukturkode": "NO05.0519",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63242",
+        "navn": "Ringebu",
+        "strukturkode": "NO05.0520",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63243",
+        "navn": "Øyer",
+        "strukturkode": "NO05.0521",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63244",
+        "navn": "Gausdal",
+        "strukturkode": "NO05.0522",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63245",
+        "navn": "Østre Toten",
+        "strukturkode": "NO05.0528",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63246",
+        "navn": "Vestre Toten",
+        "strukturkode": "NO05.0529",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63247",
+        "navn": "Jevnaker",
+        "strukturkode": "NO05.0532",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63248",
+        "navn": "Lunner",
+        "strukturkode": "NO05.0533",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63249",
+        "navn": "Gran",
+        "strukturkode": "NO05.0534",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63250",
+        "navn": "Søndre Land",
+        "strukturkode": "NO05.0536",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63251",
+        "navn": "Nordre Land",
+        "strukturkode": "NO05.0538",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63252",
+        "navn": "Sør-Aurdal",
+        "strukturkode": "NO05.0540",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63253",
+        "navn": "Etnedal",
+        "strukturkode": "NO05.0541",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63254",
+        "navn": "Nord-Aurdal",
+        "strukturkode": "NO05.0542",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63255",
+        "navn": "Vestre Slidre",
+        "strukturkode": "NO05.0543",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63256",
+        "navn": "Øystre Slidre",
+        "strukturkode": "NO05.0544",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63257",
+        "navn": "Vang",
+        "strukturkode": "NO05.0545",
+        "parent": "62874",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162874",
+        "navn": "Generelt for Oppland",
+        "strukturkode": "",
+        "parent": "62874",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62875",
+    "navn": "Buskerud",
+    "strukturkode": "NO06",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63258",
+        "navn": "Drammen",
+        "strukturkode": "NO06.0602",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63259",
+        "navn": "Kongsberg",
+        "strukturkode": "NO06.0604",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63260",
+        "navn": "Ringerike",
+        "strukturkode": "NO06.0605",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63261",
+        "navn": "Hole",
+        "strukturkode": "NO06.0612",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63262",
+        "navn": "Flå",
+        "strukturkode": "NO06.0615",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63263",
+        "navn": "Nes i Buskerud",
+        "strukturkode": "NO06.0616",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63264",
+        "navn": "Gol",
+        "strukturkode": "NO06.0617",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63265",
+        "navn": "Hemsedal",
+        "strukturkode": "NO06.0618",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63266",
+        "navn": "Ål",
+        "strukturkode": "NO06.0619",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63267",
+        "navn": "Hol",
+        "strukturkode": "NO06.0620",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63268",
+        "navn": "Sigdal",
+        "strukturkode": "NO06.0621",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63269",
+        "navn": "Krødsherad",
+        "strukturkode": "NO06.0622",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63270",
+        "navn": "Modum",
+        "strukturkode": "NO06.0623",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63271",
+        "navn": "Øvre Eiker",
+        "strukturkode": "NO06.0624",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63272",
+        "navn": "Nedre Eiker",
+        "strukturkode": "NO06.0625",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63273",
+        "navn": "Lier",
+        "strukturkode": "NO06.0626",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63274",
+        "navn": "Røyken",
+        "strukturkode": "NO06.0627",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63275",
+        "navn": "Hurum",
+        "strukturkode": "NO06.0628",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63276",
+        "navn": "Flesberg",
+        "strukturkode": "NO06.0631",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63277",
+        "navn": "Rollag",
+        "strukturkode": "NO06.0632",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63278",
+        "navn": "Nore og Uvdal",
+        "strukturkode": "NO06.0633",
+        "parent": "62875",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162875",
+        "navn": "Generelt for Buskerud",
+        "strukturkode": "",
+        "parent": "62875",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62876",
+    "navn": "Vestfold",
+    "strukturkode": "NO07",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63279",
+        "navn": "Horten",
+        "strukturkode": "NO07.0701",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63281",
+        "navn": "Tønsberg",
+        "strukturkode": "NO07.0704",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63282",
+        "navn": "Gml_Sandefjord",
+        "strukturkode": "NO07.0706",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63284",
+        "navn": "Svelvik",
+        "strukturkode": "NO07.0711",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63285",
+        "navn": "Sande i Vestfold",
+        "strukturkode": "NO07.0713",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63287",
+        "navn": "Re",
+        "strukturkode": "NO07.0716",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63289",
+        "navn": "Andebu",
+        "strukturkode": "NO07.0719",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63290",
+        "navn": "Stokke",
+        "strukturkode": "NO07.0720",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "129564",
+        "navn": "Sandefjord",
+        "strukturkode": "NO07.0710",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130153",
+        "navn": "Færder",
+        "strukturkode": "NO07.0729",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130151",
+        "navn": "Larvik",
+        "strukturkode": "NO07.0712",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130152",
+        "navn": "Holmestrand",
+        "strukturkode": "NO07.0715",
+        "parent": "62876",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162876",
+        "navn": "Generelt for Vestfold",
+        "strukturkode": "",
+        "parent": "62876",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62877",
+    "navn": "Telemark",
+    "strukturkode": "NO08",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63294",
+        "navn": "Porsgrunn",
+        "strukturkode": "NO08.0805",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63295",
+        "navn": "Skien",
+        "strukturkode": "NO08.0806",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63296",
+        "navn": "Notodden",
+        "strukturkode": "NO08.0807",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63297",
+        "navn": "Siljan",
+        "strukturkode": "NO08.0811",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63298",
+        "navn": "Bamble",
+        "strukturkode": "NO08.0814",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63299",
+        "navn": "Kragerø",
+        "strukturkode": "NO08.0815",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63300",
+        "navn": "Drangedal",
+        "strukturkode": "NO08.0817",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63301",
+        "navn": "Nome",
+        "strukturkode": "NO08.0819",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63302",
+        "navn": "Bø i Telemark",
+        "strukturkode": "NO08.0821",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63303",
+        "navn": "Sauherad",
+        "strukturkode": "NO08.0822",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63304",
+        "navn": "Tinn",
+        "strukturkode": "NO08.0826",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63305",
+        "navn": "Hjartdal",
+        "strukturkode": "NO08.0827",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63306",
+        "navn": "Seljord",
+        "strukturkode": "NO08.0828",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63307",
+        "navn": "Kviteseid",
+        "strukturkode": "NO08.0829",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63308",
+        "navn": "Nissedal",
+        "strukturkode": "NO08.0830",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63309",
+        "navn": "Fyresdal",
+        "strukturkode": "NO08.0831",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63310",
+        "navn": "Tokke",
+        "strukturkode": "NO08.0833",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63311",
+        "navn": "Vinje",
+        "strukturkode": "NO08.0834",
+        "parent": "62877",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162877",
+        "navn": "Generelt for Telemark",
+        "strukturkode": "",
+        "parent": "62877",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62878",
+    "navn": "Aust-Agder",
+    "strukturkode": "NO09",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63312",
+        "navn": "Risør",
+        "strukturkode": "NO09.0901",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63313",
+        "navn": "Grimstad",
+        "strukturkode": "NO09.0904",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63314",
+        "navn": "Arendal",
+        "strukturkode": "NO09.0906",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63315",
+        "navn": "Gjerstad",
+        "strukturkode": "NO09.0911",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63316",
+        "navn": "Vegårshei",
+        "strukturkode": "NO09.0912",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63317",
+        "navn": "Tvedestrand",
+        "strukturkode": "NO09.0914",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63318",
+        "navn": "Froland",
+        "strukturkode": "NO09.0919",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63319",
+        "navn": "Lillesand",
+        "strukturkode": "NO09.0926",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63320",
+        "navn": "Birkenes",
+        "strukturkode": "NO09.0928",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63321",
+        "navn": "Åmli",
+        "strukturkode": "NO09.0929",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63322",
+        "navn": "Iveland",
+        "strukturkode": "NO09.0935",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63323",
+        "navn": "Evje og Hornnes",
+        "strukturkode": "NO09.0937",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63324",
+        "navn": "Bygland",
+        "strukturkode": "NO09.0938",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63325",
+        "navn": "Valle",
+        "strukturkode": "NO09.0940",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63326",
+        "navn": "Bykle",
+        "strukturkode": "NO09.0941",
+        "parent": "62878",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162878",
+        "navn": "Generelt for Aust-Agder",
+        "strukturkode": "",
+        "parent": "62878",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62879",
+    "navn": "Vest-Agder",
+    "strukturkode": "NO10",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63006",
+        "navn": "Søgne",
+        "strukturkode": "NO10.1018",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63007",
+        "navn": "Marnardal",
+        "strukturkode": "NO10.1021",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63008",
+        "navn": "Åseral",
+        "strukturkode": "NO10.1026",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63009",
+        "navn": "Audnedal",
+        "strukturkode": "NO10.1027",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63010",
+        "navn": "Lindesnes",
+        "strukturkode": "NO10.1029",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63011",
+        "navn": "Lyngdal",
+        "strukturkode": "NO10.1032",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63012",
+        "navn": "Hægebostad",
+        "strukturkode": "NO10.1034",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63013",
+        "navn": "Kvinesdal",
+        "strukturkode": "NO10.1037",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63014",
+        "navn": "Sirdal",
+        "strukturkode": "NO10.1046",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63152",
+        "navn": "Songdalen",
+        "strukturkode": "NO10.1017",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63327",
+        "navn": "Kristiansand",
+        "strukturkode": "NO10.1001",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63328",
+        "navn": "Mandal",
+        "strukturkode": "NO10.1002",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63329",
+        "navn": "Farsund",
+        "strukturkode": "NO10.1003",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63330",
+        "navn": "Flekkefjord",
+        "strukturkode": "NO10.1004",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63331",
+        "navn": "Vennesla",
+        "strukturkode": "NO10.1014",
+        "parent": "62879",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162879",
+        "navn": "Generelt for Vest-Agder",
+        "strukturkode": "",
+        "parent": "62879",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62880",
+    "navn": "Rogaland",
+    "strukturkode": "NO11",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63015",
+        "navn": "Eigersund",
+        "strukturkode": "NO11.1101",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63016",
+        "navn": "Sandnes",
+        "strukturkode": "NO11.1102",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63017",
+        "navn": "Stavanger",
+        "strukturkode": "NO11.1103",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63018",
+        "navn": "Haugesund",
+        "strukturkode": "NO11.1106",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63019",
+        "navn": "Sokndal",
+        "strukturkode": "NO11.1111",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63020",
+        "navn": "Lund",
+        "strukturkode": "NO11.1112",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63021",
+        "navn": "Bjerkreim",
+        "strukturkode": "NO11.1114",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63022",
+        "navn": "Hå",
+        "strukturkode": "NO11.1119",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63023",
+        "navn": "Klepp",
+        "strukturkode": "NO11.1120",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63024",
+        "navn": "Time",
+        "strukturkode": "NO11.1121",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63025",
+        "navn": "Gjesdal",
+        "strukturkode": "NO11.1122",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63026",
+        "navn": "Sola",
+        "strukturkode": "NO11.1124",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63027",
+        "navn": "Randaberg",
+        "strukturkode": "NO11.1127",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63028",
+        "navn": "Forsand",
+        "strukturkode": "NO11.1129",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63029",
+        "navn": "Strand",
+        "strukturkode": "NO11.1130",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63030",
+        "navn": "Hjelmeland",
+        "strukturkode": "NO11.1133",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63031",
+        "navn": "Suldal",
+        "strukturkode": "NO11.1134",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63032",
+        "navn": "Sauda",
+        "strukturkode": "NO11.1135",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63033",
+        "navn": "Finnøy",
+        "strukturkode": "NO11.1141",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63034",
+        "navn": "Rennesøy",
+        "strukturkode": "NO11.1142",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63035",
+        "navn": "Kvitsøy",
+        "strukturkode": "NO11.1144",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63036",
+        "navn": "Bokn",
+        "strukturkode": "NO11.1145",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63037",
+        "navn": "Tysvær",
+        "strukturkode": "NO11.1146",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63038",
+        "navn": "Karmøy",
+        "strukturkode": "NO11.1149",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63039",
+        "navn": "Utsira",
+        "strukturkode": "NO11.1151",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63040",
+        "navn": "Vindafjord gammel",
+        "strukturkode": "NO11.1154",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "128064",
+        "navn": "OLJESKATTEKONTORET I SANDNES",
+        "strukturkode": "NO11.2312",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "91702",
+        "navn": "Ølen",
+        "strukturkode": "NO11.1159",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "102182",
+        "navn": "Vindafjord",
+        "strukturkode": "NO11.1160",
+        "parent": "62880",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162880",
+        "navn": "Generelt for Rogaland",
+        "strukturkode": "",
+        "parent": "62880",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62881",
+    "navn": "Hordaland",
+    "strukturkode": "NO12",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63041",
+        "navn": "Bergen",
+        "strukturkode": "NO12.1201",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63042",
+        "navn": "Etne",
+        "strukturkode": "NO12.1211",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63044",
+        "navn": "Sveio",
+        "strukturkode": "NO12.1216",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63045",
+        "navn": "Bømlo",
+        "strukturkode": "NO12.1219",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63046",
+        "navn": "Stord",
+        "strukturkode": "NO12.1221",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63047",
+        "navn": "Fitjar",
+        "strukturkode": "NO12.1222",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63048",
+        "navn": "Tysnes",
+        "strukturkode": "NO12.1223",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63049",
+        "navn": "Kvinnherad",
+        "strukturkode": "NO12.1224",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63050",
+        "navn": "Jondal",
+        "strukturkode": "NO12.1227",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63051",
+        "navn": "Odda",
+        "strukturkode": "NO12.1228",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63052",
+        "navn": "Ullensvang",
+        "strukturkode": "NO12.1231",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63053",
+        "navn": "Eidfjord",
+        "strukturkode": "NO12.1232",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63054",
+        "navn": "Ulvik",
+        "strukturkode": "NO12.1233",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63055",
+        "navn": "Granvin",
+        "strukturkode": "NO12.1234",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63056",
+        "navn": "Voss",
+        "strukturkode": "NO12.1235",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63057",
+        "navn": "Kvam",
+        "strukturkode": "NO12.1238",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63058",
+        "navn": "Fusa",
+        "strukturkode": "NO12.1241",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63059",
+        "navn": "Samnanger",
+        "strukturkode": "NO12.1242",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63060",
+        "navn": "Os i Hordaland",
+        "strukturkode": "NO12.1243",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63061",
+        "navn": "Austevoll",
+        "strukturkode": "NO12.1244",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63062",
+        "navn": "Sund",
+        "strukturkode": "NO12.1245",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63063",
+        "navn": "Fjell",
+        "strukturkode": "NO12.1246",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63064",
+        "navn": "Askøy",
+        "strukturkode": "NO12.1247",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63065",
+        "navn": "Vaksdal",
+        "strukturkode": "NO12.1251",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63066",
+        "navn": "Modalen",
+        "strukturkode": "NO12.1252",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63067",
+        "navn": "Osterøy",
+        "strukturkode": "NO12.1253",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63068",
+        "navn": "Meland",
+        "strukturkode": "NO12.1256",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63069",
+        "navn": "Øygarden",
+        "strukturkode": "NO12.1259",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63070",
+        "navn": "Radøy",
+        "strukturkode": "NO12.1260",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63071",
+        "navn": "Lindås",
+        "strukturkode": "NO12.1263",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63072",
+        "navn": "Austrheim",
+        "strukturkode": "NO12.1264",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63073",
+        "navn": "Fedje",
+        "strukturkode": "NO12.1265",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63074",
+        "navn": "Masfjorden",
+        "strukturkode": "NO12.1266",
+        "parent": "62881",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162881",
+        "navn": "Generelt for Hordaland",
+        "strukturkode": "",
+        "parent": "62881",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62882",
+    "navn": "Sogn og Fjordane",
+    "strukturkode": "NO14",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63075",
+        "navn": "Flora",
+        "strukturkode": "NO14.1401",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63076",
+        "navn": "Gulen",
+        "strukturkode": "NO14.1411",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63077",
+        "navn": "Solund",
+        "strukturkode": "NO14.1412",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63078",
+        "navn": "Hyllestad",
+        "strukturkode": "NO14.1413",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63079",
+        "navn": "Høyanger",
+        "strukturkode": "NO14.1416",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63080",
+        "navn": "Vik",
+        "strukturkode": "NO14.1417",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63081",
+        "navn": "Balestrand",
+        "strukturkode": "NO14.1418",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63082",
+        "navn": "Leikanger",
+        "strukturkode": "NO14.1419",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63083",
+        "navn": "Sogndal",
+        "strukturkode": "NO14.1420",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63084",
+        "navn": "Aurland",
+        "strukturkode": "NO14.1421",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63085",
+        "navn": "Lærdal",
+        "strukturkode": "NO14.1422",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63086",
+        "navn": "Årdal",
+        "strukturkode": "NO14.1424",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63087",
+        "navn": "Luster",
+        "strukturkode": "NO14.1426",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63088",
+        "navn": "Askvoll",
+        "strukturkode": "NO14.1428",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63089",
+        "navn": "Fjaler",
+        "strukturkode": "NO14.1429",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63090",
+        "navn": "Gaular",
+        "strukturkode": "NO14.1430",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63091",
+        "navn": "Jølster",
+        "strukturkode": "NO14.1431",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63092",
+        "navn": "Førde",
+        "strukturkode": "NO14.1432",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63093",
+        "navn": "Naustdal",
+        "strukturkode": "NO14.1433",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63094",
+        "navn": "Bremanger",
+        "strukturkode": "NO14.1438",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63095",
+        "navn": "Vågsøy",
+        "strukturkode": "NO14.1439",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63096",
+        "navn": "Selje",
+        "strukturkode": "NO14.1441",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63097",
+        "navn": "Eid",
+        "strukturkode": "NO14.1443",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63098",
+        "navn": "Hornindal",
+        "strukturkode": "NO14.1444",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63099",
+        "navn": "Gloppen",
+        "strukturkode": "NO14.1445",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63100",
+        "navn": "Stryn",
+        "strukturkode": "NO14.1449",
+        "parent": "62882",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162882",
+        "navn": "Generelt for Sogn og Fjordane",
+        "strukturkode": "",
+        "parent": "62882",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62883",
+    "navn": "Møre og Romsdal",
+    "strukturkode": "NO15",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "63101",
+        "navn": "Molde",
+        "strukturkode": "NO15.1502",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63102",
+        "navn": "Kristiansund (gml)",
+        "strukturkode": "NO15.1503",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63103",
+        "navn": "Ålesund",
+        "strukturkode": "NO15.1504",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63104",
+        "navn": "Vanylven",
+        "strukturkode": "NO15.1511",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63105",
+        "navn": "Sande i Møre og Romsdal",
+        "strukturkode": "NO15.1514",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63106",
+        "navn": "Herøy i Møre og Romsdal",
+        "strukturkode": "NO15.1515",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63107",
+        "navn": "Ulstein",
+        "strukturkode": "NO15.1516",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63108",
+        "navn": "Hareid",
+        "strukturkode": "NO15.1517",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63109",
+        "navn": "Volda",
+        "strukturkode": "NO15.1519",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63110",
+        "navn": "Ørsta",
+        "strukturkode": "NO15.1520",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63111",
+        "navn": "Ørskog",
+        "strukturkode": "NO15.1523",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63112",
+        "navn": "Norddal",
+        "strukturkode": "NO15.1524",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63113",
+        "navn": "Stranda",
+        "strukturkode": "NO15.1525",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63114",
+        "navn": "Stordal",
+        "strukturkode": "NO15.1526",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63115",
+        "navn": "Sykkylven",
+        "strukturkode": "NO15.1528",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63116",
+        "navn": "Skodje",
+        "strukturkode": "NO15.1529",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63117",
+        "navn": "Sula",
+        "strukturkode": "NO15.1531",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63118",
+        "navn": "Giske",
+        "strukturkode": "NO15.1532",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63119",
+        "navn": "Haram",
+        "strukturkode": "NO15.1534",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63120",
+        "navn": "Vestnes",
+        "strukturkode": "NO15.1535",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63121",
+        "navn": "Rauma",
+        "strukturkode": "NO15.1539",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63122",
+        "navn": "Nesset",
+        "strukturkode": "NO15.1543",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63123",
+        "navn": "Midsund",
+        "strukturkode": "NO15.1545",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63124",
+        "navn": "Sandøy",
+        "strukturkode": "NO15.1546",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63125",
+        "navn": "Aukra",
+        "strukturkode": "NO15.1547",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63126",
+        "navn": "Fræna",
+        "strukturkode": "NO15.1548",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63127",
+        "navn": "Eide",
+        "strukturkode": "NO15.1551",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63128",
+        "navn": "Averøy",
+        "strukturkode": "NO15.1554",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63129",
+        "navn": "Frei",
+        "strukturkode": "NO15.1556",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63130",
+        "navn": "Gjemnes",
+        "strukturkode": "NO15.1557",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63131",
+        "navn": "Tingvoll",
+        "strukturkode": "NO15.1560",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63132",
+        "navn": "Sunndal",
+        "strukturkode": "NO15.1563",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63133",
+        "navn": "Surnadal",
+        "strukturkode": "NO15.1566",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63134",
+        "navn": "Rindal",
+        "strukturkode": "NO15.1567",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63135",
+        "navn": "Aure gammel",
+        "strukturkode": "NO15.1569",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63136",
+        "navn": "Halsa",
+        "strukturkode": "NO15.1571",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63137",
+        "navn": "Tustna",
+        "strukturkode": "NO15.1572",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "63138",
+        "navn": "Smøla",
+        "strukturkode": "NO15.1573",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "103601",
+        "navn": "Kristiansund",
+        "strukturkode": "NO15.1505",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "102181",
+        "navn": "Aure",
+        "strukturkode": "NO15.1576",
+        "parent": "62883",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162883",
+        "navn": "Generelt for Møre og Romsdal",
+        "strukturkode": "",
+        "parent": "62883",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62886",
+    "navn": "Nordland",
+    "strukturkode": "NO18",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "62907",
+        "navn": "Bodø",
+        "strukturkode": "NO18.1804",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62908",
+        "navn": "Narvik",
+        "strukturkode": "NO18.1805",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62909",
+        "navn": "Bindal",
+        "strukturkode": "NO18.1811",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62910",
+        "navn": "Sømna",
+        "strukturkode": "NO18.1812",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62911",
+        "navn": "Brønnøy",
+        "strukturkode": "NO18.1813",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62912",
+        "navn": "Vega",
+        "strukturkode": "NO18.1815",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62913",
+        "navn": "Vevelstad",
+        "strukturkode": "NO18.1816",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62914",
+        "navn": "Herøy i Nordland",
+        "strukturkode": "NO18.1818",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62915",
+        "navn": "Alstahaug",
+        "strukturkode": "NO18.1820",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62916",
+        "navn": "Leirfjord",
+        "strukturkode": "NO18.1822",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62917",
+        "navn": "Vefsn",
+        "strukturkode": "NO18.1824",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62918",
+        "navn": "Grane",
+        "strukturkode": "NO18.1825",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62919",
+        "navn": "Hattfjelldal",
+        "strukturkode": "NO18.1826",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62920",
+        "navn": "Dønna",
+        "strukturkode": "NO18.1827",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62921",
+        "navn": "Nesna",
+        "strukturkode": "NO18.1828",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62922",
+        "navn": "Hemnes",
+        "strukturkode": "NO18.1832",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62923",
+        "navn": "Rana",
+        "strukturkode": "NO18.1833",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62924",
+        "navn": "Lurøy",
+        "strukturkode": "NO18.1834",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62925",
+        "navn": "Træna",
+        "strukturkode": "NO18.1835",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62926",
+        "navn": "Rødøy",
+        "strukturkode": "NO18.1836",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62927",
+        "navn": "Meløy",
+        "strukturkode": "NO18.1837",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62928",
+        "navn": "Gildeskål",
+        "strukturkode": "NO18.1838",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62929",
+        "navn": "Beiarn",
+        "strukturkode": "NO18.1839",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62930",
+        "navn": "Saltdal",
+        "strukturkode": "NO18.1840",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62931",
+        "navn": "Fauske",
+        "strukturkode": "NO18.1841",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62932",
+        "navn": "Skjerstad",
+        "strukturkode": "NO18.1842",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62933",
+        "navn": "Sørfold",
+        "strukturkode": "NO18.1845",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62934",
+        "navn": "Steigen",
+        "strukturkode": "NO18.1848",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62935",
+        "navn": "Hamarøy",
+        "strukturkode": "NO18.1849",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62936",
+        "navn": "Tysfjord",
+        "strukturkode": "NO18.1850",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62937",
+        "navn": "Lødingen",
+        "strukturkode": "NO18.1851",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62938",
+        "navn": "Tjeldsund",
+        "strukturkode": "NO18.1852",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62939",
+        "navn": "Evenes",
+        "strukturkode": "NO18.1853",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62940",
+        "navn": "Ballangen",
+        "strukturkode": "NO18.1854",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62941",
+        "navn": "Røst",
+        "strukturkode": "NO18.1856",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62942",
+        "navn": "Værøy",
+        "strukturkode": "NO18.1857",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62943",
+        "navn": "Flakstad",
+        "strukturkode": "NO18.1859",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62944",
+        "navn": "Vestvågøy",
+        "strukturkode": "NO18.1860",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62945",
+        "navn": "Vågan",
+        "strukturkode": "NO18.1865",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62946",
+        "navn": "Hadsel",
+        "strukturkode": "NO18.1866",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62947",
+        "navn": "Bø i Vesterålen",
+        "strukturkode": "NO18.1867",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62948",
+        "navn": "Øksnes",
+        "strukturkode": "NO18.1868",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62949",
+        "navn": "Sortland",
+        "strukturkode": "NO18.1870",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62950",
+        "navn": "Andøy",
+        "strukturkode": "NO18.1871",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62951",
+        "navn": "Moskenes",
+        "strukturkode": "NO18.1874",
+        "parent": "62886",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162886",
+        "navn": "Generelt for Nordland",
+        "strukturkode": "",
+        "parent": "62886",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62887",
+    "navn": "Troms",
+    "strukturkode": "NO19",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "121091",
+        "navn": "Harstad",
+        "strukturkode": "NO19.1903",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62952",
+        "navn": "Harstad UTGÅTT",
+        "strukturkode": "NO19.1901",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62953",
+        "navn": "Tromsø",
+        "strukturkode": "NO19.1902",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62954",
+        "navn": "Kvæfjord",
+        "strukturkode": "NO19.1911",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62955",
+        "navn": "Skånland",
+        "strukturkode": "NO19.1913",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62956",
+        "navn": "Bjarkøy UTGÅTT",
+        "strukturkode": "NO19.1915",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62957",
+        "navn": "Ibestad",
+        "strukturkode": "NO19.1917",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62958",
+        "navn": "Gratangen",
+        "strukturkode": "NO19.1919",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62959",
+        "navn": "Lavangen",
+        "strukturkode": "NO19.1920",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62960",
+        "navn": "Bardu",
+        "strukturkode": "NO19.1922",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62961",
+        "navn": "Salangen",
+        "strukturkode": "NO19.1923",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62962",
+        "navn": "Målselv",
+        "strukturkode": "NO19.1924",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62963",
+        "navn": "Sørreisa",
+        "strukturkode": "NO19.1925",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62964",
+        "navn": "Dyrøy",
+        "strukturkode": "NO19.1926",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62965",
+        "navn": "Tranøy",
+        "strukturkode": "NO19.1927",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62966",
+        "navn": "Torsken",
+        "strukturkode": "NO19.1928",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62967",
+        "navn": "Berg",
+        "strukturkode": "NO19.1929",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62968",
+        "navn": "Lenvik",
+        "strukturkode": "NO19.1931",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62969",
+        "navn": "Balsfjord",
+        "strukturkode": "NO19.1933",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62970",
+        "navn": "Karlsøy",
+        "strukturkode": "NO19.1936",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62971",
+        "navn": "Lyngen",
+        "strukturkode": "NO19.1938",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62972",
+        "navn": "Storfjord",
+        "strukturkode": "NO19.1939",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62973",
+        "navn": "Kåfjord",
+        "strukturkode": "NO19.1940",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62974",
+        "navn": "Skjervøy",
+        "strukturkode": "NO19.1941",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62975",
+        "navn": "Nordreisa",
+        "strukturkode": "NO19.1942",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62976",
+        "navn": "Kvænangen",
+        "strukturkode": "NO19.1943",
+        "parent": "62887",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162887",
+        "navn": "Generelt for Troms",
+        "strukturkode": "",
+        "parent": "62887",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "62888",
+    "navn": "Finnmark",
+    "strukturkode": "NO20",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "62993",
+        "navn": "Unjárga - Nesseby",
+        "strukturkode": "NO20.2027",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62994",
+        "navn": "Båtsfjord",
+        "strukturkode": "NO20.2028",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62995",
+        "navn": "Sør-Varanger",
+        "strukturkode": "NO20.2030",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62977",
+        "navn": "Vardø",
+        "strukturkode": "NO20.2002",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62978",
+        "navn": "Vadsø",
+        "strukturkode": "NO20.2003",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62979",
+        "navn": "Hammerfest",
+        "strukturkode": "NO20.2004",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62980",
+        "navn": "Guovdageaidnu - Kautokeino",
+        "strukturkode": "NO20.2011",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62981",
+        "navn": "Alta",
+        "strukturkode": "NO20.2012",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62982",
+        "navn": "Loppa",
+        "strukturkode": "NO20.2014",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62983",
+        "navn": "Hasvik",
+        "strukturkode": "NO20.2015",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62984",
+        "navn": "Kvalsund",
+        "strukturkode": "NO20.2017",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62985",
+        "navn": "Måsøy",
+        "strukturkode": "NO20.2018",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62986",
+        "navn": "Nordkapp",
+        "strukturkode": "NO20.2019",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62987",
+        "navn": "Porsanger",
+        "strukturkode": "NO20.2020",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62988",
+        "navn": "Karasjok",
+        "strukturkode": "NO20.2021",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62989",
+        "navn": "Lebesby",
+        "strukturkode": "NO20.2022",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62990",
+        "navn": "Gamvik",
+        "strukturkode": "NO20.2023",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62991",
+        "navn": "Berlevåg",
+        "strukturkode": "NO20.2024",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "62992",
+        "navn": "Deatnu - Tana",
+        "strukturkode": "NO20.2025",
+        "parent": "62888",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "11001162888",
+        "navn": "Generelt for Finnmark",
+        "strukturkode": "",
+        "parent": "62888",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "129904",
+    "navn": "Trøndelag",
+    "strukturkode": "NO50",
+    "parent": "63569",
+    "underomrader": [
+      {
+        "nivaa": "3",
+        "id": "130106",
+        "navn": "Namsos",
+        "strukturkode": "NO50.5005",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130105",
+        "navn": "Steinkjer",
+        "strukturkode": "NO50.5004",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130107",
+        "navn": "Hemne",
+        "strukturkode": "NO50.5011",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130109",
+        "navn": "Hitra",
+        "strukturkode": "NO50.5013",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130110",
+        "navn": "Frøya",
+        "strukturkode": "NO50.5014",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130111",
+        "navn": "Ørland",
+        "strukturkode": "NO50.5015",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130112",
+        "navn": "Agdenes",
+        "strukturkode": "NO50.5016",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130113",
+        "navn": "Bjugn",
+        "strukturkode": "NO50.5017",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130114",
+        "navn": "Åfjord",
+        "strukturkode": "NO50.5018",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130115",
+        "navn": "Roan",
+        "strukturkode": "NO50.5019",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130116",
+        "navn": "Osen",
+        "strukturkode": "NO50.5020",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130117",
+        "navn": "Oppdal",
+        "strukturkode": "NO50.5021",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130119",
+        "navn": "Meldal",
+        "strukturkode": "NO50.5023",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130118",
+        "navn": "Rennebu",
+        "strukturkode": "NO50.5022",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130120",
+        "navn": "Orkdal",
+        "strukturkode": "NO50.5024",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130121",
+        "navn": "Røros",
+        "strukturkode": "NO50.5025",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130122",
+        "navn": "Holtålen",
+        "strukturkode": "NO50.5026",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130124",
+        "navn": "Melhus",
+        "strukturkode": "NO50.5028",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130126",
+        "navn": "Klæbu",
+        "strukturkode": "NO50.5030",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130125",
+        "navn": "Skaun",
+        "strukturkode": "NO50.5029",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130123",
+        "navn": "Midtre Gauldal",
+        "strukturkode": "NO50.5027",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130127",
+        "navn": "Malvik",
+        "strukturkode": "NO50.5031",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130128",
+        "navn": "Selbu",
+        "strukturkode": "NO50.5032",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130130",
+        "navn": "Meråker",
+        "strukturkode": "NO50.5034",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130131",
+        "navn": "Stjørdal",
+        "strukturkode": "NO50.5035",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130135",
+        "navn": "Verran",
+        "strukturkode": "NO50.5039",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130137",
+        "navn": "Snåsa",
+        "strukturkode": "NO50.5041",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130136",
+        "navn": "Namdalseid",
+        "strukturkode": "NO50.5040",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130132",
+        "navn": "Frosta",
+        "strukturkode": "NO50.5036",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130139",
+        "navn": "Røyrvik",
+        "strukturkode": "NO50.5043",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130133",
+        "navn": "Levanger",
+        "strukturkode": "NO50.5037",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130134",
+        "navn": "Verdal",
+        "strukturkode": "NO50.5038",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130138",
+        "navn": "Lierne",
+        "strukturkode": "NO50.5042",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130140",
+        "navn": "Namsskogan",
+        "strukturkode": "NO50.5044",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130142",
+        "navn": "Høylandet",
+        "strukturkode": "NO50.5046",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130141",
+        "navn": "Grong",
+        "strukturkode": "NO50.5045",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130143",
+        "navn": "Overhalla",
+        "strukturkode": "NO50.5047",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130144",
+        "navn": "Fosnes",
+        "strukturkode": "NO50.5048",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130145",
+        "navn": "Flatanger",
+        "strukturkode": "NO50.5049",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130146",
+        "navn": "Vikna",
+        "strukturkode": "NO50.5050",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130147",
+        "navn": "Nærøy",
+        "strukturkode": "NO50.5051",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130148",
+        "navn": "Leka",
+        "strukturkode": "NO50.5052",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130149",
+        "navn": "Inderøy",
+        "strukturkode": "NO50.5053",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130150",
+        "navn": "Indre Fosen",
+        "strukturkode": "NO50.5054",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130108",
+        "navn": "Snillfjord",
+        "strukturkode": "NO50.5012",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130104",
+        "navn": "Trondheim",
+        "strukturkode": "NO50.5001",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "130129",
+        "navn": "Tydal",
+        "strukturkode": "NO50.5033",
+        "parent": "129904",
+        "underomrader": []
+      },
+      {
+        "nivaa": "3",
+        "id": "110011129904",
+        "navn": "Generelt for Trøndelag",
+        "strukturkode": "",
+        "parent": "129904",
+        "underomrader": []
+      }
+    ]
+  },
+  {
+    "nivaa": "2",
+    "id": "11001163569",
+    "navn": "Generelt for Norge",
+    "strukturkode": "",
+    "parent": "63569",
+    "underomrader": []
+  },
+  {
+    "nivaa": "1",
+    "id": "resten av verden",
+    "navn": "Resten av verden",
+    "strukturkode": "resten av verden",
+    "parent": null,
+    "underomrader": []
+  },
+  {
+    "nivaa": "1",
+    "id": "EOSEU",
+    "navn": "EØS",
+    "strukturkode": "EOSEU",
+    "parent": null,
+    "underomrader": []
+  }
+]
