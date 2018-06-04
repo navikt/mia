@@ -57,9 +57,12 @@ class Omrader : ArrayList<Omrade>()
 @Service
 @Profile("mock")
 class GeografiConsumerMock: GeografiConsumer {
-    override fun hentAlleOmrader(): List<OmradeDTO> =
-            hentAlleMockOmrader()
-                    .map { omradeToOmradeDTO(it) }
+    override fun hentAlleOmrader(): List<OmradeDTO> {
+        val alleOmrader = hentAlleMockOmrader()
+        val fylker = alleOmrader.map { omradeToOmradeDTO(it) }
+        val kommuner = alleOmrader.flatMap { fylke -> fylke.underomrader.map { omradeToOmradeDTO(it, fylke.id) } }
+        return fylker.union(kommuner).toList()
+    }
 
     override fun hentKommunerforFylker(fylker: List<String>): List<OmradeDTO> =
             hentAlleMockOmrader()
@@ -68,13 +71,13 @@ class GeografiConsumerMock: GeografiConsumer {
                     .map { omradeToOmradeDTO(it) }
 
 
-    private fun omradeToOmradeDTO(omrade: Omrade): OmradeDTO =
+    private fun omradeToOmradeDTO(omrade: Omrade, parent: String? = null): OmradeDTO =
             OmradeDTO(
                     id = omrade.id,
                     navn = omrade.navn,
                     strukturkode = omrade.strukturkode,
                     nivaa = omrade.nivaa,
-                    parent = omrade.parent
+                    parent = parent
             )
 
     private fun hentAlleMockOmrader(): List<Omrade> =

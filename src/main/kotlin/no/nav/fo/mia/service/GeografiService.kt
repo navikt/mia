@@ -18,8 +18,8 @@ constructor(
                 .map { dtoToOmrade(it, alleOmrader) }
 
         val andreRelevanteOmrader = listOf(
-                Omrade(nivaa = "1", id = "resten av verden", navn = "Resten av verden", strukturkode = "resten av verden"),
-                Omrade(nivaa = "1", id = "EOSEU", navn = "EØS", strukturkode = "EOSEU")
+                Omrade(nivaa = "1", id = "resten av verden", navn = "Resten av verden", strukturkode = "resten av verden", underomrader = emptyList()),
+                Omrade(nivaa = "1", id = "EOSEU", navn = "EØS", strukturkode = "EOSEU", underomrader = emptyList())
         )
 
         return fylkerMedKommuner.union(andreRelevanteOmrader).toList()
