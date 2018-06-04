@@ -1,5 +1,7 @@
 package no.nav.fo.mia.consumers
 
+import no.nav.fo.forenkletdeploy.util.fromJson
+import no.nav.fo.mia.Omrade
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
 import org.apache.solr.common.SolrDocument
@@ -49,14 +51,32 @@ constructor(
             )
 }
 
+
+class Omrader : ArrayList<Omrade>()
+
 @Service
 @Profile("mock")
 class GeografiConsumerMock: GeografiConsumer {
-    override fun hentAlleOmrader(): List<OmradeDTO> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun hentAlleOmrader(): List<OmradeDTO> =
+            hentAlleMockOmrader()
+                    .map { omradeToOmradeDTO(it) }
 
-    override fun hentKommunerforFylker(fylker: List<String>): List<OmradeDTO> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun hentKommunerforFylker(fylker: List<String>): List<OmradeDTO> =
+            hentAlleMockOmrader()
+                    .filter { fylker.contains(it.id) }
+                    .flatMap { it.underomrader }
+                    .map { omradeToOmradeDTO(it) }
+
+
+    private fun omradeToOmradeDTO(omrade: Omrade): OmradeDTO =
+            OmradeDTO(
+                    id = omrade.id,
+                    navn = omrade.navn,
+                    strukturkode = omrade.strukturkode,
+                    nivaa = omrade.nivaa,
+                    parent = omrade.parent
+            )
+
+    private fun hentAlleMockOmrader(): List<Omrade> =
+            fromJson(this.javaClass.getResourceAsStream("/mockdata/omrader.json"), Omrader::class.java)
 }

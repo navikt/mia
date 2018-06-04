@@ -16,7 +16,3 @@ fun setupTruststore() {
 
 fun sensurerData(statistik: Map<String, Int>): Map<String, Int?> =
         statistik.map { Pair(it.key, if (it.value > 4) it.value else null) }.toMap()
-
-fun stringToSeed(text: String): Long =
-        text.map { it.toLong() }
-                .fold(11L) { acc, i -> (acc * 31 ) + i }

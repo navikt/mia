@@ -1,9 +1,12 @@
 package no.nav.fo.mia.consumers
 
+import com.github.javafaker.Faker
+import no.nav.fo.mia.util.stringToSeed
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
+import java.util.*
 import javax.inject.Inject
 
 interface StillingstypeConsumer {
@@ -62,14 +65,31 @@ constructor (
 @Profile("mock")
 class StillingstypeConsumerMock: StillingstypeConsumer {
     override fun getYrkesomrader(): List<YrkesomradeDTO> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(stringToSeed("yrkesomrader")))
+        return (0 until 9).map {
+            YrkesomradeDTO(
+                    id = faker.number().digits(6),
+                    navn = faker.company().industry()
+            )
+        }
     }
 
     override fun getAlleYrkesgrupperOgYrkesomrader(): List<YrkesgruppeDTO> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val yrkesomrader = getYrkesomrader().map { YrkesgruppeDTO(id = it.id, navn = it.navn, strukturkode = it.id, parents = emptyList()) }
+        val yrkesgrupper = yrkesomrader.flatMap { getYrkesgrupperForYrkesomrade(it.id) }
+        return yrkesomrader.union(yrkesgrupper).toList()
     }
 
     override fun getYrkesgrupperForYrkesomrade(yrkesomradeid: String): List<YrkesgruppeDTO> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(stringToSeed("yrkesomrade:$yrkesomradeid")))
+        val numGrupper = faker.number().numberBetween(4, 9)
+        return (0 until numGrupper).map {
+            YrkesgruppeDTO(
+                    id = faker.number().digits(6),
+                    navn = faker.company().industry(),
+                    strukturkode = faker.numerify("struktur.#####"),
+                    parents = listOf(yrkesomradeid)
+            )
+        }
     }
 }

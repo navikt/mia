@@ -1,12 +1,16 @@
 package no.nav.fo.mia.consumers
 
+import com.github.javafaker.Faker
 import no.nav.fo.mia.Filtervalg
 import no.nav.fo.mia.service.SolrGeografiMappingService
+import no.nav.fo.mia.util.filtervalgToSeed
+import no.nav.fo.mia.util.stringToSeed
 import org.apache.commons.lang3.StringUtils
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
+import java.util.*
 import javax.inject.Inject
 
 interface LedighetConsumer {
@@ -131,22 +135,40 @@ constructor (
 @Profile("mock")
 class LedighetConsumerMock: LedighetConsumer {
     override fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(stringToSeed("ledighetKommune") + filtervalgToSeed(filtervalg)))
+        return filtervalg.kommuner
+                .map { it to faker.number().numberBetween(0, 1000) }
+                .toMap()
     }
 
     override fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(stringToSeed("ledighetFylke") + filtervalgToSeed(filtervalg)))
+        return filtervalg.fylker
+                .map { it to faker.number().numberBetween(0, 1000) }
+                .toMap()
     }
 
     override fun getArbeidsledighetForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(1 + filtervalgToSeed(filtervalg)))
+        val min = faker.number().numberBetween(0, 100)
+        val max = faker.number().numberBetween(min, 400)
+        return getSistePerioder()
+                .map { it to faker.number().numberBetween(min, max) }
+                .toMap()
     }
 
     override fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(2 + filtervalgToSeed(filtervalg)))
+        val min = faker.number().numberBetween(0, 100)
+        val max = faker.number().numberBetween(min, 400)
+        return getSistePerioder()
+                .map { it to faker.number().numberBetween(min, max) }
+                .toMap()
     }
 
-    override fun getSisteOpplastedeMaaned(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getSisteOpplastedeMaaned(): String =
+            getSistePerioder().last()
+
+    private fun getSistePerioder(): List<String> =
+            listOf("201701", "201702", "201703", "201704", "201705", "201706", "201707", "201708", "201709", "201710", "201711", "201712", "201801")
 }

@@ -11,6 +11,8 @@ import javax.ws.rs.Produces
 import com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.databind.Module
+import java.io.IOException
+import java.io.InputStream
 import javax.ws.rs.core.MediaType.APPLICATION_JSON
 
 @Produces("*/*", APPLICATION_JSON)
@@ -31,3 +33,13 @@ fun createObjectMapper(): ObjectMapper =
                 .registerModule(ParameterNamesModule())
                 .configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
+
+
+val objectMapper = createObjectMapper()
+fun <T> fromJson(json: String, valueClass: Class<T>): T {
+    return objectMapper.readValue(json, valueClass)
+}
+
+fun <T> fromJson(json: InputStream, valueClass: Class<T>): T {
+    return objectMapper.readValue(json, valueClass)
+}

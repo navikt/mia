@@ -1,9 +1,11 @@
 package no.nav.fo.mia.consumers
 
+import com.github.javafaker.Faker
 import no.nav.fo.mia.Filtervalg
 import no.nav.fo.mia.Stilling
 import no.nav.fo.mia.util.dateToString
 import no.nav.fo.mia.util.filterForYrker
+import no.nav.fo.mia.util.filtervalgToSeed
 import no.nav.fo.mia.util.solrQueryMedOmradeFilter
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
@@ -101,26 +103,38 @@ constructor(
 @Profile("mock")
 class StillingerConsumerMock : StillingerConsumer {
     override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        filtervalg.yrkesomrade = yrkesomrade
+        val faker = Faker(Random(filtervalgToSeed(filtervalg)))
+        return faker.number().numberBetween(0, 1000)
     }
 
-    override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int =
+        getAntallStillingerForYrkesomrade(yrkesomrade = yrkesgruppe, filtervalg = filtervalg)
 
     override fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(filtervalgToSeed(filtervalg)))
+        return faker.number().numberBetween(0, 1000)
     }
 
     override fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val faker = Faker(Random(filtervalgToSeed(filtervalg)))
+        val antall = faker.number().numberBetween(3, 30)
+        return (0 until antall).map {
+            Stilling(
+                    id = faker.number().digits(5),
+                    arbeidsgivernavn = faker.company().name(),
+                    tittel = faker.company().catchPhrase(),
+                    stillingstype = faker.company().profession(),
+                    yrkesgrupper = filtervalg.yrkesgrupper,
+                    antallStillinger = faker.number().numberBetween(0, 5),
+                    lokal = false
+            )
+        }
     }
 
-    override fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int =
+            getAntallStillingerForYrkesomrade(yrkesomrade = kommune, filtervalg = filtervalg)
 
-    override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int =
+            getAntallStillingerForYrkesomrade(yrkesomrade = fylke, filtervalg = filtervalg)
 }
