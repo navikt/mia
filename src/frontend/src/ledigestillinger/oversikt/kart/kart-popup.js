@@ -49,7 +49,7 @@ export const visPopupForKommune = (e, props, feature, layer) => {
 
   const kommune = finnKommuneForKommunenummer(feature.properties.id, props.omrader);
   if (kommune == null) {
-    layer.bindPopup(getPopupForOmrade(kommune.navn, { antallLedige: '-', antallStillinger: '-' })).openPopup();
+    layer.bindPopup(getPopupForOmrade(feature.properties.navn, { antallLedige: '-', antallStillinger: '-' })).openPopup();
   } else {
     layer.bindPopup(getPopupMedInnholdslaster(kommune.navn)).openPopup();
     hentDataForKommune(kommune.id, yrkesomrade, yrkesgrupper).then((result) => {

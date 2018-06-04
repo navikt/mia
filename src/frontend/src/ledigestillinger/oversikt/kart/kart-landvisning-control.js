@@ -13,8 +13,6 @@ const landvisningControl = L.Control.extend({
     const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
     const kartUrl = process.env.PUBLIC_URL + "/norway.svg";
 
-    console.log(process.env);
-
     container.style.background = 'rgba(255, 255, 255, 0.7)';
     container.style['background-image'] = `url('${kartUrl}')`;
     container.style['background-size'] = '100% 100%';
