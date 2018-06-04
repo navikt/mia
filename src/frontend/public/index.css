@@ -3409,6 +3409,10 @@ table col[class*="col-"] {
 }
 .text-right {
   float: right;
+  text-align: right;
+}
+.text-center {
+  text-align: center;
 }
 .hovedinnhold {
   padding: 2rem 0;

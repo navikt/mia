@@ -25,7 +25,7 @@ export const Stilling = (props) => {
             <td>
                 <span>{props.stilling.arbeidsgivernavn}</span>
             </td>
-            <td className="text-right">
+            <td className="text-center stillinger-soknadsfrist">
                 <span>{getSoknadsfrist(props.stilling.soknadfrist)}</span>
             </td>
         </tr>
