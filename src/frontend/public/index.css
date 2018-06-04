@@ -1248,13 +1248,16 @@ body .blokk-xl {
   text-align: center;
 }
 .panel {
-  background-color: #ffffff;
+  background-color: #efefef;
 }
 .spinner {
   margin: 1rem auto;
 }
 .hovedinnhold {
   padding: 2rem 0;
+}
+body {
+  background: #efefef;
 }
 @media (min-width: 1200px) {
   .side-midtstilt {
@@ -1373,7 +1376,7 @@ body .blokk-xl {
   display: none;
 }
 .bransje-boks-container {
-  background-color: #59514b;
+  background-color: #efefef;
   border: solid 1px #3e3832;
   text-align: left;
   color: #3e3832;
@@ -1430,7 +1433,7 @@ body .blokk-xl {
   display: inline-block;
 }
 .list-with-hover .row:hover {
-  background-color: #59514b;
+  background-color: #efefef;
   text-decoration: underline;
 }
 .tabell-container {
