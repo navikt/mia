@@ -206,7 +206,7 @@ class Oversiktskart extends React.Component {
 
         return (
             <div className="kart-omrader-container">
-                <div className="valgte-omrader-container hjelpetekst-nedover">
+                <div className="valgte-omrader-container">
                     <HjelpetekstUnder id="valgtomrade-hjelpetekst">
                         <div>
                             <Undertittel className="blokk-xxs">

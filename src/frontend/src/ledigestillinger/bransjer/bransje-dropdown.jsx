@@ -3,6 +3,7 @@ import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
 import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
+import { Select } from 'nav-frontend-skjema';
 
 const meldinger = defineMessages({
     velgstillingskategori: {
@@ -33,7 +34,7 @@ export const BransjeDropdown = (props) => {
 
     return(
         <div className="bransjevalg blokk-s">
-            <div className="hjelpetekst-nedover">
+            <div className="blokk-xxs">
                 <label htmlFor="select-bransje">
                     <FormattedMessage {...meldinger.velgstillingskategori} />
                 </label>
@@ -46,14 +47,13 @@ export const BransjeDropdown = (props) => {
                     </div>
                 </HjelpetekstUnder>
             </div>
-            <div className="select-container input-fullbredde">
-                <select id="select-bransje" value={props.yrkesomrade}
-                        onChange={e => props.onClick(e.target.value)}>
+            <div>
+                <Select id="select-bransje" bredde="xxl" selected={props.yrkesomrade} value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
                     <option value={ALTERNATIV_ALLE}>
                         {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall + ''})}
                     </option>
                     {yrkesomrader}
-                </select>
+                </Select>
             </div>
         </div>
     );
