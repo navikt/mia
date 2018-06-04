@@ -26,9 +26,9 @@ interface StillingerConsumer {
 @Service
 @Profile("!mock")
 class StillingerConsumerImpl @Inject
-constructor (
+constructor(
         val stillingSolrClient: SolrClient
-): StillingerConsumer {
+) : StillingerConsumer {
     override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int =
             hentLedigeStillingerForOmrade("FYLKE_ID:$fylke", filtervalg)
 
@@ -99,7 +99,7 @@ constructor (
 
 @Service
 @Profile("mock")
-class StillingerConsumerMock: StillingerConsumer {
+class StillingerConsumerMock : StillingerConsumer {
     override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
