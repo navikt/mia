@@ -1189,6 +1189,47 @@ body .blokk-xl {
   top: 1rem;
   right: 1rem;
 }
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+.modal {
+  background-color: #FFF;
+  display: block;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 4px;
+  position: relative;
+  flex-grow: 0;
+  overflow: auto;
+  max-height: 100%;
+  margin-bottom: 0;
+  z-index: 1010;
+}
+.modal:focus,
+.modal--focus {
+  box-shadow: 0 0 0px 3px #FFBD66;
+  outline: none;
+}
+.modal__overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(61, 56, 49, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.modal__overlay:active .modal:not(:active) .modal__lukkknapp--shake {
+  transform: rotate(10deg);
+  transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
+}
+.modal__lukkknapp--shake {
+  transform: rotate(0deg);
+  transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
+}
 .panel {
   background-color: #FFF;
   display: block;
@@ -1321,6 +1362,67 @@ body .blokk-xl {
   line-height: 1.25rem;
   font-family: 'Source Sans Pro', Arial, sans-serif;
   font-weight: 400;
+}
+.spinner {
+  display: inline-block;
+  position: relative;
+  animation: rotering 2s infinite linear;
+}
+.spinner--xxs {
+  height: 16px;
+  width: 16px;
+  background-size: 16px 16px;
+  animation-duration: 0.8s;
+}
+.spinner--xs {
+  height: 20px;
+  width: 20px;
+  background-size: 20px 20px;
+  animation-duration: 0.9s;
+}
+.spinner--s {
+  height: 24px;
+  width: 24px;
+  background-size: 24px 24px;
+  animation-duration: 1s;
+}
+.spinner--m {
+  height: 32px;
+  width: 32px;
+  background-size: 32px 32px;
+  animation-duration: 1.1s;
+}
+.spinner--l {
+  height: 40px;
+  width: 40px;
+  background-size: 40px 40px;
+  animation-duration: 1.2s;
+}
+.spinner--xl {
+  height: 64px;
+  width: 64px;
+  background-size: 64px 64px;
+  animation-duration: 1.6s;
+}
+.spinner--xxl {
+  height: 128px;
+  width: 128px;
+  background-size: 128px 128px;
+  animation-duration: 2s;
+}
+.spinner--xxxl {
+  height: 256px;
+  width: 256px;
+  background-size: 256px 256px;
+  animation-duration: 2.5s;
+}
+@keyframes rotering {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 [autocomplete='off']::-webkit-contacts-auto-fill-button {
   visibility: hidden;
@@ -2640,47 +2742,6 @@ body .blokk-xl {
 .bekreftCheckboksPanel .inputPanel__label:hover:before {
   background-color: #FFBD66;
 }
-.ReactModal__Body--open {
-  overflow: hidden;
-}
-.modal {
-  background-color: #FFF;
-  display: block;
-  padding: 1rem 1rem 1rem 1rem;
-  border-radius: 4px;
-  position: relative;
-  flex-grow: 0;
-  overflow: auto;
-  max-height: 100%;
-  margin-bottom: 0;
-  z-index: 1010;
-}
-.modal:focus,
-.modal--focus {
-  box-shadow: 0 0 0px 3px #FFBD66;
-  outline: none;
-}
-.modal__overlay {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(61, 56, 49, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-}
-.modal__overlay:active .modal:not(:active) .modal__lukkknapp--shake {
-  transform: rotate(10deg);
-  transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
-}
-.modal__lukkknapp--shake {
-  transform: rotate(0deg);
-  transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
-}
 /* required styles */
 .leaflet-pane,
 .leaflet-tile,
@@ -3395,24 +3456,25 @@ table col[class*="col-"] {
   float: none;
   display: table-column;
 }
-.select-container.input-fullbredde select {
-  width: calc(100% - 2.1rem);
-}
 .bransjevalg .hjelpetekst {
   top: 5px;
 }
 .tabell th.text-center {
   text-align: center;
 }
-.spinner {
-  margin: 1rem auto;
-}
 .text-right {
   float: right;
   text-align: right;
 }
+.ReactModal__Content {
+  min-width: 550px;
+}
 .text-center {
   text-align: center;
+}
+.checkbox-expanded > .checkboks:checked + .skjemaelement__label:before {
+  background-image: url('input_checkbox_checked_expanded.svg');
+  background-size: auto;
 }
 .hovedinnhold {
   padding: 2rem 0;
@@ -3438,31 +3500,6 @@ body {
 }
 .liste-omrade li:first-child {
   margin-top: 0.5rem;
-}
-.liste-omrade .nav-checkbox:checked.expanded + label:before {
-  background-image: url('/mia/img/input_checkbox_checked_expanded.svg');
-  background-size: auto;
-}
-.hovedmeny .liste-vannrett li:not(:last-child):after {
-  content: "";
-}
-.hovedmeny a {
-  padding-bottom: 2px;
-}
-.hovedmeny .liste-vannrett li {
-  display: block;
-  padding-bottom: 0.5rem;
-}
-.hovedmeny a.active {
-  border-bottom: 2px solid;
-}
-.hovedmeny a:hover {
-  border-bottom: 1px solid;
-}
-@media (min-width: 768px) {
-  .hovedmeny .liste-vannrett li {
-    display: inline-block;
-  }
 }
 .stillinger-container {
   display: flex;

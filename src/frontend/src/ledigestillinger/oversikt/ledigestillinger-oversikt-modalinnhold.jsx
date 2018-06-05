@@ -1,4 +1,5 @@
 import React from "react";
+import {Checkbox} from 'nav-frontend-skjema';
 import {connect} from 'react-redux';
 import {actions} from './ledigestillinger-oversikt-reducer';
 import {compareOmrader} from './ledigestillinger-oversikt-utils';
@@ -7,17 +8,18 @@ const Omrade = props => {
     const name = `checkbox_${props.omrade.id}`;
     const underomradeErValgt = props.omrade.underomrader && props.omrade.underomrader.some(omrade => omrade.valgt === true);
 
-    const classes = ["nav-checkbox"];
-    if(underomradeErValgt) {
-        classes.push("expanded");
-    }
-
     const valgt = underomradeErValgt || props.omrade.valgt === true;
 
     return (
         <li className="blokk-xxs">
-            <input type="checkbox" className={classes.join(" ")} id={name} checked={valgt} name={name} onChange={props.onChange} />
-            <label htmlFor={name}>{props.omrade.navn}</label>
+            <Checkbox
+                label={props.omrade.navn}
+                checked={valgt}
+                id={name}
+                name={name}
+                onChange={props.onChange}
+                className={underomradeErValgt ? "checkbox-expanded" : ""}
+            />
             { valgt && props.omrade.underomrader.length > 1 ? props.children : null}
         </li>
     );

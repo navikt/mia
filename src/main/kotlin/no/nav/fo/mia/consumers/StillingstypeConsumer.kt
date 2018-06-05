@@ -86,7 +86,7 @@ class StillingstypeConsumerMock: StillingstypeConsumer {
         return (0 until numGrupper).map {
             YrkesgruppeDTO(
                     id = faker.number().digits(6),
-                    navn = faker.company().industry(),
+                    navn = faker.pokemon().name(),
                     strukturkode = faker.numerify("struktur.#####"),
                     parents = listOf(yrkesomradeid)
             )

@@ -1,5 +1,6 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
+import {Hovedknapp} from 'nav-frontend-knapper';
 import Modal from './../../felles/modal/modal';
 import Modalinnhold from './ledigestillinger-oversikt-modalinnhold';
 import OmradeTabell from './ledigestillinger-oversikt-omradetabell';
@@ -33,12 +34,11 @@ export class Oversiktspanel extends React.Component {
         return (
             <div className="panel panel-fremhevet">
                 <div className="velg-omrader text-center blokk">
-                    <button className="knapp knapp-hoved" onClick={() => props.apneModal(modalId)} ref="modalknapp">
+                    <Hovedknapp onClick={() => props.apneModal(modalId)}>
                         <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
-                    </button>
+                    </Hovedknapp>
                 </div>
-                <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}
-                       onLukk={() => this.refs.modalknapp.focus()}>
+                <Modal id={modalId} tittel={meldinger.modalTittel} onLagre={() => props.lagreModal()}>
                     <Modalinnhold />
                 </Modal>
                 <Innholdslaster spinnerForInitialisert={false} avhengigheter={[props.oversiktStillinger]}>

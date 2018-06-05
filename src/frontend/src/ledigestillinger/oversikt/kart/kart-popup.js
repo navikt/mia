@@ -4,7 +4,7 @@ import { finnKommuneForKommunenummer, finnFylkeForFylkenummer } from './kart-uti
 
 export const getPopupMedInnholdslaster = navn => `
             <h3 class="typo-etikett">${navn}</h3>
-            <div class="innholdslaster"><div class="spinner spinner-m" /></div>`;
+            <NavFrontendSpinner type="S" />`;
 
 export const getPopupForOmrade = (navn, data) => `
             <div>
