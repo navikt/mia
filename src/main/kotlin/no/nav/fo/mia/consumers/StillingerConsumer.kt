@@ -126,7 +126,7 @@ class StillingerConsumerMock : StillingerConsumer {
                     tittel = faker.company().catchPhrase(),
                     stillingstype = faker.company().profession(),
                     yrkesgrupper = filtervalg.yrkesgrupper,
-                    antallStillinger = faker.number().numberBetween(0, 5),
+                    antallStillinger = faker.number().numberBetween(1, 5),
                     lokal = false
             )
         }

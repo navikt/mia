@@ -1,6 +1,6 @@
 import React from "react";
 import {STATUS} from "../../felles/konstanter";
-import Spinner from "./innholdslaster-spinner";
+import Spinner from 'nav-frontend-spinner';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
 const harStatus = status => element => element.status === status;
@@ -46,7 +46,7 @@ const Innholdslaster = ({avhengigheter, children, spinnerForInitialisert = true,
             </div>
         );
     }
-    return <Spinner />;
+    return <Spinner type="XL" />;
 };
 
 export default Innholdslaster;
