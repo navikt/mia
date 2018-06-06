@@ -32,23 +32,26 @@ export const BransjeDropdown = (props) => {
         </option>
     ));
 
+    const selectLabel = (
+        <div>
+            <label htmlFor="select-bransje">
+                <FormattedMessage {...meldinger.velgstillingskategori} />
+            </label>
+            <HjelpetekstUnder id="bransje-dropdown-hjelpetekst">
+                <div>
+                    <Undertittel className="blokk-xxs">
+                        <FormattedMessage {...meldinger.hjelpetekstTittel}/>
+                    </Undertittel>
+                    <FormattedMessage {...meldinger.hjelpetekstTekst}/>
+                </div>
+            </HjelpetekstUnder>
+        </div>
+    );
+
     return(
         <div className="bransjevalg blokk-s">
-            <div className="blokk-xxs">
-                <label htmlFor="select-bransje">
-                    <FormattedMessage {...meldinger.velgstillingskategori} />
-                </label>
-                <HjelpetekstUnder id="bransje-dropdown-hjelpetekst">
-                    <div>
-                        <Undertittel className="blokk-xxs">
-                            <FormattedMessage {...meldinger.hjelpetekstTittel}/>
-                        </Undertittel>
-                        <FormattedMessage {...meldinger.hjelpetekstTekst}/>
-                    </div>
-                </HjelpetekstUnder>
-            </div>
             <div>
-                <Select id="select-bransje" bredde="xxl" selected={props.yrkesomrade} value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
+                <Select id="select-bransje" bredde="xxl" label={selectLabel} selected={props.yrkesomrade} value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
                     <option value={ALTERNATIV_ALLE}>
                         {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall + ''})}
                     </option>
