@@ -33,8 +33,3 @@ fasitResources:
     resourceType: restservice
     propertyMap:
       url: MIASOLR_SOLR_ARBEIDSLEDIGECORE_URL
-
-  - alias: miasolr.elastic
-      resourceType: baseurl
-      propertyMap:
-        url: MIASOLR_ELASTIC_URL
