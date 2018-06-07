@@ -9,7 +9,7 @@ FROM ${BASE_IMAGE_PREFIX}maven AS builder
 COPY . /source
 WORKDIR /source
 COPY --from=node-builder /source/build /source/src/main/resources/static
-RUN mvn package
+RUN mvn package -DskipTests
 
 FROM openjdk:8-jre-alpine
 COPY --from=builder /source/target /app
