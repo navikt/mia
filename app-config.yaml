@@ -23,3 +23,13 @@ fasitResources:
     resourceType: baseurl
     propertyMap:
       url: STILLINGSOK_LINK_URL
+
+  - alias: miasolr.solr.ledigestillingercore
+    resourceType: baseurl
+    propertyMap:
+      url: MIASOLR_SOLR_LEDIGESTILLINGERCORE_URL
+
+  - alias: miasolr.solr.ledigestillingercore
+    resourceType: baseurl
+    propertyMap:
+      url: MIASOLR_SOLR_ARBEIDSLEDIGECORE_URL

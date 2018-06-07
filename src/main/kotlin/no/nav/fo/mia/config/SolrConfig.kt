@@ -20,11 +20,11 @@ open class SolrConfig {
 
     @Bean
     open fun arbeidsledighetSolrClient(): SolrClient =
-            HttpSolrClient.Builder().build() //todo FIKS
+            getClientForUri(getRequiredProperty("MIASOLR_SOLR_ARBEIDSLEDIGECORE_URL"))
 
     @Bean
     open fun ledigestillingSolrClient(): SolrClient =
-            HttpSolrClient.Builder().build() //todo FIKS
+            getClientForUri(getRequiredProperty("MIASOLR_SOLR_LEDIGESTILLINGERCORE_URL"))
 
     private fun getClientForUri(uri: String): SolrClient =
             HttpSolrClient.Builder().withBaseSolrUrl(uri).build()
