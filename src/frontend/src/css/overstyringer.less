@@ -1,15 +1,41 @@
-.select-container.input-fullbredde select {
-    width: ~"calc(100% - 2.1rem)";
+@import "variabler";
+
+.bransjevalg .hjelpetekst {
+  top: 5px;
 }
 
 .tabell th.text-center {
     text-align: center;
 }
 
-.panel {
-    background-color: @gray-background;
+.text-right {
+  float: right;
+  text-align: right;
 }
 
-.spinner {
-    margin: 1rem auto;
+.ReactModal__Content {
+  width: 550px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.lenke {
+  border: none;
+
+  > span {
+    border-bottom: solid 1px @navGra20;
+
+    &:hover {
+      border-color: @navBla;
+    }
+  }
+}
+
+.checkbox-expanded > .checkboks:checked + .skjemaelement__label:before {
+  background-image: url('input_checkbox_checked_expanded.svg');
+  background-size: auto;
 }

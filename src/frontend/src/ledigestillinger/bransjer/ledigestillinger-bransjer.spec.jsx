@@ -1,6 +1,5 @@
 import React from 'react';
-import {expect, sinon} from '../../../test/test-helper';
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 
 import BransjeReducer, {actions} from './ledigestillinger-bransjer-reducer';
 import {getNavnForYrkesomradeId, getNavnForYrkesgruppeId} from './ledigestillinger-bransjer-util';
@@ -30,22 +29,22 @@ describe('bransjer', () => {
     describe('bransje-reducer', () => {
         it('skal sette valgteyrkesgrupper til ikke inneholde 1 når vi kaller action "YRKESGRUPPE_DESELECT med payload 1', () => {
             const newState = BransjeReducer({valgteyrkesgrupper: [1,2,3,4,5,6,7]}, { type: actions.yrkesgruppedeselect, payload: 1 });
-            expect(newState.valgteyrkesgrupper).to.not.include(1);
+            expect(newState.valgteyrkesgrupper.includes(1)).toBeFalsy();
         });
 
         it('skal sette valgteyrkesgrupper til å inneholde 1 når vi kaller action "YRKESGRUPPE_SELECT med payload 1', () => {
             const newState = BransjeReducer({valgteyrkesgrupper: [2,3,4,5,6,7]}, { type: actions.yrkesgruppeselect, payload: 1 });
-            expect(newState.valgteyrkesgrupper).to.include(1);
+            expect(newState.valgteyrkesgrupper.includes(1)).toBeTruthy();
         });
 
         it("skal sette valgtyrkesomrade til 1 når vi kaller action YRKESOMRADE_SELECT med payload 1", () => {
             const newState = BransjeReducer({}, { type: actions.yrkesomradeselect, payload:  1});
-            expect(newState.valgtyrkesomrade).to.equal(1);
+            expect(newState.valgtyrkesomrade).toEqual(1);
         });
 
         it("skal sette valgteyrkesgrupper til tom når vi kaller action YRKESOMRADE_SELECT", () => {
             const newState = BransjeReducer({valgteyrkesgrupper: [2,3,4,5,6,7]}, { type: actions.yrkesomradeselect, payload:  1});
-            expect(newState.valgteyrkesgrupper).to.be.empty;
+            expect(newState.valgteyrkesgrupper).toMatchObject([]);
         });
     });
 
@@ -56,10 +55,10 @@ describe('bransjer', () => {
             const yrkesomradenavnAlle = getNavnForYrkesomradeId("3", yrkedata);
             const yrkesomradenavnNull = getNavnForYrkesomradeId(null, yrkedata);
 
-            expect(yrkesomradenavnHandel).to.equal("Handel, kundeservice, restaurant og reiseliv");
-            expect(yrkesomradenavnReiseliv).to.equal("Reiseliv, hotell og overnatting");
-            expect(yrkesomradenavnAlle).to.equal("Alle");
-            expect(yrkesomradenavnNull).to.equal("Alle");
+            expect(yrkesomradenavnHandel).toEqual("Handel, kundeservice, restaurant og reiseliv");
+            expect(yrkesomradenavnReiseliv).toEqual("Reiseliv, hotell og overnatting");
+            expect(yrkesomradenavnAlle).toEqual("Alle");
+            expect(yrkesomradenavnNull).toEqual("Alle");
         });
 
         it('skal returnere riktig navn for yrkesgruppe basert på yrkesgruppeid', () => {
@@ -68,10 +67,10 @@ describe('bransjer', () => {
             const ikkeIListen = getNavnForYrkesgruppeId("3", yrkedata.data);
             const nullert = getNavnForYrkesgruppeId(null, yrkedata.data);
 
-            expect(handel[0]).to.equal("Handel, kundeservice, restaurant og reiseliv");
-            expect(reiseliv[0]).to.equal("Reiseliv, hotell og overnatting");
-            expect(ikkeIListen).to.be.null;
-            expect(nullert).to.be.null;
+            expect(handel[0]).toEqual("Handel, kundeservice, restaurant og reiseliv");
+            expect(reiseliv[0]).toEqual("Reiseliv, hotell og overnatting");
+            expect(ikkeIListen).toEqual(null);
+            expect(nullert).toEqual(null);
         });
     });
 
@@ -84,8 +83,8 @@ describe('bransjer', () => {
                                                      totaltAntall={10}
                                                      intl={{formatMessage}}
             />);
-            expect(wrapper.is('div')).to.be.true;
-            expect(wrapper.find('select').length).to.equal(1);
+            expect(wrapper.is('div')).toBeTruthy();
+            expect(wrapper.find('Select').length).toEqual(1);
         });
     });
 
@@ -93,14 +92,14 @@ describe('bransjer', () => {
         it('skal rendre bransjeoversikt med en bransjedropdown', () => {
             const wrapper = shallow(<BransjerOversikt yrkesomrader={yrkedata.data}
                                                       totantallstillinger={11} />);
-            expect(wrapper.is('div')).to.be.true;
-            expect(wrapper).to.have.descendants(DropdownMedIntl);
+            expect(wrapper.is('div')).toBeTruthy();
+            expect(wrapper.find(DropdownMedIntl).length).toBeGreaterThan(0);
         });
 
         describe('toggleYrkesgrupper', function() {
             beforeEach(() => {
                 this.props = {
-                    dispatch: sinon.spy(),
+                    dispatch: jest.fn(),
                     valgteyrkesgrupper: []
                 };
             });
@@ -108,20 +107,20 @@ describe('bransjer', () => {
             it('skal deselecte yrkesgruppe', () => {
                 const bransjeOversikt = new BransjerOversikt({...this.props, valgteyrkesgrupper: ["1"]});
                 bransjeOversikt.toggleYrkesgruppe("1");
-                expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesgruppedeselect });
+                expect(this.props.dispatch).toHaveBeenCalledWith({ payload: "1", type: actions.yrkesgruppedeselect });
             });
 
             it('skal selecte yrkesgruppe', () => {
                 const bransjeOversikt = new BransjerOversikt(this.props);
                 bransjeOversikt.toggleYrkesgruppe("1");
-                expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesgruppeselect });
+                expect(this.props.dispatch).toHaveBeenCalledWith({ payload: "1", type: actions.yrkesgruppeselect });
             });
         });
 
         describe('velgYrkesomrade', function() {
             beforeEach(() => {
                 this.props = {
-                    dispatch: sinon.spy(),
+                    dispatch: jest.fn(),
                     valgtyrkesomrade: ""
                 };
             });
@@ -129,7 +128,7 @@ describe('bransjer', () => {
            it('skal selecte yrkesområde', () => {
                const bransjeOversikt = new BransjerOversikt(this.props);
                bransjeOversikt.velgYrkesomrade("1");
-               expect(this.props.dispatch).to.have.been.calledWith({ payload: "1", type: actions.yrkesomradeselect });
+               expect(this.props.dispatch).toHaveBeenCalledWith({ payload: "1", type: actions.yrkesomradeselect });
            });
         });
     });

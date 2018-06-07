@@ -1,17 +1,17 @@
-import {expect, React} from '../../../test/test-helper';
+import React from 'react';
 import {shallow} from 'enzyme';
 import {LinjeGraf} from './linje-graf.jsx';
 import tekster from './graf-tekster';
 
 describe('LinjeGraf', () => {
-    before(() => {
+    beforeAll(() => {
         Object.values = o => Object.keys(o).map(a => o[a]);
     });
 
     it('returnerer ingenting om den ikke har fått data', function () {
         const element = shallow(<LinjeGraf />);
 
-        expect(element.type()).to.equal(null);
+        expect(element.type()).toEqual(null);
     });
 
 
@@ -34,7 +34,10 @@ describe('LinjeGraf', () => {
                     201604: 114,
                 }
             },
-            tabellOverskrift: null,
+            tabellOverskrift: {
+                id: 'test',
+                defaultMessage: 'test'
+            },
             intl: {
                 formatMessage: (tekst) => tekst
             }
@@ -48,26 +51,26 @@ describe('LinjeGraf', () => {
         const graf = switcher.prop('graf');
 
         it('skal lage en grafswitcher med tabell og graf', function () {
-            expect(switcher.length).to.equal(1);
+            expect(switcher.length).toEqual(1);
 
-            expect(tabell).to.not.be.undefined;
-            expect(graf).to.not.be.undefined;
+            expect(tabell).not.toBeUndefined();
+            expect(graf).not.toBeUndefined();
         });
 
         it('tabellen skal bruke korte serienavn', function () {
-            expect(tabell.props.serieNavn).to.eql([
+            expect(tabell.props.serieNavn).toMatchObject([
                 tekster.serieArbeidsledighet,
                 tekster.serieLedigeStillinger
             ]);
         });
 
         it('grafen skal bruke lengre serienavn inneholdende område', function () {
-            expect(graf.props.config.series[0].name).to.eql(tekster.serieArbeidsledighet);
-            expect(graf.props.config.series[1].name).to.eql(tekster.serieLedigeStillinger);
+            expect(graf.props.config.series[0].name).toEqual(tekster.serieArbeidsledighet);
+            expect(graf.props.config.series[1].name).toEqual(tekster.serieLedigeStillinger);
         });
 
         it('kutter bort tittelraden og bruker bare de andre til data', function () {
-            expect(tabell.props.rader.length).to.eql(2);
+            expect(tabell.props.rader.length).toEqual(2);
         });
     });
 

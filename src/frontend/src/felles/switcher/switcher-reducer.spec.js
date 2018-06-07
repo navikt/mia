@@ -1,5 +1,3 @@
-import { expect } from '../../../test/test-helper';
-
 import Reducer, { settValg } from './switcher-reducer';
 
 describe('switcher reducer', () => {
@@ -7,7 +5,7 @@ describe('switcher reducer', () => {
     const action = settValg('switcher1', 2);
     const stateEtter = Reducer(undefined, action);
 
-    expect(stateEtter).to.eql({ switcher1: 2 });
+    expect(stateEtter).toEqual({ switcher1: 2 });
   });
 
 
@@ -24,7 +22,7 @@ describe('switcher reducer', () => {
       switcher2: 3,
     };
 
-    expect(stateEtter).to.eql(forventet);
+    expect(stateEtter).toEqual(forventet);
   });
 
 
@@ -42,6 +40,6 @@ describe('switcher reducer', () => {
       switcher2: 3,
     };
 
-    expect(stateEtter).to.eql(forventet);
+    expect(stateEtter).toEqual(forventet);
   });
 });

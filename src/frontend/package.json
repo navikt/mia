@@ -9,15 +9,28 @@
     "history": "^4.7.2",
     "intl-messageformat": "^2.2.0",
     "leaflet": "^1.3.1",
+    "lodash.throttle": "^4.1.1",
     "nav-frontend-core": "^4.0.5",
+    "nav-frontend-hjelpetekst": "^1.0.13",
+    "nav-frontend-hjelpetekst-style": "^0.3.12",
+    "nav-frontend-ikoner-assets": "^0.2.27",
+    "nav-frontend-js-utils": "^1.0.6",
     "nav-frontend-knapper": "^1.0.9",
     "nav-frontend-knapper-style": "^0.3.9",
+    "nav-frontend-lenker": "^1.0.8",
+    "nav-frontend-lenker-style": "^0.2.6",
     "nav-frontend-lukknapp": "^1.0.4",
     "nav-frontend-lukknapp-style": "^0.2.5",
     "nav-frontend-modal": "^1.0.4",
     "nav-frontend-modal-style": "^0.3.9",
     "nav-frontend-paneler": "^1.0.6",
     "nav-frontend-paneler-style": "^0.3.8",
+    "nav-frontend-skjema": "^1.0.15",
+    "nav-frontend-skjema-style": "^0.3.20",
+    "nav-frontend-spinner": "^1.0.10",
+    "nav-frontend-spinner-style": "^0.2.4",
+    "nav-frontend-typografi": "^2.0.5",
+    "nav-frontend-typografi-style": "^1.0.9",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-document-title": "^2.0.3",
@@ -35,17 +48,33 @@
   "scripts": {
     "start": "npm-run-all -p start:*",
     "start:js": "react-scripts start",
-    "start:less": "autoless --source-map --intervall 100 ./src ./public",
+    "start:less": "less-watch-compiler ./src ./public index.less",
     "build": "npm run build:less && npm run build:js",
     "build:js": "react-scripts build",
-    "build:less": "node ./node_modules/less/bin/lessc/ src/index.less ./public/index.css",
+    "build:less": "node ./node_modules/less/bin/lessc -x src/index.less ./public/index.css",
     "test": "react-scripts test --env=jsdom",
+    "test:coverage": "react-scripts test --env=jsdom --coverage",
     "lint": "echo \"Eslint kjøres som en del av create-react-app\"",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@types/jest": "^23.0.0",
     "autoless": "^0.1.7",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest-enzyme": "^6.0.1",
     "less": "^3.0.4",
-    "npm-run-all": "^4.1.3"
+    "less-watch-compiler": "^1.11.3",
+    "npm-run-all": "^4.1.3",
+    "react-test-renderer": "^16.4.0"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 20,
+        "functions": 20,
+        "lines": 30
+      }
+    }
   }
 }

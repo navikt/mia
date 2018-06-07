@@ -1,4 +1,4 @@
-import {expect, React} from '../../../test/test-helper';
+import React from 'react';
 import {shallow} from 'enzyme';
 import {GrafTabell}  from './graf-tabell.jsx';
 
@@ -16,17 +16,17 @@ describe('GrafTabell - ', () => {
 
     it('viser tabell', () => {
         const wrapper = shallow(<GrafTabell {... props}/>);
-        expect(wrapper.find('table')).to.have.length(1);
+        expect(wrapper.find('table')).toHaveLength(1);
     });
 
     it('viser vedlagt beskrivelse', () => {
         const wrapper = shallow(<GrafTabell {... props}/>);
-        expect(wrapper.find('caption').text()).to.contain(props.tabelloverskrift);
+        expect(wrapper.find('caption').text()).toContain(props.tabelloverskrift);
     });
 
     it('kolonner har unikid', () => {
         const wrapper = shallow(<GrafTabell {... props}/>);
-        expect(wrapper.find('#sykefravaerstilfeller_0_nov')).to.have.length(1);
+        expect(wrapper.find('#sykefravaerstilfeller_0_nov')).toHaveLength(1);
     });
 });
 

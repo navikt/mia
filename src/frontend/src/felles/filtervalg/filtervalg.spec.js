@@ -1,4 +1,3 @@
-import { expect } from '../../../test/test-helper';
 import { bareValgtEOSRestenAvVerden } from './filtrering-andre-omrader';
 import { EOS_EU, RESTEN_AV_VERDEN } from '../konstanter';
 
@@ -9,7 +8,7 @@ describe('filtervalg', () => {
       valgteKommuner: [],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.true;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeTruthy();
   });
 
   it('skal returnere true hvis kun Resten av verden er valgt', () => {
@@ -18,7 +17,7 @@ describe('filtervalg', () => {
       valgteKommuner: [],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.true;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeTruthy();
   });
 
   it('skal returnere true hvis Resten av verden og EØS er valgt', () => {
@@ -27,7 +26,7 @@ describe('filtervalg', () => {
       valgteKommuner: [],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.true;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeTruthy();
   });
 
   it('skal returnere false hvis EØS og ett fylke er valgt', () => {
@@ -36,7 +35,7 @@ describe('filtervalg', () => {
       valgteKommuner: [],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.false;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeFalsy();
   });
 
   it('skal returnere false hvis Resten av verden og ett fylke er valgt', () => {
@@ -45,7 +44,7 @@ describe('filtervalg', () => {
       valgteKommuner: [],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.false;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeFalsy();
   });
 
   it('skal returnere false hvis en kommune er valgt', () => {
@@ -54,7 +53,7 @@ describe('filtervalg', () => {
       valgteKommuner: ['0101'],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.false;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeFalsy();
   });
 
   it('skal returnere false hvis en kommune er valgt med Resten av verden og EØS', () => {
@@ -63,7 +62,7 @@ describe('filtervalg', () => {
       valgteKommuner: ['0101'],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.false;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeFalsy();
   });
 
   it('skal returnere false hvis hverken EØS eller Resten av verden er valgt', () => {
@@ -72,6 +71,6 @@ describe('filtervalg', () => {
       valgteKommuner: ['0101'],
     };
 
-    expect(bareValgtEOSRestenAvVerden(oversikt)).to.be.false;
+    expect(bareValgtEOSRestenAvVerden(oversikt)).toBeFalsy();
   });
 });

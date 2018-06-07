@@ -1,0 +1,155 @@
+@import "variabler";
+
+@color-border: @table-bg-hover;
+@gray-inactive: @navMorkGra;
+@table-bg: transperant;
+@table-bg-hover: @navGra60;
+@table-bg-accent: @navMorkGra;
+@line-height-computed: 1.42857143;
+@table-cell-padding: 8px;
+
+
+table {
+  caption {
+    padding-top: @table-cell-padding;
+    padding-bottom: @table-cell-padding;
+    color: @gray-inactive;
+    text-align: left;
+  }
+}
+
+// Baseline styles
+
+.tabell {
+  background-color: @table-bg;
+  caption {
+    position: absolute;
+    left: -3000px;
+  }
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: @line-height-computed;
+
+  // Cells
+  th {
+    text-align: left;
+  }
+  th, td {
+    padding: @table-cell-padding;
+    line-height: @line-height-base;
+    vertical-align: top;
+    border-top: 1px solid @color-border;
+    &.vertikal-strek {
+      .vertikalstrek();
+    }
+  }
+  thead {
+    tr:first-child {
+      th, td {
+        border-top: none;
+      }
+    }
+  }
+  tbody {
+    tr:first-child {
+      th, td {
+        border-top-width: 2px;
+      }
+    }
+  }
+
+  // Account for multiple tbody instances
+  tbody + tbody {
+    border-top: 2px solid @color-border;
+  }
+
+  a {
+    color: @navBla;
+    border-bottom: 1px dashed @navBla;
+    text-decoration: none;
+    &:hover {
+      border-bottom-style: solid;
+    }
+  }
+
+  // Nesting
+  .tabell {
+    background-color: @gray-background;
+  }
+}
+
+
+// Bordered version
+//
+// Add borders all around the.tabell and between all the columns.
+
+.tabell-ramme {
+  border: 1px solid @color-border;
+  th, td {
+    border: 1px solid @color-border;
+  }
+}
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+.tabell-striper {
+  tbody tr:nth-of-type(odd) {
+    background-color: @table-bg-accent;
+  }
+}
+
+// Tabell med vertikal skillestrek i alle celler
+// Border på topp og bunn
+// Ingen border til venstre og høyre
+
+.tabell-skillestrek {
+  border-top: 1px solid @color-border;
+  border-bottom: 1px solid @color-border;
+  th, td {
+    .vertikalstrek();
+  }
+}
+
+// Hover effect
+//
+// Placed here since it has to come after the potential zebra striping
+
+.tabell-hover {
+  tr:hover {
+    background-color: @table-bg-hover;
+  }
+}
+
+// Table cell sizing
+//
+// Reset default.tabell behavior
+
+table col[class*="col-"] {
+  position: static; // Prevent border hiding in Firefox and IE9-11 (see https://github.com/twbs/bootstrap/issues/11623)
+  float: none;
+  display: table-column;
+}
+
+// Mixin for vertikal strek
+
+.vertikalstrek() {
+  position: relative;
+  &:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    border-right: 1px solid @color-border;
+    right: 0;
+    top: 25%;
+    width: 0;
+    height: 50%;
+    padding: 0;
+  }
+  &:last-child {
+    &:after {
+      border-right: none;
+    }
+  }
+}

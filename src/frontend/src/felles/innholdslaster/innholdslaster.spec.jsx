@@ -1,7 +1,6 @@
-import {expect, React} from '../../../test/test-helper';
+import React from 'react';
 import {shallow} from 'enzyme';
 import Innholdslaster from './innholdslaster';
-import Spinner from './innholdslaster-spinner';
 import {STATUS} from '../../felles/konstanter';
 
 describe('Innholdslaster', () => {
@@ -11,7 +10,7 @@ describe('Innholdslaster', () => {
         const lastet = {status: STATUS.lastet, data: {}};
 
         const wrapper = shallow(<Innholdslaster avhengigheter={[laster1, laster2, lastet]}/>);
-        expect(wrapper.equals(<Spinner />)).to.be.true;
+        expect(wrapper.find('NavFrontendSpinner').length).toBe(1);
     });
 
     it('skal vise child om alt gikk greit', () => {
@@ -23,6 +22,6 @@ describe('Innholdslaster', () => {
                 DETTE SKAL VISES
             </Innholdslaster>)
         );
-        expect(wrapper.text()).to.equal("DETTE SKAL VISES");
+        expect(wrapper.text()).toEqual("DETTE SKAL VISES");
     });
 });
