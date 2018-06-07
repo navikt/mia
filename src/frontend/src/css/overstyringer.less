@@ -1,3 +1,5 @@
+@import "variabler";
+
 .bransjevalg .hjelpetekst {
   top: 5px;
 }
@@ -19,6 +21,18 @@
 
 .text-center {
   text-align: center;
+}
+
+.lenke {
+  border: none;
+
+  > span {
+    border-bottom: solid 1px @navGra20;
+
+    &:hover {
+      border-color: @navBla;
+    }
+  }
 }
 
 .checkbox-expanded > .checkboks:checked + .skjemaelement__label:before {

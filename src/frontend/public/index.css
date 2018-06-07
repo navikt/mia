@@ -3474,6 +3474,15 @@ table col[class*="col-"] {
 .text-center {
   text-align: center;
 }
+.lenke {
+  border: none;
+}
+.lenke > span {
+  border-bottom: solid 1px #C6C2BF;
+}
+.lenke > span:hover {
+  border-color: #0067C5;
+}
 .checkbox-expanded > .checkboks:checked + .skjemaelement__label:before {
   background-image: url('input_checkbox_checked_expanded.svg');
   background-size: auto;

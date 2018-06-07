@@ -53,9 +53,9 @@ class ModalWrapper extends Component {
                         </Hovedknapp>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" role="button" className="lenke js-test-avbryt" onClick={() => this.onLukk()} ref="avbryt">
+                        <button className="lenke js-test-avbryt" onClick={() => this.onLukk()}>
                             <FormattedMessage {...avbrytTekst} />
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </div>
