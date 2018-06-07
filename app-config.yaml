@@ -20,7 +20,7 @@ fasitResources:
     propertyMap:
       url: STILLING_SOLR_URL
 
-- alias: stillingsok.link
+  - alias: stillingsok.link
       resourceType: baseurl
       propertyMap:
         url: STILLINGSOK_LINK_URL
