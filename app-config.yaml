@@ -11,3 +11,18 @@ healthcheck:
   readiness:
     path: /internal/isReady
     initialDelay: 60
+
+
+fasitResources:
+  used:
+  - alias: stilling.solr
+    resourceType: baseurl
+    propertyMap:
+      url: STILLING_SOLR_URL
+
+- alias: stillingsok.link
+      resourceType: baseurl
+      propertyMap:
+        url: STILLINGSOK_LINK_URL
+
+
