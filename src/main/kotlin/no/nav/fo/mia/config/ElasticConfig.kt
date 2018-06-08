@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Profile
 open class EsConfig {
     @Bean
     open fun elasticClient(): RestHighLevelClient =
-            getClientForUri(getRequiredProperty("MIASOLR_ELASTIC_URL"))
+            getClientForUri(getRequiredProperty("MIA_ELASTIC_URL"))
 
     private fun getClientForUri(uri: String): RestHighLevelClient =
             RestHighLevelClient(
