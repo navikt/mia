@@ -24,7 +24,7 @@ open class EsConfig {
     private fun getClientForUri(uri: String): RestHighLevelClient =
             RestHighLevelClient(
                     RestClient
-                            .builder(HttpHost(uri))
+                            .builder(HttpHost(uri, 9200, "http"))
                             .setHttpClientConfigCallback(HttpClientConfigCallback())
             )
 }
