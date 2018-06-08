@@ -29,7 +29,7 @@ fasitResources:
     propertyMap:
       url: MIASOLR_SOLR_LEDIGESTILLINGERCORE_URL
 
-  - alias: miasolr.solr.ledigestillingercore
+  - alias: miasolr.solr.arbeidsledigecore
     resourceType: restservice
     propertyMap:
       url: MIASOLR_SOLR_ARBEIDSLEDIGECORE_URL
