@@ -23,4 +23,7 @@ constructor(val es: ElasticIndexProvider) {
         es.createStillingerIndex()
         return es.getAll()
     }
+
+    @GetMapping("/es/indexes")
+    fun getIndexes() = es.getAll()
 }
