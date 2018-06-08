@@ -33,3 +33,14 @@ fasitResources:
     resourceType: restservice
     propertyMap:
       url: MIASOLR_SOLR_ARBEIDSLEDIGECORE_URL
+
+  - alias: miasolr.elastic
+    resourceType: baseurl
+    propertyMap:
+      url: MIASOLR_ELASTIC_URL
+
+  - alias: mia_elasticsearch_user
+    resourceType: credential
+    propertyMap:
+      username: MIASOLR_ELASTIC_USER
+      password: MIASOLR_ELASTIC_PSW
