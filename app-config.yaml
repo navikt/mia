@@ -37,10 +37,10 @@ fasitResources:
   - alias: mia.elastic
     resourceType: baseurl
     propertyMap:
-      url: MIASOLR_ELASTIC_URL
+      url: MIA_ELASTIC_URL
 
   - alias: mia_elasticsearch_user
     resourceType: credential
     propertyMap:
-      username: MIASOLR_ELASTIC_USER
-      password: MIASOLR_ELASTIC_PSW
+      username: MIA_ELASTIC_USER
+      password: MIA_ELASTIC_PSW
