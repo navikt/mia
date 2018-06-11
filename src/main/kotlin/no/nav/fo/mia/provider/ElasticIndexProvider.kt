@@ -21,34 +21,46 @@ constructor(
 ): ElasticIndexProvider {
     override fun createArbeidsledigeIndex() {
         val request = CreateIndexRequest("arbeidsledige")
-        val map = HashMap<String, Any>()
+        val properties = HashMap<String, Any>()
+        val ledige = HashMap<String, Any>()
+        val jsonMap = HashMap<String, Any>()
 
-        map["PERIODE"] = "keyword"
-        map["FYLKESNR"] = "keyword"
-        map["KOMMUNENR"] = "keyword"
-        map["YRKESKODE"] = "keyword"
-        map["ARBEIDSLEDIGE"] = "integer"
-        map["YRKGR_LVL_1_ID"] = "keyword"
-        map["YRKGR_LVL_2_ID"] = "keyword"
 
-        request.mapping("arbeidsledige", map)
+
+        properties["PERIODE"] = keyword
+        properties["FYLKESNR"] = keyword
+        properties["KOMMUNENR"] = keyword
+        properties["YRKESKODE"] = keyword
+        properties["ARBEIDSLEDIGE"] = integer
+        properties["YRKGR_LVL_1_ID"] = keyword
+        properties["YRKGR_LVL_2_ID"] = keyword
+
+        ledige["properties"] = properties
+        jsonMap["arbeidsledige"] = ledige
+
+        request.mapping("arbeidsledige", jsonMap)
 
         client.indices().create(request)
     }
 
     override fun createStillingerIndex() {
-        val request = CreateIndexRequest("stillinger")
-        val map = HashMap<String, Any>()
+        val request = CreateIndexRequest("ledigestillinger")
+        val properties = HashMap<String, Any>()
+        val ledige = HashMap<String, Any>()
+        val jsonMap = HashMap<String, Any>()
 
-        map["PERIODE"] = "keyword"
-        map["FYLKESNR"] = "keyword"
-        map["KOMMUNENR"] = "keyword"
-        map["YRKESKODE"] = "keyword"
-        map["LEDIGE_STILLINGER"] = "integer"
-        map["YRKGR_LVL_1_ID"] = "keyword"
-        map["YRKGR_LVL_2_ID"] = "keyword"
+        properties["PERIODE"] = keyword
+        properties["FYLKESNR"] = keyword
+        properties["KOMMUNENR"] = keyword
+        properties["YRKESKODE"] = keyword
+        properties["LEDIGE_STILLINGER"] = integer
+        properties["YRKGR_LVL_1_ID"] = keyword
+        properties["YRKGR_LVL_2_ID"] = keyword
 
-        request.mapping("stillinger", map)
+        ledige["properties"] = properties
+        jsonMap["ledigestillinger"]
+
+        request.mapping("ledigestillinger", jsonMap)
 
         client.indices().create(request)
     }
@@ -59,3 +71,7 @@ constructor(
     }
 
 }
+
+
+private val keyword = hashMapOf<String, Any>("type" to "keyword")
+private val integer = hashMapOf<String, Any>("type" to "integer")
