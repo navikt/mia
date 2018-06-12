@@ -30,18 +30,49 @@ constructor(
 
         LOGGER.info("remapping data")
 
-        val requests = allLines
-                .subList(1, allLines.size) //fjerner header linjen
-                .map(this::getValues)
-                .map {
-                    headers
-                            .zip(it)
-                            .toMap()
-                }
-                .map { IndexRequest(index, doc).source(it) }
+        val maptime = measureTimeMillis {
 
-        bulk.add(requests)
+            val t1 = System.currentTimeMillis()
 
+            val sublist = allLines
+                    .subList(1, allLines.size) //fjerner header linjen
+
+            val t2 = System.currentTimeMillis()
+            var l: Long
+            l = t2 - t1
+            LOGGER.info("sublist took: $l")
+
+            val valuList = sublist.map(this::getValues)
+
+            val t3 = System.currentTimeMillis()
+
+            l = t3 - t2
+            LOGGER.info("getvalus took: $l")
+
+            val mapList = valuList.map {
+                headers
+                        .zip(it)
+                        .toMap()
+            }
+
+            val t4 = System.currentTimeMillis()
+
+            l = t3 - t3
+            LOGGER.info("zip took: $l")
+
+            val requests = mapList.map { IndexRequest(index, doc).source(it) }
+
+            val t5 = System.currentTimeMillis()
+
+            l = t5 - t4
+            LOGGER.info("request creation took: $l")
+
+            bulk.add(requests)
+
+            l = System.currentTimeMillis() - t5
+            LOGGER.info("add reqiest took: $l")
+        }
+        LOGGER.info("mapptime: $maptime")
 
         val time = measureTimeMillis {    //TODO fiks denne til å vere nedetidsfri og tryggere (17 sec på mac med stor fil)
             LOGGER.info("Ddeleting and creting index")
