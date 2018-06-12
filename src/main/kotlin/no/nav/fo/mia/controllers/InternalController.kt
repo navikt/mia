@@ -1,29 +1,38 @@
 package no.nav.fo.mia.controllers
 
-import no.nav.fo.mia.provider.ElasticIndexProvider
+import no.nav.fo.mia.service.IndeksererService
+import no.nav.fo.mia.util.arbeidsledigeIndex
+import no.nav.fo.mia.util.stillingerIndex
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.inject.Inject
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/internal", produces = [(MediaType.TEXT_PLAIN_VALUE)])
 class InternalController @Inject
-constructor(val es: ElasticIndexProvider) {
+constructor(
+        val service: IndeksererService
+) {
     @GetMapping("/isAlive")
     fun isAlive() = "Application is UP"
 
     @GetMapping("/isReady")
     fun isReady() = "Application is READY"
 
-    @GetMapping("/createIndexes")
-    fun createIndexes(): String {
-        es.createArbeidsledigeIndex()
-        es.createStillingerIndex()
-        return es.getAll()
+    @GetMapping("/es/indexes")
+    fun getIndexes() = service.getAll()
+
+    @PostMapping("/arbeidsledigecore")
+    fun arbeidlsedigeIndex(@RequestParam("file")  file: MultipartFile): String {
+        println("oppdaterer: $arbeidsledigeIndex")
+        return service.recreatIndex(file.inputStream, arbeidsledigeIndex)
     }
 
-    @GetMapping("/es/indexes")
-    fun getIndexes() = es.getAll()
+    @PostMapping("/ledigestillingercore")
+    fun stilingerIndex(@RequestParam("file")  file: MultipartFile): String {
+        println("oppdaterer: $arbeidsledigeIndex")
+        return service.recreatIndex(file.inputStream, stillingerIndex)
+    }
+
 }
