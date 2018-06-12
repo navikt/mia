@@ -16,8 +16,7 @@ healthcheck:
 
 resources:
   limits:
-    cpu: 3
-    memory: 2048Mi
+    cpu: 6
 
 fasitResources:
   used:

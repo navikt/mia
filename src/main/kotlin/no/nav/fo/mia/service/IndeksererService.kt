@@ -19,73 +19,48 @@ constructor(
         private val elastic: ElasticIndexProvider
 ) {
     private val LOGGER = LoggerFactory.getLogger(IndeksererService::class.java)
-    fun recreatIndex(stream: InputStream, index: String): String{
-        val bulk = BulkRequest()
+    fun recreatIndex(stream: InputStream, index: String): String {
+
         val headers = indexMap[index]!!
 
-        LOGGER.info("rteading inputdata for reindex")
+        LOGGER.info("recreiting index")
         val allLines = stream
                 .reader()
                 .readLines()
 
-        LOGGER.info("remapping data")
+        val lines = allLines
+                .subList(1, allLines.size) //fjerner header linjen
 
-        val maptime = measureTimeMillis {
+        elastic.recreateIndex(index)
 
-            val t1 = System.currentTimeMillis()
 
-            val sublist = allLines
-                    .subList(1, allLines.size) //fjerner header linjen
+        val time = measureTimeMillis {
+            var bulk = BulkRequest()
 
-            val t2 = System.currentTimeMillis()
-            var l: Long
-            l = t2 - t1
-            LOGGER.info("sublist took: $l")
+            lines.forEach{
+                val values = getValues(it)
+                val content = headers.zip(values).toMap()
 
-            val valuList = sublist.map(this::getValues)
+                val request = IndexRequest(index, doc).source(content)
+                bulk.add(request)
 
-            val t3 = System.currentTimeMillis()
-
-            l = t3 - t2
-            LOGGER.info("getvalus took: $l")
-
-            val mapList = valuList.map {
-                headers
-                        .zip(it)
-                        .toMap()
+                if(10000 > bulk.numberOfActions()) {
+                    elastic.index(bulk)
+                    bulk = BulkRequest()
+                }
             }
 
-            val t4 = System.currentTimeMillis()
-
-            l = t3 - t3
-            LOGGER.info("zip took: $l")
-
-            val requests = mapList.map { IndexRequest(index, doc).source(it) }
-
-            val t5 = System.currentTimeMillis()
-
-            l = t5 - t4
-            LOGGER.info("request creation took: $l")
-
-            bulk.add(requests)
-
-            l = System.currentTimeMillis() - t5
-            LOGGER.info("add reqiest took: $l")
-        }
-        LOGGER.info("mapptime: $maptime")
-
-        val time = measureTimeMillis {    //TODO fiks denne til å vere nedetidsfri og tryggere (17 sec på mac med stor fil)
-            LOGGER.info("Ddeleting and creting index")
-            elastic.recreateIndex(index)
-            LOGGER.info("indexing")
             elastic.index(bulk)
         }
-        LOGGER.info("Indexing took $time")
+        LOGGER.info("time: $time")
+
 
         return ":) $time"
     }
 
-    private fun getValues(csvString : String): List<Any> {
+
+
+    private fun getValues(csvString: String): List<Any> {
         val cvsSplitBy = ","
         val cvsValues = csvString
                 .replace("\"", "")
@@ -99,8 +74,8 @@ constructor(
 
         val values = LinkedList<Any>()
         values.addAll(cvsValues)
-        values.add(if(yrkersomrader.isEmpty()) "-2" else yrkersomrader)
-        values.add(if(yrkesgrupper.isEmpty()) "-2" else yrkesgrupper)
+        values.add(if (yrkersomrader.isEmpty()) "-2" else yrkersomrader)
+        values.add(if (yrkesgrupper.isEmpty()) "-2" else yrkesgrupper)
 
         return values
     }
