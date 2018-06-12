@@ -36,10 +36,7 @@ constructor(
     @PostMapping("/ledigestillingercore")
     fun stilingerIndex(@RequestParam("file")  file: MultipartFile): String {
         LOGGER.info(stillingerIndex)
-        thread {
-            service.recreatIndex(file.inputStream, stillingerIndex)
-        }
-        return ":)"
+        return service.recreatIndex(file.inputStream, stillingerIndex)
     }
 
 }

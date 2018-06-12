@@ -23,7 +23,7 @@ constructor(
 
         val headers = indexMap[index]!!
 
-        LOGGER.info("recreiting index")
+        LOGGER.info("recreating index")
         val allLines = stream
                 .reader()
                 .readLines()
@@ -35,29 +35,32 @@ constructor(
 
 
         val time = measureTimeMillis {
+            var teller = 0
             var bulk = BulkRequest()
 
-            lines.forEach{
+            lines.forEach {
                 val values = getValues(it)
                 val content = headers.zip(values).toMap()
 
                 val request = IndexRequest(index, doc).source(content)
                 bulk.add(request)
 
-                if(10000 > bulk.numberOfActions()) {
+                if (bulk.numberOfActions() > 10000) {
                     elastic.index(bulk)
                     bulk = BulkRequest()
                 }
             }
 
             elastic.index(bulk)
+
+            teller += bulk.numberOfActions()
+            LOGGER.info("totalt indekserte $teller")
         }
         LOGGER.info("time: $time")
 
 
         return ":) $time"
     }
-
 
 
     private fun getValues(csvString: String): List<Any> {
