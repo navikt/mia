@@ -12,6 +12,11 @@ healthcheck:
     path: /mia/internal/isReady
     initialDelay: 60
 
+resources:
+  limits:
+    cpu: 3
+    memory: 2048Mi
+
 fasitResources:
   used:
   - alias: stilling.solr
