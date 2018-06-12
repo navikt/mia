@@ -8,9 +8,11 @@ healthcheck:
   liveness:
     path: /mia/internal/isAlive
     initialDelay: 60
+    timeout: 10
   readiness:
     path: /mia/internal/isReady
     initialDelay: 60
+    timeout: 10
 
 resources:
   limits:
