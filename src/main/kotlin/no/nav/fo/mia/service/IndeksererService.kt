@@ -34,7 +34,6 @@ constructor(
         elastic.recreateIndex(index)
 
 
-        var teller = 0
         val time = measureTimeMillis {
 
             var bulk = BulkRequest()
@@ -47,7 +46,6 @@ constructor(
                 bulk.add(request)
 
                 if (bulk.numberOfActions() > 10000) {
-                    teller += bulk.numberOfActions()
                     elastic.index(bulk)
                     bulk = BulkRequest()
                 }
@@ -55,13 +53,12 @@ constructor(
 
             elastic.index(bulk)
 
-            teller += bulk.numberOfActions()
-            LOGGER.info("totalt indekserte $teller")
+            LOGGER.info("totalt indekserte ${lines.size}")
         }
         LOGGER.info("time: $time")
 
 
-        return "indexen $index er lagd på nytt, antall indekserte: $teller på $time ms :)"
+        return "indexen $index er lagd på nytt, antall indekserte: ${lines.size} på $time ms :)"
     }
 
 
@@ -85,6 +82,6 @@ constructor(
         return values
     }
 
-    fun getAll(): Any = elastic.getAll()
+    fun getAll(): Any = elastic.getAllIndexes()
 
 }

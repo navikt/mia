@@ -6,33 +6,35 @@ import org.elasticsearch.action.admin.indices.create.CreateIndexRequest
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
 import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.client.RestHighLevelClient
+import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import javax.inject.Inject
 
 interface ElasticIndexProvider {
     fun createArbeidsledigeIndex()
     fun createStillingerIndex()
-    fun tryDeleteArbeidsledigeIndex()
-    fun tryDeleteStillingerIndex()
-    fun getAll(): String
+    fun getAllIndexes(): String
     fun index(bulk: BulkRequest)
     fun recreateIndex(index: String)
 }
 
 @Service
-//@Profile("!mock")
+@Profile("!mock")
 class ElasticIndexProviderImpl @Inject
 constructor(
         val client: RestHighLevelClient
 ) : ElasticIndexProvider {
+    private val LOGGER = LoggerFactory.getLogger(ElasticIndexProviderImpl::class.java)
+
     override fun recreateIndex(index: String) {
         when (index) {
             arbeidsledigeIndex -> {
-                tryDeleteArbeidsledigeIndex()
+                deleteArbeidsledigeIndex()
                 createArbeidsledigeIndex()
             }
             stillingerIndex -> {
-                tryDeleteStillingerIndex()
+                deleteStillingerIndex()
                 createStillingerIndex()
             }
             else -> throw error("$index kan ikke recreates")
@@ -47,6 +49,8 @@ constructor(
     }
 
     override fun createArbeidsledigeIndex() {
+        LOGGER.info("lager $arbeidsledigeIndex")
+
         val request = CreateIndexRequest(arbeidsledigeIndex)
         val properties = HashMap<String, Any>()
         val ledige = HashMap<String, Any>()
@@ -66,9 +70,13 @@ constructor(
         request.mapping(doc, jsonMap)
 
         client.indices().create(request)
+
+        LOGGER.info("$arbeidsledigeIndex er velykket opprettet")
     }
 
     override fun createStillingerIndex() {
+        LOGGER.info("lager $stillingerIndex")
+
         val request = CreateIndexRequest(stillingerIndex)
         val properties = HashMap<String, Any>()
         val ledige = HashMap<String, Any>()
@@ -88,29 +96,36 @@ constructor(
         request.mapping(doc, jsonMap)
 
         client.indices().create(request)
+
+        LOGGER.info("$stillingerIndex er velykket opprettet")
     }
 
-    override fun tryDeleteArbeidsledigeIndex() {
+    private fun deleteArbeidsledigeIndex() {
         try {
+            LOGGER.info("deleating $arbeidsledigeIndex")
             client
                     .indices()
                     .delete(DeleteIndexRequest(arbeidsledigeIndex))
+            LOGGER.info("$arbeidsledigeIndex er slettet")
         } catch (e: Exception) {
-            //TODO
+            LOGGER.warn("sletting av $arbeidsledigeIndex feilet: ${e.message}")
         }
     }
 
-    override fun tryDeleteStillingerIndex() {
+    private fun deleteStillingerIndex() {
         try {
+            LOGGER.info("deleating $stillingerIndex")
             client
                     .indices()
                     .delete(DeleteIndexRequest(stillingerIndex))
+            LOGGER.info("$stillingerIndex er slettet")
+
         } catch (e: Exception) {
-            //TODO
+            LOGGER.warn("sletting av $stillingerIndex feilet: ${e.message}")
         }
     }
 
-    override fun getAll(): String {
+    override fun getAllIndexes(): String {
         val response = client.lowLevelClient.performRequest("GET", "/_cat/indices?v")
         return EntityUtils.toString(response.entity)
     }
@@ -119,3 +134,20 @@ constructor(
     private val integer = hashMapOf<String, Any>("type" to "integer")
 }
 
+@Service
+@Profile("mock")
+class ElasticIndexProviderMock : ElasticIndexProvider {
+    override fun createArbeidsledigeIndex() {
+    }
+
+    override fun createStillingerIndex() {
+    }
+
+    override fun getAllIndexes(): String = "MOCK"
+
+    override fun index(bulk: BulkRequest) {
+    }
+
+    override fun recreateIndex(index: String) {
+    }
+}
