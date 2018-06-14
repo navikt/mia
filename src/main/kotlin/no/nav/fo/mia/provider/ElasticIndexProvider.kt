@@ -1,6 +1,5 @@
 package no.nav.fo.mia.provider
 
-import no.nav.fo.mia.util.*
 import no.nav.fo.mia.util.ElasticConstants.Companion.arbeidledige
 import no.nav.fo.mia.util.ElasticConstants.Companion.arbeidsledigeIndex
 import no.nav.fo.mia.util.ElasticConstants.Companion.doc
@@ -103,7 +102,7 @@ constructor(
         properties[yrkesgruppe_lvl_2] = keyword
 
         ledige[propertys] = properties
-        jsonMap[doc]
+        jsonMap[doc] = ledige
 
         request.mapping(doc, jsonMap)
 
