@@ -1,14 +1,13 @@
 package no.nav.fo.mia.controllers
 
 import no.nav.fo.mia.service.IndeksererService
-import no.nav.fo.mia.util.arbeidsledigeIndex
-import no.nav.fo.mia.util.stillingerIndex
+import no.nav.fo.mia.util.ElasticConstants.Companion.arbeidsledigeIndex
+import no.nav.fo.mia.util.ElasticConstants.Companion.stillingerIndex
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import javax.inject.Inject
 import org.springframework.web.multipart.MultipartFile
-import kotlin.concurrent.thread
 
 @RestController
 @RequestMapping("/internal", produces = [(MediaType.TEXT_PLAIN_VALUE)])

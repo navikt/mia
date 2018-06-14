@@ -1,6 +1,18 @@
 package no.nav.fo.mia.provider
 
 import no.nav.fo.mia.util.*
+import no.nav.fo.mia.util.ElasticConstants.Companion.arbeidledige
+import no.nav.fo.mia.util.ElasticConstants.Companion.arbeidsledigeIndex
+import no.nav.fo.mia.util.ElasticConstants.Companion.doc
+import no.nav.fo.mia.util.ElasticConstants.Companion.fylkesnummer
+import no.nav.fo.mia.util.ElasticConstants.Companion.komunenummer
+import no.nav.fo.mia.util.ElasticConstants.Companion.ledigeStillinger
+import no.nav.fo.mia.util.ElasticConstants.Companion.periode
+import no.nav.fo.mia.util.ElasticConstants.Companion.propertys
+import no.nav.fo.mia.util.ElasticConstants.Companion.stillingerIndex
+import no.nav.fo.mia.util.ElasticConstants.Companion.yrkesgruppe_lvl_1
+import no.nav.fo.mia.util.ElasticConstants.Companion.yrkesgruppe_lvl_2
+import no.nav.fo.mia.util.ElasticConstants.Companion.yrkeskode
 import org.apache.http.util.EntityUtils
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
