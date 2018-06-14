@@ -1,8 +1,8 @@
 package no.nav.fo.mia.service
 
 import no.nav.fo.mia.provider.ElasticIndexProvider
-import no.nav.fo.mia.util.doc
-import no.nav.fo.mia.util.indexMap
+import no.nav.fo.mia.util.ElasticConstants.Companion.doc
+import no.nav.fo.mia.util.ElasticConstants.Companion.indexMap
 import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.common.inject.Inject
