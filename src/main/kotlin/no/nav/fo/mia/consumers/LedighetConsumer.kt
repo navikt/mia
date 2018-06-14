@@ -30,8 +30,8 @@ import javax.inject.Inject
 interface LedighetConsumer {
     fun getArbeidsledighetForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int>
     fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int>
-    fun getLedighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int>
-    fun getLedighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int>
+    fun getArbeidsledighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int>
+    fun getArbeidsledighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int>
     fun getSisteOpplastedeMaaned(): String
 }
 
@@ -64,7 +64,7 @@ constructor(
         )
     }
 
-    override fun getLedighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getArbeidsledighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val query = createQuery(filtervalg = filtervalg, periode = periode)
 
         val statestikk = getStatestikk(
@@ -77,7 +77,7 @@ constructor(
     }
 
 
-    override fun getLedighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getArbeidsledighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val filterUtenKomuner = filtervalg.copy(kommuner = emptyList())
         val query = createQuery(filterUtenKomuner, periode)
 
@@ -180,14 +180,14 @@ constructor(
 @Service
 @Profile("mock")
 class LedighetConsumerMock : LedighetConsumer {
-    override fun getLedighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getArbeidsledighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val faker = Faker(Random(stringToSeed("ledighetKommune") + filtervalgToSeed(filtervalg)))
         return filtervalg.kommuner
                 .map { it to faker.number().numberBetween(0, 1000) }
                 .toMap()
     }
 
-    override fun getLedighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getArbeidsledighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val faker = Faker(Random(stringToSeed("ledighetFylke") + filtervalgToSeed(filtervalg)))
         return filtervalg.fylker
                 .map { it to faker.number().numberBetween(0, 1000) }
