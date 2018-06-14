@@ -12,10 +12,10 @@ constructor (
         val ledighetConsumer: LedighetConsumer
 ) {
     fun getArbeidsledighetForValgteFylker(filtervalg: Filtervalg): Map<String, Int?> =
-            sensurerData(ledighetConsumer.getLedighetForFylker(ledighetConsumer.getSisteOpplastedeMaaned(), filtervalg))
+            sensurerData(ledighetConsumer.getLedighetPerFylker(ledighetConsumer.getSisteOpplastedeMaaned(), filtervalg))
 
     fun getArbeidsledighetForValgteKommuner(filtervalg: Filtervalg): Map<String, Int?> =
-            sensurerData(ledighetConsumer.getLedighetForKommuner(ledighetConsumer.getSisteOpplastedeMaaned(), filtervalg))
+            sensurerData(ledighetConsumer.getLedighetPerKommuner(ledighetConsumer.getSisteOpplastedeMaaned(), filtervalg))
 
     fun getArbeidsledighetForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int?> =
             sensurerData(ledighetConsumer.getArbeidsledighetForSisteTrettenMaaneder(filtervalg))

@@ -30,14 +30,14 @@ import javax.inject.Inject
 interface LedighetConsumer {
     fun getArbeidsledighetForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int>
     fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int>
-    fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int>
-    fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int>
+    fun getLedighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int>
+    fun getLedighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int>
     fun getSisteOpplastedeMaaned(): String
 }
 
 @Service
 @Profile("!mock")
-class LedighetConsumerElastic @Inject
+class LedighetConsumerImpl @Inject
 constructor(
         private val client: RestHighLevelClient,
         private val solrGeografiMappingService: SolrGeografiMappingService
@@ -64,7 +64,7 @@ constructor(
         )
     }
 
-    override fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getLedighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val query = createQuery(filtervalg = filtervalg, periode = periode)
 
         val statestikk = getStatestikk(
@@ -77,15 +77,9 @@ constructor(
     }
 
 
-    override fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
-        val fylkesnr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
-        val query = createQueryForFiltreringsvalg(
-                yrkesomradeid = filtervalg.yrkesomrade,
-                yrkesgrupper = filtervalg.yrkesgrupper,
-                fylkesnr = fylkesnr,
-                kommunenr = emptyList(),
-                periode = periode
-        )
+    override fun getLedighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+        val filterUtenKomuner = filtervalg.copy(kommuner = emptyList())
+        val query = createQuery(filterUtenKomuner, periode)
 
         val statestikk = getStatestikk(
                 query = query,
@@ -145,35 +139,24 @@ constructor(
 
     private fun createQueryForFiltreringsvalg(filtervalg: Filtervalg) = createQuery(filtervalg, null)
 
-    private fun createQuery(filtervalg: Filtervalg, periode: String?) = createQueryForFiltreringsvalg(
-            yrkesomradeid = filtervalg.yrkesomrade,
-            yrkesgrupper = filtervalg.yrkesgrupper,
-            fylkesnr = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) },
-            kommunenr = filtervalg.kommuner.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) },
-            periode = periode
-    )
-
-    private fun createQueryForFiltreringsvalg(
-            yrkesomradeid: String?,
-            yrkesgrupper: List<String>,
-            fylkesnr: List<String>,
-            kommunenr: List<String>,
-            periode: String?
-    ): QueryBuilder = BoolQueryBuilder()
-            .filter(arbeidsFilter(yrkesomradeid, yrkesgrupper))
-            .filter(fylkeFilter(fylkesnr, kommunenr))
+    private fun createQuery(filtervalg: Filtervalg, periode: String?) :QueryBuilder = BoolQueryBuilder()
+            .filter(arbeidsFilter(filtervalg))
+            .filter(fylkeFilter(filtervalg))
             .filter(periodeFilter(periode))
 
-    private fun arbeidsFilter(yrkesomradeid: String?, yrkesgrupper: List<String>): QueryBuilder {
+    private fun arbeidsFilter(filtervalg: Filtervalg): QueryBuilder {
         return when {
-            !yrkesgrupper.isEmpty() -> TermsQueryBuilder(yrkesgruppe_lvl_2, yrkesgrupper)
-            yrkesomradeid != null -> TermQueryBuilder(yrkesgruppe_lvl_1, yrkesomradeid)
+            !filtervalg.yrkesgrupper.isEmpty() -> TermsQueryBuilder(yrkesgruppe_lvl_2, filtervalg.yrkesgrupper)
+            filtervalg.yrkesomrade != null -> TermQueryBuilder(yrkesgruppe_lvl_1, filtervalg.yrkesomrade)
             else -> MatchAllQueryBuilder()
         }
     }
 
-    private fun fylkeFilter(fylker: List<String>, kommuner: List<String>): QueryBuilder {
+    private fun fylkeFilter(filtervalg: Filtervalg): QueryBuilder {
         val builder = BoolQueryBuilder()
+
+        val fylker = filtervalg.fylker.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
+        val kommuner = filtervalg.kommuner.mapNotNull { solrGeografiMappingService.getStrukturkodeForId(it) }
 
         if (!fylker.isEmpty()) {
             builder.should(TermsQueryBuilder(fylkesnummer, fylker))
@@ -192,20 +175,19 @@ constructor(
             else -> MatchAllQueryBuilder()
         }
     }
-
 }
 
 @Service
 @Profile("mock")
 class LedighetConsumerMock : LedighetConsumer {
-    override fun getLedighetForKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getLedighetPerKommuner(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val faker = Faker(Random(stringToSeed("ledighetKommune") + filtervalgToSeed(filtervalg)))
         return filtervalg.kommuner
                 .map { it to faker.number().numberBetween(0, 1000) }
                 .toMap()
     }
 
-    override fun getLedighetForFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
+    override fun getLedighetPerFylker(periode: String, filtervalg: Filtervalg): Map<String, Int> {
         val faker = Faker(Random(stringToSeed("ledighetFylke") + filtervalgToSeed(filtervalg)))
         return filtervalg.fylker
                 .map { it to faker.number().numberBetween(0, 1000) }
