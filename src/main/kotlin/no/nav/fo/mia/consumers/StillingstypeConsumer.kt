@@ -49,13 +49,14 @@ constructor (
     private fun getStillingstyper(query: String): List<YrkesgruppeDTO> {
         val solrQuery = SolrQuery(query)
                 .addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE")
+                .setRows(Integer.MAX_VALUE)
 
         return supportSolrClient.query(solrQuery).results.map {
             YrkesgruppeDTO(
                     id = it.getFieldValue("ID") as String,
                     navn = it.getFieldValue("NAVN") as String,
                     strukturkode = it.getFieldValue("STRUKTURKODE") as String?,
-                    parents = it.getFieldValues("PARENT").map { it as String }
+                    parents = it.getFieldValues("PARENT")?.map { it as String } ?: emptyList()
             )
         }
     }

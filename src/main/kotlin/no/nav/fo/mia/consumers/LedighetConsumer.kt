@@ -119,7 +119,7 @@ constructor(
         val agregation = AggregationBuilders
                 .terms(grupperingsnavn)
                 .field(gruperingsKolone)
-                .size(1000)
+                .size(Int.MAX_VALUE)
                 .subAggregation(sumagregation)
 
         val searchSourceBuilder = SearchSourceBuilder()
