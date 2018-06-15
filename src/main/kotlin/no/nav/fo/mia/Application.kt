@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import no.nav.fo.mia.util.getOptionalProperty
+import no.nav.fo.mia.util.setPropertyIfNotAlredyEksists
 import no.nav.fo.mia.util.setupTruststore
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -20,10 +21,7 @@ fun main(args: Array<String>) {
     val app = SpringApplication(Application::class.java)
     if (getOptionalProperty("USE_MOCK") == "true") {
         app.setAdditionalProfiles("mock")
-
-        if(getOptionalProperty("STILLINGSOK_LINK_URL") == null) {
-           System.setProperty("STILLINGSOK_LINK_URL", "https://tjenester.nav.no/stillinger/")
-        }
+        setPropertyIfNotAlredyEksists("STILLINGSOK_LINK_URL", "https://tjenester.nav.no/stillinger/")
     }
     app.run(*args)
 }
