@@ -1,6 +1,5 @@
 import React from 'react';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
 import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 import { Select } from 'nav-frontend-skjema';
@@ -13,10 +12,6 @@ const meldinger = defineMessages({
     alternativAlle: {
         id: 'ledigestillinger.bransjer.alle',
         defaultMessage: 'Alle ({antall})'
-    },
-    hjelpetekstTittel: {
-        id: 'ledigestillinger.bransjer.hjelpetekst.tittel',
-        defaultMessage: 'Valgte stillingskategorier og arbeidsområder'
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.bransjer.hjelpetekst.innhold',
@@ -38,12 +33,7 @@ export const BransjeDropdown = (props) => {
                 <FormattedMessage {...meldinger.velgstillingskategori} />
             </label>
             <HjelpetekstUnder id="bransje-dropdown-hjelpetekst">
-                <div>
-                    <Undertittel className="blokk-xxs">
-                        <FormattedMessage {...meldinger.hjelpetekstTittel}/>
-                    </Undertittel>
-                    <FormattedMessage {...meldinger.hjelpetekstTekst}/>
-                </div>
+                <FormattedMessage {...meldinger.hjelpetekstTekst}/>
             </HjelpetekstUnder>
         </div>
     );
