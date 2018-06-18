@@ -1,7 +1,6 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
 import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
@@ -16,10 +15,6 @@ const meldinger = defineMessages({
     kartplaceholder: {
         id: 'ledigestillinger.oversikt.kartplaceholder',
         defaultMessage: 'Kart for å velge fylker og kommuner.'
-    },
-    hjelpetekstTittel: {
-        id: 'ledigestillinger.oversikt.hjelpeteksttittel',
-        defaultMessage: 'Valgte områder'
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.oversikt.hjelpeteksttekst',
@@ -208,12 +203,7 @@ class Oversiktskart extends React.Component {
             <div className="kart-omrader-container">
                 <div className="valgte-omrader-container">
                     <HjelpetekstUnder id="valgtomrade-hjelpetekst">
-                        <div>
-                            <Undertittel className="blokk-xxs">
-                                <FormattedMessage {...meldinger.hjelpetekstTittel}/>
-                            </Undertittel>
-                            <FormattedMessage {...meldinger.hjelpetekstTekst}/>
-                        </div>
+                        <FormattedMessage {...meldinger.hjelpetekstTekst}/>
                     </HjelpetekstUnder>
 
                     {valgtHeleLandet}

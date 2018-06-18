@@ -1,17 +1,12 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import {Undertittel} from 'nav-frontend-typografi';
 import LinjeGraf from '../../felles/graf/linje-graf';
 import {ValgteFylker, ValgteKommuner, ValgtStillingskategori, ValgteArbeidsomrader, ValgtHeleNorge} from '../../felles/filtervalg/filtervalgVisning';
 
 const tekster = defineMessages({
     tabellOverskrift: {
         id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
-        defaultMessage: 'Ledighet siste 13 måneder'
-    },
-    hjelpetekstTittel: {
-        id: 'ledigestillinger.graf.hjelpetekst.tittel',
         defaultMessage: 'Ledighet siste 13 måneder'
     },
     hjelpetekstTekst: {
@@ -51,12 +46,7 @@ const LedigestillingerOversiktGraf = ({ tabell, valgteFylker, valgteKommuner, om
                     <FormattedMessage {...tekster.tabellOverskrift} />
                 </h2>
                 <Hjelpetekst id="hjelpetekst.bransjer">
-                    <div>
-                        <Undertittel className={"blokk-xxs"}>
-                            <FormattedMessage {...tekster.hjelpetekstTittel} />
-                        </Undertittel>
-                        <FormattedMessage {...tekster.hjelpetekstTekst} />
-                    </div>
+                    <FormattedMessage {...tekster.hjelpetekstTekst} />
                 </Hjelpetekst>
 
             </div>

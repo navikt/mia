@@ -26,7 +26,11 @@ open class WebMvcConfig : WebMvcConfigurer {
                 .resourceChain(true)
                 .addResolver(object : PathResourceResolver() {
                     override fun getResource(resourcePath: String, location: Resource): Resource {
-                        return location.createRelative(resourcePath)
+                        val file = location.createRelative(resourcePath)
+                        if (file.exists()) {
+                            return file
+                        }
+                        return location.createRelative("blank.png")
                     }
                 })
     }
