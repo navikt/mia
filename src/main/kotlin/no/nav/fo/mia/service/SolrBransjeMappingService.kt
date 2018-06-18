@@ -28,11 +28,13 @@ constructor (
 
     private fun createStrukturkodeTilIdMapping(): Map<String, String> =
             stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
+                    .filter { it.strukturkode != null }
                     .map { it.strukturkode!! to it.id }
                     .toMap()
 
     private fun createIdTilStrukturkodeMapping(): Map<String, String> =
             stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
+                    .filter { it.strukturkode != null }
                     .map { it.id to it.strukturkode!! }
                     .toMap()
 
