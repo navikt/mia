@@ -23,19 +23,15 @@ constructor(
 
         val headers = indexMap[index]!!
 
-        LOGGER.info("recreating index")
-        val allLines = stream
+        LOGGER.info("Starter indeksering av elastic-indeksen.")
+        val lines = stream
                 .reader()
                 .readLines()
-
-        val lines = allLines
-                .subList(1, allLines.size) //fjerner header linjen
+                .drop(1) // fjerned header-linjen
 
         elastic.recreateIndex(index)
 
-
         val time = measureTimeMillis {
-
             var bulk = BulkRequest()
 
             lines.forEach {
@@ -52,21 +48,17 @@ constructor(
             }
 
             elastic.index(bulk)
-
-            LOGGER.info("totalt indekserte ${lines.size}")
         }
-        LOGGER.info("time: $time")
-
-
-        return "indexen $index er lagd på nytt, antall indekserte: ${lines.size} på $time ms :)"
+        LOGGER.info("Indekserte ${lines.size} dokumenter over $time ms")
+        return "Indexen $index er lagd på nytt, antall indekserte: ${lines.size} på $time ms."
     }
 
 
     private fun getValues(csvString: String): List<Any> {
-        val cvsSplitBy = ","
+        val cvsSplitBy = ",".toRegex()
         val cvsValues = csvString
                 .replace("\"", "")
-                .split(cvsSplitBy.toRegex())
+                .split(cvsSplitBy)
 
         val yrkesgrupper = bransjeMappingService.getYrkesgruperForStrukturKode(cvsValues[3])
 

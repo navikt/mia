@@ -8,7 +8,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 fun solrQueryMedOmradeFilter(query: String = "*:*", filtervalg: Filtervalg): SolrQuery {
-    val solrQuery = SolrQuery("*:*")
+    val solrQuery = SolrQuery(query)
     val statements = ArrayList<String>()
 
     if (!filtervalg.fylker.isEmpty()) {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Application from './application';
 import createStore from './store';
 import Provider from './provider';
-import 'whatwg-fetch';
+import './polyfills';
 
 const store = createStore();
 
