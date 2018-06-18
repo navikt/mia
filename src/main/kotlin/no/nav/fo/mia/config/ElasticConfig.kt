@@ -18,12 +18,9 @@ import org.springframework.context.annotation.Profile
 open class EsConfig {
     @Bean
     open fun elasticClient(): RestHighLevelClient =
-            getClientForUri(getRequiredProperty("MIA_ELASTIC_URL"))
-
-    private fun getClientForUri(uri: String): RestHighLevelClient =
             RestHighLevelClient(
                     RestClient
-                            .builder(HttpHost(uri, 9200, "http"))
+                            .builder(HttpHost("tpa-miasecsok-elasticsearch.tpa.svc.nais.local", 9200, "http"))
                             .setHttpClientConfigCallback(HttpClientConfigCallback())
             )
 }

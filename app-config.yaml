@@ -30,11 +30,6 @@ fasitResources:
     propertyMap:
       url: STILLINGSOK_LINK_URL
 
-  - alias: mia.elastic
-    resourceType: baseurl
-    propertyMap:
-      url: MIA_ELASTIC_URL
-
   - alias: mia_elasticsearch_user
     resourceType: credential
     propertyMap:
