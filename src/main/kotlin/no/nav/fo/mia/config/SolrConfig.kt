@@ -16,7 +16,7 @@ open class SolrConfig {
 
     @Bean
     open fun stillingSolrClient(): SolrClient =
-            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}mainwithlocal")
+            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}maincore")
 
     private fun getClientForUri(uri: String): SolrClient =
             HttpSolrClient.Builder().withBaseSolrUrl(uri).build()
