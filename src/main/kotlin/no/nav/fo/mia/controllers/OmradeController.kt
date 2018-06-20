@@ -41,6 +41,12 @@ constructor(
 
     @GetMapping("/kommunedata")
     fun hentTallForValgteKommuner(@BeanParam filtervalg: Filtervalg): List<OmradeStilling> {
+        val kommunerForValgteHeleFylker = filtervalg.fylker
+                .flatMap { geografiService.getKommunerForFylke(it) }
+                .map { it.id }
+
+        filtervalg.kommuner = filtervalg.kommuner.union(kommunerForValgteHeleFylker).toList()
+
         val ledigestillingerForKommuner = stillingerService.getAntallStillingerForValgteKommuner(filtervalg)
         val arbeidsledighetForKommuner = arbeidsledighetService.getArbeidsledighetForValgteKommuner(filtervalg)
         return filtervalg.kommuner
