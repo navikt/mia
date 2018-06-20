@@ -1,20 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import DocumentTitle from 'react-document-title';
-import {defineMessages, injectIntl} from 'react-intl';
+import {injectIntl} from 'react-intl';
 import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import {lastTekster} from './felles/tekster/tekster-reducer';
 import restActionCreator from './felles/rest/rest-action';
 import LedigeStillinger from './ledigestillinger/ledigestillinger';
 import Feilmodal from './feilmodal/feilmodal';
-
-const meldinger = defineMessages({
-    appTitle: {
-        id: 'applikasjon.tittel',
-        defaultMessage: 'Muligheter i arbeidsmarkedet'
-    }
-});
-
 
 class Application extends React.Component {
     componentDidMount() {
@@ -34,16 +25,14 @@ class Application extends React.Component {
         ];
 
         return (
-            <DocumentTitle title={this.props.intl.formatMessage(meldinger.appTitle)}>
-                <div>
-                    <Innholdslaster avhengigheter={avhengigheter}>
-                        <div className="hovedinnhold side-midtstilt">
-                            <LedigeStillinger />
-                        </div>
-                    </Innholdslaster>
-                    <Feilmodal />
-                </div>
-            </DocumentTitle>
+            <div>
+                <Innholdslaster avhengigheter={avhengigheter}>
+                    <div className="hovedinnhold side-midtstilt">
+                        <LedigeStillinger />
+                    </div>
+                </Innholdslaster>
+                <Feilmodal />
+            </div>
         );
     }
 }
