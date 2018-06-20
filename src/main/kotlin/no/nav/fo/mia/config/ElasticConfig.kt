@@ -1,5 +1,6 @@
 package no.nav.fo.mia.config
 
+import no.nav.fo.mia.util.getOptionalProperty
 import no.nav.fo.mia.util.getRequiredProperty
 import org.apache.http.HttpHost
 import org.apache.http.auth.AuthScope
@@ -9,20 +10,34 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
 import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestClientBuilder
 import org.elasticsearch.client.RestHighLevelClient
+import org.springframework.core.env.Environment
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import javax.inject.Inject
 
 @Configuration
 @Profile("!mock")
-open class EsConfig {
+open class EsConfig @Inject constructor(
+        private val env: Environment
+) {
     @Bean
     open fun elasticClient(): RestHighLevelClient =
             RestHighLevelClient(
                     RestClient
-                            .builder(HttpHost("tpa-miasecsok-elasticsearch.tpa.svc.nais.local", 9200, "http"))
+                            .builder(createHttpHost())
                             .setHttpClientConfigCallback(HttpClientConfigCallback())
             )
+
+    private fun createHttpHost() =
+            HttpHost(
+                    getRequiredProp("mia.elastic.hostname"),
+                    getRequiredProp("mia.elastic.port").toInt(),
+                    getRequiredProp("mia.elastic.scheme")
+            )
+
+    private fun getRequiredProp(propName: String) =
+            getOptionalProperty(propName) ?: env.getRequiredProperty(propName)
 }
 
 class HttpClientConfigCallback : RestClientBuilder.HttpClientConfigCallback {
