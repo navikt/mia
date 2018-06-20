@@ -14,6 +14,15 @@ Main-metoden i `Application.kt`, mens frontenden kan startes ved å kjøre `npm 
 Ved å sette miljøvariabelen `USE_MOCK=true` vil backenden starte opp med mock-profilen, og mocke alle
 konsument-tjenestene.
 
+For å kjøre opp uten mock må følgende miljøvariabler være definert:
+
+| Variabelnavn            | Beskrivelse                                                              |
+| ----------------------- | ------------------------------------------------------------------------ |
+| STILLING_SOLR_URL       | URL til solr-indeks med oversikt over alle stillinger                    |
+| MIA_ELASTIC_USER        | Brukernavn til mia sin elastic-search for statistikkdata                 |
+| MIA_ELASTIC_PSW         | Passord for brukeren til mia i elastic-search for statatistikkdata       |
+| MIA_ELASTIC_URL         | URL til elastic-search som holder på mia sin statistikkdata              |
+
 ## Lage nye geojson-filer for ønsket nøyaktighet:
 
 Applikasjonen bruker vektordata for å tegne opp grensene for ulike fylker og kommuner i kartet. Disse kartdataene er hentet
