@@ -38,7 +38,7 @@ constructor(
         val client: RestHighLevelClient
 ) : ElasticIndexProvider {
     override fun getCluseterInfo(): String {
-        val response = client.lowLevelClient.performRequest("GET", "/?v")
+        val response = client.lowLevelClient.performRequest("GET", "/")
         return EntityUtils.toString(response.entity)
     }
 
