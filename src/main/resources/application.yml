@@ -2,3 +2,15 @@ server:
   port: 8800
   servlet:
     context-path: /mia
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+mia:
+  elastic:
+    hostname: tpa-miasecsok-elasticsearch.tpa.svc.nais.local
+    port: 9200
+    scheme: http
