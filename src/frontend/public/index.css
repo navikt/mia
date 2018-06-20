@@ -652,7 +652,7 @@ body .blokk-xl {
   height: 2rem;
   cursor: pointer;
   color: #78706A;
-  border: 1px solid currentColor;
+  border: 2px solid currentColor;
   background-color: transparent;
   border-radius: 2px;
   position: absolute;
@@ -663,9 +663,9 @@ body .blokk-xl {
 .hjelpetekst .lukknapp:after {
   content: '';
   position: absolute;
-  width: 1.5rem;
-  height: 1px;
-  top: calc(50% - 1px);
+  width: 1.25rem;
+  height: 3px;
+  top: calc(50% - 0.175rem);
   left: 50%;
   background-color: currentColor;
 }
@@ -676,7 +676,11 @@ body .blokk-xl {
   transform: translate(-50%, 50%) rotate(45deg);
 }
 .hjelpetekst .lukknapp:hover {
-  color: #3385d1;
+  background-color: currentColor;
+}
+.hjelpetekst .lukknapp:hover:before,
+.hjelpetekst .lukknapp:hover:after {
+  background-color: #FFF;
 }
 .hjelpetekst .lukknapp:active {
   color: #19548a;
@@ -1143,7 +1147,7 @@ body .blokk-xl {
   height: 2rem;
   cursor: pointer;
   color: #78706A;
-  border: 1px solid currentColor;
+  border: 2px solid currentColor;
   background-color: transparent;
   border-radius: 2px;
 }
@@ -1151,9 +1155,9 @@ body .blokk-xl {
 .lukknapp:after {
   content: '';
   position: absolute;
-  width: 1.5rem;
-  height: 1px;
-  top: calc(50% - 1px);
+  width: 1.25rem;
+  height: 3px;
+  top: calc(50% - 0.175rem);
   left: 50%;
   background-color: currentColor;
 }
@@ -1164,7 +1168,11 @@ body .blokk-xl {
   transform: translate(-50%, 50%) rotate(45deg);
 }
 .lukknapp:hover {
-  color: #3385d1;
+  background-color: currentColor;
+}
+.lukknapp:hover:before,
+.lukknapp:hover:after {
+  background-color: #FFF;
 }
 .lukknapp:active {
   color: #19548a;
@@ -1174,7 +1182,7 @@ body .blokk-xl {
   box-shadow: 0 0 0 3px #FFBD66;
 }
 .lukknapp--bla {
-  color: #66CBEC;
+  color: #0067C5;
 }
 .lukknapp--hvit {
   color: #FFF;
@@ -1242,6 +1250,9 @@ body .blokk-xl {
   padding: 1rem 1rem 1rem 1rem;
   border-radius: 4px;
   padding: 1.25rem 1rem 1.25rem 1rem;
+}
+.panel--border {
+  border: 1px solid #C6C2BF;
 }
 @font-face {
   font-family: 'Source Sans Pro';
