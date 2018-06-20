@@ -21,7 +21,8 @@ For å kjøre opp uten mock må følgende miljøvariabler være definert:
 | STILLING_SOLR_URL       | URL til solr-indeks med oversikt over alle stillinger                    |
 | MIA_ELASTIC_USER        | Brukernavn til mia sin elastic-search for statistikkdata                 |
 | MIA_ELASTIC_PSW         | Passord for brukeren til mia i elastic-search for statatistikkdata       |
-| MIA_ELASTIC_URL         | URL til elastic-search som holder på mia sin statistikkdata              |
+| MIA_ELASTIC_HOSTNAME    | Hostname til elastic-search som holder på mia sin statistikkdata         |
+| MIA_ELASTIC_SCHEME      | http eller https basert på om elastic er tilgjengelig via SSL eller ikke |
 
 ## Lage nye geojson-filer for ønsket nøyaktighet:
 

@@ -39,7 +39,7 @@ export function createRestReducer(navn, initialState = defaultStateObj) {
 
 export default combineReducers({
   omrader: createRestReducer('omrader', defaultStateList),
-  oversiktStillinger: createRestReducer('oversikt_stillinger'),
+  oversiktStillinger: createRestReducer('oversikt_stillinger', defaultStateList),
   yrkesomrader: createRestReducer('yrkesomrader', defaultStateList),
   yrkesgrupper: createRestReducer('yrkesgrupper', defaultStateList),
   stillinger: createRestReducer('stillinger', defaultStateList),

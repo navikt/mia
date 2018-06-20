@@ -1,6 +1,6 @@
 package no.nav.fo.mia.config
 
-    import no.nav.fo.mia.util.getRequiredProperty
+import no.nav.fo.mia.util.getRequiredProperty
 import org.apache.http.HttpHost
 import org.apache.http.auth.AuthScope
 import org.apache.http.auth.UsernamePasswordCredentials
