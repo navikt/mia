@@ -108,12 +108,19 @@ export class Oversikt extends React.Component {
             avvelgKommune: this.avvelgKommune
         };
 
-        const innhold = this.props.visKart ? <OversiktKart {...oversiktProps} {...kartProps} /> : <Oversiktspanel {...oversiktProps}/>;
+        const KartPaaDesktop = (
+            <div>
+                <OversiktKart className="hidden-xs hidden-sm" {...oversiktProps} {...kartProps} />
+                <Oversiktspanel className="hidden-md hidden-lg" {...oversiktProps}/>
+            </div>
+        );
+
+        const innhold = this.props.visKart ? KartPaaDesktop : <Oversiktspanel {...oversiktProps}/>;
 
         return (
             <div className="panel-oversikt">
                 {innhold}
-                <div className="oversikt-toggle blokk-xs">
+                <div className="oversikt-toggle blokk-xs hidden-xs hidden-sm">
                     <SwitcherKnapp
                         id="switch_kart"
                         aktiv={this.props.visKart}

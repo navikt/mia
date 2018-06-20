@@ -25,6 +25,12 @@ constructor(
         return fylkerMedKommuner.union(andreRelevanteOmrader).toList()
     }
 
+    fun getKommunerForFylke(fylkeId: String): List<Omrade> =
+        hentAlleRelevanteOmrader()
+                .find { it.id == fylkeId }
+                ?.underomrader
+                ?: emptyList()
+
     private fun dtoToOmrade(dto: OmradeDTO, alleDto: List<OmradeDTO>): Omrade =
             Omrade(
                     id = dto.id,

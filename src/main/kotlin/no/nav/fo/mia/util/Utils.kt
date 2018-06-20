@@ -6,7 +6,7 @@ fun getOptionalProperty(propName: String): String? =
 fun getRequiredProperty(propName: String) =
         getOptionalProperty(propName) ?: throw IllegalArgumentException("Missing required property: $propName")
 
-fun setPropertyIfNotAlredyEksists(propName: String, propValue: String) {
+fun setPropertyIfNotAlredyExists(propName: String, propValue: String) {
     if(getOptionalProperty(propName) == null) {
         System.setProperty(propName, propValue)
     }

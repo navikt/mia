@@ -28,7 +28,7 @@ export class Switcher extends Component {
 
         return (
             <div id={domId}>
-                <div role="tablist" className="blokk-s text-right">
+                <div role="tablist" className="blokk-s text-right hidden-xs hidden-sm">
                     {this.lagKnapper(domId, elementer, vistValgNr)}
                 </div>
                 <div id={`${domId}-${vistValgNr}`}
