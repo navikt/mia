@@ -26,6 +26,9 @@ constructor(
     @GetMapping("/es/indexes")
     fun getIndexes() = service.getAll()
 
+    @GetMapping("/es/info")
+    fun getInfo() = service.info()
+
     @PostMapping("/arbeidsledigecore")
     fun arbeidlsedigeIndex(@RequestParam("file")  file: MultipartFile): String {
         LOGGER.info(arbeidsledigeIndex)

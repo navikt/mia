@@ -74,6 +74,7 @@ constructor(
         return values
     }
 
-    fun getAll(): Any = elastic.getAllIndexes()
+    fun getAll() = elastic.getAllIndexes()
+    fun info() = elastic.getCluseterInfo()
 
 }

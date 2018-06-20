@@ -28,6 +28,7 @@ interface ElasticIndexProvider {
     fun getAllIndexes(): String
     fun index(bulk: BulkRequest)
     fun recreateIndex(index: String)
+    fun getCluseterInfo(): String
 }
 
 @Service
@@ -36,6 +37,11 @@ class ElasticIndexProviderImpl @Inject
 constructor(
         val client: RestHighLevelClient
 ) : ElasticIndexProvider {
+    override fun getCluseterInfo(): String {
+        val response = client.lowLevelClient.performRequest("GET", "/?v")
+        return EntityUtils.toString(response.entity)
+    }
+
     private val LOGGER = LoggerFactory.getLogger(ElasticIndexProviderImpl::class.java)
 
     override fun recreateIndex(index: String) {
@@ -148,13 +154,15 @@ constructor(
 @Service
 @Profile("mock")
 class ElasticIndexProviderMock : ElasticIndexProvider {
+    override fun getCluseterInfo() = "mock info"
+
     override fun createArbeidsledigeIndex() {
     }
 
     override fun createStillingerIndex() {
     }
 
-    override fun getAllIndexes(): String = "MOCK"
+    override fun getAllIndexes() = "MOCK indexes"
 
     override fun index(bulk: BulkRequest) {
     }
