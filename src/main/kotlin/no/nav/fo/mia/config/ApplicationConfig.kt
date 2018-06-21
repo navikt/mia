@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.jcache.JCacheCacheManager
-import org.springframework.context.annotation.Profile
 import javax.cache.Caching
 
 
@@ -23,7 +22,6 @@ open class ApplicationConfig {
     }
 
     @Bean
-    @Profile("!mock") //TODO se på denne
     open fun cacheManager(): CacheManager {
         val cachingProvider = Caching.getCachingProvider()
         val cacheManager = cachingProvider.getCacheManager(
