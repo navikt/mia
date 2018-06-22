@@ -45,12 +45,13 @@
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "start": "npm-run-all -p start:*",
+    "start": "npm run decorate:html && npm-run-all -p start:*",
     "start:js": "react-scripts start",
     "start:less": "less-watch-compiler ./src ./public index.less",
-    "build": "npm run build:less && npm run build:js",
+    "build": "npm run decorate:html && npm run all build:*",
     "build:js": "react-scripts build",
     "build:less": "node ./node_modules/less/bin/lessc -x src/index.less ./public/index.css",
+    "decorate:html": "node ./decorate-html.js ./src/index.template.html ./public/index.html",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --env=jsdom --coverage",
     "lint": "echo \"Eslint kjøres som en del av create-react-app\"",
@@ -58,15 +59,18 @@
   },
   "devDependencies": {
     "@types/jest": "^23.0.0",
+    "@types/node": "^10.3.4",
     "autoless": "^0.1.7",
     "core-js": "^2.5.7",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest-enzyme": "^6.0.1",
+    "jsdom": "^11.11.0",
     "less": "^3.0.4",
     "less-watch-compiler": "^1.11.3",
     "npm-run-all": "^4.1.3",
-    "react-test-renderer": "^16.4.0"
+    "react-test-renderer": "^16.4.0",
+    "request": "^2.87.0"
   },
   "jest": {
     "coverageThreshold": {
