@@ -46,7 +46,12 @@ const Innholdslaster = ({avhengigheter, children, spinnerForInitialisert = true,
             </div>
         );
     }
-    return <Spinner type="XL" />;
+    
+    return (
+        <div className="text-center">
+            <Spinner type="XXL" />
+        </div>
+    );
 };
 
 export default Innholdslaster;
