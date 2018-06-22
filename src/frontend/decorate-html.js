@@ -16,8 +16,9 @@ const getDecorator = (baseuri) =>
                 const data = {
                     NAV_SCRIPTS: document.getElementById('scripts')[prop],
                     NAV_STYLES: document.getElementById('styles')[prop],
-                    NAV_HEADING: document.getElementById('header')[prop],
-                    NAV_FOOTER: document.getElementById('footer')[prop]
+                    NAV_HEADING: document.getElementById('header-withmenu')[prop],
+                    NAV_FOOTER: document.getElementById('footer')[prop],
+                    NAV_MEGAMENU_RESOURCES: document.getElementById('megamenu-resources')[prop]
                 };
                 resolve(data);
             } else {
@@ -26,7 +27,7 @@ const getDecorator = (baseuri) =>
             }
         };
 
-        request(`${baseuri}/common-html/v4/navno?header=true&styles=true&scripts=true&footer=true`, callback);
+        request(`${baseuri}/common-html/v4/navno?header=true&header-withmenu=true&styles=true&scripts=true&footer=true`, callback);
     });
 
 const inputPath = process.argv[2];
@@ -40,5 +41,6 @@ getDecorator(appresUri)
         .replace("{{decorator-styles}}", decorator.NAV_STYLES + "\n")
         .replace("{{decorator-header}}", decorator.NAV_HEADING + "\n")
         .replace("{{decorator-footer}}", decorator.NAV_FOOTER + "\n")
+        .replace("{{decorator-megamenu}}", decorator.NAV_MEGAMENU_RESOURCES + "\n")
     )
     .then(outputFile => fs.writeFileSync(outputPath, outputFile, "utf-8"));
