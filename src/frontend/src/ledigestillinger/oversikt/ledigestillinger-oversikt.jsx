@@ -120,7 +120,7 @@ export class Oversikt extends React.Component {
         return (
             <div className="panel-oversikt">
                 {innhold}
-                <div className="oversikt-toggle blokk-xs hidden-xs hidden-sm">
+                <div className="oversikt-toggle blokk-xs hidden-xs hidden-sm" role="tablist">
                     <SwitcherKnapp
                         id="switch_kart"
                         aktiv={this.props.visKart}

@@ -32,7 +32,7 @@ export class Oversiktspanel extends React.Component {
         const modalId = "velgKommunerOgFylker";
 
         return (
-            <div className={`panel panel-fremhevet ${this.props.className}`}>
+            <div className={`panel panel-fremhevet ${this.props.className}`} id='switch_tabell'>
                 <div className="velg-omrader text-center blokk">
                     <Hovedknapp onClick={() => props.apneModal(modalId)}>
                         <FormattedMessage {...meldinger.velgKommuneOgFylkeLabel}/>
