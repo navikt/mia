@@ -9,6 +9,7 @@ src/frontend/node_modules/
 src/frontend/build/
 src/frontend/coverage/
 src/frontend/public/index.css
+src/frontend/public/index.html
 
 target/
 node_modules/
