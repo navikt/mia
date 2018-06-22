@@ -41,8 +41,4 @@ getDecorator(appresUri)
         .replace("{{decorator-header}}", decorator.NAV_HEADING + "\n")
         .replace("{{decorator-footer}}", decorator.NAV_FOOTER + "\n")
     )
-    .then(outputFile => {
-        console.log(outputFile);
-        return outputFile;
-    })
     .then(outputFile => fs.writeFileSync(outputPath, outputFile, "utf-8"));
