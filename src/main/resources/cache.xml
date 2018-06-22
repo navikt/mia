@@ -4,6 +4,44 @@
         xsi:schemaLocation="
             http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.2.xsd"
 >
+    <!-- Georgrafi -->
+    <cache alias="alleOmrader" uses-template="very-long">
+        <heap>100</heap>
+    </cache>
+    <cache alias="kommunerForFylker" uses-template="very-long">
+        <heap>100</heap>
+    </cache>
+
+    <!-- Stillinger -->
+    <cache alias="ledigeStillingerFylke" uses-template="medium">
+        <heap>100</heap>
+    </cache>
+    <cache alias="ledigeStillingerKommune" uses-template="medium">
+        <heap>100</heap>
+    </cache>
+    <cache alias="stillinger" uses-template="medium">
+        <heap>200</heap>
+    </cache>
+    <cache alias="antallStillingerOmrade" uses-template="long">
+        <heap>150</heap>
+    </cache>
+    <cache alias="antallStillingerYrkesgruppe" uses-template="long">
+        <heap>150</heap>
+    </cache>
+    <cache alias="antallStillingerYrkesomrade" uses-template="long">
+        <heap>150</heap>
+    </cache>
+
+    <!-- Stillingstyper -->
+    <cache alias="yrkesomrader" uses-template="long">
+        <heap>10</heap>
+    </cache>
+    <cache alias="yrkesgrupperOgYrkesomrader" uses-template="long">
+        <heap>10</heap>
+    </cache>
+    <cache alias="yrkesgrupperForYrkesomrader" uses-template="long">
+        <heap>50</heap>
+    </cache>
 
     <!-- templates -->
     <cache-template name="short">
@@ -19,6 +57,11 @@
     <cache-template name="long">
         <expiry>
             <ttl unit="minutes">60</ttl>
+        </expiry>
+    </cache-template>
+    <cache-template name="very-long">
+        <expiry>
+            <ttl unit="minutes">180</ttl>
         </expiry>
     </cache-template>
 </config>

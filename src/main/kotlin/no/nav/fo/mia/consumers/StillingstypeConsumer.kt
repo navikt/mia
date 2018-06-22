@@ -4,6 +4,7 @@ import com.github.javafaker.Faker
 import no.nav.fo.mia.util.stringToSeed
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.util.*
@@ -17,11 +18,13 @@ interface StillingstypeConsumer {
 
 @Service
 @Profile("!mock")
-class StillingstypeConsumerImpl @Inject
+open class StillingstypeConsumerImpl @Inject
 constructor (
         val supportSolrClient: SolrClient,
         val stillingSolrClient: SolrClient
 ) : StillingstypeConsumer {
+
+    @Cacheable("yrkesomrader")
     override fun getYrkesomrader(): List<YrkesomradeDTO> {
         val query = SolrQuery("*:*")
         query.addFacetField("YRKGR_LVL_1")
@@ -40,9 +43,11 @@ constructor (
         }
     }
 
+    @Cacheable("yrkesgrupperOgYrkesomrader")
     override fun getAlleYrkesgrupperOgYrkesomrader(): List<YrkesgruppeDTO> =
             getStillingstyper("*:*")
 
+    @Cacheable("yrkesgrupperForYrkesomrader")
     override fun getYrkesgrupperForYrkesomrade(yrkesomradeid: String): List<YrkesgruppeDTO> =
             getStillingstyper("PARENT:$yrkesomradeid")
 

@@ -10,6 +10,7 @@ import no.nav.fo.mia.util.solrQueryMedOmradeFilter
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
 import org.apache.solr.client.solrj.response.FacetField
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.lang.Integer.parseInt
@@ -27,16 +28,19 @@ interface StillingerConsumer {
 
 @Service
 @Profile("!mock")
-class StillingerConsumerImpl @Inject
+open class StillingerConsumerImpl @Inject
 constructor(
         val stillingSolrClient: SolrClient
 ) : StillingerConsumer {
+    @Cacheable("ledigeStillingerFylke")
     override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int =
             hentLedigeStillingerForOmrade("FYLKE_ID:$fylke", filtervalg)
 
+    @Cacheable("ledigeStillingerKommune")
     override fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int =
             hentLedigeStillingerForOmrade("KOMMUNE_ID:$kommune", filtervalg)
 
+    @Cacheable("stillinger")
     override fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
         val query = solrQueryMedOmradeFilter("*:*", filtervalg)
                 .addFilterQuery(yrkesgrupper.joinToString(" OR ") { "YRKGR_LVL_2_ID:$it" })
@@ -58,12 +62,15 @@ constructor(
                 }
     }
 
+    @Cacheable("antallStillingerOmrade")
     override fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int =
             getAntallStillinger("*:*", filtervalg)
 
+    @Cacheable("antallStillingerYrkesgruppe")
     override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int =
             getAntallStillinger("YRKGR_LVL_2_ID:$yrkesgruppe", filtervalg)
 
+    @Cacheable("antallStillingerYrkesomrade")
     override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int =
             getAntallStillinger("YRKGR_LVL_1_ID:$yrkesomrade", filtervalg)
 

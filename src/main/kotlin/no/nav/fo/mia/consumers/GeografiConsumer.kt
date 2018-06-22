@@ -5,6 +5,7 @@ import no.nav.fo.mia.Omrade
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
 import org.apache.solr.common.SolrDocument
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import javax.inject.Inject
@@ -16,11 +17,12 @@ interface GeografiConsumer {
 
 @Service
 @Profile("!mock")
-class GeografiConsumerImpl @Inject
+open class GeografiConsumerImpl @Inject
 constructor(
         val supportSolrClient: SolrClient
 ): GeografiConsumer {
 
+    @Cacheable("alleOmrader")
     override fun hentAlleOmrader(): List<OmradeDTO> {
         val query = SolrQuery("NIVAA:[1 TO 3]")
                 .addFilterQuery("DOKUMENTTYPE:GEOGRAFI")
@@ -28,6 +30,7 @@ constructor(
         return supportSolrClient.query(query).results.map(this::documentToOmrade)
     }
 
+    @Cacheable("kommunerForFylker")
     override fun hentKommunerforFylker(fylker: List<String>): List<OmradeDTO> {
         if (fylker.isEmpty()) {
             return emptyList()
