@@ -19,5 +19,8 @@ open class SolrConfig {
             getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}maincore")
 
     private fun getClientForUri(uri: String): SolrClient =
-            HttpSolrClient.Builder().withBaseSolrUrl(uri).build()
+            HttpSolrClient.Builder()
+                    .withBaseSolrUrl(uri)
+                    .withConnectionTimeout(2000)
+                    .build()
 }
