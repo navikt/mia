@@ -1,0 +1,50 @@
+@import "vendors";
+@import "variabler";
+
+.sidebanner-container {
+  .blokk-s();
+  background: @navDypBlaLighten80;
+  border-bottom: 3px solid @navDypBlaLighten60;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.sidebanner {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding-top: 1rem;
+
+  &__illustrasjon {
+    display: none;
+    margin-bottom: 2.5rem;
+  }
+
+  &__tittel {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .sidebanner-container {
+    .blokk-l();
+  }
+
+  .sidebanner-grid {
+    width: 956px;
+    padding: 0 1rem 0 1rem;
+    margin: 0 auto;
+  }
+
+  .sidebanner {
+    &__illustrasjon {
+      display: inline;
+      flex: 0 0 3.75rem;
+    }
+  }
+}
+
+@media (min-width: @screen-lg-desktop) {
+  .sidebanner-grid {
+    width: 1200px;
+  }
+}

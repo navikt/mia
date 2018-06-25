@@ -5,6 +5,7 @@ import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import {lastTekster} from './felles/tekster/tekster-reducer';
 import restActionCreator from './felles/rest/rest-action';
 import LedigeStillinger from './ledigestillinger/ledigestillinger';
+import Sidebanner from './felles/sidebanner/sidebanner';
 import Feilmodal from './feilmodal/feilmodal';
 
 class Application extends React.Component {
@@ -27,6 +28,7 @@ class Application extends React.Component {
         return (
             <div>
                 <Innholdslaster avhengigheter={avhengigheter}>
+                    <Sidebanner />
                     <div className="hovedinnhold side-midtstilt">
                         <LedigeStillinger />
                     </div>
