@@ -6,19 +6,13 @@ import javax.inject.Inject
 
 @Service
 class SolrBransjeMappingService @Inject
-constructor (
+constructor(
         val stillingstypeConsumer: StillingstypeConsumer
 ) {
     private val idTilStrukturkodeMapping = createIdTilStrukturkodeMapping()
     private val strukturkodeTilId = createStrukturkodeTilIdMapping()
     private val yrkesgruppeTilYrkesomradeMapping = createYrkesgruppeTilYrkesomradeMapping()
-    private val strukturkodeTilYrkesgruppe  = createStrukturkodeTilYrkesgruppe()
-
-    fun getIdForStrukturkode(strukturkode: String): String? =
-            strukturkodeTilId[strukturkode]
-
-    fun getStrukturkodeForId(id: String): String? =
-            idTilStrukturkodeMapping[id]
+    private val strukturkodeTilYrkesgruppe = createStrukturkodeTilYrkesgruppe()
 
     fun getYrkesomradeForYrkesgruppe(yrkesgruppe: String): List<String> =
             yrkesgruppeTilYrkesomradeMapping[yrkesgruppe].orEmpty()
@@ -39,9 +33,11 @@ constructor (
                     .toMap()
 
     private fun createYrkesgruppeTilYrkesomradeMapping(): Map<String, List<String>> =
-            stillingstypeConsumer.getYrkesomrader()
-                    .map { it.id to stillingstypeConsumer.getYrkesgrupperForYrkesomrade(it.id).map { it.id } }
-                    .toMap()
+        stillingstypeConsumer.getYrkesomrader()
+                .flatMap { stillingstypeConsumer.getYrkesgrupperForYrkesomrade(it.id) }
+                .map { it.id to it.parents }
+                .distinct()
+                .toMap()
 
     private fun createStrukturkodeTilYrkesgruppe(): Map<String, List<String>> =
             stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
