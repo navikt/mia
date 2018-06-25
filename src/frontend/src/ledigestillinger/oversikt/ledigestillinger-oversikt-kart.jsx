@@ -200,7 +200,7 @@ class Oversiktskart extends React.Component {
         const tilesBaseUrl = erDev() ? "http://localhost:8800/mia" : "/mia";
 
         return (
-            <div className={`kart-omrader-container ${this.props.className}`}>
+            <div className={`kart-omrader-container ${this.props.className}`} id="switch_kart">
                 <div className="valgte-omrader-container">
                     <HjelpetekstUnder id="valgtomrade-hjelpetekst">
                         <FormattedMessage {...meldinger.hjelpetekstTekst}/>
