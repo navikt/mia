@@ -21,3 +21,5 @@ data class Filtervalg (
     @QueryParam("restenavverden")
     var restenavverden: Boolean = false
 )
+
+data class Feilmelding(val id: String, val tittel: String, val message: String, val callId: String?)
