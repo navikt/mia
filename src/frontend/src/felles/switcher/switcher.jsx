@@ -25,7 +25,7 @@ export class Switcher extends Component {
             return <div id={`${domId}-${index}`}
                  key={index}
                  role="tabpanel"
-                 aria-describedby={domId + '-' + index}
+                 aria-describedby={`${domId}-${index}-knapp`}
                  hidden={index !== valg}
             >
                 {elementer[index].element}
