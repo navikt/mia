@@ -12,10 +12,10 @@ fun solrQueryMedOmradeFilter(query: String = "*:*", filtervalg: Filtervalg): Sol
     val statements = ArrayList<String>()
 
     if (!filtervalg.fylker.isEmpty()) {
-        statements.add("FYLKE_ID:${filtervalg.fylker.joinToString(" OR ")}")
+        statements.add("FYLKE_ID:(${filtervalg.fylker.joinToString(" OR ")})")
     }
     if (!filtervalg.kommuner.isEmpty()) {
-        statements.add("KOMMUNE_ID:${filtervalg.kommuner.joinToString(" OR ")}")
+        statements.add("KOMMUNE_ID:(${filtervalg.kommuner.joinToString(" OR ")})")
     }
 
     if (filtervalg.eoseu) {
