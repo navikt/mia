@@ -41,7 +41,7 @@ export const BransjeDropdown = (props) => {
     return(
         <div className="bransjevalg blokk-s">
             <div>
-                <Select id="select-bransje" bredde="xxl" label={selectLabel} selected={props.yrkesomrade} value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
+                <Select id="select-bransje" bredde="fullbredde" label={selectLabel} selected={props.yrkesomrade} value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
                     <option value={ALTERNATIV_ALLE}>
                         {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall + ''})}
                     </option>

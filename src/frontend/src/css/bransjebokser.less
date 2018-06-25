@@ -1,0 +1,82 @@
+
+// --------------------- responsivitet ---------------------------
+.bokser-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.bransje-boks-container {
+  position: relative;
+  width: ~"calc(50% - 0.5rem)";
+  height: 10rem;
+  margin-bottom: 1rem;
+
+  .boks-navn {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .boks-antall {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+  .bransje-boks-container {
+    width: ~"calc(33.3% - 0.666rem)";
+  }
+}
+
+// ----------------------- Styling/farger -----------------------
+.bransje-boks-container {
+  cursor: pointer;
+  background-color: @gray-background;
+  border: solid 1px @gray-icon;
+  text-align: left;
+  color: @gray-text;
+  border-radius: 4px;
+}
+
+.bransje-boks-container:hover {
+  background-color: @white;
+  color: @black;
+  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
+}
+
+.bransje-boks-container:active {
+  background-color: @blue-active;
+  color: @white;
+  box-shadow: 0 2px 2px 0 rgba(62, 56, 50, 0.4);
+}
+
+.aktiv-bransjeboks {
+  background-color: @navBlaDarken40;
+  color: @white;
+  &:hover {
+    background-color: @navBlaDarken20;
+    color: @white;
+  }
+}
+
+.bransje-boks-container:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px @orange-focus;
+}
+
+.boks-navn {
+  font-style: normal;
+  font-stretch: normal;
+  word-wrap: break-word;
+}
+
+.boks-antall {
+  font-size: @rem-as-30px;
+  font-weight: bold;
+  font-style: normal;
+}
