@@ -183,6 +183,7 @@ class Oversiktskart extends React.Component {
         };
 
         const mapProps = {
+            keyboard: false,
             center: initialPosition,
             bounds: this.worldBounds,
             zoom: initialZoom,
