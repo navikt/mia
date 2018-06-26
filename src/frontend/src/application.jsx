@@ -26,7 +26,7 @@ class Application extends React.Component {
         ];
 
         return (
-            <div>
+            <div role="main">
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <Sidebanner />
                     <div className="hovedinnhold side-midtstilt">

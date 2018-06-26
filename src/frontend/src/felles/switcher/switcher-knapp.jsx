@@ -8,7 +8,7 @@ const SwitcherKnapp = ({ id, aktiv, onClick, tekst }) => {
             aria-selected={aktiv ? 'true' : 'false'}
             aria-controls={id}
             id={id + '-knapp'}
-            className={classnames('knapp-switcher', { 'er-aktiv': aktiv })}
+            className={classnames('knapp-switcher knapp', { 'er-aktiv': aktiv })}
             onClick={onClick}>
             {tekst}
         </button>
