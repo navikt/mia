@@ -12,10 +12,9 @@ constructor(
         val geografiConsumer: GeografiConsumer
 ) {
     fun hentAlleRelevanteOmrader(): List<Omrade> {
-        val alleOmrader = geografiConsumer.hentAlleOmrader()
+        val alleOmrader = geografiConsumer.hentAlleOmrader().filter { !erUtgått(it) }
         val fylkerMedKommuner = alleOmrader
                 .filter { it.nivaa == "2" }
-                .filter { !erUtgått(it) }
                 .map { dtoToOmrade(it, alleOmrader) }
 
         val andreRelevanteOmrader = listOf(
