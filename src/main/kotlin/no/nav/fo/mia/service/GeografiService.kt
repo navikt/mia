@@ -15,6 +15,7 @@ constructor(
         val alleOmrader = geografiConsumer.hentAlleOmrader()
         val fylkerMedKommuner = alleOmrader
                 .filter { it.nivaa == "2" }
+                .filter { !erUtgått(it) }
                 .map { dtoToOmrade(it, alleOmrader) }
 
         val andreRelevanteOmrader = listOf(
@@ -42,4 +43,11 @@ constructor(
                             .filter { it.parent == dto.id }
                             .map { dtoToOmrade(it, alleDto) }
             )
+
+    private fun erUtgått(omrade: OmradeDTO) =
+            omrade.navn.contains("Ikke i bruk") ||
+                    omrade.navn.contains("UTGÅTT") ||
+                    omrade.navn.contains("gml") ||
+                    omrade.navn.contains("Gml") ||
+                    omrade.navn.contains("gammel")
 }
