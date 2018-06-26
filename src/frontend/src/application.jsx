@@ -26,7 +26,7 @@ class Application extends React.Component {
         ];
 
         return (
-            <div role="main">
+            <main>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <Sidebanner />
                     <div className="hovedinnhold side-midtstilt">
@@ -34,7 +34,7 @@ class Application extends React.Component {
                     </div>
                 </Innholdslaster>
                 <Feilmodal />
-            </div>
+            </main>
         );
     }
 }

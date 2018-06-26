@@ -29,9 +29,7 @@ export const BransjeDropdown = (props) => {
 
     const selectLabel = (
         <div>
-            <label>
-                <FormattedMessage {...meldinger.velgstillingskategori} />
-            </label>
+            <FormattedMessage {...meldinger.velgstillingskategori} />
             <HjelpetekstUnder id="bransje-dropdown-hjelpetekst">
                 <FormattedMessage {...meldinger.hjelpetekstTekst}/>
             </HjelpetekstUnder>
