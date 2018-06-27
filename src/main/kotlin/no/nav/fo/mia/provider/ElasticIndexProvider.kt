@@ -13,6 +13,8 @@ import no.nav.fo.mia.util.ElasticConstants.Companion.yrkesgruppe_lvl_1
 import no.nav.fo.mia.util.ElasticConstants.Companion.yrkesgruppe_lvl_2
 import no.nav.fo.mia.util.ElasticConstants.Companion.yrkeskode
 import org.apache.http.util.EntityUtils
+import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest
+import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
 import org.elasticsearch.action.bulk.BulkRequest
@@ -20,15 +22,16 @@ import org.elasticsearch.client.RestHighLevelClient
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 interface ElasticIndexProvider {
-    fun createArbeidsledigeIndex()
-    fun createStillingerIndex()
     fun getAllIndexes(): String
     fun index(bulk: BulkRequest)
-    fun recreateIndex(index: String)
     fun getCluseterInfo(): String
+    fun createIndexForAlias(alias: String): String
+    fun replaceIndexForAlias(alias: String, nyIndex: String)
 }
 
 @Service
@@ -37,25 +40,17 @@ class ElasticIndexProviderImpl @Inject
 constructor(
         val client: RestHighLevelClient
 ) : ElasticIndexProvider {
+    private val LOGGER = LoggerFactory.getLogger(ElasticIndexProviderImpl::class.java)
+
+    override fun createIndexForAlias(alias: String) = when (alias) {
+        arbeidsledigeIndex -> createArbeidsledigeIndex()
+        stillingerIndex -> createStillingerIndex()
+        else -> throw error("$alias finnes ikke")
+    }
+
     override fun getCluseterInfo(): String {
         val response = client.lowLevelClient.performRequest("GET", "/")
         return EntityUtils.toString(response.entity)
-    }
-
-    private val LOGGER = LoggerFactory.getLogger(ElasticIndexProviderImpl::class.java)
-
-    override fun recreateIndex(index: String) {
-        when (index) {
-            arbeidsledigeIndex -> {
-                deleteArbeidsledigeIndex()
-                createArbeidsledigeIndex()
-            }
-            stillingerIndex -> {
-                deleteStillingerIndex()
-                createStillingerIndex()
-            }
-            else -> throw error("$index kan ikke recreates")
-        }
     }
 
     override fun index(bulk: BulkRequest) {
@@ -65,13 +60,35 @@ constructor(
         }
     }
 
-    override fun createArbeidsledigeIndex() {
-        LOGGER.info("lager $arbeidsledigeIndex")
+    override fun replaceIndexForAlias(alias: String, nyIndex: String) {
+        val removeOldIndexes = AliasActions(AliasActions.Type.REMOVE)
+                .alias(alias)
+                .index("*")
 
-        val request = CreateIndexRequest(arbeidsledigeIndex)
+        val addNewIndex = AliasActions(AliasActions.Type.ADD)
+                .alias(alias)
+                .index(nyIndex)
+
+        val request = IndicesAliasesRequest()
+                .addAliasAction(removeOldIndexes)
+                .addAliasAction(addNewIndex)
+
+        client
+                .indices()
+                .updateAliases(request)
+
+        client
+                .indices()
+                .delete(DeleteIndexRequest("${alias}_*,-$nyIndex"))
+    }
+
+    override fun getAllIndexes(): String {
+        val response = client.lowLevelClient.performRequest("GET", "/_cat/indices?v")
+        return EntityUtils.toString(response.entity)
+    }
+
+    private fun createArbeidsledigeIndex(): String {
         val properties = HashMap<String, Any>()
-        val ledige = HashMap<String, Any>()
-        val jsonMap = HashMap<String, Any>()
 
         properties[periode] = keyword
         properties[fylkesnummer] = keyword
@@ -81,23 +98,11 @@ constructor(
         properties[yrkesgruppe_lvl_1] = keyword
         properties[yrkesgruppe_lvl_2] = keyword
 
-        ledige[propertys] = properties
-        jsonMap[doc] = ledige
-
-        request.mapping(doc, jsonMap)
-
-        client.indices().create(request)
-
-        LOGGER.info("$arbeidsledigeIndex er velykket opprettet")
+        return createIndex(alias = arbeidsledigeIndex, properties = properties)
     }
 
-    override fun createStillingerIndex() {
-        LOGGER.info("lager $stillingerIndex")
-
-        val request = CreateIndexRequest(stillingerIndex)
+    private fun createStillingerIndex(): String {
         val properties = HashMap<String, Any>()
-        val ledige = HashMap<String, Any>()
-        val jsonMap = HashMap<String, Any>()
 
         properties[periode] = keyword
         properties[fylkesnummer] = keyword
@@ -107,45 +112,26 @@ constructor(
         properties[yrkesgruppe_lvl_1] = keyword
         properties[yrkesgruppe_lvl_2] = keyword
 
-        ledige[propertys] = properties
-        jsonMap[doc] = ledige
+        return createIndex(alias = stillingerIndex, properties = properties)
+    }
 
-        request.mapping(doc, jsonMap)
+    private fun createIndex(alias: String, properties: HashMap<String, Any>): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")
+        val index = alias + "_" + LocalDateTime.now().format(formatter)
+
+        LOGGER.info("Lager index: $index for alias: $alias")
+
+        val request = CreateIndexRequest(index)
+        request.mapping(doc, wrapPropertys(doc, properties))
 
         client.indices().create(request)
 
-        LOGGER.info("$stillingerIndex er velykket opprettet")
+        LOGGER.info("Index: $index opprettet for alias: $alias")
+        return index
     }
 
-    private fun deleteArbeidsledigeIndex() {
-        try {
-            LOGGER.info("deleating $arbeidsledigeIndex")
-            client
-                    .indices()
-                    .delete(DeleteIndexRequest(arbeidsledigeIndex))
-            LOGGER.info("$arbeidsledigeIndex er slettet")
-        } catch (e: Exception) {
-            LOGGER.warn("sletting av $arbeidsledigeIndex feilet: ${e.message}")
-        }
-    }
-
-    private fun deleteStillingerIndex() {
-        try {
-            LOGGER.info("deleating $stillingerIndex")
-            client
-                    .indices()
-                    .delete(DeleteIndexRequest(stillingerIndex))
-            LOGGER.info("$stillingerIndex er slettet")
-
-        } catch (e: Exception) {
-            LOGGER.warn("sletting av $stillingerIndex feilet: ${e.message}")
-        }
-    }
-
-    override fun getAllIndexes(): String {
-        val response = client.lowLevelClient.performRequest("GET", "/_cat/indices?v")
-        return EntityUtils.toString(response.entity)
-    }
+    private fun wrapPropertys(type: String, properties: HashMap<String, Any>): Map<String, Any> =
+            mapOf(type to mapOf(propertys to properties))
 
     private val keyword = hashMapOf<String, Any>("type" to "keyword")
     private val integer = hashMapOf<String, Any>("type" to "integer")
@@ -154,19 +140,13 @@ constructor(
 @Service
 @Profile("mock")
 class ElasticIndexProviderMock : ElasticIndexProvider {
+    override fun replaceIndexForAlias(alias: String, nyIndex: String) {
+    }
+
+    override fun createIndexForAlias(alias: String) = "created-mock-index"
     override fun getCluseterInfo() = "mock info"
-
-    override fun createArbeidsledigeIndex() {
-    }
-
-    override fun createStillingerIndex() {
-    }
-
     override fun getAllIndexes() = "MOCK indexes"
 
     override fun index(bulk: BulkRequest) {
-    }
-
-    override fun recreateIndex(index: String) {
     }
 }
