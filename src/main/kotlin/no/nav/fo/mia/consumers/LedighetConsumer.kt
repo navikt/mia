@@ -119,6 +119,7 @@ constructor(
         val agregation = AggregationBuilders
                 .terms(grupperingsnavn)
                 .field(gruperingsKolone)
+                .minDocCount(0)
                 .size(Int.MAX_VALUE)
                 .subAggregation(sumagregation)
 
