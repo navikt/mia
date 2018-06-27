@@ -31,7 +31,7 @@ export const LinjeGraf = ({id, tabell, tabellOverskrift, yTittel='', yEnhet='', 
         getValues(tabell["arbeidsledighet"]),
         getValues(tabell["ledigestillinger"])
     ];
-    const serier = rawData.map(konfigurerSerie(serienavn, serienavnKort));
+    const serier = rawData.map(konfigurerSerie(serienavn, serienavnKort, ["square", "circle"]));
     const conf = standardGrafConfig({ kategorier, serier, yEnhet, yTittel });
 
     const grafTabell = <GrafTabell overskrifter={katBase}

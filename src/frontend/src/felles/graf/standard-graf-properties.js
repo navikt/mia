@@ -171,7 +171,7 @@ const standardGrafConfig = ({
 });
 
 const serieFarger = [farger.svart, farger.gronn, farger.oransje];
-const konfigurerSerie = (navnListe, tooltipListe = []) => (serie, idx) => ({
+const konfigurerSerie = (navnListe, tooltipListe = [], markers = []) => (serie, idx) => ({
   data: serie,
   name: navnListe[idx],
   tooltipName: tooltipListe[idx],
@@ -183,7 +183,7 @@ const konfigurerSerie = (navnListe, tooltipListe = []) => (serie, idx) => ({
     lineColor: null,
     lineWidth: 3,
     radius: 5,
-    symbol: 'circle',
+    symbol: markers[idx],
   },
   events: {
     legendItemClick: () => false,
