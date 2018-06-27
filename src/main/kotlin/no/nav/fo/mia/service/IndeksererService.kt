@@ -19,17 +19,18 @@ constructor(
         private val elastic: ElasticIndexProvider
 ) {
     private val LOGGER = LoggerFactory.getLogger(IndeksererService::class.java)
-    fun recreatIndex(stream: InputStream, index: String): String {
+    fun recreatIndex(stream: InputStream, alias: String): String {
 
-        val headers = indexMap[index]!!
 
-        LOGGER.info("Starter indeksering av elastic-indeksen.")
+        val headers = indexMap[alias]!!
+
+        LOGGER.info("Starter indeksering av $alias")
         val lines = stream
                 .reader()
                 .readLines()
                 .drop(1) // fjerned header-linjen
 
-        elastic.recreateIndex(index)
+        val indexName = elastic.createIndexForAlias(alias)
 
         val time = measureTimeMillis {
             var bulk = BulkRequest()
@@ -38,7 +39,7 @@ constructor(
                 val values = getValues(it)
                 val content = headers.zip(values).toMap()
 
-                val request = IndexRequest(index, doc).source(content)
+                val request = IndexRequest(indexName, doc).source(content)
                 bulk.add(request)
 
                 if (bulk.numberOfActions() > 10000) {
@@ -50,7 +51,9 @@ constructor(
             elastic.index(bulk)
         }
         LOGGER.info("Indekserte ${lines.size} dokumenter over $time ms")
-        return "Indexen $index er lagd på nytt, antall indekserte: ${lines.size} på $time ms."
+        elastic.replaceIndexForAlias(alias = alias, nyIndex = indexName)
+        LOGGER.info("Alias: $alias er erstattet av index: $indexName")
+        return "Indexen $alias er lagd på nytt, antall indekserte: ${lines.size} på $time ms."
     }
 
 
