@@ -49,7 +49,8 @@ constructor(
                 query = query,
                 gruperingsKolone = periode,
                 summeringsKollone = arbeidledige,
-                index = arbeidsledigeIndex
+                index = arbeidsledigeIndex,
+                includeEmptyBuckets = true
         )
     }
 
@@ -60,7 +61,8 @@ constructor(
                 query = query,
                 gruperingsKolone = periode,
                 summeringsKollone = ledigeStillinger,
-                index = stillingerIndex
+                index = stillingerIndex,
+                includeEmptyBuckets = true
         )
     }
 
@@ -108,7 +110,7 @@ constructor(
 
     }
 
-    private fun getStatestikk(query: QueryBuilder, gruperingsKolone: String, summeringsKollone: String, index: String): Map<String, Int> {
+    private fun getStatestikk(query: QueryBuilder, gruperingsKolone: String, summeringsKollone: String, index: String, includeEmptyBuckets: Boolean = false): Map<String, Int> {
         val summeringsnavn = "antall"
         val grupperingsnavn = "gruppering"
 
@@ -119,9 +121,12 @@ constructor(
         val agregation = AggregationBuilders
                 .terms(grupperingsnavn)
                 .field(gruperingsKolone)
-                .minDocCount(0)
                 .size(Int.MAX_VALUE)
                 .subAggregation(sumagregation)
+
+        if(includeEmptyBuckets) {
+            agregation.minDocCount(0)
+        }
 
         val searchSourceBuilder = SearchSourceBuilder()
                 .size(0)
