@@ -14,42 +14,14 @@ const maanederTekst = [
   'Nov',
   'Des',
 ];
-const kvartalTekst = {
-  k01: '1. kvartal',
-  k02: '2. kvartal',
-  k03: '3. kvartal',
-  k04: '4. kvartal',
-  '01': '1. kvartal',
-  '02': '2. kvartal',
-  '03': '3. kvartal',
-  '04': '4. kvartal',
-  k1: '1. kvartal',
-  k2: '2. kvartal',
-  k3: '3. kvartal',
-  k4: '4. kvartal',
-};
 
 const farger = {
   hovedAkseFarger: '#b7b1a9',
   oransje: '#FF9100',
   svart: '#3e3832',
   gronn: '#119b49',
+  hvit: '#fff',
   tekstSvart: '#3e3832',
-};
-
-const fjernSirklerILegendSymbolet = (event) => {
-  if (!('remove' in Element.prototype)) {
-    Element.prototype.remove = function () {
-      if (this.parentNode) {
-        this.parentNode.removeChild(this);
-      }
-    };
-  }
-
-  const paths = event.target.container.querySelectorAll('.highcharts-legend-item path:nth-child(2)');
-  for (let i = 0; i < paths.length; i++) {
-    paths[i].remove();
-  }
 };
 
 const standardGrafConfig = ({
@@ -58,10 +30,6 @@ const standardGrafConfig = ({
   chart: {
     spacingTop: 40,
     backgroundColor: 'transparent',
-    events: {
-      load: fjernSirklerILegendSymbolet,
-      redraw: fjernSirklerILegendSymbolet,
-    },
   },
   title: {
     text: tittel,
@@ -70,13 +38,16 @@ const standardGrafConfig = ({
     text: undertittel,
   },
   legend: {
+    symbolHeight: 24,
+    symbolWidth: 24,
     title: {
-      text: legend,
+      text: legend
     },
     itemStyle: {
       fontSize: '0.8125rem',
       fontFamily: 'Arial, sans-serif',
       fontWeight: 400,
+      lineHeight: '19px',
       cursor: 'auto',
       width: 500,
     },
@@ -170,7 +141,9 @@ const standardGrafConfig = ({
   series: serier,
 });
 
-const serieFarger = [farger.svart, farger.gronn, farger.oransje];
+const serieFarger = [farger.svart, farger.gronn];
+const fillFarger = [farger.svart, farger.hvit];
+
 const konfigurerSerie = (navnListe, tooltipListe = [], markers = []) => (serie, idx) => ({
   data: serie,
   name: navnListe[idx],
@@ -179,7 +152,7 @@ const konfigurerSerie = (navnListe, tooltipListe = [], markers = []) => (serie, 
   lineWidth: 4,
   color: serieFarger[idx],
   marker: {
-    fillColor: '#fff',
+    fillColor: fillFarger[idx],
     lineColor: null,
     lineWidth: 3,
     radius: 5,
@@ -223,6 +196,5 @@ export {
   konfigurerSerie,
   lagTidsserier,
   lagManeder,
-  maanederTekst,
-  kvartalTekst,
+  maanederTekst
 };
