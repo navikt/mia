@@ -27,14 +27,15 @@ export class Statistikk extends React.Component {
         (
             <div className="panel panel-fremhevet">
                 <Innholdslaster avhengigheter={[this.props.statistikk]} feilmelding={feilmeldinger}>
-                    <OversiktGraf tabell={this.props.statistikk.data}
-                                  valgteFylker={this.props.oversikt.valgteFylker}
-                                  valgteKommuner={this.props.oversikt.valgteKommuner}
-                                  omrader={this.props.omrader}
-                                  yrkesomrader={this.props.yrkesomrader}
-                                  yrkesgrupper={this.props.yrkesgrupper}
-                                  valgtyrkesomrade={this.props.valgtyrkesomrade}
-                                  valgteyrkesgrupper={this.props.valgteyrkesgrupper}
+                    <OversiktGraf
+                        tabell={this.props.statistikk.data}
+                        valgteFylker={this.props.oversikt.valgteFylker}
+                        valgteKommuner={this.props.oversikt.valgteKommuner}
+                        omrader={this.props.omrader}
+                        yrkesomrader={this.props.yrkesomrader}
+                        yrkesgrupper={this.props.yrkesgrupper}
+                        valgtyrkesomrade={this.props.valgtyrkesomrade}
+                        valgteyrkesgrupper={this.props.valgteyrkesgrupper}
                     />
                 </Innholdslaster>
             </div>

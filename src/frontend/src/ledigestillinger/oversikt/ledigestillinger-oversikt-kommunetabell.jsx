@@ -37,24 +37,26 @@ export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
     return (
         <section className="blokk">
             <h2 className="typo-etikett">{fylkenavn}</h2>
-            <table className="tabell blokk-s">
-                <thead>
-                    <tr>
-                        <th scope="col" className="typo-etikett-stor kommune-navn">
-                            <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
-                        </th>
-                        <th scope="col" className="text-center typo-etikett-stor">
-                            <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: antallArbeidsledigeTekst}}/>
-                        </th>
-                        <th scope="col" className="text-center typo-etikett-stor">
-                            <FormattedMessage {...meldinger.tabellOverskriftStillinger} />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tabellrad}
-                </tbody>
-            </table>
+            <div className="tabell-container">
+                <table className="tabell blokk-s">
+                    <thead>
+                        <tr>
+                            <th scope="col" className="typo-etikett-stor kommune-navn">
+                                <FormattedMessage {...meldinger.tabellOverskriftKommune}/>
+                            </th>
+                            <th scope="col" className="text-center typo-etikett-stor">
+                                <FormattedMessage {...meldinger.tabellOverskriftLedige} values={{antall: antallArbeidsledigeTekst}}/>
+                            </th>
+                            <th scope="col" className="text-center typo-etikett-stor">
+                                <FormattedMessage {...meldinger.tabellOverskriftStillinger} />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tabellrad}
+                    </tbody>
+                </table>
+            </div>
         </section>
     );
 };

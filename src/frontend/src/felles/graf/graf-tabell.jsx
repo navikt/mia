@@ -65,24 +65,26 @@ export const GrafTabell = ({overskrifter, rader, serieNavn, tabelloverskrift, ta
     });
 
     return (
-        <table className="tabell tabell-skillestrek">
-            <caption className="visuallyhidden">
-                {tabelloverskrift}
-            </caption>
-            <thead>
-            <tr>
-                <th id={`${tabellId}_aar`}>År</th>
-                {aar}
-            </tr>
-            <tr>
-                <th id={`${tabellId}_periode`}>{periodetype}</th>
-                {underoverskrift()}
-            </tr>
-            </thead>
-            <tbody>
-                {serierHtml}
-            </tbody>
-        </table>
+        <div className="tabell-container">
+            <table className="tabell tabell-skillestrek">
+                <caption className="visuallyhidden">
+                    {tabelloverskrift}
+                </caption>
+                <thead>
+                <tr>
+                    <th id={`${tabellId}_aar`}>År</th>
+                    {aar}
+                </tr>
+                <tr>
+                    <th id={`${tabellId}_periode`}>{periodetype}</th>
+                    {underoverskrift()}
+                </tr>
+                </thead>
+                <tbody>
+                    {serierHtml}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

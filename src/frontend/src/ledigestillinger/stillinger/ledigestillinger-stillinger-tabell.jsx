@@ -29,20 +29,22 @@ export const StillingTabell = ({ stillinger }) => {
     const rader = stillinger.map(stilling => <Stilling stilling={stilling} key={stilling.id}/>);
 
     return (
-        <table className="tabell tabell-container">
-            <caption><FormattedMessage {...meldinger.tabellcaption} /></caption>
-            <thead>
-                <tr>
-                    <th scope="col" className="typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></th>
-                    <th scope="col" className="stillinger-antallstillinger typo-etikett-stor"><FormattedMessage {...meldinger.antallStillinger} /></th>
-                    <th scope="col" className="stillinger-arbeidsgiver typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></th>
-                    <th scope="col" className="stillinger-soknadsfrist typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></th>
-                </tr>
-            </thead>
-            <tbody>
-                {rader}
-            </tbody>
-        </table>
+        <div className="tabell-container">
+            <table className="tabell">
+                <caption><FormattedMessage {...meldinger.tabellcaption} /></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" className="typo-etikett-stor"><FormattedMessage {...meldinger.stilling} /></th>
+                        <th scope="col" className="stillinger-antallstillinger typo-etikett-stor"><FormattedMessage {...meldinger.antallStillinger} /></th>
+                        <th scope="col" className="stillinger-arbeidsgiver typo-etikett-stor"><FormattedMessage {...meldinger.arbeidsgiver} /></th>
+                        <th scope="col" className="stillinger-soknadsfrist typo-etikett-stor"><FormattedMessage {...meldinger.soknadsfrist} /></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rader}
+                </tbody>
+            </table>
+        </div>
     );
 };
 
