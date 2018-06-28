@@ -18,7 +18,7 @@ const meldinger = defineMessages({
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.oversikt.hjelpeteksttekst',
-        defaultMessage: 'Valgte geografiske områder danner grunnlag for stillingene og statistikken som vises på siden.'
+        defaultMessage: 'Klikk på det fylket eller den kommunen du ønsker å sjekke. Du får se antall stillinger og arbeidsledige i det området du har valgt.'
     },
     stillingerEUEOS: {
         id: 'ledigestillinger.kart.stillingereueos',

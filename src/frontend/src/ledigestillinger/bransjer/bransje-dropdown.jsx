@@ -15,7 +15,7 @@ const meldinger = defineMessages({
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.bransjer.hjelpetekst.innhold',
-        defaultMessage: 'Valgte stillingskategorier og arbeidsområder danner grunnlag for stillingene og statistikken som vises på siden.'
+        defaultMessage: 'Velg stillingskategori i rullgardinmenyen. Etterpå kan du velge bransje i boksen under rullgardinmenyen.'
     }
 });
 

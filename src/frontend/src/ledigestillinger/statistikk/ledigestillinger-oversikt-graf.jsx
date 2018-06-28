@@ -11,7 +11,7 @@ const tekster = defineMessages({
     },
     hjelpetekstTekst: {
         id: 'ledigestillinger.graf.hjelpetekst.innhold',
-        defaultMessage: 'Grafen/tabellen viser utviklingen i antall helt arbeidsledige og tilgang på ledige stillinger.'
+        defaultMessage: 'I tabellen ser du to grafer som viser utviklingen i arbeidsmarkedet for det området du har valgt. Den sorte grafen viser antall arbeidsledige de siste 13 månedene. Den grønne grafen viser ledige stillinger i samme periode.'
     },
     valgtStillingskategori: {
         id: 'ledigestillinger.oversikt.statistikk.valgtstillingskategori',
