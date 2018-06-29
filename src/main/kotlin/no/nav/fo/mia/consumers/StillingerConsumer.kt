@@ -3,6 +3,7 @@ package no.nav.fo.mia.consumers
 import com.github.javafaker.Faker
 import no.nav.fo.mia.Filtervalg
 import no.nav.fo.mia.Stilling
+import no.nav.fo.mia.config.stillingerCore
 import no.nav.fo.mia.util.dateToString
 import no.nav.fo.mia.util.filterForYrker
 import no.nav.fo.mia.util.filtervalgToSeed
@@ -30,7 +31,7 @@ interface StillingerConsumer {
 @Profile("!mock")
 open class StillingerConsumerImpl @Inject
 constructor(
-        val stillingSolrClient: SolrClient
+        val solrClient: SolrClient
 ) : StillingerConsumer {
     @Cacheable("ledigeStillingerFylke")
     override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int =
@@ -46,7 +47,7 @@ constructor(
                 .addFilterQuery(yrkesgrupper.joinToString(" OR ") { "YRKGR_LVL_2_ID:$it" })
                 .setRows(Int.MAX_VALUE)
 
-        return stillingSolrClient.query(query).results
+        return solrClient.query(stillingerCore, query).results
                 .map {
                     Stilling(
                             id = (it.getFieldValue("ID") as Int).toString(),
@@ -83,7 +84,7 @@ constructor(
         filterForYrker(yrkesomrade = filtervalg.yrkesomrade, yrkesgrupper = filtervalg.yrkesgrupper)
                 .forEach { solrQuery.addFilterQuery(it) }
 
-        return getAntallStillingerFraFacet(stillingSolrClient.query(solrQuery).getFacetField("ANTALLSTILLINGER"))
+        return getAntallStillingerFraFacet(solrClient.query(stillingerCore, solrQuery).getFacetField("ANTALLSTILLINGER"))
     }
 
     private fun getAntallStillinger(filter: String, filtervalg: Filtervalg): Int {
@@ -92,7 +93,7 @@ constructor(
                 .addFacetField("ANTALLSTILLINGER")
                 .setRows(0)
 
-        return getAntallStillingerFraFacet(stillingSolrClient.query(query).getFacetField("ANTALLSTILLINGER"))
+        return getAntallStillingerFraFacet(solrClient.query(stillingerCore, query).getFacetField("ANTALLSTILLINGER"))
     }
 
     private fun getAntallStillingerFraFacet(antallStillingerFacet: FacetField?): Int {

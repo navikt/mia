@@ -1,6 +1,8 @@
 package no.nav.fo.mia.consumers
 
 import com.github.javafaker.Faker
+import no.nav.fo.mia.config.stillingerCore
+import no.nav.fo.mia.config.suportcore
 import no.nav.fo.mia.util.stringToSeed
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
@@ -20,8 +22,7 @@ interface StillingstypeConsumer {
 @Profile("!mock")
 open class StillingstypeConsumerImpl @Inject
 constructor (
-        val supportSolrClient: SolrClient,
-        val stillingSolrClient: SolrClient
+        val solrClient: SolrClient
 ) : StillingstypeConsumer {
 
     @Cacheable("yrkesomrader")
@@ -31,7 +32,7 @@ constructor (
                 .addFacetField("YRKGR_LVL_1_ID")
                 .rows = 0
 
-        val response = stillingSolrClient.query(query)
+        val response = solrClient.query(stillingerCore, query)
         val navnFacets = response.getFacetField("YRKGR_LVL_1")
         val idFacets = response.getFacetField("YRKGR_LVL_1_ID")
 
@@ -56,7 +57,7 @@ constructor (
                 .addFilterQuery("DOKUMENTTYPE:STILLINGSTYPE")
                 .setRows(Integer.MAX_VALUE)
 
-        return supportSolrClient.query(solrQuery).results.map {
+        return solrClient.query(suportcore, solrQuery).results.map {
             YrkesgruppeDTO(
                     id = it.getFieldValue("ID") as String,
                     navn = it.getFieldValue("NAVN") as String,

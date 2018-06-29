@@ -7,20 +7,18 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 
+const val stillingerCore = "maincore"
+const val suportcore = "supportcore"
+
+
+
 @Configuration
 @Profile("!mock")
 open class SolrConfig {
     @Bean
-    open fun supportSolrClient(): SolrClient =
-            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}supportcore")
-
-    @Bean
     open fun stillingSolrClient(): SolrClient =
-            getClientForUri("${getRequiredProperty("STILLING_SOLR_URL")}maincore")
-
-    private fun getClientForUri(uri: String): SolrClient =
             HttpSolrClient.Builder()
-                    .withBaseSolrUrl(uri)
+                    .withBaseSolrUrl(getRequiredProperty("STILLING_SOLR_URL"))
                     .withConnectionTimeout(2000)
                     .build()
 }

@@ -33,6 +33,3 @@ management:
   endpoint:
     health:
       show-details: always
-  health:
-    solr:
-      enabled: false
