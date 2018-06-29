@@ -18,6 +18,10 @@ resources:
   limits:
     cpu: 6
 
+prometheus:
+  enabled: true
+  path: /internal/actuator/prometheus
+
 fasitResources:
   used:
   - alias: stilling.solr
