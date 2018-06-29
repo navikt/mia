@@ -14,3 +14,25 @@ mia:
     hostname: tpa-miasecsok-elasticsearch.tpa.svc.nais.local
     port: 9200
     scheme: http
+
+management:
+  endpoints:
+    web:
+      base-path: /internal/actuator
+      exposure:
+        include:
+          - prometheus
+          - health
+          - info
+  metrics:
+    distribution:
+      percentiles:
+        http.server.requests: [0.5,0.95]
+      percentiles-histogram:
+        http.server.requests: true
+  endpoint:
+    health:
+      show-details: always
+  health:
+    solr:
+      enabled: false
