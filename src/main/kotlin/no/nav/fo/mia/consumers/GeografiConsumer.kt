@@ -2,6 +2,7 @@ package no.nav.fo.mia.consumers
 
 import no.nav.fo.forenkletdeploy.util.fromJson
 import no.nav.fo.mia.Omrade
+import no.nav.fo.mia.config.suportcore
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.SolrQuery
 import org.apache.solr.common.SolrDocument
@@ -19,7 +20,7 @@ interface GeografiConsumer {
 @Profile("!mock")
 open class GeografiConsumerImpl @Inject
 constructor(
-        val supportSolrClient: SolrClient
+        val solrClient: SolrClient
 ): GeografiConsumer {
 
     @Cacheable("alleOmrader")
@@ -27,7 +28,7 @@ constructor(
         val query = SolrQuery("NIVAA:[1 TO 3]")
                 .addFilterQuery("DOKUMENTTYPE:GEOGRAFI")
         query.rows = 1000
-        return supportSolrClient.query(query).results.map(this::documentToOmrade)
+        return solrClient.query(suportcore, query).results.map(this::documentToOmrade)
     }
 
     @Cacheable("kommunerForFylker")
@@ -41,7 +42,7 @@ constructor(
                 .addFilterQuery("NIVAA:3")
                 .addFilterQuery("PARENT: ${fylker.joinToString(" OR ")}")
         query.rows = 1000
-        return supportSolrClient.query(query).results.map(this::documentToOmrade)
+        return solrClient.query(suportcore, query).results.map(this::documentToOmrade)
     }
 
     private fun documentToOmrade(document: SolrDocument): OmradeDTO =
