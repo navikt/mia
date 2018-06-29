@@ -1,4 +1,4 @@
-package no.nav.fo.mia.config
+package no.nav.fo.mia
 
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.boot.actuate.health.AbstractHealthIndicator
@@ -15,12 +15,15 @@ constructor(
         val response= client.lowLevelClient.performRequest("get", "/_cluster/health")
         val statusCode = response.statusLine.statusCode
         val info = client.info()
-        if(statusCode in 200..299 && info.isAvailable) {
+
+        if (statusCode in 200..299 && info.isAvailable) {
             builder.up()
         }
         else {
             builder.down()
+            builder.withDetail("ErrorCode", statusCode)
         }
+
         builder.withDetail("clusterName", info.clusterName.value())
         builder.withDetail("clusterUuid", info.clusterUuid)
         builder.withDetail("isAvailable", info.isAvailable)
