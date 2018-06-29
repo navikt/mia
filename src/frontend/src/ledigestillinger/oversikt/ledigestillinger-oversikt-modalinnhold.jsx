@@ -19,6 +19,8 @@ const Omrade = props => {
                 name={name}
                 onChange={props.onChange}
                 className={underomradeErValgt ? "checkbox-expanded" : ""}
+                data-testid={props.testid}
+
             />
             { valgt && props.omrade.underomrader.length > 1 ? props.children : null}
         </li>
@@ -32,7 +34,7 @@ export class Modalinnhold extends React.Component {
 
     getKommunerForFylke(fylke) {
         return fylke.underomrader.sort(compareOmrader).map(kommune => (
-            <Omrade key={kommune.id} omrade={kommune} onChange={this.toggleKommune.bind(this, kommune.id)} />
+            <Omrade key={kommune.id} omrade={kommune} onChange={this.toggleKommune.bind(this, kommune.id)} testid="kommuner"/>
         ));
     }
 
@@ -74,8 +76,8 @@ export class Modalinnhold extends React.Component {
         }));
 
         const omrader = omraderMedData.sort(compareOmrader).map(fylke => (
-            <Omrade key={fylke.id} omrade={fylke} onChange={this.toggleFylke.bind(this, fylke.id)}>
-                <ul className="liste liste-omrade blokk-xs">
+            <Omrade key={fylke.id} omrade={fylke} onChange={this.toggleFylke.bind(this, fylke.id)} testid="fylker">
+                <ul className="liste liste-omrade blokk-xs" >
                     {this.getKommunerForFylke(fylke)}
                 </ul>
             </Omrade>
