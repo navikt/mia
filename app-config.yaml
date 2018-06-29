@@ -20,7 +20,7 @@ resources:
 
 prometheus:
   enabled: true
-  path: /internal/actuator/prometheus
+  path: /mia/internal/actuator/prometheus
 
 fasitResources:
   used:
