@@ -48,7 +48,7 @@ class ModalWrapper extends Component {
             <div className="knapperad text-center">
                 <ul className="ustilet liste-ustilet">
                     <li className="blokk-xs">
-                        <Hovedknapp onClick={() => this.lagreOgLukk()}>
+                        <Hovedknapp onClick={() => this.lagreOgLukk()} data-testid="lagre-knapp">
                             <FormattedMessage {...lagreTekst} />
                         </Hovedknapp>
                     </li>

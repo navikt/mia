@@ -19,7 +19,7 @@ export const BokserForYrkesomrader = props => (
         <div className="blokk-s">
             <FormattedMessage {...meldinger.boksoverskrift_stillingskategori} />
         </div>
-        <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader}/>
+        <Bokser onClick={id => props.onClick(id)} yrkesgrupper={props.yrkesomrader} testid="stillingskategori-bokser"/>
     </div>
 );
 
@@ -29,6 +29,6 @@ export const BokserForYrkesgrupper = ({ yrkesgrupper, onClick, valgteyrkesgruppe
             <FormattedMessage {...meldinger.boksoverskrift_arbeidsomrader} />
         </div>
         <Bokser onClick={id => onClick(id)} yrkesgrupper={yrkesgrupper.data}
-                valgteyrkesgrupper={valgteyrkesgrupper}/>
+                valgteyrkesgrupper={valgteyrkesgrupper} testid="arbeidsomrader-bokser"/>
     </Innholdslaster>
 );

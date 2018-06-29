@@ -6,7 +6,7 @@ export const Bokser = (props) => {
     const erValgt = row => props.valgteyrkesgrupper != null && props.valgteyrkesgrupper.includes(`${row.id}`);
 
     return (
-        <div className="bokser-container blokk-s">
+        <div className="bokser-container blokk-s" data-testid={props.testid}>
             { yrkesgrupper.map(row => <BransjeBoks {...row} onClick={props.onClick} erValgt={erValgt(row)} key={row.id} checkbox={row.parent != null}/> )}
         </div>
     );
