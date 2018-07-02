@@ -10,6 +10,7 @@ src/frontend/build/
 src/frontend/coverage/
 src/frontend/public/index.css
 src/frontend/public/index.html
+src/frontend/chrome-driver
 
 target/
 node_modules/
