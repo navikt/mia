@@ -29,6 +29,7 @@ constructor(
                 .reader()
                 .readLines()
                 .drop(1) // fjerned header-linjen
+                .filter(String::isNotEmpty)
 
         val indexName = elastic.createIndexForAlias(alias)
 
@@ -56,11 +57,11 @@ constructor(
         return "Indexen $alias er lagd på nytt, antall indekserte: ${lines.size} på $time ms."
     }
 
-
     private fun getValues(csvString: String): List<Any> {
         val cvsSplitBy = ",".toRegex()
         val cvsValues = csvString
                 .replace("\"", "")
+                .replace(" ", "")
                 .split(cvsSplitBy)
 
         val yrkesgrupper = bransjeMappingService.getYrkesgruperForStrukturKode(cvsValues[3])
