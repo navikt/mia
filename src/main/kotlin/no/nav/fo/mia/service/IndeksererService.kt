@@ -61,8 +61,9 @@ constructor(
                 .reader()
                 .readLines()
 
-        if (linesWithHeader.first() != filHeaderMap[alias])
+        if (linesWithHeader.first() != filHeaderMap[alias]) {
             throw IllegalArgumentException("fil header skal være ${filHeaderMap[alias]} den er: ${linesWithHeader.first()}")
+        }
 
         val lines = linesWithHeader
                 .drop(1) // fjerned header-linjen
@@ -74,7 +75,6 @@ constructor(
         val cvsSplitBy = ",".toRegex()
         val cvsValues = csvString
                 .replace("\"", "")
-                .replace(" ", "")
                 .split(cvsSplitBy)
 
         vallidatecsvVaslues(cvsValues)
@@ -94,18 +94,10 @@ constructor(
     }
 
     private fun vallidatecsvVaslues(csvValues: List<String>) {
-        val utlandet = "UT".toRegex()
-
         if (csvValues.size != 5)
             throw IllegalArgumentException()
 
         csvValues[0].toInt()
-
-        if (!utlandet.matches(csvValues[1])) {
-            csvValues[1].toInt()
-            csvValues[2].toInt()
-        }
-
         csvValues[3].toDouble()
         csvValues[4].toInt()
 

@@ -3,7 +3,7 @@ package no.nav.fo.mia.util
 
 class ElasticConstants {
     companion object {
-        val stillingerHeader =  """"År-måned","Arbeidsstedfylkesnummer","Arbeidsstedkommunenummer","StillingYrkesbetegnelsekode(6-siffer)","Tilgangstillingeriperioden""""
+        val stillingerHeader =  """"År-måned","Arbeidssted fylkesnummer","Arbeidssted kommunenummer","Stilling Yrkesbetegnelse kode (6-siffer)","Tilgang stillinger i perioden""""
         val arbeidsledigeHeader = """"År-måned","Person fylkeskommunenr","Person kommunenr","Praksis yrkesbetegnelse kode (6-siffer)","Beh personer i mnd""""
 
         const val periode = "PERIODE"
