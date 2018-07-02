@@ -3,9 +3,11 @@ package no.nav.fo.mia
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.boot.actuate.health.AbstractHealthIndicator
 import org.springframework.boot.actuate.health.Health
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import javax.inject.Inject
 
+@Profile("!mock")
 @Component
 open class ElasticHealth @Inject
 constructor(

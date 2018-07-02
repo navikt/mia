@@ -3,6 +3,9 @@ package no.nav.fo.mia.util
 
 class ElasticConstants {
     companion object {
+        val stillingerHeader =  """"År-måned","Arbeidsstedfylkesnummer","Arbeidsstedkommunenummer","StillingYrkesbetegnelsekode(6-siffer)","Tilgangstillingeriperioden""""
+        val arbeidsledigeHeader = """"År-måned","Person fylkeskommunenr","Person kommunenr","Praksis yrkesbetegnelse kode (6-siffer)","Beh personer i mnd""""
+
         const val periode = "PERIODE"
         const val fylkesnummer = "FYLKESNR"
         const val komunenummer = "KOMMUNENR"
@@ -22,6 +25,6 @@ class ElasticConstants {
         val ledigeStillingHeaderProps = arrayOf(periode, fylkesnummer, komunenummer, yrkeskode, ledigeStillinger, yrkesgruppe_lvl_1, yrkesgruppe_lvl_2)
 
         val indexMap = mapOf(arbeidsledigeIndex to arbeidsledigeHeaderProps, stillingerIndex to ledigeStillingHeaderProps)
-
+        val filHeaderMap = mapOf(arbeidsledigeIndex to arbeidsledigeHeader, stillingerIndex to stillingerHeader)
     }
 }
