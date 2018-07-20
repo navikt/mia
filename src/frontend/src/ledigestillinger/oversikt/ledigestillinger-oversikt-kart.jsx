@@ -10,6 +10,7 @@ import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 import {EOS_EU, RESTEN_AV_VERDEN} from '../../felles/konstanter';
 import {erDev} from '../../felles/utils/dev';
+import LocateControl from './kart/LocateControl';
 
 const meldinger = defineMessages({
     kartplaceholder: {
@@ -214,6 +215,7 @@ class Oversiktskart extends React.Component {
                 </div>
                 <div className="oversikt-kart" aria-label={this.props.intl.formatMessage(meldinger.kartplaceholder)}>
                     <Map ref="map" {...mapProps}>
+                        <LocateControl keepCurrentZoomLevel/>
                         <TileLayer
                             url={tilesBaseUrl + "/tiles/{z}_{x}_{y}.png"}
                             attribution="<a href='http://www.kartverket.no'>Kartverket</a>"
