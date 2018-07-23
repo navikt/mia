@@ -1,13 +1,13 @@
 package no.nav.fo.mia.config
 
+import no.nav.fo.mia.LoggerInterceptor
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import org.springframework.web.servlet.resource.PathResourceResolver
 
-import java.io.IOException
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 
 @Configuration
 open class WebMvcConfig : WebMvcConfigurer {
@@ -33,5 +33,9 @@ open class WebMvcConfig : WebMvcConfigurer {
                         return location.createRelative("blank.png")
                     }
                 })
+    }
+
+    override fun addInterceptors(registry: InterceptorRegistry) {
+        registry.addInterceptor(LoggerInterceptor())
     }
 }
