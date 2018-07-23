@@ -3,7 +3,7 @@
     <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
 
     <property name="loggingPattern"
-              value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
+              value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{requestId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
 
 
     <if condition='!isNull("APP_LOG_HOME")'>
