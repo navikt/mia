@@ -1,0 +1,6 @@
+links:
+  - link: 'https://tjenester-q6.nav.no/mia/'
+    options:
+      ignoreRules: 'hidden-content'
+      commands:
+        - waitFor: '#select-bransje'
