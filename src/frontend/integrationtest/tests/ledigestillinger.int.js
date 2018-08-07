@@ -1,9 +1,9 @@
-var WAIT_TIME;
-var ledigestillinger;
+let WAIT_TIME;
+let ledigestillinger;
 
 module.exports = {
     before: (client) => {
-        WAIT_TIME = client.globals.test_settings.timeout;
+        WAIT_TIME = client.globals.timeout;
         client.resizeWindow(1024, 1024);
 
         ledigestillinger = client.useXpath().page.ledigestillinger();

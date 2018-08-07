@@ -3,17 +3,17 @@ const oversiktcommands = require('../commands/oversikt-section');
 
 module.exports = {
     url: function() {
-        return this.api.launchUrl + '/';
+        return this.api.globals.launch_url;
     },
     elements: {},
     sections: {
         oversikt: {
             selector: '.stillinger-oversikt',
             elements: {
-                kart: '#switch_kart',
                 knappKart: '#switch_kart-knapp',
                 knappTabell: '#switch_tabell-knapp',
                 tabell: '#switch_tabell',
+                kart: '#switch_kart',
                 knappVelgOmrade: '[data-testid="knappVelgFylkerOgKommuner"]',
                 toggle: '.oversikt-toggle',
                 fylkeheader: 'h2'

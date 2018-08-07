@@ -13,7 +13,7 @@ module.exports = {
     },
 
     klikkStillingskategoriBoks(nummer){
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         const bransjeboks = this.hentStillingskategoriSelektor(nummer);
 
         this.expect.element(bransjeboks).to.be.visible.after(timeout);
@@ -23,7 +23,7 @@ module.exports = {
 
     klikkArbeidsomradeBoks(nummer){
         const bransjeboks = this.hentArbeidsomradeSelektor(nummer);
-        this.expect.element(bransjeboks).to.be.visible.after(this.api.globals.test_settings.timeout);
+        this.expect.element(bransjeboks).to.be.visible.after(this.api.globals.timeout);
         this.click(bransjeboks);
         this.api.pause(400);
 
