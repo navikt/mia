@@ -56,12 +56,14 @@
     "test:coverage": "react-scripts test --env=jsdom --coverage",
     "integrationtest": "node integrationtest/nightwatch.js -c integrationtest/default.conf.js",
     "lint": "echo \"Eslint kjøres som en del av create-react-app\"",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:browser": "node integrationtest/browsertest.runner.js -c integrationtest/browsertest.conf.js -e win_ie,win_edge,ios_safari"
   },
   "devDependencies": {
     "@types/jest": "^23.0.0",
     "@types/node": "^10.3.5",
     "autoless": "^0.1.7",
+    "browserstack-local": "^1.3.3",
     "core-js": "^2.5.7",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
