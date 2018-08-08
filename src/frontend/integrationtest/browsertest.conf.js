@@ -30,7 +30,7 @@ let nightwatch_config = {
                 enabled: true,
                 on_failure: true,
                 on_error: true,
-                path: 'test/nightwatch-tester/reports',
+                path: 'integrationtest/reports',
             },
         },
         win_chrome: {
