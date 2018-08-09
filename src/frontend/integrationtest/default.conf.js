@@ -2,7 +2,7 @@
 const config = {
     src_folders: ["integrationtest/tests"],
     page_objects_path: ["integrationtest/pages"],
-    output_folder: "../../../target/surefire-reports",
+    output_folder: "integrationtest/reports",
     custom_commands_path: "integrationtest/commands",
     custom_assertions_path: "",
     globals_path: "./integrationtest/globals.js",
@@ -13,7 +13,10 @@ const config = {
 
     test_settings: {
         default: {
-            launch_url: "http://localhost:3000",
+            globals: {
+                launch_url: 'http://localhost:3000',
+                timeout: 20000,
+            },
             selenium_port: 9515,
             timeout: 15000,
             selenium_host: "localhost",

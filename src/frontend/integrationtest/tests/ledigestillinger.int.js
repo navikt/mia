@@ -1,42 +1,39 @@
-var WAIT_TIME;
-var ledigestillinger;
+let WAIT_TIME;
+let ledigestillinger;
+let isMobile;
 
 module.exports = {
     before: (client) => {
-        WAIT_TIME = client.globals.test_settings.timeout;
-        client.resizeWindow(1024, 1024);
-
+        WAIT_TIME = client.globals.timeout;
         ledigestillinger = client.useXpath().page.ledigestillinger();
         ledigestillinger.navigate();
 
+        const capabilities = client.options.desiredCapabilities;
+        isMobile = capabilities.device !== undefined;
+        if(!isMobile) client.resizeWindow(1024, 768);
     },
     after: (client) => {
         client.end();
     },
 
     'oversikt, bransjer og graf skal være synlig': function () {
+        let selektor = isMobile?'@tabell':'@kart';
+        let oversikt = ledigestillinger.section.oversikt;
+        ledigestillinger.expect.section('@bransjer').to.be.visible.after(WAIT_TIME);
+        ledigestillinger.expect.section('@oversikt').to.be.visible.after(WAIT_TIME);
+        ledigestillinger.expect.section('@statistikk').to.be.visible.after(WAIT_TIME);
+        oversikt.expect.element(selektor).to.be.visible.after(WAIT_TIME);
 
-        ledigestillinger.expect.section('@oversikt').to.be.present.after(WAIT_TIME);
-        ledigestillinger.expect.section('@bransjer').to.be.present.after(WAIT_TIME);
-        ledigestillinger.expect.section('@statistikk').to.be.present.after(WAIT_TIME);
     },
 
-    'første bransjeboks skal finnes i bransje cb': function() {
-        const cbKategori = ledigestillinger.section.bransjer.elements.bransjeselect;
-        const bransjeboks1 = ledigestillinger.section.bransjer.elements.bransjeboks1;
-
-        ledigestillinger.api.waitForElementVisible(cbKategori.selector, WAIT_TIME);
-        ledigestillinger.expect.element(cbKategori.selector).value.to.equal('alle');
-
-        ledigestillinger.api.getText(bransjeboks1.selector, result => {
-            ledigestillinger.expect.element(cbKategori.selector).text.to.contain(result.value).after(WAIT_TIME);
-        });
+    'skal vise arbeidsområder etter valg av stillingskategoriboks': function() {
+        ledigestillinger.section.bransjer.klikkStillingskategoriBoks(1);
     },
+
     'skal vise stillingsannonser for valgte arbeidsomrader': function() {
         const tabeller = ledigestillinger.section.stillingliste.elements.tabeller;
         const stillingTabeller = `${ledigestillinger.section.stillingliste.selector} ${tabeller.selector}`;
 
-        ledigestillinger.section.bransjer.klikkStillingskategoriBoks(1);
         ledigestillinger.section.bransjer.klikkArbeidsomradeBoks(1);
         ledigestillinger.section.bransjer.klikkArbeidsomradeBoks(2);
         ledigestillinger.section.bransjer.klikkArbeidsomradeBoks(3);
@@ -47,9 +44,10 @@ module.exports = {
         });
     },
     'skal kunne bytte fra kartvisning til tabellvisning': function() {
-        ledigestillinger.section.oversikt.expect.element('@kart').to.be.visible.after(WAIT_TIME);
-        ledigestillinger.section.oversikt.visTabell();
-
+        if(!isMobile) {
+            ledigestillinger.section.oversikt.expect.element('@kart').to.be.visible.after(WAIT_TIME);
+            ledigestillinger.section.oversikt.visTabell();
+        }
     },
     'skal vise oversikt over stillinger og arbeidsledige for kommuner valgt i modal': function() {
         const oversikt = ledigestillinger.section.oversikt;
