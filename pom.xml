@@ -22,7 +22,7 @@
         <kotlin.version>1.2.40</kotlin.version>
         <annotations.version>16.0.1</annotations.version>
         <solr.version>7.3.1</solr.version>
-        <elastic.version>6.3.0</elastic.version>
+        <elastic.version>6.3.2</elastic.version>
     </properties>
 
     <dependencyManagement>
