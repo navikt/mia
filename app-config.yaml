@@ -42,3 +42,6 @@ fasitResources:
     propertyMap:
       username: MIA_ELASTIC_USER
       password: MIA_ELASTIC_PSW
+
+  - alias: appdynamics
+    resourceType: applicationproperties
