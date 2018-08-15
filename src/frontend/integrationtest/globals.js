@@ -9,7 +9,7 @@ module.exports = {
     beforeEach: function(browser, done){
         if (!this.isLocal){
             getNetworkIp()
-                .then(ip => browser.globals.launch_url = `http://${ip}:3000/`)
+                .then(ip => browser.globals.launch_url = `http://${ip}:8800/mia`)
                 .then(() => done())
                 .catch(error => done(error))
         }
