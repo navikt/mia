@@ -14,11 +14,9 @@ matrix:
     language: node_js
     node_js: 10
     install:
-      - npm ci
-    before_script:
-    - cd src/frontend
+    - (cd src/frontend/ && npm ci)
     script:
-    - npm run test
+    - (cd src/frontend/ && npm run test)
 
   - name: "Run integration tests"
     language: java
