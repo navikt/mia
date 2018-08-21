@@ -13,9 +13,10 @@ matrix:
   - name: "Run unit tests frontend"
     language: node_js
     node_js: 10
+    install:
+      - npm ci
     before_script:
     - cd src/frontend
-    - npm i
     script:
     - npm run test
 
@@ -28,8 +29,9 @@ matrix:
     - nvm install $NODE_VERSION
     - node -v
     - npm -v
+    - (cd src/frontend/ && npm ci && npm run build)
+
     before_script:
-    - (cd src/frontend/ && npm i && npm run build)
     - ls -al src/frontend/build/
     - cp -r src/frontend/build/ src/main/resources/static/
     - mvn package -DskipTests
