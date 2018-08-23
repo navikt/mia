@@ -1,6 +1,6 @@
 # Muligheter i Arbeidsmarkedet
 
-[![CircleCI](https://circleci.com/gh/navikt/mia.svg?style=svg&circle-token=fe6511cd8cf35cb7b80f43a56da59afbc08c44ae)](https://circleci.com/gh/navikt/mia)
+[![Build Status](https://travis-ci.org/navikt/mia.svg?branch=master)](https://travis-ci.org/navikt/mia)
 
 Muligheter i Arbeidsmarkedet er en applikasjon hvor man kan få oversikt over arbeidsmarkedet
 gjennom å se på ulike bransjer om områder. Tjenesten har en kartløsning for å lett presentere
