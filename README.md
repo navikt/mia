@@ -44,11 +44,10 @@ cat {input-geojson}.json | simplify-geojson -t 0.003 > {output-geojson}.json
 
 ## Henvendelser
 
-Spørsmål knyttet til koden eller prosjektet kan rettes til Team Kartlegging.
+Spørsmål knyttet til koden eller prosjektet kan rettes til Team Registrering.
 
 For eksterne kontakt en av følgende:
 
-* Steffen Hageland (steffen.hagelan@nav.no)
 * Håkon Planke Holm (hakon.planke.holm@nav.no)
 
-For NAV-ansatte kan henvendelser sendes via slack i kanalen #pus
+For NAV-ansatte kan henvendelser sendes via slack i kanalen #teamregistrering
