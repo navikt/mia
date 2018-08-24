@@ -1,0 +1,39 @@
+cache:
+  directories:
+  - src/frontend/node_modules
+
+matrix:
+  include:
+  - name: "Run backend tests"
+    language: java
+    jdk: oraclejdk8
+    script:
+    - mvn verify
+
+  - name: "Run unit tests frontend"
+    language: node_js
+    node_js: 10
+    install:
+    - (cd src/frontend/ && npm ci)
+    script:
+    - (cd src/frontend/ && npm run test)
+
+  - name: "Run integration tests"
+    language: java
+    jdk: oraclejdk8
+    env:
+    - NODE_VERSION="10"
+    install:
+    - nvm install $NODE_VERSION
+    - node -v
+    - npm -v
+    - (cd src/frontend/ && npm ci && npm run build)
+
+    before_script:
+    - ls -al src/frontend/build/
+    - cp -r src/frontend/build/ src/main/resources/static/
+    - mvn package -DskipTests
+    script:
+    - java -jar -DUSE_MOCK=true target/mia.jar &
+    - sleep 100
+    - (cd src/frontend && npm run test:browser)

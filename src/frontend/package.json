@@ -48,7 +48,7 @@
     "start": "npm run decorate:html && npm-run-all -p start:*",
     "start:js": "react-scripts start",
     "start:less": "less-watch-compiler ./src ./public index.less",
-    "build": "npm run decorate:html && npm-run-all build:*",
+    "build": "npm run decorate:html && npm run build:less && npm run build:js",
     "build:js": "react-scripts build",
     "build:less": "node ./node_modules/less/bin/lessc -x src/index.less ./public/index.css",
     "decorate:html": "node ./decorate-html.js ./src/index.template.html ./public/index.html",
