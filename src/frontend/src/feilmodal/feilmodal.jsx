@@ -11,7 +11,7 @@ const meldinger = defineMessages({
     },
     feilmeldingTekst: {
         id: 'feilmodal.tekst',
-        defaultMessage: 'Noe gikk galt ved henting av innhold fra baksystemene. Dette gjøt at siden ikke vil fungere som forventet. Du kan prøve å oppdatere siden, eller fortsette å bruke den.'
+        defaultMessage: 'Noe gikk galt ved henting av innhold fra baksystemene. Dette gjør at siden ikke vil fungere som forventet. Du kan prøve å oppdatere siden, eller fortsette å bruke den.'
     },
     knappOppdater: {
         id: 'feilmodal.knapp.oppdater',
