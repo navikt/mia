@@ -18,6 +18,10 @@ healthcheck:
 resources:
   limits:
     cpu: 6
+    memory: 768Mi
+  requests:
+    memory: 512Mi
+
 
 prometheus:
   enabled: true
@@ -42,7 +46,6 @@ fasitResources:
     propertyMap:
       username: MIA_ELASTIC_USER
       password: MIA_ELASTIC_PSW
-
   - alias: appdynamics
     resourceType: applicationproperties
 
