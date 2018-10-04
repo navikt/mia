@@ -38,7 +38,7 @@ class CustomErrorController : ErrorController {
     }
 
     private fun log(request: HttpServletRequest, response: HttpServletResponse) {
-        LOGGER.info("request feilemet mot: ${request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI)} med feilkode: ${response.status}")
+        LOGGER.warn("request feilemet mot: ${request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI)} med feilkode: ${response.status}")
     }
 
     private fun feilmelding(feilkode: Int) = when (feilkode) {

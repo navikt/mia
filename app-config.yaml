@@ -45,3 +45,6 @@ fasitResources:
 
   - alias: appdynamics
     resourceType: applicationproperties
+
+alertProfiles:
+  - basic
