@@ -19,6 +19,7 @@ open class SolrConfig {
     open fun stillingSolrClient(): SolrClient =
             HttpSolrClient.Builder()
                     .withBaseSolrUrl(getRequiredProperty("STILLING_SOLR_URL"))
-                    .withConnectionTimeout(2000)
+                    .withConnectionTimeout(2_000)
+                    .withSocketTimeout(10_000)
                     .build()
 }
