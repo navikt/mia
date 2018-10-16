@@ -1,6 +1,8 @@
 package no.nav.fo.mia
 
+import no.nav.fo.mia.controllers.CustomErrorController
 import org.elasticsearch.client.RestHighLevelClient
+import org.slf4j.LoggerFactory
 import org.springframework.boot.actuate.health.AbstractHealthIndicator
 import org.springframework.boot.actuate.health.Health
 import org.springframework.context.annotation.Profile
@@ -13,15 +15,19 @@ open class ElasticHealth @Inject
 constructor(
         val client: RestHighLevelClient
 ) : AbstractHealthIndicator() {
+    private val LOGGER = LoggerFactory.getLogger(ElasticHealth::class.java)
     override fun doHealthCheck(builder: Health.Builder) {
+
         val response= client.lowLevelClient.performRequest("get", "/_cluster/health")
         val statusCode = response.statusLine.statusCode
         val info = client.info()
 
         if (statusCode in 200..299 && info.isAvailable) {
             builder.up()
+            LOGGER.info("elastic ok")
         }
         else {
+            LOGGER.error("elastic bad {}", statusCode)
             builder.down()
             builder.withDetail("ErrorCode", statusCode)
         }
