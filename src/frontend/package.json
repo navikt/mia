@@ -39,7 +39,7 @@
     "react-leaflet": "^2.0.0",
     "react-modal": "^3.4.4",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.4",
+    "react-scripts": "2.1.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "whatwg-fetch": "^2.0.4"
@@ -83,5 +83,11 @@
         "lines": 30
       }
     }
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
