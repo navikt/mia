@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
+    "acorn": "^6.0.4",
+    "ajv": "^6.5.5",
+    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "highcharts": "^6.1.0",
     "history": "^4.7.2",
@@ -87,7 +90,7 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 11",
+    "not ie <= 9",
     "not op_mini all"
   ]
 }
