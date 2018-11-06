@@ -6,6 +6,11 @@ import Application from './application';
 import createStore from './store';
 import Provider from './provider';
 
+
+if (!global._babelPolyfill) {
+    require('babel-polyfill')
+}
+
 const store = createStore();
 
 ReactDOM.render(

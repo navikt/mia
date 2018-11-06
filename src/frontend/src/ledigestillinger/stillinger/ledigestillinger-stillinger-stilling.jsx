@@ -16,7 +16,9 @@ export const Stilling = (props) => {
     return (
         <tr>
             <td>
-                <a href={stillingUrl} target="_blank">{props.stilling.tittel}</a>
+                <a href={stillingUrl}
+                   rel="noopener noreferrer"
+                   target="_blank">{props.stilling.tittel}</a>
             </td>
             <td className="text-center">
                 <span>{props.stilling.antallStillinger}</span>
