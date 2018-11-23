@@ -9,8 +9,6 @@ class SolrBransjeMappingService @Inject
 constructor(
         val stillingstypeConsumer: StillingstypeConsumer
 ) {
-    private val idTilStrukturkodeMapping = createIdTilStrukturkodeMapping()
-    private val strukturkodeTilId = createStrukturkodeTilIdMapping()
     private val yrkesgruppeTilYrkesomradeMapping = createYrkesgruppeTilYrkesomradeMapping()
     private val strukturkodeTilYrkesgruppe = createStrukturkodeTilYrkesgruppe()
 
@@ -19,18 +17,6 @@ constructor(
 
     fun getYrkesgruperForStrukturKode(kode: String): List<String> =
             strukturkodeTilYrkesgruppe[kode].orEmpty()
-
-    private fun createStrukturkodeTilIdMapping(): Map<String, String> =
-            stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
-                    .filter { it.strukturkode != null }
-                    .map { it.strukturkode!! to it.id }
-                    .toMap()
-
-    private fun createIdTilStrukturkodeMapping(): Map<String, String> =
-            stillingstypeConsumer.getAlleYrkesgrupperOgYrkesomrader()
-                    .filter { it.strukturkode != null }
-                    .map { it.id to it.strukturkode!! }
-                    .toMap()
 
     private fun createYrkesgruppeTilYrkesomradeMapping(): Map<String, List<String>> =
         stillingstypeConsumer.getYrkesomrader()
