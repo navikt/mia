@@ -6,6 +6,7 @@ import no.nav.fo.mia.Stilling
 import no.nav.fo.mia.consumers.LedighetConsumer
 import no.nav.fo.mia.consumers.StillingerConsumer
 import no.nav.fo.mia.consumers.StillingstypeConsumer
+import no.nav.fo.mia.util.pmap
 import org.springframework.stereotype.Service
 import javax.inject.Inject
 
@@ -47,15 +48,13 @@ constructor (
     fun getLedigestillingerForSisteTrettenMaaneder(filtervalg: Filtervalg): Map<String, Int?> =
             ledighetConsumer.getLedigestillingerForSisteTrettenMaaneder(filtervalg)
 
-    // TODO: Burde kjøre i parallell
     fun getAntallStillingerForValgteFylker(filtervalg: Filtervalg): Map<String, Int> =
             filtervalg.fylker
-                    .map { it to stillingerConsumer.getLedigeStillingerForFylke(it, filtervalg) }
+                    .pmap { it to stillingerConsumer.getLedigeStillingerForFylke(it, filtervalg) }
                     .toMap()
 
-    // TODO: Burde kjøre i parallell
     fun getAntallStillingerForValgteKommuner(filtervalg: Filtervalg): Map<String, Int> =
             filtervalg.kommuner
-                    .map { it to stillingerConsumer.getLedigeStillingerForKommune(it, filtervalg) }
+                    .pmap { it to stillingerConsumer.getLedigeStillingerForKommune(it, filtervalg) }
                     .toMap()
 }
