@@ -49,5 +49,9 @@ fasitResources:
   - alias: appdynamics
     resourceType: applicationproperties
 
+  - alias: loadbalancer:mia
+    resourceType: loadbalancerconfig
+
+
 alertProfiles:
   - basic
