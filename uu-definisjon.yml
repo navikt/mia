@@ -1,5 +1,5 @@
 links:
-  - link: 'https://tjenester-q6.nav.no/mia/'
+  - link: 'https://mia-q.nav.no/'
     options:
       ignoreRules: 'hidden-content'
       commands:

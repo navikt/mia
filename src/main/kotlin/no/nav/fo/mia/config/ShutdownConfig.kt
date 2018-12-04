@@ -12,7 +12,7 @@ open class ShutdownConfig {
     @PreDestroy
     open fun destroy() {
         log.info("venter 5 sek med shudown pga kybernets lastbalangsering")
-        Thread.sleep(5 * 1000)
+        Thread.sleep(5_000)
         log.info("shuting down")
     }
 }

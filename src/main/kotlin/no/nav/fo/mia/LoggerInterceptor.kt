@@ -1,5 +1,6 @@
 package no.nav.fo.mia
 
+import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.web.servlet.HandlerInterceptor
 
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletResponse
 const val requestId = "requestId"
 
 class LoggerInterceptor : HandlerInterceptor {
+    private val log = LoggerFactory.getLogger(LoggerInterceptor::class.java)
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val id = requestId()
+        log.info(request.requestURL.toString())
 
         MDC.put(requestId, id)
         response.addHeader(requestId, id)
