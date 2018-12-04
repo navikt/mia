@@ -198,7 +198,7 @@ class Oversiktskart extends React.Component {
         };
 
         const valgtHeleLandet = !harData(this.props.valgteFylker) && !harData(this.props.valgteKommuner) ? <ValgtHeleNorge valgtOmrade={meldinger.valgtOmrade} className={'valgte-omrader'} />: <noscript />;
-        const tilesBaseUrl = erDev() ? "http://localhost:8800/" : "/";
+        const tilesBaseUrl = erDev() ? "http://localhost:8800" : "";
 
         return (
             <div className={`kart-omrader-container ${this.props.className}`} id="switch_kart">
