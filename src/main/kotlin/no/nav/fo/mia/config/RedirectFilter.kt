@@ -13,7 +13,7 @@ val tjensteUrl = """\Ahttps://tjenester(-q[0-9])?.nav.no/.*""".toRegex()
 open class RedirectFilter : OncePerRequestFilter() {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         if( tjensteUrl.matches(request.requestURL)) {
-            response.sendRedirect("https://mia.nav.no/")
+            response.sendRedirect(response.encodeRedirectURL("https://mia.nav.no/"))
         } else {
             chain.doFilter(request, response)
         }
