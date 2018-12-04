@@ -11,8 +11,8 @@ describe('felles-utils', () => {
   });
 
   it('skal finne ut om url en utvilkerUrl', () => {
-    const localurl = 'http://a34duvw25920.devillo.no:8486/mia/ledigestillinger';
-    const t1url = 'https://modapp-t1.adeo.no/mia';
+    const localurl = 'http://a34duvw25920.devillo.no:8486/ledigestillinger';
+    const t1url = 'https://modapp-t1.adeo.no/';
     expect(erDevUrl(localurl)).toBeTruthy();
     expect(erDevUrl(t1url)).toBeFalsy();
   });

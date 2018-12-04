@@ -7,11 +7,11 @@ port: 8800
 
 healthcheck:
   liveness:
-    path: /mia/internal/actuator/health
+    path: /internal/actuator/health
     initialDelay: 60
     timeout: 10
   readiness:
-    path: /mia/internal/isReady
+    path: /internal/isReady
     initialDelay: 60
     timeout: 10
 
@@ -25,7 +25,7 @@ resources:
 
 prometheus:
   enabled: true
-  path: /mia/internal/actuator/prometheus
+  path: /internal/actuator/prometheus
 
 team: oppfolging
 
