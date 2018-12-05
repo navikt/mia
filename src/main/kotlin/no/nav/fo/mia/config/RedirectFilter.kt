@@ -15,13 +15,14 @@ val log = LoggerFactory.getLogger(RedirectFilter::class.java)
 open class RedirectFilter : OncePerRequestFilter() {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
 
-        log.info(request.requestURI)
+        log.info("request.requestURI: {}", request.requestURI)
+        log.info("request.requestURL: {}", request.requestURL.toString())
+        log.info("request.remoteAddr {}", request.remoteAddr)
 
         if( tjensteUrl.matches(request.requestURL)) {
             log.info("redirecter")
             response.sendRedirect(response.encodeRedirectURL("https://mia.nav.no/"))
         } else {
-            log.info("fortsetter")
             chain.doFilter(request, response)
         }
     }
