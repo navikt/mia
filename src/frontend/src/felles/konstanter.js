@@ -1,6 +1,6 @@
 import { erDev } from './utils/dev';
 
-export const RESTURL = erDev() ? `http://${window.location.hostname}:8800/rest` : '/rest';
+export const RESTURL = erDev() ? `http://${window.location.hostname}:8800/mia/rest` : '/mia/rest';
 export const STATUS = {
   feilet: 'FEILET',
   lastet: 'LASTET',
