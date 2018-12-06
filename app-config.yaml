@@ -52,6 +52,9 @@ fasitResources:
   - alias: loadbalancer:mia
     resourceType: loadbalancerconfig
 
+  - alias: unleash-api
+    resourceType: restservice
+
 
 alertProfiles:
   - basic

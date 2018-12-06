@@ -1,6 +1,5 @@
 package no.nav.fo.mia
 
-import no.nav.fo.mia.controllers.CustomErrorController
 import org.elasticsearch.client.RestHighLevelClient
 import org.slf4j.LoggerFactory
 import org.springframework.boot.actuate.health.AbstractHealthIndicator
@@ -24,7 +23,6 @@ constructor(
 
         if (statusCode in 200..299 && info.isAvailable) {
             builder.up()
-            LOGGER.info("elastic ok")
         }
         else {
             LOGGER.error("elastic bad {}", statusCode)
