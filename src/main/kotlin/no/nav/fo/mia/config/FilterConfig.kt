@@ -2,6 +2,7 @@ package no.nav.fo.mia.config
 
 import no.finn.unleash.Unleash
 import org.slf4j.LoggerFactory
+import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.*
@@ -9,8 +10,22 @@ import javax.servlet.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+
 val tjensteUrl = """\Ahttps://tjenester(-q[0-9])?.nav.no/.*""".toRegex()
 val log = LoggerFactory.getLogger(RedirectFilter::class.java)
+
+
+@Component
+@Order(1)
+open class MIssingSlach(val unleash: Unleash) : OncePerRequestFilter() {
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
+        if("/mia".equals(request.requestURI)){
+            response.sendRedirect("/mia/")
+        } else {
+            chain.doFilter(request, response)
+        }
+    }
+}
 
 @Component
 open class RedirectFilter(val unleash: Unleash) : OncePerRequestFilter() {
