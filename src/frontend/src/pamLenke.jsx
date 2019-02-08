@@ -21,37 +21,24 @@ function createKategoriURI(valgtyrkesomrade, valgteyrkesgrupper) {
 }
 
 function findKommuneParam(id, omroder) {
-    var param;
-    omroder.some(
-        fylke => {
-            return fylke.underomrader.some(
-                komune => {
-                    if(komune.id === id) {
-                        param = 'municipals[]=' + encodeURIComponent(fylke.name.toUpperCase()) + '.' + encodeURIComponent(komune.name.toUpperCase());
-                        return true;
-                    }else {
-                        return false;
-                    }
-                }
-            )
-        }
+    let kommune = null;
+    const fylke = omroder.find(
+        fylke =>
+            kommune = fylke.underomrader.find(komune => komune.id === id)
     );
-    return param;
+
+    if(fylke) {
+        return 'municipals[]=' + encodeURIComponent(fylke.name.toUpperCase()) + '.' + encodeURIComponent(kommune.name.toUpperCase());
+    }
+    return null;
 }
 
 function findFylkeParam(id, omroder) {
-    var param;
-    omroder.find(
-        omrade => {
-            if(omrade.id === id) {
-                param  = 'counties[]=' + encodeURIComponent(omrade.navn.toUpperCase());
-                return true;
-            } else {
-                return false;
-            }
-        }
-    );
-    return param;
+    let fylke = omroder.find(omrade => omrade.id === id);
+    if(fylke) {
+        return 'counties[]=' + encodeURIComponent(omrade.navn.toUpperCase());
+    }
+    return null
 }
 
 function createOmrodeFilter(valgteKommuner, valgteFylker, omrader) {
