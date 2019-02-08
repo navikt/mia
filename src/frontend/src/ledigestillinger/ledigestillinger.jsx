@@ -12,9 +12,6 @@ const LedigeStillinger = () => (
         <section className="stillinger-bransjer blokk-m">
             <Bransjer />
         </section>
-        <section className="stillinger-stillingsliste blokk-m">
-            <Stillinger />
-        </section>
         <section className="stillinger-statistikk blokk-m">
             <Statistikk />
         </section>

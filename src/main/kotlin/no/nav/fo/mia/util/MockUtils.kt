@@ -1,6 +1,8 @@
 package no.nav.fo.mia.util
 
 import no.nav.fo.mia.Filtervalg
+import java.time.LocalDate
+import java.time.ZonedDateTime
 
 fun stringToSeed(text: String): Long =
         text.map { it.toLong() }
@@ -14,3 +16,6 @@ fun filtervalgToSeed(filtervalg: Filtervalg): Long {
 
     return stringToSeed(fylker + kommuner + yrkesgrupper + yrkesomrade)
 }
+
+
+
