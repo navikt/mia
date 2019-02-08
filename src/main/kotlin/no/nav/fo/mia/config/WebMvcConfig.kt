@@ -1,7 +1,7 @@
 package no.nav.fo.mia.config
 
 import no.nav.fo.mia.LoggerInterceptor
-import no.nav.fo.mia.util.ListStringToListConverter
+import no.nav.fo.mia.util.StringArrayToListConverter
 import no.nav.fo.mia.util.StringToListConverter
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.Resource
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 open class WebMvcConfig : WebMvcConfigurer {
 
     override fun addFormatters(registry: FormatterRegistry) {
-        registry.addConverter(ListStringToListConverter())
+        registry.addConverter(StringArrayToListConverter())
         registry.addConverter(StringToListConverter())
     }
 

@@ -12,14 +12,12 @@ import javax.inject.Inject
 @RestController
 @RequestMapping("/rest/ledighet")
 class LedighetController2 @Inject
-constructor(
-        val statestikkService: StatestikkConsumer
-) {
+constructor(val statestikkService: StatestikkConsumer) {
 
     @GetMapping("/statistikk")
     fun hentLedighetForSisteTrettenMaaneder(@RequestParam filtervalg: Filtervalg): Map<String, Map<String, Int?>> {
         val underkategorier = underkategorierFra(filtervalg)
-        val komuner = komunerFra(filtervalg)
+        val komuner = kommunerFra(filtervalg)
         val statistikk = HashMap<String, Map<String, Int?>>()
         statistikk["arbeidsledighet"] = statestikkService.getArbeidsledighetForSisteTrettenMaaneder(underkategorier = underkategorier, komuner = komuner)
         statistikk["ledigestillinger"] = statestikkService.getStillingerForSisteTrettenMaaneder(underkategorier = underkategorier, komuner = komuner)

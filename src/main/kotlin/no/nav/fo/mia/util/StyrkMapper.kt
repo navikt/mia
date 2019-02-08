@@ -1,6 +1,6 @@
 package no.nav.fo.mia.util
 
-val hovedkategoriTIlunderkategori = mapOf(
+val hovedkategoriTilUnderkategori = mapOf(
         "Uoppgitt/ ikke identifiserbare" to listOf("Ikke identifiserbare"),
         "Sikkerhet og beredskap" to listOf("Forsvar/militære", "Brann-, utryknings- og redningspersonell", "Politi, fengsel og toll", "Vakt-, sikrings- og kontrollarbeid"),
         "Kontor og økonomi" to listOf("Organisasjonsarbeid og politikk", "Ledelse, administrasjon og rådgivning", "Bank finans forsikring", "Personal, arbeidsmiljø og rekruttering", "økonomi, statistikk og regnskap", "Kontor, forvaltning og saksbehandling", "Juridisk arbeid", "Megling"),

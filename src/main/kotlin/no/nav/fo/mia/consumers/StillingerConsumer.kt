@@ -1,7 +1,7 @@
 package no.nav.fo.mia.consumers
 
 import no.nav.fo.mia.util.fylkesnrTilNavn
-import no.nav.fo.mia.util.hovedkategoriTIlunderkategori
+import no.nav.fo.mia.util.hovedkategoriTilUnderkategori
 import no.nav.fo.mia.util.kommuneNrTIlNavn
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.context.annotation.Profile
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service
 import javax.inject.Inject
 import kotlin.random.Random
 
-interface StilliingerConsumer {
-    fun getStillingerForHovedkategorier(komuner: List<String>): Map<String, Int>
-    fun getStillingerForUnderkattegorier(komuner: List<String>): Map<String, Int>
+interface StillingerConsumer {
+    fun getStillingerPerHovedkategorier(komuner: List<String>): Map<String, Int>
+    fun getStillingerPerUnderkategorier(komuner: List<String>): Map<String, Int>
     fun getStillingerPerKomune(underkategorier: List<String>): Map<String, Int>
     fun getStillingerPerFylke(underkategorier: List<String>): Map<String, Int>
     fun getAntallStillinger(komuner: List<String>, underkategorier: List<String>): Int
@@ -19,21 +19,21 @@ interface StilliingerConsumer {
 
 @Service
 @Profile("!mock")
-open class StilliingerConsumerImpl @Inject
+open class StillingerConsumerImpl @Inject
 constructor(
         private val esclient: RestHighLevelClient
-) : StilliingerConsumer {
-    override fun getStillingerForHovedkategorier(komuner: List<String>) =
+) : StillingerConsumer {
+    override fun getStillingerPerHovedkategorier(kommuner: List<String>) =
             esclient.sumPerBucket(
-                    filterQuery = komuneFilter(komuner),
+                    filterQuery = komuneFilter(kommuner),
                     summeringskollone = antall,
                     grupperingsKollone = hovedkategori,
                     index = stillingerIndex
             )
 
-    override fun getStillingerForUnderkattegorier(komuner: List<String>) =
+    override fun getStillingerPerUnderkategorier(kommuner: List<String>) =
             esclient.sumPerBucket(
-                    filterQuery = komuneFilter(komuner),
+                    filterQuery = komuneFilter(kommuner),
                     summeringskollone = antall,
                     grupperingsKollone = underkattegori,
                     index = stillingerIndex
@@ -55,9 +55,9 @@ constructor(
                     index = stillingerIndex
             )
 
-    override fun getAntallStillinger(komuner: List<String>, underkategorier: List<String>) =
+    override fun getAntallStillinger(kommuner: List<String>, underkategorier: List<String>) =
             esclient.sum(
-                    filterQuery = must(komuneFilter(komuner), underkategoriFilter(underkategorier)),
+                    filterQuery = must(komuneFilter(kommuner), underkategoriFilter(underkategorier)),
                     summeringskollone = antall,
                     index = stillingerIndex
             )
@@ -66,15 +66,15 @@ constructor(
 
 @Service
 @Profile("mock")
-open class StilliingerConsumerMock : StilliingerConsumer {
-    override fun getStillingerForHovedkategorier(komuner: List<String>) =
-            hovedkategoriTIlunderkategori
+open class StillingerConsumerMock : StillingerConsumer {
+    override fun getStillingerPerHovedkategorier(kommuner: List<String>) =
+            hovedkategoriTilUnderkategori
                     .map { it.key to Random.nextInt(0, 10_000) }
                     .toMap()
 
 
-    override fun getStillingerForUnderkattegorier(komuner: List<String>): Map<String, Int> =
-            hovedkategoriTIlunderkategori
+    override fun getStillingerPerUnderkategorier(kommuner: List<String>): Map<String, Int> =
+            hovedkategoriTilUnderkategori
                     .flatMap { hovedkategori ->
                         hovedkategori.value.map {underkategori ->
                             underkategori to Random.nextInt(0, 10_000)
@@ -91,7 +91,7 @@ open class StilliingerConsumerMock : StilliingerConsumer {
                     .map { it.key to Random.nextInt(0, 10_000) }
                     .toMap()
 
-    override fun getAntallStillinger(komuner: List<String>, underkategorier: List<String>): Int =
+    override fun getAntallStillinger(kommuner: List<String>, underkategorier: List<String>): Int =
             Random.nextInt(0, 10_000)
 
 }

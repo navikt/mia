@@ -20,7 +20,7 @@ function createKategoriURI(valgtyrkesomrade, valgteyrkesgrupper) {
     return a.filter(x => !!x ).join("&")
 }
 
-function findKouneParam(id, omroder) {
+function findKommuneParam(id, omroder) {
     var param;
     omroder.some(
         fylke => {
@@ -39,7 +39,7 @@ function findKouneParam(id, omroder) {
     return param;
 }
 
-function findFyllkeParam(id, omroder) {
+function findFylkeParam(id, omroder) {
     var param;
     omroder.find(
         omrade => {
@@ -58,12 +58,12 @@ function createOmrodeFilter(valgteKommuner, valgteFylker, omrader) {
     let params = [];
     if(valgteFylker && valgteFylker.length) {
         valgteFylker.forEach(fylke => {
-            params.push(findFyllkeParam(fylke, omrader))
+            params.push(findFylkeParam(fylke, omrader))
         })
     }
     if(valgteKommuner && valgteKommuner.length) {
         valgteKommuner.forEach(komune => {
-            params.push(findKouneParam(komune, omrader))
+            params.push(findKommuneParam(komune, omrader))
         })
     }
     return params.filter(x => !!x).join("&")

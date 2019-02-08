@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Stillingspanel from './ledigestillinger-stillinger-panel';
 import Innholdslaster from "../../felles/innholdslaster/innholdslaster";
 import {defineMessages} from 'react-intl';
-
+//TODO sjekk denne
 import {
     getHarValgtYrkesgrupper,
     getValgteYrkesgrupperMedStillinger

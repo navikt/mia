@@ -1,8 +1,8 @@
 package no.nav.fo.mia.controllers
 
 import no.nav.fo.mia.util.*
-import no.nav.fo.mia.consumers.StilliingerConsumer
-import no.nav.fo.mia.util.hovedkategoriTIlunderkategori
+import no.nav.fo.mia.consumers.StillingerConsumer
+import no.nav.fo.mia.util.hovedkategoriTilUnderkategori
 import no.nav.fo.mia.util.styrkTilHovedkategori
 import no.nav.fo.mia.util.styrkTilUnderkategori
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,15 +14,14 @@ import javax.inject.Inject
 
 @RestController
 @RequestMapping("/rest/rat")
-class RatController2 @Inject
-constructor(
-        val stillingerService: StilliingerConsumer
-) {
+class RatController @Inject
+constructor(val stillingerService: StillingerConsumer) {
+
     @GetMapping("/fylke")
     fun rat(
-            @RequestParam("kommunennummer") komuneNummer: String,
+            @RequestParam("kommunennummer") kommuneNummer: String,
             @RequestParam("styrkkode") styrkKode: String
-    ): r {
+    ): BehovsvurderingDTO {
         val komuner: List<String>
         val hovedkategori: String
         val underkategori: String
@@ -30,28 +29,28 @@ constructor(
         val komuneNavn: String
         val fylkesnavn: String
         try {
-            val fylkesNummer = komuneNrTilFylkesNr[komuneNummer]!!
+            val fylkesNummer = komuneNrTilFylkesNr[kommuneNummer]!!
             komuner = fylkeTilKommuner[fylkesNummer]!!
             hovedkategori = styrkTilHovedkategori[styrkKode]!!
             underkategori = styrkTilUnderkategori[styrkKode]!!
-            underkategorier = hovedkategoriTIlunderkategori[hovedkategori]!!
-            komuneNavn = kommuneNrTIlNavn[komuneNummer]!!
+            underkategorier = hovedkategoriTilUnderkategori[hovedkategori]!!
+            komuneNavn = kommuneNrTIlNavn[kommuneNummer]!!
             fylkesnavn = fylkesnrTilNavn[fylkesNummer]!!
         } catch (e: NullPointerException) {
             throw IllegalArgumentException("ikke gyldig")
         }
 
-        val under= stillingerService.getAntallStillinger(komuner, listOf(underkategori))
+        val under = stillingerService.getAntallStillinger(komuner, listOf(underkategori))
         val hoved = stillingerService.getAntallStillinger(komuner, underkategorier)
 
-        return r(
+        return BehovsvurderingDTO(
                 kommuneNavn = komuneNavn,
                 fylkesnavn = fylkesnavn,
-                hovedkategorei = a(hovedkategori, hoved),
-                underkategori = a(underkategori, under)
+                hovedkategori = StillingerIKategori(hovedkategori, hoved),
+                underkategori = StillingerIKategori(underkategori, under)
         )
     }
 }
 
-data class r(val kommuneNavn: String, val fylkesnavn: String, val hovedkategorei: a, val underkategori: a)
-data class a(val kategori: String, val antall: Int)
+data class BehovsvurderingDTO(val kommuneNavn: String, val fylkesnavn: String, val hovedkategori: StillingerIKategori, val underkategori: StillingerIKategori)
+data class StillingerIKategori(val kategori: String, val antall: Int)
