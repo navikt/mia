@@ -1,7 +1,6 @@
 import React from "react";
 import Oversikt from "./oversikt/ledigestillinger-oversikt";
 import Bransjer from "./bransjer/ledigestillinger-bransjer";
-import Stillinger from "./stillinger/ledigestillinger-stillinger";
 import Statistikk from "./statistikk/ledigestillinger-statistikk";
 
 const LedigeStillinger = () => (

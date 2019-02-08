@@ -7,7 +7,6 @@ import {hentStillinger, hentAntallStillingerForYrkesgruppe} from '../stillinger/
 import {ALTERNATIV_ALLE} from '../../felles/konstanter';
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
-import Lenke from "nav-frontend-lenker";
 import PamLenke from "../../pamLenke";
 
 export class BransjerOversikt extends React.Component {
