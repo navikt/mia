@@ -1,6 +1,5 @@
 package no.nav.fo.mia.controllers
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import no.nav.fo.mia.util.*
 import no.nav.fo.mia.consumers.StilliingerConsumer
 import no.nav.fo.mia.util.hovedkategoriTIlunderkategori
@@ -39,7 +38,7 @@ constructor(
             komuneNavn = kommuneNrTIlNavn[komuneNummer]!!
             fylkesnavn = fylkesnrTilNavn[fylkesNummer]!!
         } catch (e: NullPointerException) {
-            throw InvalidArgumentException(arrayOf(""))
+            throw IllegalArgumentException("ikke gyldig")
         }
 
         val under= stillingerService.getAntallStillinger(komuner, listOf(underkategori))
