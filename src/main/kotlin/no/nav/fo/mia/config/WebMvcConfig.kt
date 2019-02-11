@@ -1,8 +1,11 @@
 package no.nav.fo.mia.config
 
 import no.nav.fo.mia.LoggerInterceptor
+import no.nav.fo.mia.util.StringArrayToListConverter
+import no.nav.fo.mia.util.StringToListConverter
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.Resource
+import org.springframework.format.FormatterRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import org.springframework.web.servlet.resource.PathResourceResolver
@@ -11,6 +14,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 
 @Configuration
 open class WebMvcConfig : WebMvcConfigurer {
+
+    override fun addFormatters(registry: FormatterRegistry) {
+        registry.addConverter(StringArrayToListConverter())
+        registry.addConverter(StringToListConverter())
+    }
+
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry.addResourceHandler("/geojson/*")
                 .addResourceLocations("classpath:/kart/geojson/")
@@ -37,5 +46,6 @@ open class WebMvcConfig : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(LoggerInterceptor())
+
     }
 }
