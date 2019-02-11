@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {actions} from './ledigestillinger-bransjer-reducer';
 import BransjeDropdown from './bransje-dropdown';
 import {hentYrkesgrupper} from './ledigestillinger-bransjer-actions';
-import {hentStillinger, hentAntallStillingerForYrkesgruppe} from '../stillinger/ledigestillinger-stillinger-actions';
+import {hentAntallStillingerForYrkesgruppe} from '../stillinger/ledigestillinger-stillinger-actions';
 import {ALTERNATIV_ALLE} from '../../felles/konstanter';
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
@@ -16,7 +16,6 @@ export class BransjerOversikt extends React.Component {
         } else {
             this.props.dispatch({type: actions.yrkesgruppeselect, payload: id});
         }
-        this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
         this.props.dispatch(hentStatistikk());
     }
