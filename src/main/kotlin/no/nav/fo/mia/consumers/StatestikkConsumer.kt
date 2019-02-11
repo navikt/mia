@@ -55,7 +55,7 @@ constructor(
             esClient
                     .sumPerBucket(
                             filterQuery = must(underkategoriFilter(underkategorier), periodeFilter(getSisteOpplastedeMaaned())),
-                            grupperingsKollone = fylkesnummer,
+                            grupperingsKollone = fylkesnummerStatestikk,
                             summeringskollone = antall,
                             index = arbeidsledighetsIndex
                     ).map { it.key to it.value.sensurer() }

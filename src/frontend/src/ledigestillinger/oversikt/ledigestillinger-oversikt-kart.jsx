@@ -4,7 +4,6 @@ import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
-import UtenforNorgeControl from './kart/kart-utenfornorge-controls';
 import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
@@ -46,8 +45,6 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
-        this.utenforEosControl = new UtenforNorgeControl(this.utenforEosClick, this.props.intl.formatMessage(meldinger.stillingerEUEOS));
-        this.restenAvVerdenControl = new UtenforNorgeControl(this.restenAvVerdenClick, this.props.intl.formatMessage(meldinger.stillingerVerden));
         this.leggTilUtenforNorgeControls();
     }
 

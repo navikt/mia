@@ -51,7 +51,7 @@ constructor(
             esclient.sumPerBucket(
                     filterQuery = underkategoriFilter(underkategorier),
                     summeringskollone = antall,
-                    grupperingsKollone = fylkesnummer,
+                    grupperingsKollone = fylkesnummerStillinger,
                     index = stillingerIndex
             )
 
