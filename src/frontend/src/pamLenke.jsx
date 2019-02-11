@@ -36,7 +36,7 @@ function findKommuneParam(id, omroder) {
 function findFylkeParam(id, omroder) {
     let fylke = omroder.find(omrade => omrade.id === id);
     if(fylke) {
-        return 'counties[]=' + encodeURIComponent(omrade.navn.toUpperCase());
+        return 'counties[]=' + encodeURIComponent(fylke.navn.toUpperCase());
     }
     return null
 }
