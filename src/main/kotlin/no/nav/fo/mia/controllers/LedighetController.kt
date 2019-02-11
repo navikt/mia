@@ -11,7 +11,7 @@ import javax.ws.rs.BeanParam
 
 @RestController
 @RequestMapping("/rest/ledighet")
-class LedighetController2 @Inject
+class LedighetController @Inject
 constructor(val statestikkService: StatestikkConsumer) {
 
     @GetMapping("/statistikk")
