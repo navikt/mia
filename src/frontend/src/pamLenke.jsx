@@ -28,7 +28,7 @@ function findKommuneParam(id, omroder) {
     );
 
     if(fylke) {
-        return 'municipals[]=' + encodeURIComponent(fylke.name.toUpperCase()) + '.' + encodeURIComponent(kommune.name.toUpperCase());
+        return 'municipals[]=' + encodeURIComponent(fylke.navn.toUpperCase()) + '.' + encodeURIComponent(kommune.navn.toUpperCase());
     }
     return null;
 }
