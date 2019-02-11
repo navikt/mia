@@ -31,7 +31,7 @@ matrix:
 
     before_script:
     - ls -al src/frontend/build/
-    - cp -BehovsvurderingDTO src/frontend/build/ src/main/resources/static/
+    - cp -r src/frontend/build/ src/main/resources/static/
     - mvn package -DskipTests
     script:
     - java -jar -DUSE_MOCK=true target/mia.jar &
