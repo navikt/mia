@@ -3,10 +3,11 @@ import {connect} from 'react-redux';
 import {actions} from './ledigestillinger-bransjer-reducer';
 import BransjeDropdown from './bransje-dropdown';
 import {hentYrkesgrupper} from './ledigestillinger-bransjer-actions';
-import {hentStillinger, hentAntallStillingerForYrkesgruppe} from '../stillinger/ledigestillinger-stillinger-actions';
+import {hentAntallStillingerForYrkesgruppe} from '../stillinger/ledigestillinger-stillinger-actions';
 import {ALTERNATIV_ALLE} from '../../felles/konstanter';
 import {BokserForYrkesomrader, BokserForYrkesgrupper} from './bokser/bokser-for-yrke';
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
+import PamLenke from "../../pamLenke";
 
 export class BransjerOversikt extends React.Component {
     toggleYrkesgruppe(id) {
@@ -15,7 +16,6 @@ export class BransjerOversikt extends React.Component {
         } else {
             this.props.dispatch({type: actions.yrkesgruppeselect, payload: id});
         }
-        this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
         this.props.dispatch(hentStatistikk());
     }
@@ -28,7 +28,7 @@ export class BransjerOversikt extends React.Component {
     }
 
     render() {
-        const { yrkesomrader, yrkesgrupper, totantallstillinger, valgtyrkesomrade, valgteyrkesgrupper } = this.props;
+        const {yrkesomrader, yrkesgrupper, totantallstillinger, valgtyrkesomrade, valgteyrkesgrupper} = this.props;
 
         const boksForYrkesomrader = <BokserForYrkesomrader onClick={id => this.velgYrkesomrade(id)}
                                                            yrkesomrader={yrkesomrader}
@@ -49,6 +49,7 @@ export class BransjerOversikt extends React.Component {
                                  totaltAntall={totantallstillinger}
                 />
                 {bransjeBokser}
+                <PamLenke/>
             </div>
         );
     }

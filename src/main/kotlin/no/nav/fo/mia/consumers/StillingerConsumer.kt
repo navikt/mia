@@ -1,148 +1,97 @@
 package no.nav.fo.mia.consumers
 
-import com.github.javafaker.Faker
-import no.nav.fo.mia.Filtervalg
-import no.nav.fo.mia.Stilling
-import no.nav.fo.mia.config.stillingerCore
-import no.nav.fo.mia.util.dateToString
-import no.nav.fo.mia.util.filterForYrker
-import no.nav.fo.mia.util.filtervalgToSeed
-import no.nav.fo.mia.util.solrQueryMedOmradeFilter
-import org.apache.solr.client.solrj.SolrClient
-import org.apache.solr.client.solrj.SolrQuery
-import org.apache.solr.client.solrj.response.FacetField
-import org.springframework.cache.annotation.Cacheable
+import no.nav.fo.mia.util.fylkesnrTilNavn
+import no.nav.fo.mia.util.hovedkategoriTilUnderkategori
+import no.nav.fo.mia.util.kommuneNrTIlNavn
+import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
-import java.lang.Integer.parseInt
-import java.util.*
 import javax.inject.Inject
+import kotlin.random.Random
 
 interface StillingerConsumer {
-    fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int
-    fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int
-    fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int
-    fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling>
-    fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int
-    fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int
+    fun getStillingerPerHovedkategorier(komuner: List<String>): Map<String, Int>
+    fun getStillingerPerUnderkategorier(komuner: List<String>): Map<String, Int>
+    fun getStillingerPerKomune(underkategorier: List<String>): Map<String, Int>
+    fun getStillingerPerFylke(underkategorier: List<String>): Map<String, Int>
+    fun getAntallStillinger(komuner: List<String>, underkategorier: List<String>): Int
 }
 
 @Service
 @Profile("!mock")
 open class StillingerConsumerImpl @Inject
 constructor(
-        val solrClient: SolrClient
+        private val esclient: RestHighLevelClient
 ) : StillingerConsumer {
-    @Cacheable("ledigeStillingerFylke")
-    override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int =
-            hentLedigeStillingerForOmrade("FYLKE_ID:$fylke", filtervalg)
+    override fun getStillingerPerHovedkategorier(kommuner: List<String>) =
+            esclient.sumPerBucket(
+                    filterQuery = komuneFilter(kommuner),
+                    summeringskollone = antall,
+                    grupperingsKollone = hovedkategori,
+                    index = stillingerIndex
+            )
 
-    @Cacheable("ledigeStillingerKommune")
-    override fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int =
-            hentLedigeStillingerForOmrade("KOMMUNE_ID:$kommune", filtervalg)
+    override fun getStillingerPerUnderkategorier(kommuner: List<String>) =
+            esclient.sumPerBucket(
+                    filterQuery = komuneFilter(kommuner),
+                    summeringskollone = antall,
+                    grupperingsKollone = underkattegori,
+                    index = stillingerIndex
+            )
 
-    @Cacheable("stillinger")
-    override fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
-        val query = solrQueryMedOmradeFilter("*:*", filtervalg)
-                .addFilterQuery(yrkesgrupper.joinToString(" OR ") { "YRKGR_LVL_2_ID:$it" })
-                .setRows(Int.MAX_VALUE)
+    override fun getStillingerPerKomune(underkategorier: List<String>) =
+            esclient.sumPerBucket(
+                    filterQuery = underkategoriFilter(underkategorier),
+                    summeringskollone = antall,
+                    grupperingsKollone = komuneNumer,
+                    index = stillingerIndex
+            )
 
-        return solrClient.query(stillingerCore, query).results
-                .map {
-                    Stilling(
-                            id = (it.getFieldValue("ID") as Int).toString(),
-                            arbeidsgivernavn = it.getFieldValue("ARBEIDSGIVERNAVN") as String,
-                            tittel = it.getFieldValue("TITTEL") as String,
-                            stillingstype = it.getFieldValue("STILLINGSTYPE_5") as String,
-                            lokal = "LOK" == it.getFieldValue("PRESENTASJONSFORMKODE"),
-                            antallStillinger = (it.getFieldValue("ANTALLSTILLINGER") as Int?) ?: 1,
-                            soknadsfrist = dateToString(it.getFieldValue("SOKNADSFRIST") as Date?),
-                            yrkesgrupper = it.getFieldValues("YRKGR_LVL_2_ID").map { it.toString() },
-                            yrkesomrader = it.getFieldValues("YRKGR_LVL_1_ID").map { it.toString() }
-                    )
-                }
-    }
+    override fun getStillingerPerFylke(underkategorier: List<String>) =
+            esclient.sumPerBucket(
+                    filterQuery = underkategoriFilter(underkategorier),
+                    summeringskollone = antall,
+                    grupperingsKollone = fylkesnummer,
+                    index = stillingerIndex
+            )
 
-    @Cacheable("antallStillingerOmrade")
-    override fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int =
-            getAntallStillinger("*:*", filtervalg)
-
-    @Cacheable("antallStillingerYrkesgruppe")
-    override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int =
-            getAntallStillinger("YRKGR_LVL_2_ID:$yrkesgruppe", filtervalg)
-
-    @Cacheable("antallStillingerYrkesomrade")
-    override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int =
-            getAntallStillinger("YRKGR_LVL_1_ID:$yrkesomrade", filtervalg)
-
-    private fun hentLedigeStillingerForOmrade(query: String, filtervalg: Filtervalg): Int {
-        val solrQuery = SolrQuery("*:*")
-                .addFilterQuery(query)
-                .setRows(0)
-                .addFacetField("ANTALLSTILLINGER")
-
-        filterForYrker(yrkesomrade = filtervalg.yrkesomrade, yrkesgrupper = filtervalg.yrkesgrupper)
-                .forEach { solrQuery.addFilterQuery(it) }
-
-        return getAntallStillingerFraFacet(solrClient.query(stillingerCore, solrQuery).getFacetField("ANTALLSTILLINGER"))
-    }
-
-    private fun getAntallStillinger(filter: String, filtervalg: Filtervalg): Int {
-        val query = solrQueryMedOmradeFilter(filtervalg = filtervalg)
-                .addFilterQuery(filter)
-                .addFacetField("ANTALLSTILLINGER")
-                .setRows(0)
-
-        return getAntallStillingerFraFacet(solrClient.query(stillingerCore, query).getFacetField("ANTALLSTILLINGER"))
-    }
-
-    private fun getAntallStillingerFraFacet(antallStillingerFacet: FacetField?): Int {
-        if (antallStillingerFacet == null || antallStillingerFacet.valueCount == 0) {
-            return 0
-        }
-
-        return antallStillingerFacet.values
-                .map { it.count * parseInt(it.name ?: "1") }
-                .sum().toInt()
-    }
+    override fun getAntallStillinger(kommuner: List<String>, underkategorier: List<String>) =
+            esclient.sum(
+                    filterQuery = must(komuneFilter(kommuner), underkategoriFilter(underkategorier)),
+                    summeringskollone = antall,
+                    index = stillingerIndex
+            )
 }
+
 
 @Service
 @Profile("mock")
-class StillingerConsumerMock : StillingerConsumer {
-    override fun getAntallStillingerForYrkesomrade(yrkesomrade: String, filtervalg: Filtervalg): Int {
-        filtervalg.yrkesomrade = yrkesomrade
-        val faker = Faker(Random(filtervalgToSeed(filtervalg)))
-        return faker.number().numberBetween(0, 1000)
-    }
+open class StillingerConsumerMock : StillingerConsumer {
+    override fun getStillingerPerHovedkategorier(kommuner: List<String>) =
+            hovedkategoriTilUnderkategori
+                    .map { it.key to Random.nextInt(0, 10_000) }
+                    .toMap()
 
-    override fun getAntallStillingerForYrkesgruppe(yrkesgruppe: String, filtervalg: Filtervalg): Int =
-        getAntallStillingerForYrkesomrade(yrkesomrade = yrkesgruppe, filtervalg = filtervalg)
 
-    override fun getAntallStillingerForValgtOmrade(filtervalg: Filtervalg): Int {
-        val faker = Faker(Random(filtervalgToSeed(filtervalg)))
-        return faker.number().numberBetween(0, 1000)
-    }
+    override fun getStillingerPerUnderkategorier(kommuner: List<String>): Map<String, Int> =
+            hovedkategoriTilUnderkategori
+                    .flatMap { hovedkategori ->
+                        hovedkategori.value.map {underkategori ->
+                            underkategori to Random.nextInt(0, 10_000)
+                        }
+                    }.toMap()
 
-    override fun getStillingsannonser(yrkesgrupper: List<String>, filtervalg: Filtervalg): List<Stilling> {
-        val faker = Faker(Random(filtervalgToSeed(filtervalg)))
-        val antall = faker.number().numberBetween(3, 30)
-        return (0 until antall).map {
-            Stilling(
-                    id = faker.number().digits(5),
-                    arbeidsgivernavn = faker.company().name(),
-                    tittel = faker.company().catchPhrase(),
-                    stillingstype = faker.company().profession(),
-                    yrkesgrupper = filtervalg.yrkesgrupper,
-                    antallStillinger = faker.number().numberBetween(1, 5),
-                    lokal = false
-            )
-        }
-    }
+    override fun getStillingerPerKomune(underkategorier: List<String>): Map<String, Int>  =
+            kommuneNrTIlNavn
+                    .map { it.key to Random.nextInt(0, 10_000) }
+                    .toMap()
 
-    override fun getLedigeStillingerForKommune(kommune: String, filtervalg: Filtervalg): Int =
-            getAntallStillingerForYrkesomrade(yrkesomrade = kommune, filtervalg = filtervalg)
+    override fun getStillingerPerFylke(underkategorier: List<String>): Map<String, Int> =
+            fylkesnrTilNavn
+                    .map { it.key to Random.nextInt(0, 10_000) }
+                    .toMap()
 
-    override fun getLedigeStillingerForFylke(fylke: String, filtervalg: Filtervalg): Int =
-            getAntallStillingerForYrkesomrade(yrkesomrade = fylke, filtervalg = filtervalg)
+    override fun getAntallStillinger(kommuner: List<String>, underkategorier: List<String>): Int =
+            Random.nextInt(0, 10_000)
+
 }

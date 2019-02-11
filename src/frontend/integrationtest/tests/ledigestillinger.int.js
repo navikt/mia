@@ -29,20 +29,6 @@ module.exports = {
     'skal vise arbeidsområder etter valg av stillingskategoriboks': function() {
         ledigestillinger.section.bransjer.klikkStillingskategoriBoks(1);
     },
-
-    'skal vise stillingsannonser for valgte arbeidsomrader': function() {
-        const tabeller = ledigestillinger.section.stillingliste.elements.tabeller;
-        const stillingTabeller = `${ledigestillinger.section.stillingliste.selector} ${tabeller.selector}`;
-
-        ledigestillinger.section.bransjer.klikkArbeidsomradeBoks(1);
-        ledigestillinger.section.bransjer.klikkArbeidsomradeBoks(2);
-        ledigestillinger.section.bransjer.klikkArbeidsomradeBoks(3);
-
-        ledigestillinger.section.stillingliste.expect.element('@tabell1').to.be.present.after(WAIT_TIME);
-        ledigestillinger.api.elements(tabeller.locateStrategy, stillingTabeller, (result) => {
-            ledigestillinger.api.assert.equal(result.value.length, 3, "viser tabell for alle valgte yrkesomrader");
-        });
-    },
     'skal kunne bytte fra kartvisning til tabellvisning': function() {
         if(!isMobile) {
             ledigestillinger.section.oversikt.expect.element('@kart').to.be.visible.after(WAIT_TIME);
