@@ -4,7 +4,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import Oversiktspanel from "./ledigestillinger-oversikt-panel";
-import {hentStillinger, hentAntallStillingerForYrkesgruppe} from "../stillinger/ledigestillinger-stillinger-actions";
+import {hentAntallStillingerForYrkesgruppe} from "../stillinger/ledigestillinger-stillinger-actions";
 import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
 import {apneModal} from "../../felles/modal/modal-reducer";
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
@@ -80,7 +80,6 @@ export class Oversikt extends React.Component {
     oppdaterAlleDatagrunnlag() {
         this.props.dispatch(hentYrkesomrader());
         this.props.dispatch(hentYrkesgrupper());
-        this.props.dispatch(hentStillinger());
         this.props.dispatch(hentAntallStillingerForOmrade());
         this.props.dispatch(hentAntallStillingerForYrkesgruppe());
         this.props.dispatch(hentStatistikk());

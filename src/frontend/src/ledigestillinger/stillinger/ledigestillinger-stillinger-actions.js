@@ -10,27 +10,11 @@ import {
 
 import {
   getHarValgtOmrade,
-  getHarValgtYrkesgrupper,
   getValgteYrkesgrupperId,
   getValgtYrkesomradeId,
 } from './ledigestillinger-stillinger-selectors';
 
-export const hentStillinger = () => (dispatch, getState) => {
-  const state = getState();
-  const actions = getActions('stillinger');
 
-  if (!getHarValgtYrkesgrupper(state)) {
-    return;
-  }
-
-  dispatch({ type: actions[STATUS.laster] });
-  const uri = `/stillinger?${buildUriParams(getUriParams(state))}`;
-  fetchToJson(uri)
-    .then(
-      sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
-      handterFeil(dispatch, actions[STATUS.feilet]),
-    );
-};
 
 export const hentAntallStillingerForYrkesgruppe = () => (dispatch, getState) => {
   const state = getState();
@@ -47,12 +31,6 @@ export const hentAntallStillingerForYrkesgruppe = () => (dispatch, getState) => 
       sendResultatTilDispatch(dispatch, actions[STATUS.lastet]),
       handterFeil(dispatch, actions[STATUS.feilet]),
     );
-};
-
-const getUriParams = (state) => {
-  const params = getParamsForValgteFylkerOgKommuner(state);
-  params.yrkesgrupper = getValgteYrkesgrupperId(state);
-  return params;
 };
 
 const getUriParamsForFiltrering = (state) => {
