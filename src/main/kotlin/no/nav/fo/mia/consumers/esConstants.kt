@@ -1,7 +1,7 @@
 package no.nav.fo.mia.consumers
 
 //stillinger
-internal val stillingerIndex = "stillinger3"
+internal val stillingerIndex = "stillinger4"
 internal val fylkesnummerStillinger = "fylkesnr"
 
 //statestikk
