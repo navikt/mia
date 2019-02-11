@@ -7,7 +7,6 @@ import LandvisningControl from './kart/kart-landvisning-control';
 import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
-import {EOS_EU, RESTEN_AV_VERDEN} from '../../felles/konstanter';
 import {erDev} from '../../felles/utils/dev';
 
 const meldinger = defineMessages({
@@ -33,8 +32,6 @@ class Oversiktskart extends React.Component {
     constructor(props) {
         super(props);
         this.worldBounds = [[58, 3], [71, 31]];
-        this.restenAvVerdenClick = this.restenAvVerdenClick.bind(this);
-        this.utenforEosClick = this.utenforEosClick.bind(this);
     }
 
     componentDidMount() {
@@ -45,34 +42,8 @@ class Oversiktskart extends React.Component {
         map.keyboard.disable();
         map.boxZoom.disable();
         this.landvisningControl = new LandvisningControl(() => this.zoomTilLandvisning());
-        this.leggTilUtenforNorgeControls();
     }
 
-    utenforEosClick() {
-        if(this.props.valgteFylker.includes(EOS_EU)) {
-            this.props.resetValg();
-        } else {
-            this.props.velgFylke(EOS_EU);
-        }
-    }
-
-    restenAvVerdenClick() {
-        if(this.props.valgteFylker.includes(RESTEN_AV_VERDEN)) {
-            this.props.resetValg();
-        } else {
-            this.props.velgFylke(RESTEN_AV_VERDEN);
-        }
-    }
-
-    leggTilUtenforNorgeControls() {
-        this.refs.map.leafletElement.addControl(this.utenforEosControl);
-        this.refs.map.leafletElement.addControl(this.restenAvVerdenControl);
-    }
-
-    fjernUtenforNorgeControls() {
-        this.refs.map.leafletElement.removeControl(this.utenforEosControl);
-        this.refs.map.leafletElement.removeControl(this.restenAvVerdenControl);
-    }
 
     zoomTilLandvisning() {
         this.refs.map.leafletElement.fitBounds(this.worldBounds);
@@ -80,7 +51,6 @@ class Oversiktskart extends React.Component {
         this.refs.fylker.leafletElement.bringToFront();
         this.refs.map.leafletElement.removeControl(this.landvisningControl);
         this.props.resetValg();
-        this.leggTilUtenforNorgeControls();
         this.fjernSelectedFraFylker();
         this.resetKommuner();
     }
@@ -102,7 +72,6 @@ class Oversiktskart extends React.Component {
         this.refs.kommuner.leafletElement.bringToFront();
         this.refs.map.leafletElement.addControl(this.landvisningControl);
         this.resetKommuner();
-        this.fjernUtenforNorgeControls();
     }
 
     fjernSelectedFraFylker() {
