@@ -44,7 +44,7 @@ constructor(val stillingerService: StillingerConsumer) {
         val hoved = stillingerService.getAntallStillinger(komuner, underkategorier)
 
         return BehovsvurderingDTO(
-                kommuneNavn = komuneNavn,
+                kommunenavn = komuneNavn,
                 fylkesnavn = fylkesnavn,
                 hovedkategori = StillingerIKategori(hovedkategori, hoved),
                 underkategori = StillingerIKategori(underkategori, under)
@@ -52,5 +52,5 @@ constructor(val stillingerService: StillingerConsumer) {
     }
 }
 
-data class BehovsvurderingDTO(val kommuneNavn: String, val fylkesnavn: String, val hovedkategori: StillingerIKategori, val underkategori: StillingerIKategori)
-data class StillingerIKategori(val kategori: String, val antall: Int)
+data class BehovsvurderingDTO(val kommunenavn: String, val fylkesnavn: String, val hovedkategori: StillingerIKategori, val underkategori: StillingerIKategori)
+data class StillingerIKategori(val kategori: String, val antallStillinger: Int)
