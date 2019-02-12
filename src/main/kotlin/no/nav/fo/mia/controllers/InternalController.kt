@@ -1,6 +1,7 @@
 package no.nav.fo.mia.controllers
 
-import org.slf4j.LoggerFactory
+import no.nav.fo.mia.consumers.StatestikkConsumer
+import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import javax.inject.Inject
@@ -9,15 +10,14 @@ import javax.inject.Inject
 @RequestMapping("/internal", produces = [(MediaType.TEXT_PLAIN_VALUE)])
 class InternalController @Inject
 constructor(
-
+        private val service: StatestikkConsumer
 ) {
-    private val LOGGER = LoggerFactory.getLogger(InternalController::class.java)
-
     @GetMapping("/isAlive")
-    fun isAlive() = "Application is UP"
+    fun isAlive(): String {
+        return "Application is UP"
+    }
 
     @GetMapping("/isReady")
     fun isReady() = "Application is READY"
-
 
 }

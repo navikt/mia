@@ -32,6 +32,13 @@ internal fun underkategoriFilter(underkategorier: List<String>): AbstractQueryBu
     }
 }
 
+internal fun aktivPublicQuery(): AbstractQueryBuilder<*> {
+    return must(
+            QueryBuilders.termQuery(active, true),
+            QueryBuilders.termQuery(public, true)
+    )
+}
+
 internal fun must(vararg querys: AbstractQueryBuilder<*>): AbstractQueryBuilder<*> {
     return querys.fold(QueryBuilders.boolQuery()) { acc, query -> acc.must(query) }
 }

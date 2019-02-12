@@ -3,6 +3,8 @@ package no.nav.fo.mia.consumers
 //stillinger
 internal val stillingerIndex = "stillinger4"
 internal val fylkesnummerStillinger = "fylkesnr"
+internal val active = "active"
+internal val public = "public"
 
 //statestikk
 internal val perioder = "periode"

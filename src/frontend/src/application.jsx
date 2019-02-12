@@ -14,13 +14,11 @@ class Application extends React.Component {
         this.props.lastOmrader();
         this.props.lastFylkerGeojson();
         this.props.lastKommunerGeojson();
-        this.props.lastMiljovariabler();
     }
     render() {
         const avhengigheter = [
             this.props.tekster,
             this.props.omrader,
-            this.props.miljovariabler,
             this.props.fylkergeojson,
             this.props.kommunergeojson
         ];
@@ -42,7 +40,6 @@ class Application extends React.Component {
 const stateToProps = state => ({
     tekster: state.tekster,
     omrader: state.rest.omrader,
-    miljovariabler: state.rest.miljovariabler,
     fylkergeojson: state.rest.fylkergeojson,
     kommunergeojson: state.rest.kommunergeojson
 });
@@ -50,7 +47,6 @@ const stateToProps = state => ({
 const actionsToProps = {
     lastTekster,
     lastOmrader: () => restActionCreator('omrader', '/omrader'),
-    lastMiljovariabler: () => restActionCreator('miljovariabler', '/miljovariabler'),
     lastFylkerGeojson: () => restActionCreator('fylkergeojson', '/../geojson/fylker.json'),
     lastKommunerGeojson: () => restActionCreator('kommunergeojson', '/../geojson/kommuner.json')
 };

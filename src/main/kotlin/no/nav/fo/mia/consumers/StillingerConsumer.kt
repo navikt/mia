@@ -25,7 +25,9 @@ constructor(
 ) : StillingerConsumer {
     override fun getStillingerPerHovedkategorier(kommuner: List<String>) =
             esclient.sumPerBucket(
-                    filterQuery = komuneFilter(kommuner),
+                    filterQuery = must(
+                            komuneFilter(kommuner),
+                            aktivPublicQuery()),
                     summeringskollone = antall,
                     grupperingsKollone = hovedkategori,
                     index = stillingerIndex
@@ -33,7 +35,9 @@ constructor(
 
     override fun getStillingerPerUnderkategorier(kommuner: List<String>) =
             esclient.sumPerBucket(
-                    filterQuery = komuneFilter(kommuner),
+                    filterQuery = must(
+                            komuneFilter(kommuner),
+                            aktivPublicQuery()),
                     summeringskollone = antall,
                     grupperingsKollone = underkattegori,
                     index = stillingerIndex
@@ -41,7 +45,9 @@ constructor(
 
     override fun getStillingerPerKomune(underkategorier: List<String>) =
             esclient.sumPerBucket(
-                    filterQuery = underkategoriFilter(underkategorier),
+                    filterQuery = must(
+                            underkategoriFilter(underkategorier),
+                            aktivPublicQuery()),
                     summeringskollone = antall,
                     grupperingsKollone = komuneNumer,
                     index = stillingerIndex
@@ -49,7 +55,9 @@ constructor(
 
     override fun getStillingerPerFylke(underkategorier: List<String>) =
             esclient.sumPerBucket(
-                    filterQuery = underkategoriFilter(underkategorier),
+                    filterQuery = must(
+                            underkategoriFilter(underkategorier),
+                            aktivPublicQuery()),
                     summeringskollone = antall,
                     grupperingsKollone = fylkesnummerStillinger,
                     index = stillingerIndex
@@ -57,7 +65,10 @@ constructor(
 
     override fun getAntallStillinger(kommuner: List<String>, underkategorier: List<String>) =
             esclient.sum(
-                    filterQuery = must(komuneFilter(kommuner), underkategoriFilter(underkategorier)),
+                    filterQuery = must(
+                            komuneFilter(kommuner),
+                            underkategoriFilter(underkategorier),
+                            aktivPublicQuery()),
                     summeringskollone = antall,
                     index = stillingerIndex
             )
