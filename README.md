@@ -18,7 +18,6 @@ For å kjøre opp uten mock må følgende miljøvariabler være definert:
 
 | Variabelnavn            | Beskrivelse                                                              |
 | ----------------------- | ------------------------------------------------------------------------ |
-| STILLING_SOLR_URL       | URL til solr-indeks med oversikt over alle stillinger                    |
 | MIA_ELASTIC_USER        | Brukernavn til mia sin elastic-search for statistikkdata                 |
 | MIA_ELASTIC_PSW         | Passord for brukeren til mia i elastic-search for statatistikkdata       |
 | MIA_ELASTIC_HOSTNAME    | Hostname til elastic-search som holder på mia sin statistikkdata         |
