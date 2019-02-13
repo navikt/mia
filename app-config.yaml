@@ -27,7 +27,7 @@ prometheus:
   enabled: true
   path: /internal/actuator/prometheus
 
-team: oppfolging
+team: bos
 
 fasitResources:
   used:
