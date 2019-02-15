@@ -31,21 +31,12 @@ team: bos
 
 fasitResources:
   used:
-  - alias: stilling.solr
-    resourceType: baseurl
-    propertyMap:
-      url: STILLING_SOLR_URL
-
-  - alias: stillingsok.link
-    resourceType: baseurl
-    propertyMap:
-      url: STILLINGSOK_LINK_URL
-
   - alias: mia_elasticsearch_user
     resourceType: credential
     propertyMap:
       username: MIA_ELASTIC_USER
       password: MIA_ELASTIC_PSW
+
   - alias: appdynamics
     resourceType: applicationproperties
 

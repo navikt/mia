@@ -21,7 +21,6 @@ fun main(args: Array<String>) {
     val app = SpringApplication(Application::class.java)
     if (getOptionalProperty("USE_MOCK") == "true") {
         app.setAdditionalProfiles("mock")
-        setPropertyIfNotAlredyExists("STILLINGSOK_LINK_URL", "https://tjenester.nav.no/stillinger/")
     }
     app.run(*args)
 }
