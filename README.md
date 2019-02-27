@@ -24,24 +24,24 @@ For å kjøre opp uten mock må følgende miljøvariabler være definert:
 | MIA_ELASTIC_SCHEME      | http eller https basert på om elastic er tilgjengelig via SSL eller ikke |
 
 ## Lage nye geojson-filer for ønsket nøyaktighet:
-Last ned geojson filene for fylker og komuner fra [kartverket](https://kartkatalog.geonorge.no/tema/administrative-inndelinger/3).  
-Siden filene er alt forstore må vi forenkle disse  
+Last ned geojson filene for fylker og kommuner fra [kartverket](https://kartkatalog.geonorge.no/tema/administrative-inndelinger/3).  
+Siden filene er alt for store må vi forenkle disse  
 Fra fylker filen kopier inholdet i `administrative_enheter.fylke` sin `features`.  
-Gjør det samme i kommuner fulen men koppier fra `administrative_enheter.kommune`.  
+Gjør det samme i kommuner filen, men kopier fra `administrative_enheter.kommune`.  
 Putt alt dette inn i en ny fil som ser slik ut: 
 ```
 {
     "type" : "FeatureCollection",
     "features" : [
-        inhodlde fra fylker og kommuner
+        innholdet fra fylker og kommuner
     ]
 }
 ```
-Dette gjøres for å sørege for at fylkesgrensene forenkles likt som kommunene.  
+Dette gjøres for å sørge for at fylkesgrensene forenkles likt som kommunene.  
 Deretter forenkler man filen med npm modulen [mapshaper](https://mapshaper.org/), man kan eventult bruke nettsiden.
-Vi har funnet at 2,3% er en fornuftig cutof for forenklingen
+Vi har funnet at 2,3% er en fornuftig cutoff for forenklingen
 ```
-mapshaper -i snap fylkeskomuner.json -simplify 0.023 keep-shapes -o fylkeskomunerSimple.json 
+mapshaper -i snap fylkeskommuner.json -simplify 0.023 keep-shapes -o fylkeskommunerSimple.json 
 ```
 splitet tilbake til fylker.json og kommuner.json med samme struktur som over og konverterer kordinatene med
 ```
