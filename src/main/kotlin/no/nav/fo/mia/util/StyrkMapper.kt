@@ -5,7 +5,7 @@ val hovedkategoriTilUnderkategori = mapOf(
         "Sikkerhet og beredskap" to listOf("Forsvar/militære", "Brann-, utryknings- og redningspersonell", "Politi, fengsel og toll", "Vakt-, sikrings- og kontrollarbeid"),
         "Kontor og økonomi" to listOf("Organisasjonsarbeid og politikk", "Ledelse, administrasjon og rådgivning", "Bank finans forsikring", "Personal, arbeidsmiljø og rekruttering", "økonomi, statistikk og regnskap", "Kontor, forvaltning og saksbehandling", "Juridisk arbeid", "Megling"),
         "Salg og service" to listOf("Salg, butikk- og varehandel", "Markedsføring og reklame", "Personlig tjenesteyting", "Tolk og oversettere", "Eiendomsmegler", "Post og måleavlesere", "Frisør og velvære", "Renholdere og renovasjon"),
-        "Utdanning" to listOf("Forskningsarbeid", "Ledere av undervisning og utdanning", "Universitet og høyskole", "Videregående skole", "Barnehage og grunnskole", "Instruktører og pedagoger"),
+        "Utdanning" to listOf("Forskningsarbeid", "Ledere av undervisning og utdanning", "Universitet og høyskole", "Videregående skole", "Barnehage og grunnskole", "Instruktører og pedagoger", "SFO og fritidsleder"),
         "Natur og miljø" to listOf("Skogbruk, gartnerarbeid og hagebruk", "Naturvitenskapelige yrker", "Biologer, zoologer, botanikere", "Jordbruk og dyrehold", "Miljøvern", "Veterinærer og dyrepleiere", "Matproduksjon og næringsmiddelarbeid", "Fiske, fangst og oppdrett", "Fiske, fangst og oppdrett"),
         "Industri og produksjon" to listOf("Arbeidsleder, industri", "Olje, gass og bergverk", "Fysikk, kjemi og metallurgi", "Maskinteknikk og mekanikk", "Elektro/elektronikk", "Jern og metall", "Matproduksjon og næringsmiddelarbeid", "Trevarearbeid og –foredling", "Tekstil og presisjonsarbeid", "Andre hjelpearbeidere"),
         "Bygg og anlegg" to listOf("Arbeidsleder, bygg og anlegg", "Ingeniør bygg", "Ingeniør miljøteknikk", "Arealplanlegging og arkitektur", "Skytebaser og sprengningsarbeidere", "Hjelpearbeider Bygg og anlegg", "Maskin- og kranfører"),
@@ -14,7 +14,6 @@ val hovedkategoriTilUnderkategori = mapOf(
         "Helse og sosial" to listOf("Leder innenfor helsetjenester", "Leger, psykologer og terapeuter", "Sykepleier", "Helse", "Tannhelse/-pleie", "Farmasøytisk og apotekerarbeid", "Sosial", "Bioingeniør", "Optiker"),
         "Reiseliv og mat" to listOf("Reiseliv, hotell og overnatting", "Restaurant", "Kokk", "Baker og konditor"),
         "Kultur og kreative yrker" to listOf("Fritid", "Design, grafisk arbeid og illustrasjon", "Journalistikk og litteratur", "Museum, bibliotek", "Religiøst arbeid", "Kunst og kunsthåndverk", "Musikk/lyd, foto og video", "Underholdning, scene og teater", "Sport og idrett", "Andre yrker innen estetiske fag", "Reklame og dekorasjon"),
-        "Utdanning" to listOf("Forskningsarbeid", "Instruktører og pedagoger", "SFO og fritidsleder"),
         "Håndverkere" to listOf("Elektriker/elektro", "Vaktmester", "øvrige håndverksyrker", "Murer", "Betongfagarbeider", "Tømrer og snekker", "Maler", "Rørlegger", "Feier", "Platearbeider og sveiser", "Mekaniker", "Skredder"))
 
 val styrkTilUnderkategori = mapOf(
