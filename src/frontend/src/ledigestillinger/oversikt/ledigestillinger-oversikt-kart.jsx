@@ -4,7 +4,7 @@ import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
-import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
+import { highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 import {erDev} from '../../felles/utils/dev';
