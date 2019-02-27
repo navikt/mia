@@ -83,7 +83,7 @@ class Oversiktskart extends React.Component {
     clickKommune(e) {
         const properties = e.target.feature.properties;
         const kommuneErValgt = properties.valgt === true;
-        const kommuneId = finnIdForKommunenummer(properties.id, this.props.omrader);
+        const kommuneId = properties.kommunenummer;
         this.fjernSelectedFraFylker();
 
         if(kommuneErValgt) {
@@ -99,7 +99,7 @@ class Oversiktskart extends React.Component {
 
     clickFylke(e, layer) {
         this.zoomTilFylke(e);
-        const fylkeId = finnIdForFylkenummer(e.target.feature.properties.id, this.props.omrader);
+        const fylkeId = e.target.feature.properties.fylkesnummer;
         this.props.velgFylke(fylkeId);
         layer.setStyle({fillOpacity: 0.1});
     }
