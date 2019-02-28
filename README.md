@@ -24,16 +24,28 @@ For å kjøre opp uten mock må følgende miljøvariabler være definert:
 | MIA_ELASTIC_SCHEME      | http eller https basert på om elastic er tilgjengelig via SSL eller ikke |
 
 ## Lage nye geojson-filer for ønsket nøyaktighet:
-
-Applikasjonen bruker vektordata for å tegne opp grensene for ulike fylker og kommuner i kartet. Disse kartdataene er hentet
-fra kartverket, men som originalfiler er de alt for store og har så høy nøyaktighet at nettleseren kan få problemer med å
-tegne de opp. Vi har derfor tatt i bruk en tjeneste som heter `simplify-geojson` som kan brukes til å simplifisere
-geojson-filer, og vil prøve å fokusere på å fjerne "unødvendige" datapunker.
-
-Kommandoen som brukes til dette er:
-
+Last ned geojson filene for fylker og kommuner fra [kartverket](https://kartkatalog.geonorge.no/tema/administrative-inndelinger/3).  
+Siden filene er alt for store må vi forenkle disse  
+Fra fylker filen kopier inholdet i `administrative_enheter.fylke` sin `features`.  
+Gjør det samme i kommuner filen, men kopier fra `administrative_enheter.kommune`.  
+Putt alt dette inn i en ny fil som ser slik ut: 
 ```
-cat {input-geojson}.json | simplify-geojson -t 0.003 > {output-geojson}.json
+{
+    "type" : "FeatureCollection",
+    "features" : [
+        innholdet fra fylker og kommuner
+    ]
+}
+```
+Dette gjøres for å sørge for at fylkesgrensene forenkles likt som kommunene.  
+Deretter forenkler man filen med npm modulen [mapshaper](https://mapshaper.org/), man kan eventult bruke nettsiden.
+Vi har funnet at 2,3% er en fornuftig cutoff for forenklingen
+```
+mapshaper -i snap fylkeskommuner.json -simplify 0.023 keep-shapes -o fylkeskommunerSimple.json 
+```
+splitet tilbake til fylker.json og kommuner.json med samme struktur som over og konverterer kordinatene med
+```
+cat  {input-geojson}.json | reproject --eio --from=EPSG:25833 --to=EPSG:4326 > {output-geojson}.json
 ```
 
 * input-geojson: Inputfil med geojsondata fra kartverket. Vi bruker vektordata om fylker og kommuner i dag.
@@ -43,10 +55,6 @@ cat {input-geojson}.json | simplify-geojson -t 0.003 > {output-geojson}.json
 
 ## Henvendelser
 
-Spørsmål knyttet til koden eller prosjektet kan rettes til Team Registrering.
+Opprett en issue i GitHub for eventuelle spørsmål.
 
-For eksterne kontakt en av følgende:
-
-* Håkon Planke Holm (hakon.planke.holm@nav.no)
-
-For NAV-ansatte kan henvendelser sendes via slack i kanalen #teamregistrering
+Er du ansatt i NAV kan du stille spørsmål på Slack i kanalen #fo

@@ -31,7 +31,7 @@ const hentDataForOmrade = (kommune, fylke, yrkesomrade, yrkesgrupper, baseUri) =
 export const visPopupForFylke = (e, props, feature, layer) => {
   const yrkesomrade = props.valgtYrkesomrade;
   const yrkesgrupper = props.valgteYrkesgrupper;
-  const fylke = finnFylkeForFylkenummer(feature.properties.id, props.omrader);
+  const fylke = finnFylkeForFylkenummer(feature.properties.fylkesnummer, props.omrader);
   layer.bindPopup(getPopupMedInnholdslaster(fylke.navn)).openPopup();
   feature.properties.harFokus = true;
 
@@ -47,7 +47,7 @@ export const visPopupForKommune = (e, props, feature, layer) => {
   const yrkesgrupper = props.valgteYrkesgrupper;
   feature.properties.harFokus = true;
 
-  const kommune = finnKommuneForKommunenummer(feature.properties.id, props.omrader);
+  const kommune = finnKommuneForKommunenummer(feature.properties.kommunenummer, props.omrader);
   if (kommune == null) {
     layer.bindPopup(getPopupForOmrade(feature.properties.navn, { antallLedige: '-', antallStillinger: '-' })).openPopup();
   } else {

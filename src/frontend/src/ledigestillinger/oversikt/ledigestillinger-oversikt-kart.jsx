@@ -4,7 +4,7 @@ import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
-import {finnIdForKommunenummer, finnIdForFylkenummer, highlightFeature, resetHighlight} from './kart/kart-utils';
+import { highlightFeature, resetHighlight} from './kart/kart-utils';
 import {visPopupForKommune, visPopupForFylke} from './kart/kart-popup';
 import {ValgtHeleNorge, ValgteFylker, ValgteKommuner} from '../../felles/filtervalg/filtervalgVisning';
 import {erDev} from '../../felles/utils/dev';
@@ -83,7 +83,7 @@ class Oversiktskart extends React.Component {
     clickKommune(e) {
         const properties = e.target.feature.properties;
         const kommuneErValgt = properties.valgt === true;
-        const kommuneId = finnIdForKommunenummer(properties.id, this.props.omrader);
+        const kommuneId = properties.kommunenummer;
         this.fjernSelectedFraFylker();
 
         if(kommuneErValgt) {
@@ -99,7 +99,7 @@ class Oversiktskart extends React.Component {
 
     clickFylke(e, layer) {
         this.zoomTilFylke(e);
-        const fylkeId = finnIdForFylkenummer(e.target.feature.properties.id, this.props.omrader);
+        const fylkeId = e.target.feature.properties.fylkesnummer;
         this.props.velgFylke(fylkeId);
         layer.setStyle({fillOpacity: 0.1});
     }

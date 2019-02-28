@@ -11,17 +11,6 @@ export const finnKommuneForKommunenummer = (kommunenummer, omrader) => {
   return kommune == null ? null : kommune;
 };
 
-
-export const finnIdForFylkenummer = (fylkenummer, omrader) => {
-  const fylke = finnFylkeForFylkenummer(fylkenummer, omrader);
-  return fylke == null ? null : fylke.id;
-};
-
-export const finnIdForKommunenummer = (kommunenummer, omrader) => {
-  const kommune = finnKommuneForKommunenummer(kommunenummer, omrader);
-  return kommune == null ? null : kommune.id;
-};
-
 export const getAlleKommunerForOmrader = omrader => omrader.map(omrade => omrade.underomrader).reduce((a, b) => a.concat(b), []);
 
 export const getNavnForKommuneId = (kommuneid, omrader) => getAlleKommunerForOmrader(omrader).find(omrade => omrade.id === kommuneid).navn;
