@@ -1,3 +1,0 @@
-[submodule "src/frontend/chrome-driver"]
-	path = src/frontend/chrome-driver
-	url = https://github.com/navikt/chrome-driver.git

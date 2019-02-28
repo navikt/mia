@@ -11,6 +11,7 @@ module.exports = {
         const capabilities = client.options.desiredCapabilities;
         isMobile = capabilities.device !== undefined;
         if(!isMobile) client.resizeWindow(1024, 768);
+        client.useCss();
     },
     after: (client) => {
         client.end();
