@@ -1,5 +1,5 @@
-const driver = require('./driver');
 const { getNetworkIp } = require('./getNetworkIp');
+const driver = require('chromedriver');
 
 module.exports = {
     default: {

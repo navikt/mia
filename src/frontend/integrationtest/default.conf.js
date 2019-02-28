@@ -5,10 +5,12 @@ const config = {
     output_folder: "integrationtest/reports",
     custom_commands_path: "integrationtest/commands",
     custom_assertions_path: "",
-    globals_path: "./integrationtest/globals.js",
+    globals_path: "globals.js",
 
     selenium: {
         start_process: false,
+        port: 9515,
+        host: 'localhost'
     },
 
     test_settings: {
@@ -17,10 +19,8 @@ const config = {
                 launch_url: 'http://localhost:3000',
                 timeout: 20000,
             },
-            selenium_port: 9515,
-            timeout: 15000,
-            selenium_host: "localhost",
             default_path_prefix: '',
+            timeout: 15000,
             desiredCapabilities: {
                 browserName: "chrome",
                 javascriptEnabled: true,
