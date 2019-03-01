@@ -1,11 +1,15 @@
 import React from 'react';
-import { Sidetittel } from 'nav-frontend-typografi';
+import {Normaltekst, Sidetittel} from 'nav-frontend-typografi';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 const tekster = defineMessages({
     tittel: {
         id: 'hovedside.tittel',
-        defaultMessage: 'Muligheter i arbeidsmarkedet'
+        defaultMessage: 'Arbeidsmarkedet'
+    },
+    beskrivelse: {
+        id: 'hovedside.beskrivelse',
+        defaultMessage: 'Her kan du få oversikt over arbeidsmarkedet og utforske jobbmulighetene i ulike deler av landet og i ulike bransjer'
     }
 });
 
@@ -17,6 +21,9 @@ function Sidebanner() {
                     <Sidetittel className="sidebanner__tittel">
                         <FormattedMessage {...tekster.tittel} />
                     </Sidetittel>
+                    <Normaltekst className="sidebanner__text">
+                        <FormattedMessage {...tekster.beskrivelse}/>
+                    </Normaltekst>
                 </div>
             </div>
         </div>
