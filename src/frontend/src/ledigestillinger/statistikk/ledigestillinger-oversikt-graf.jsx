@@ -15,11 +15,11 @@ const tekster = defineMessages({
     },
     valgtStillingskategori: {
         id: 'ledigestillinger.oversikt.statistikk.valgtstillingskategori',
-        defaultMessage: 'Valgt stillingskategori:'
+        defaultMessage: 'Valgt stillingskategori: '
     },
     valgteArbeidsomrader: {
         id: 'ledigestillinger.oversikt.statistikk.valgtearbeidsomrader',
-        defaultMessage: 'Valgte arbeidsområder:'
+        defaultMessage: 'Valgte arbeidsområder: '
     }
 });
 
