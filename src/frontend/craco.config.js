@@ -6,10 +6,6 @@ module.exports = {
         { plugin: CracoLessPlugin,
             options: {
                 lessLoaderOptions: {
-                    modifyVars: {
-                        "coreModulePath": "./../../",
-                        "nodeModulesPath": "./../../"
-                    },
                     loader: new NpmImportPlugin({ prefix: '~' })
                 }
             }
