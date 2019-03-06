@@ -7,6 +7,7 @@ import restActionCreator from './felles/rest/rest-action';
 import LedigeStillinger from './ledigestillinger/ledigestillinger';
 import Sidebanner from './felles/sidebanner/sidebanner';
 import Feilmodal from './feilmodal/feilmodal';
+import Lenker from "./ledigestillinger/lenker/lenker";
 
 class Application extends React.Component {
     componentDidMount() {
@@ -15,6 +16,7 @@ class Application extends React.Component {
         this.props.lastFylkerGeojson();
         this.props.lastKommunerGeojson();
     }
+
     render() {
         const avhengigheter = [
             this.props.tekster,
@@ -25,13 +27,14 @@ class Application extends React.Component {
 
         return (
             <main>
-                <Innholdslaster avhengigheter={avhengigheter}>
-                    <Sidebanner />
-                    <div className="hovedinnhold side-midtstilt">
-                        <LedigeStillinger />
-                    </div>
-                </Innholdslaster>
-                <Feilmodal />
+                <Sidebanner/>
+                <div className="hovedinnhold side-midtstilt">
+                    <Innholdslaster avhengigheter={avhengigheter}>
+                        <LedigeStillinger/>
+                    </Innholdslaster>
+                    <Feilmodal/>
+                </div>
+                <Lenker/>
             </main>
         );
     }
