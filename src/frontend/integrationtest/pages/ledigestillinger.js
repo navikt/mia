@@ -16,7 +16,7 @@ module.exports = {
                 kart: '#switch_kart',
                 knappVelgOmrade: '[data-testid="knappVelgFylkerOgKommuner"]',
                 toggle: '.oversikt-toggle',
-                fylkeheader: 'h2'
+                fylkeheader: 'h3'
             },
             commands: [oversiktcommands]
 
