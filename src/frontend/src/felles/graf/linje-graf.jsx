@@ -71,7 +71,7 @@ export class LinjeGraf  extends Component {
             <div>
                 <TabsPure
                     kompakt
-                    className="hidden-xs hidden-sm grafvisning-tabs"
+                    className="grafvisning-tabs"
                     tabs={[
                         {"label": <FormattedMessage {...meldinger.visGraf}/>, 'aktiv': valgtTab === 0},
                         {"label": <FormattedMessage {...meldinger.visTabell} />, 'aktiv': valgtTab === 1}
