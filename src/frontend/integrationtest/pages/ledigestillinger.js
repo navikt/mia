@@ -11,7 +11,7 @@ module.exports = {
             selector: '.stillinger-oversikt',
             elements: {
                 knappKart: '#switch_kart-knapp',
-                knappTabell: '#switch_tabell-knapp',
+                knappTabell: 'button.nav-frontend-tabs__tab-inner.nav-frontend-tabs__tab-inner--interaktiv',
                 tabell: '#switch_tabell',
                 kart: '#switch_kart',
                 knappVelgOmrade: '[data-testid="knappVelgFylkerOgKommuner"]',
