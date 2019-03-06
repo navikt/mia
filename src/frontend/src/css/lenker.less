@@ -1,0 +1,85 @@
+@import "variabler";
+
+.lenkeWraper {
+  background-color: @navLysGra;
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+  padding-bottom: 10rem;
+}
+
+@media (min-width: @screen-md-min) {
+  .lenkeboks {
+    padding: 2rem 2rem 0 2rem;
+  }
+}
+
+@media (max-width: @screen-sm-max) {
+  .lenkeboks {
+    padding: 1rem 1rem 0 1rem;
+  }
+}
+
+
+@media (max-width: @screen-xs-max) {
+  .lenkeWraper {
+    flex-wrap: wrap;
+  }
+}
+
+
+.lenkeboks {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  margin: 1rem;
+  height: 25rem;
+  color: @navMorkGra;
+  text-decoration-line: none;
+  overflow: hidden;
+  max-width: 30rem;
+  border-radius: 8px;
+  border: 1px @navGra60 solid;
+
+  & .indikator{
+    left: 0;
+    transition: left 250ms;
+  }
+
+  &:focus {
+    background-color: @white;
+    box-shadow: 0 0 0 3px @orangeFocus;
+    outline: none;
+  }
+
+  &:hover {
+    .header {
+      text-decoration: underline;
+      color: @navBla;
+    }
+    .indikator {
+      left: 10px
+    }
+    border-color: @navBla;
+    box-shadow: @navGra40 0 2px 1px 0;
+  }
+
+  & .lenkestylBoks {
+    display: flex;
+    align-items: center;
+  }
+
+  & .lenkesyle {
+    margin-bottom: 0.3rem;
+    text-decoration: underline;
+    color: @navBla;
+  }
+
+  & .logo {
+    margin-bottom: -1px;
+    align-self: center;
+  }
+
+}
+
