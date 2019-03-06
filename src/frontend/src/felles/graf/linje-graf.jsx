@@ -29,7 +29,6 @@ export class LinjeGraf  extends Component {
     render() {
 
         const {id, tabell, tabellOverskrift, yTittel='', yEnhet='', periodetype="Kvartal", intl, switcher} = this.props;
-        console.log(switcher);
         const valgtTab = switcher ? switcher : 0;
 
         if (tabell == null) {
@@ -66,7 +65,7 @@ export class LinjeGraf  extends Component {
                                        tabelloverskrift={<FormattedMessage {...tabellOverskrift} />}
                                        tabellId={id + '_tabell'}/>;
 
-        const a = valgtTab === 1 ? grafTabell : <ReactHighcharts config={conf}/>;
+        const statestikkVisning = valgtTab === 1 ? grafTabell : <ReactHighcharts config={conf}/>;
         return (
             <div>
                 <TabsPure
@@ -76,11 +75,11 @@ export class LinjeGraf  extends Component {
                         {"label": <FormattedMessage {...meldinger.visGraf}/>, 'aktiv': valgtTab === 0},
                         {"label": <FormattedMessage {...meldinger.visTabell} />, 'aktiv': valgtTab === 1}
                     ]}
-                    onChange={(a, indeks) => {
+                    onChange={(eventTarget, indeks) => {
                         this.knapptrykket(indeks)
                     }}
                 />
-                {a}
+                {statestikkVisning}
             </div>
         );
     }

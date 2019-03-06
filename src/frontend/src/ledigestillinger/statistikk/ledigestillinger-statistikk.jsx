@@ -21,7 +21,7 @@ const feilmeldinger = defineMessages({
 const tekster = defineMessages( {
     tabellOverskrift: {
         id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
-        defaultMessage: 'Utviklingnen i arbeidsmarkedet i området'
+        defaultMessage: 'Utviklingen i arbeidsmarkedet i området'
     },
     visGraf: {
         id: 'grafswitcher.visgraf',

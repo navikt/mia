@@ -10,10 +10,6 @@ import {
 } from '../../felles/filtervalg/filtervalgVisning';
 
 const tekster = defineMessages({
-    tabellOverskrift: {
-        id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
-        defaultMessage: 'Utviklingnen i arbeidsmarkedet i området'
-    },
     hjelpetekstTekst: {
         id: 'ledigestillinger.graf.hjelpetekst.innhold',
         defaultMessage: 'I tabellen ser du to grafer som viser utviklingen i arbeidsmarkedet for det området du har valgt. Den sorte grafen viser antall arbeidsledige de siste 13 månedene. Den grønne grafen viser ledige stillinger i samme periode.'
@@ -39,7 +35,6 @@ const tekster = defineMessages({
 const LedigestillingerOversiktGraf = ({tabell, valgteFylker, valgteKommuner, omrader, valgtyrkesomrade, yrkesomrader, valgteyrkesgrupper, yrkesgrupper}) => {
     const grafData = {
         id: 'arbeidsledighet-graf',
-        tabellOverskrift: tekster.tabellOverskrift,
         tabell,
         periodetype: "Måned",
         yEnhet: '',

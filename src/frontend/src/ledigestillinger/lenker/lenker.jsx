@@ -24,7 +24,7 @@ const meldinger = defineMessages({
     },
     euTekst: {
         id: 'linker.flytteTekst',
-        defaultMessage: 'hvis du vil søke jobb i EU/EØS-landende og Sveits,\n kan NAV hjelpe deg gjennom EURES-samarbeidet.'
+        defaultMessage: 'Hvis du vil søke jobb i EU/EØS-landende og Sveits,\n kan NAV hjelpe deg gjennom EURES-samarbeidet.'
     },
 });
 
