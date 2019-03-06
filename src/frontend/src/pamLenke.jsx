@@ -62,7 +62,6 @@ function createUrl(props) {
     params.push(createKategoriURI(props.valgtyrkesomrade, props.valgteyrkesgrupper));
     params.push(createOmrodeFilter(props.valgteKommuner,props.valgteFylker, props.omrader));
     return url + params.filter(x => !!x).join("&")
-
 }
 
 function TilPam(props) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {getStillingerTotalt, getKommuneMedData, compareOmrader} from './ledigestillinger-oversikt-utils';
+import {Innholdstittel} from "nav-frontend-typografi";
 
 const meldinger = defineMessages({
     tabellOverskriftKommune: {
@@ -36,7 +37,7 @@ export const KommuneTabell = ({fylke, kommuner, stillinger}) => {
 
     return (
         <section className="blokk">
-            <h2 className="typo-etikett">{fylkenavn}</h2>
+            <Innholdstittel tag="h3" >{fylkenavn}</Innholdstittel>
             <div className="tabell-container">
                 <table className="tabell blokk-s">
                     <thead>

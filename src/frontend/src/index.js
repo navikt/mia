@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Application from './application';
 import createStore from './store';
 import Provider from './provider';
+import './index.less'
 
 
 if (!global._babelPolyfill) {

@@ -1,21 +1,17 @@
 import React from 'react';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import {ALTERNATIV_ALLE} from "../../felles/konstanter";
-import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
-import { Select } from 'nav-frontend-skjema';
+import {Select} from 'nav-frontend-skjema';
+import {Undertittel} from 'nav-frontend-typografi';
 
 const meldinger = defineMessages({
     velgstillingskategori: {
         id: 'ledigestillinger.bransjer.velgstillingskategori',
-        defaultMessage: 'Velg stillingskategori'
+        defaultMessage: 'Velg bransje'
     },
     alternativAlle: {
         id: 'ledigestillinger.bransjer.alle',
         defaultMessage: 'Alle ({antall})'
-    },
-    hjelpetekstTekst: {
-        id: 'ledigestillinger.bransjer.hjelpetekst.innhold',
-        defaultMessage: 'Velg stillingskategori i rullgardinmenyen. Etterpå kan du velge bransje i boksen under rullgardinmenyen.'
     }
 });
 
@@ -28,18 +24,18 @@ export const BransjeDropdown = (props) => {
     ));
 
     const selectLabel = (
-        <div>
-            <FormattedMessage {...meldinger.velgstillingskategori} />
-            <HjelpetekstUnder id="bransje-dropdown-hjelpetekst">
-                <FormattedMessage {...meldinger.hjelpetekstTekst}/>
-            </HjelpetekstUnder>
+        <div className="bransje-header">
+            <Undertittel className="inline">
+                <FormattedMessage {...meldinger.velgstillingskategori} />
+            </Undertittel>
         </div>
     );
 
-    return(
+    return (
         <div className="bransjevalg blokk-s">
             <div>
-                <Select id="select-bransje" bredde="fullbredde" label={selectLabel} selected={props.yrkesomrade} value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
+                <Select id="select-bransje" bredde="fullbredde" label={selectLabel} selected={props.yrkesomrade}
+                        value={props.yrkesomrade} onChange={e => props.onClick(e.target.value)}>
                     <option value={ALTERNATIV_ALLE}>
                         {formatMessage(meldinger.alternativAlle, {antall: props.totaltAntall + ''})}
                     </option>

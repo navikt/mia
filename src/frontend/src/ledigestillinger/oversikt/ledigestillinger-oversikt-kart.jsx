@@ -1,7 +1,7 @@
 import React from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
-import { HjelpetekstUnder } from 'nav-frontend-hjelpetekst';
+import {HjelpetekstUnderVenstre} from 'nav-frontend-hjelpetekst';
 import {highlightStyling, geojsonStyling, selectedStyling} from './kart/kart-styling';
 import LandvisningControl from './kart/kart-landvisning-control';
 import { highlightFeature, resetHighlight} from './kart/kart-utils';
@@ -169,9 +169,9 @@ class Oversiktskart extends React.Component {
         return (
             <div className={`kart-omrader-container ${this.props.className}`} id="switch_kart">
                 <div className="valgte-omrader-container">
-                    <HjelpetekstUnder id="valgtomrade-hjelpetekst">
+                    <HjelpetekstUnderVenstre id="valgtomrade-hjelpetekst">
                         <FormattedMessage {...meldinger.hjelpetekstTekst}/>
-                    </HjelpetekstUnder>
+                    </HjelpetekstUnderVenstre>
 
                     {valgtHeleLandet}
 

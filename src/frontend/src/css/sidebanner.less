@@ -12,7 +12,8 @@
   display: flex;
   justify-content: center;
   align-items: baseline;
-  padding-top: 1rem;
+  flex-direction: column;
+  text-align: left;
 
   &__illustrasjon {
     display: none;
@@ -25,6 +26,10 @@
   }
 }
 
+.sidebanner__text {
+  max-width: 25rem;
+}
+
 .sidebanner-grid {
   margin: 0 auto;
   text-align: center;
@@ -33,7 +38,7 @@
 
 @media (min-width: @screen-md-min) {
   .sidebanner-container {
-    .blokk-l();
+    margin-bottom: 1rem;
   }
 
   .sidebanner-grid {

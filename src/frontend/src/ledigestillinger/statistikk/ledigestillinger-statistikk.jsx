@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import {defineMessages} from 'react-intl';
+import {connect} from 'react-redux';
+import {defineMessages, FormattedMessage} from 'react-intl';
 import Innholdslaster from './../../felles/innholdslaster/innholdslaster';
-import { hentStatistikk } from './ledigestillinger-statistikk-actions';
+import {hentStatistikk} from './ledigestillinger-statistikk-actions';
 import OversiktGraf from './ledigestillinger-oversikt-graf';
 import {bareValgtEOSRestenAvVerden} from '../../felles/filtervalg/filtrering-andre-omrader';
+import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 
 const feilmeldinger = defineMessages({
     tittel: {
@@ -17,6 +18,21 @@ const feilmeldinger = defineMessages({
     }
 });
 
+const tekster = defineMessages( {
+    tabellOverskrift: {
+        id: 'ledigestillinger.overskrift.graf.arbeidsledighet',
+        defaultMessage: 'Utviklingen i arbeidsmarkedet i området'
+    },
+    visGraf: {
+        id: 'grafswitcher.visgraf',
+        defaultMessage: 'Vis som graf'
+    },
+    visTabell: {
+        id: 'grafswitcher.vistabell',
+        defaultMessage: 'Vis som tabell'
+    },
+});
+
 export class Statistikk extends React.Component {
     componentDidMount() {
         this.props.dispatch(hentStatistikk());
@@ -24,22 +40,22 @@ export class Statistikk extends React.Component {
 
     render() {
         return bareValgtEOSRestenAvVerden(this.props.oversikt) ? null :
-        (
-            <div className="panel panel-fremhevet">
-                <Innholdslaster avhengigheter={[this.props.statistikk]} feilmelding={feilmeldinger}>
-                    <OversiktGraf
-                        tabell={this.props.statistikk.data}
-                        valgteFylker={this.props.oversikt.valgteFylker}
-                        valgteKommuner={this.props.oversikt.valgteKommuner}
-                        omrader={this.props.omrader}
-                        yrkesomrader={this.props.yrkesomrader}
-                        yrkesgrupper={this.props.yrkesgrupper}
-                        valgtyrkesomrade={this.props.valgtyrkesomrade}
-                        valgteyrkesgrupper={this.props.valgteyrkesgrupper}
-                    />
-                </Innholdslaster>
-            </div>
-        );
+            (
+                <Ekspanderbartpanel tittel={<FormattedMessage {...tekster.tabellOverskrift} />} border>
+                    <Innholdslaster avhengigheter={[this.props.statistikk]} feilmelding={feilmeldinger}>
+                        <OversiktGraf
+                            tabell={this.props.statistikk.data}
+                            valgteFylker={this.props.oversikt.valgteFylker}
+                            valgteKommuner={this.props.oversikt.valgteKommuner}
+                            omrader={this.props.omrader}
+                            yrkesomrader={this.props.yrkesomrader}
+                            yrkesgrupper={this.props.yrkesgrupper}
+                            valgtyrkesomrade={this.props.valgtyrkesomrade}
+                            valgteyrkesgrupper={this.props.valgteyrkesgrupper}
+                        />
+                    </Innholdslaster>
+                </Ekspanderbartpanel>
+            );
     }
 }
 

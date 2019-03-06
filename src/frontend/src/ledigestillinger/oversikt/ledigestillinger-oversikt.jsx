@@ -5,12 +5,21 @@ import {actions} from "./ledigestillinger-oversikt-reducer";
 import OversiktKart from "./ledigestillinger-oversikt-kart";
 import Oversiktspanel from "./ledigestillinger-oversikt-panel";
 import {hentAntallStillingerForYrkesgruppe} from "../stillinger/ledigestillinger-stillinger-actions";
-import {hentYrkesgrupper, hentYrkesomrader, hentAntallStillingerForOmrade} from "../bransjer/ledigestillinger-bransjer-actions";
+import {
+    hentYrkesgrupper,
+    hentYrkesomrader,
+    hentAntallStillingerForOmrade
+} from "../bransjer/ledigestillinger-bransjer-actions";
 import {apneModal} from "../../felles/modal/modal-reducer";
 import {hentStatistikk} from './../statistikk/ledigestillinger-statistikk-actions';
-import SwitcherKnapp from '../../felles/switcher/switcher-knapp';
+import {Undertittel} from "nav-frontend-typografi";
+import Tabs from "nav-frontend-tabs";
 
 const meldinger = defineMessages({
+    omroddeTittel: {
+        id: 'ledigestillinger.oversikt.tittel',
+        defaultMessage: 'Velg område'
+    },
     lenkeVisKart: {
         id: 'ledigestillinger.oversikt.viskartlenke',
         defaultMessage: 'Vis som kart'
@@ -31,21 +40,21 @@ export class Oversikt extends React.Component {
     }
 
     togglekart() {
-        if(!this.props.visKart) {
+        if (!this.props.visKart) {
             this.resetValg();
         }
-        this.props.dispatch({ type: this.props.visKart ? actions.vis_tabell : actions.vis_kart });
+        this.props.dispatch({type: this.props.visKart ? actions.vis_tabell : actions.vis_kart});
     }
 
     visKart() {
-        if(!this.props.visKart) {
+        if (!this.props.visKart) {
             this.resetValg();
-            this.props.dispatch({ type: actions.vis_kart });
+            this.props.dispatch({type: actions.vis_kart});
         }
     }
 
     visTabell() {
-        this.props.dispatch({ type: actions.vis_tabell });
+        this.props.dispatch({type: actions.vis_tabell});
     }
 
     apneModal(modalid) {
@@ -53,27 +62,27 @@ export class Oversikt extends React.Component {
     }
 
     lagreModal() {
-        this.props.dispatch({ type: actions.modal_lagre });
+        this.props.dispatch({type: actions.modal_lagre});
         this.oppdaterAlleDatagrunnlag();
     }
 
     resetValg() {
-        this.props.dispatch({ type: actions.reset_valg });
+        this.props.dispatch({type: actions.reset_valg});
         this.oppdaterAlleDatagrunnlag();
     }
 
     velgFylke(fylkeid) {
-        this.props.dispatch({ type: actions.velg_fylke, payload: fylkeid });
+        this.props.dispatch({type: actions.velg_fylke, payload: fylkeid});
         this.oppdaterAlleDatagrunnlag();
     }
 
     velgKommune(kommuneid) {
-        this.props.dispatch({ type: actions.velg_kommune, payload: kommuneid });
+        this.props.dispatch({type: actions.velg_kommune, payload: kommuneid});
         this.oppdaterAlleDatagrunnlag();
     }
 
     avvelgKommune(kommuneid) {
-        this.props.dispatch({ type: actions.avvelg_kommune, payload: kommuneid });
+        this.props.dispatch({type: actions.avvelg_kommune, payload: kommuneid});
         this.oppdaterAlleDatagrunnlag();
     }
 
@@ -118,21 +127,27 @@ export class Oversikt extends React.Component {
 
         return (
             <div className="panel-oversikt">
-                {innhold}
-                <div className="oversikt-toggle blokk-xs hidden-xs hidden-sm" role="tablist">
-                    <SwitcherKnapp
-                        id="switch_kart"
-                        aktiv={this.props.visKart}
-                        onClick={() => this.visKart()}
-                        tekst={<FormattedMessage {...meldinger.lenkeVisKart} />}
-                    />
-                    <SwitcherKnapp
-                        id="switch_tabell"
-                        aktiv={!this.props.visKart}
-                        onClick={() => this.visTabell()}
-                        tekst={<FormattedMessage {...meldinger.lenkeVisTabell} />}
-                    />
+                <div className="omradeHeader">
+                    <div className="omradetitelWraper">
+                        <Undertittel className="omradeTittel">
+                            <FormattedMessage {...meldinger.omroddeTittel}/>
+                        </Undertittel>
+                    </div>
+
+                    <Tabs
+                        className="hidden-xs hidden-sm"
+                        tabs={[
+                            {"label": <FormattedMessage {...meldinger.lenkeVisKart} />},
+                            {"label": <FormattedMessage {...meldinger.lenkeVisTabell} />}
+                        ]}
+                        onChange={(a, b) =>
+                        { if(b === 0)
+                            this.visKart();
+                        else
+                            this.visTabell();
+                        }}/>
                 </div>
+                {innhold}
             </div>
         );
     }

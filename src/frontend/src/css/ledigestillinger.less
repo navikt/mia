@@ -30,13 +30,21 @@
 }
 
 .valgte-omrader {
-    margin: 0.5rem 0 0.5rem 1rem;
+    margin: 0.5rem 0 0.5rem 0;
     display: inline-block;
     width: 85%;
 }
 
-.valgte-omrader-tittel {
-    padding-right: 0.5rem;
+.valgte-omrader-container .valgte-omrader-liste {
+  font-weight:600;
+}
+.ledigestillinger-oversikt-graf .valgte-omrader-tittel {
+  font-weight:600;
+}
+
+.grafvisning-tabs{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .panel-oversikt {
@@ -44,12 +52,23 @@
     background-color: @white;
 }
 
-.panel-oversikt .oversikt-toggle {
-    margin-left: auto;
-    margin-right: 0.5rem;
-    width: 300px;
-    text-align: right;
-    padding-bottom: 0.5rem;
+.omradeHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.omradetitelWraper {
+  flex-grow: 1;
+  border-bottom: 1px @navGra20 solid;
+}
+
+.omradeTittel {
+  margin-bottom: 0.3rem;
+}
+
+.panel-oversikt  .oversikt-toggle {
+  color: black;
 }
 
 .panel-oversikt .velg-omrader {
@@ -69,6 +88,26 @@
         margin-top: 10px;
         margin-right: 5px;
     }
+}
+
+.bransje-header {
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  border-width: 0;
+  padding-bottom: 0.3rem;
+  border-bottom-width: 1px;
+  border-color: @navGra20;
+}
+
+@media (min-width: @screen-desktop) {
+  .bransje-header {
+    padding-top: 1.1rem;
+  }
+}
+
+.inline {
+  display: inline;
 }
 
 .kart-omrader-container {
@@ -104,7 +143,7 @@
 }
 
 .list-with-hover .row:hover {
-    background-color: @gray-background;
+    background-color: @white-background;
     text-decoration: underline;
 }
 
@@ -124,12 +163,12 @@
     .stillinger-oversikt {
         width: 60%;
         box-sizing: border-box;
-        padding-right: 1rem;
+        padding-left: 1rem;
     }
 
     .stillinger-bransjer {
         width: 40%;
         box-sizing: border-box;
-        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }
