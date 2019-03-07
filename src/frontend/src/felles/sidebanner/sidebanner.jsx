@@ -21,7 +21,7 @@ function Sidebanner() {
                     <Sidetittel className="sidebanner__tittel">
                         <FormattedMessage {...tekster.tittel} />
                     </Sidetittel>
-                    <Normaltekst className="sidebanner__text">
+                    <Normaltekst className="sidebanner__text hidden-xs hidden-sm hidden-md">
                         <FormattedMessage {...tekster.beskrivelse}/>
                     </Normaltekst>
                 </div>
