@@ -3,21 +3,21 @@ import * as React from "react";
 
 
 function createKategoriURI(valgtyrkesomrade, valgteyrkesgrupper) {
-    if(valgtyrkesomrade && valgtyrkesomrade === 'alle') {
+    if (valgtyrkesomrade && valgtyrkesomrade === 'alle') {
         return null;
     }
 
     let a = [];
-    if(valgtyrkesomrade) {
+    if (valgtyrkesomrade) {
         a.push('occupationFirstLevels[]=' + encodeURIComponent(valgtyrkesomrade))
     }
-    if(valgteyrkesgrupper && valgteyrkesgrupper.length) {
+    if (valgteyrkesgrupper && valgteyrkesgrupper.length) {
         const l1 = encodeURIComponent(valgtyrkesomrade);
         valgteyrkesgrupper.forEach(gruppe => {
-            a.push('occupationSecondLevels[]=' +  l1 + '.' + encodeURIComponent(gruppe))
+            a.push('occupationSecondLevels[]=' + l1 + '.' + encodeURIComponent(gruppe))
         })
     }
-    return a.filter(x => !!x ).join("&")
+    return a.filter(x => !!x).join("&")
 }
 
 function findKommuneParam(id, omroder) {
@@ -27,15 +27,15 @@ function findKommuneParam(id, omroder) {
             kommune = fylke.underomrader.find(komune => komune.id === id)
     );
 
-    if(fylke) {
-        return 'counties[]=' + encodeURIComponent(fylke.navn.toUpperCase())+  '&municipals[]=' + encodeURIComponent(fylke.navn.toUpperCase()) + '.' + encodeURIComponent(kommune.navn.toUpperCase());
+    if (fylke) {
+        return 'counties[]=' + encodeURIComponent(fylke.navn.toUpperCase()) + '&municipals[]=' + encodeURIComponent(fylke.navn.toUpperCase()) + '.' + encodeURIComponent(kommune.navn.toUpperCase());
     }
     return null;
 }
 
 function findFylkeParam(id, omroder) {
     let fylke = omroder.find(omrade => omrade.id === id);
-    if(fylke) {
+    if (fylke) {
         return 'counties[]=' + encodeURIComponent(fylke.navn.toUpperCase());
     }
     return null
@@ -43,12 +43,12 @@ function findFylkeParam(id, omroder) {
 
 function createOmrodeFilter(valgteKommuner, valgteFylker, omrader) {
     let params = [];
-    if(valgteFylker && valgteFylker.length) {
+    if (valgteFylker && valgteFylker.length) {
         valgteFylker.forEach(fylke => {
             params.push(findFylkeParam(fylke, omrader))
         })
     }
-    if(valgteKommuner && valgteKommuner.length) {
+    if (valgteKommuner && valgteKommuner.length) {
         valgteKommuner.forEach(komune => {
             params.push(findKommuneParam(komune, omrader))
         })
@@ -60,15 +60,13 @@ function createUrl(props) {
     let url = 'https://stillingsok.nav.no/stillinger?';
     let params = [];
     params.push(createKategoriURI(props.valgtyrkesomrade, props.valgteyrkesgrupper));
-    params.push(createOmrodeFilter(props.valgteKommuner,props.valgteFylker, props.omrader));
+    params.push(createOmrodeFilter(props.valgteKommuner, props.valgteFylker, props.omrader));
     return url + params.filter(x => !!x).join("&")
 }
 
 function TilPam(props) {
     return (
-        <div className="pamlenkeboks">
-            <a href={createUrl(props)} className="knapp knapp--hoved"> se stillinger </a>
-        </div>
+        <a href={createUrl(props)} className="knapp knapp--hoved pamlenke">se annonsene</a>
     )
 }
 
