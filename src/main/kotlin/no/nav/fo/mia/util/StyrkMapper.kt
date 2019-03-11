@@ -1,5 +1,24 @@
 package no.nav.fo.mia.util
 
+fun underkategori(styrk: String) =
+        styrkTilKategori(styrk, styrkTilUnderkategori)
+
+fun hovedkategori(styrk: String) =
+        styrkTilKategori(styrk, styrkTilHovedkategori)
+
+fun styrkTilKategori(styrk: String, map: Map<String,String>): String? {
+    var kode = styrk.split(".")[0]
+    while (kode.isNotEmpty()) {
+
+        val a = map[kode]
+        if(a !== null) {
+            return kode
+        }
+        kode = kode.dropLast(1)
+    }
+    return null
+}
+
 val hovedkategoriTilUnderkategori = mapOf(
         "Uoppgitt/ ikke identifiserbare" to listOf("Ikke identifiserbare"),
         "Sikkerhet og beredskap" to listOf("Forsvar/militære", "Brann-, utryknings- og redningspersonell", "Politi, fengsel og toll", "Vakt-, sikrings- og kontrollarbeid"),
