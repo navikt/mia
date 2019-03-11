@@ -12,7 +12,7 @@ fun styrkTilKategori(styrk: String, map: Map<String,String>): String? {
 
         val a = map[kode]
         if(a !== null) {
-            return kode
+            return a
         }
         kode = kode.dropLast(1)
     }
