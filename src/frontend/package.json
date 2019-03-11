@@ -3,6 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
+  "scripts": {
+    "start": "npm run decorate:html && craco start",
+    "build": "npm run decorate:html && craco build",
+    "decorate:html": "node ./decorate-html.js ./src/index.template.html ./public/index.html",
+    "test": "craco test --env=jsdom",
+    "test:coverage": "craco test --env=jsdom --coverage",
+    "integrationtest": "node integrationtest/nightwatch.js -c integrationtest/default.conf.js",
+    "lint": "echo \"Eslint kjøres som en del av create-react-app\"",
+    "eject": "craco eject",
+    "test:browser": "node integrationtest/browsertest.runner.js -c integrationtest/browsertest.conf.js -e win_ie,win_edge,ios_safari"
+  },
   "dependencies": {
     "@craco/craco": "^3.5.0",
     "@types/react": "^16.8.6",
@@ -63,17 +74,6 @@
     "redux-thunk": "^2.3.0",
     "typescript": "^3.3.3333",
     "whatwg-fetch": "^2.0.4"
-  },
-  "scripts": {
-    "start": "npm run decorate:html && craco start",
-    "build": "npm run decorate:html && craco build",
-    "decorate:html": "node ./decorate-html.js ./src/index.template.html ./public/index.html",
-    "test": "craco test --env=jsdom",
-    "test:coverage": "craco test --env=jsdom --coverage",
-    "integrationtest": "node integrationtest/nightwatch.js -c integrationtest/default.conf.js",
-    "lint": "echo \"Eslint kjøres som en del av create-react-app\"",
-    "eject": "craco eject",
-    "test:browser": "node integrationtest/browsertest.runner.js -c integrationtest/browsertest.conf.js -e win_ie,win_edge,ios_safari"
   },
   "devDependencies": {
     "@types/jest": "^23.3.14",
