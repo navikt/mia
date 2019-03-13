@@ -19,7 +19,7 @@ constructor(val stillingerService: StillingerConsumer) {
             @RequestParam("kommunennummer") kommuneNummer: String,
             @RequestParam("styrkkode") styrkKode: String
     ): BehovsvurderingDTO {
-        val fylkesNummer = komuneNrTilFylkesNr[kommuneNummer]
+        val fylkesNummer = komuneNrTilFylkesNr[kommuneNummer] ?: bydelTIlFylkesNr[kommuneNummer]
         val komuner: List<String>? = fylkeTilKommuner[fylkesNummer]
         val hovedkategori: String? = hovedkategori(styrkKode)
         val underkategori: String? = underkategori(styrkKode)
