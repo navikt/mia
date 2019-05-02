@@ -57,7 +57,7 @@ function createOmrodeFilter(valgteKommuner, valgteFylker, omrader) {
 }
 
 function createUrl(props) {
-    let url = 'https://stillingsok.nav.no/stillinger?';
+    let url = 'https://arbeidsplassen.nav.no/stillinger?';
     let params = [];
     params.push(createKategoriURI(props.valgtyrkesomrade, props.valgteyrkesgrupper));
     params.push(createOmrodeFilter(props.valgteKommuner, props.valgteFylker, props.omrader));
