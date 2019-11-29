@@ -3,7 +3,7 @@ image: docker.adeo.no:5000/fo/mia
 replicas:
   min: 2
   max: 3
-port: 8800
+port: 80
 
 healthcheck:
   liveness:
