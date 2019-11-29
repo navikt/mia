@@ -7,7 +7,7 @@ port: 80
 
 healthcheck:
   liveness:
-    path: /internal/actuator/health
+    path: /internal/health
     initialDelay: 60
     timeout: 10
   readiness:
